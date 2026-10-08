@@ -1,6 +1,6 @@
 # Grapedle
 
-A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on nine attributes: colour, origin, most-planted country, parentage, climate, ripening, flavour profile, planted area and first mention.
+A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on nine attributes: colour, origin, most-planted country, parentage, climate, ripening, flavour profile, planted area and area trend.
 
 The game is a static bundle served from this repo through jsDelivr and embedded on a Squarespace page with a single code block. There is no backend.
 
@@ -30,7 +30,7 @@ Always reference a release tag, never a branch.
 - Anderson, K., S. Nelgen and G. Puga, *Database of Regional, National and Global Winegrape Bearing Areas by Variety, 2000 to 2023*, Wine Economics Research Centre, University of Adelaide, December 2025 (revised March 2026). [doi:10.25909/32870405.v1](https://doi.org/10.25909/32870405.v1). Used for variety names and synonyms, berry colour, country of origin, 2023 planted area and top countries.
 - Anderson, K. and S. Nelgen, *Which Winegrape Varieties are Grown Where?* (revised edition), University of Adelaide Press, 2020. Used for climate class.
 - [VIVC](https://www.vivc.de), Vitis International Variety Catalogue. Used for parentage.
-- Robinson, J., J. Harding and J. Vouillamoz, *Wine Grapes*, Allen Lane, 2012. Used for first mention, ripening and flavour.
+- Robinson, J., J. Harding and J. Vouillamoz, *Wine Grapes*, Allen Lane, 2012. Used for ripening and flavour.
 - *The Oxford Companion to Wine*, 5th edition, 2023, and WSET Level 3 material. Used for flavour.
 
 `data/source/adelaide_2023_summary.csv` is regenerated with:

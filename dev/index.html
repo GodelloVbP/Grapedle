@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grapedle preview</title>
+<!-- Preview only: mimics a Squarespace 7.1 content column. Poppins is loaded here, never in the bundle. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../dist/grapedle.min.css">
+<style>
+  body { margin: 0; background: #f3ede5; color: #3b2626; font-family: 'Poppins', system-ui, sans-serif; }
+  .sqs-block-content { max-width: 1000px; margin: 0 auto; padding: 40px 17px 80px; }
+  h1 { font-weight: 600; color: #714b4b; margin: 0 0 8px; }
+  p.lead { margin: 0 0 24px; color: #6b4f4f; }
+  /* a few hostile host rules to prove the scoping holds */
+  button { text-transform: uppercase; letter-spacing: .1em; }
+  input { border-radius: 0; }
+  h2, h3 { font-family: Georgia, serif; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<main class="sqs-block-content">
+  <h1>Grapedle</h1>
+  <p class="lead">Elke dag een nieuwe druif. Query: ?lang=en, ?day=N, ?reset=1, ?mockShop=1</p>
+  <div id="grapedle-root"></div>
+</main>
+<script src="../dist/grapedle.min.js" defer></script>
+</body>
+</html>
