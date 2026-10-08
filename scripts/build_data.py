@@ -33,13 +33,12 @@ SMALL_PRINT = {"prosecco": {"nl": "druif van Prosecco", "en": "the Prosecco grap
 # Wine-country centres for grapes without a signature region (ISO -> lat, lon).
 COUNTRY_POINTS = {
     "FR": (46.5, 2.5), "IT": (43.0, 12.5), "ES": (40.4, -3.7), "PT": (40.5, -8.0), "GR": (39.0, 22.0),
-    "DE": (49.8, 8.5), "AT": (47.8, 15.5), "CH": (46.8, 7.5), "HU": (47.3, 20.0), "BG": (42.7, 25.5),
+    "DE": (49.8, 8.5), "LU": (49.6, 6.35), "AT": (47.8, 15.5), "CH": (46.8, 7.5), "HU": (47.3, 20.0), "BG": (42.7, 25.5),
     "RO": (45.5, 25.0), "MK": (41.6, 21.7), "RU": (45.0, 40.0), "GE": (42.0, 45.0), "CY": (35.0, 33.0),
     "AL": (41.0, 20.0), "TR": (39.0, 30.0), "HR": (45.0, 16.0), "SI": (46.1, 15.0), "MD": (47.0, 28.5),
     "AR": (-33.0, -68.8), "CL": (-34.5, -71.0), "PE": (-14.0, -75.7), "BR": (-29.0, -51.5),
     "US": (37.5, -120.5), "ZA": (-33.9, 18.9), "AU": (-34.5, 139.0), "NZ": (-41.5, 174.0),
 }
-CLIMATE3 = {"cool": "koel", "temperate": "koel", "warm": "warm", "hot": "heet"}
 AROMA_SITES = {"wf": "Wine Folly", "jr": "Jancis Robinson", "wp": "Wikipedia"}
 BOOK_LABEL = "Gatinois, Explore Wine Maps"
 MAX_AROMAS = 4
@@ -76,7 +75,9 @@ EXTRA_SYNONYMS = {
     "mazuelo": ["Carignan", "Cariñena", "Carignano"],
     "tempranillo": ["Tinta de Toro", "Tinto Fino", "Tinta del País"],
     "verdicchio-bianco": ["Trebbiano di Soave", "Verdicchio"],
-    "prosecco": ["Glera"],
+    "prosecco": ["Glera", "Prosecco"],
+    "muscat-blanc-a-petits-grains": ["Moscato", "Moscato d'Asti"],
+    "macabeo": ["Cava"],
     "cot": ["Malbec"],
     "tribidrag": ["Zinfandel", "Primitivo"],
     "syrah": ["Shiraz"],
@@ -266,8 +267,9 @@ def build_grapes(report):
     draft = rows("answer_pool_draft.csv")
     pool = {r["id"]: r for r in rows("answer_pool.csv")}
     sig = {r["id"]: r for r in rows("signature_regions.csv")}
-    clim = {r["prime"]: r["climate_class"] for r in rows("climate_all_2016.csv")}
     hints = {h["id"]: h for h in read_json("hints.json")}
+    # optional "Wist je dat" facts: [{id, fact_nl, fact_en, source}]; only sourced facts are used, never invented ones
+    facts = {f["id"]: f for f in (read_json("facts.json") if os.path.exists(os.path.join(SRC, "facts.json")) else [])}
     aromas = load_aromas()
     by_prime = {r["prime"]: r for r in adel}
     problems = report["problems"]
@@ -297,21 +299,15 @@ def build_grapes(report):
         s = sig.get(gid)
         if s:
             regs = [{"name": s["region"], "country": s["country_iso2"], "lat": float(s["lat"]),
-                     "lon": float(s["lon"]), "climate": s["climate3"]}]
-            clim_src = f"Anderson & Nelgen 2020, Table 75: {s['table75_rows']}; growing-season temperature {s['gst_c']} °C"
+                     "lon": float(s["lon"])}]
             if s.get("region2"):
                 regs.append({"name": s["region2"], "country": s["country2_iso2"], "lat": float(s["lat2"]),
-                             "lon": float(s["lon2"]), "climate": s["climate3_2"]})
-                clim_src += f" | {s['region2']}: Table 75: {s['table75_rows_2']}; growing-season temperature {s['gst_c_2']} °C"
+                             "lon": float(s["lon2"])})
             rec["regions"] = regs
             src["region"] = f"Signature region, hand-placed point: {s['note']}" if s["note"] else "Signature region, hand-placed point"
-            src["climate"] = clim_src
         else:
-            c = clim.get(prime)
-            rec["regions"] = [{"name": None, "country": tops[0] if tops else origin, "lat": None, "lon": None,
-                               "climate": CLIMATE3.get(c)}]
+            rec["regions"] = [{"name": None, "country": tops[0] if tops else origin, "lat": None, "lon": None}]
             src["region"] = "Most-planted country (Adelaide 2023); country point"
-            src["climate"] = "Computed from Adelaide 2016 regional data and Anderson & Nelgen 2020 Table 75, collapsed to koel/warm/heet"
         rec["areaHa"] = int(round(area)) if area > 0 else None
         rec["answer"] = gid in pool
         if gid in pool and pool[gid]["stocked"]:
@@ -326,6 +322,13 @@ def build_grapes(report):
         if h:
             rec["hint"] = {"nl": h["hint_nl"], "en": h["hint_en"]}
             src["hint"] = h["source"]
+        f = facts.get(gid)
+        if f:
+            if not (f.get("fact_nl") and f.get("fact_en") and f.get("source")):
+                problems.append(f"fact for {gid} needs fact_nl, fact_en and source")
+            else:
+                rec["fact"] = {"nl": f["fact_nl"], "en": f["fact_en"]}
+                src["fact"] = f["source"]
         rec["sources"] = src
         rec["_rawsyn"] = a["synonyms"]
         rec["_old"] = old_name
@@ -454,7 +457,11 @@ def check_hints(grapes):
 # ---- schedule ----------------------------------------------------------
 
 SPACING_REGION = 7
-SPACING_SAME = 3
+SPACING_SAME = 20  # the same grape never returns within 20 days, also across cycle boundaries
+# Week 1 (the first 7 days) only features grapes most players know.
+WEEK1_GRAPES = {"cabernet-sauvignon", "merlot", "syrah", "pinot-noir", "chardonnay", "sauvignon-blanc", "riesling",
+                "pinot-gris", "garnacha-tinta", "tempranillo", "sangiovese", "cot", "prosecco", "gewurztraminer"}
+WARN_DAYS_LEFT = 90
 # Corvina, Corvinone and Rondinella: the plan asks for 21 days between all three, but three grapes
 # at 21 days need 63 days and a cycle has 55, so that cannot hold cycle after cycle. Corvina and
 # Corvinone (one letter apart, the confusable pair) keep 21 days; Rondinella keeps 14 from both.
@@ -485,6 +492,8 @@ def build_schedule(pool, cycles, start):
 
     def allowed(seq_, pos, gid):
         if gid in weekend_only and not is_weekend(pos):
+            return False
+        if pos < 7 and gid not in WEEK1_GRAPES:
             return False
         for back in range(1, SPACING_MAX + 1):
             if pos - back < 0:
@@ -562,10 +571,17 @@ def build_schedule(pool, cycles, start):
     return cur
 
 
+def days_left(sched, today):
+    """Puzzle days still to come after `today` (a date); the whole schedule when the start is in the future."""
+    end = datetime.date.fromisoformat(sched["start"]) + datetime.timedelta(days=len(sched["days"]))
+    return (end - max(today, datetime.date.fromisoformat(sched["start"]))).days
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=770, help="rounded up to whole cycles of the pool size")
     ap.add_argument("--start", default="2026-11-01")
+    ap.add_argument("--today", default=None, help="YYYY-MM-DD, for tests of the days-left warning")
     args = ap.parse_args()
     report = {"problems": []}
     grapes = build_grapes(report)
@@ -607,7 +623,9 @@ def main():
     sch = build_schedule(pool, cycles, args.start)
     print(f"grapes: {len(grapes)} (answers {len(pool)}), countries: {len(countries)}, "
           f"schedule days: {len(sch['days'])}, synonyms: {sum(len(g['synonyms']) for g in grapes)}")
-    print("null climate:", [g["id"] for g in grapes if g["regions"][0]["climate"] is None])
+    left = days_left(sch, datetime.date.fromisoformat(args.today) if args.today else datetime.date.today())
+    if left < WARN_DAYS_LEFT:
+        print(f"WARNING: only {left} days of schedule left (minimum {WARN_DAYS_LEFT}); append cycles with --days before they run out")
     print("no area:", [g["id"] for g in grapes if not g["areaHa"]])
     print("pool grapes without aromas:", [g["id"] for g in pool if not g["flavours"]])
     print(f"synonym collisions dropped: {len(report['collisions'])}")

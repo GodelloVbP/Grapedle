@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import schedule from '../data/schedule.json' with { type: 'json' };
 import { compare } from '../src/feedback.js';
-import { letterPattern, MAX_GUESSES } from '../src/game.js';
+import { firstLetter, MAX_GUESSES } from '../src/game.js';
 
 /**
  * A casual player knows 15 grapes. Guesses 1-5 are known grapes that are still consistent with
- * all feedback so far (any unguessed known grape when none is). Hint 2 (first letter + length) opens
- * after guess 5, so guess 6 is any pool grape consistent with all feedback and the letter pattern.
+ * all feedback so far (any unguessed known grape when none is). Hint 2 (first letter) opens
+ * after guess 5, so guess 6 is any pool grape consistent with all feedback and the first letter.
  * Hint 1 ("Bekend van") is not modelled. Reported separately for weekdays and weekends.
  */
 const KNOWN = ['cabernet-sauvignon', 'merlot', 'pinot-noir', 'syrah', 'chardonnay', 'sauvignon-blanc', 'riesling', 'pinot-gris',
@@ -42,7 +42,7 @@ function sig(gid, aid) {
 }
 
 /**
- * mode 'spec': guess 6 is any pool grape consistent with all feedback and the letter pattern (as specified).
+ * mode 'spec': guess 6 is any pool grape consistent with all feedback and the first letter (as specified).
  * mode 'pattern': guess 6 only uses the letter pattern (no deduction from the tiles).
  * mode 'known': no hint 2 help, the player only ever guesses grapes from the 15 they know.
  */
@@ -55,8 +55,8 @@ function play(answerId, rand, mode = 'spec') {
     let choice;
     if (turn === MAX_GUESSES && mode !== 'known') {
       const first = byId.get(answerId);
-      const pattern = letterPattern(first.name);
-      const cands = pool.filter((g) => !guessed.includes(g.id) && letterPattern(g.name) === pattern && (mode === 'pattern' || consistent(g.id)));
+      const pattern = firstLetter(first.name);
+      const cands = pool.filter((g) => !guessed.includes(g.id) && firstLetter(g.name) === pattern && (mode === 'pattern' || consistent(g.id)));
       choice = cands.length ? pick(cands).id : pick(pool.filter((g) => !guessed.includes(g.id)).map((g) => g.id));
     } else {
       const unguessed = KNOWN.filter((id) => !guessed.includes(id));

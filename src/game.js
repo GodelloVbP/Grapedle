@@ -6,21 +6,17 @@ export const MAX_GUESSES = 6;
 /** Guesses needed before hint 1 and hint 2 unlock. */
 export const HINT_AT = [3, 5];
 
-/** "C _ _ _ _ _ _": first letter, then one underscore per letter. Spaces, slashes and hyphens stay as they are. */
-export function letterPattern(name) {
-  let first = true;
-  return [...String(name)].map((ch) => {
-    if (!/\p{L}/u.test(ch)) return ch;
-    if (first) { first = false; return ch.toUpperCase(); }
-    return '_';
-  }).join(' ');
+/** Hint 2: the first letter of the display name, upper case ("C" for Corvina). */
+export function firstLetter(name) {
+  const m = String(name).match(/\p{L}/u);
+  return m ? m[0].toUpperCase() : '';
 }
 
 /**
  * Game core without DOM. `persist` false (debug ?day=) keeps results out of storage.
  */
-export function createGame({ puzzle, store, persist = true, sched = schedule }) {
-  const answer = byId.get(answerIdFor(puzzle, sched));
+export function createGame({ puzzle, store, persist = true, sched = schedule, answerId = null }) {
+  const answer = byId.get(answerId || answerIdFor(puzzle, sched));
   const saved = persist && store.state.guesses[puzzle];
   let ids = Array.isArray(saved) ? saved.filter((id) => byId.has(id)).slice(0, MAX_GUESSES) : [];
   // a stored game is final once the answer is in or the six guesses are used

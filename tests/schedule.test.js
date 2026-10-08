@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, cpSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, cpSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import schedule from '../data/schedule.json' with { type: 'json' };
@@ -23,13 +23,13 @@ test('schedule covers >= 2 years of answer-pool grapes, in whole cycles', () => 
   for (const id of schedule.days) assert.ok(pool.has(id), id);
 });
 
-test('no repeat within a cycle, no near repeats across cycles', () => {
+test('no repeat within a cycle, the same grape at least 20 days apart across cycle boundaries', () => {
   for (let i = 0; i + N <= schedule.days.length; i += N) {
     assert.equal(new Set(schedule.days.slice(i, i + N)).size, N, 'cycle at ' + i);
   }
   const last = new Map();
   schedule.days.forEach((id, i) => {
-    if (last.has(id)) assert.ok(i - last.get(id) >= 3, `${id} repeats after ${i - last.get(id)} days`);
+    if (last.has(id)) assert.ok(i - last.get(id) >= 20, `${id} repeats after ${i - last.get(id)} days`);
     last.set(id, i);
   });
 });
@@ -70,6 +70,56 @@ test('Corvina family spacing: Corvina and Corvinone 21 days, Rondinella 14 days 
     hist.push([i, id]);
   });
   assert.ok(hist.length >= 3 * (schedule.days.length / N));
+});
+
+test('week 1 (first 7 days) only features well-known grapes', () => {
+  const known = new Set(['cabernet-sauvignon', 'merlot', 'syrah', 'pinot-noir', 'chardonnay', 'sauvignon-blanc', 'riesling', 'pinot-gris',
+    'garnacha-tinta', 'tempranillo', 'sangiovese', 'cot', 'prosecco', 'gewurztraminer']);
+  for (const id of known) assert.ok(byId.get(id) && byId.get(id).answer, id);
+  const week = schedule.days.slice(0, 7);
+  assert.equal(new Set(week).size, 7);
+  for (const id of week) assert.ok(known.has(id), `${id} in week 1`);
+  const only = new Set(grapes.filter((g) => g.weekendOnly).map((g) => g.id));
+  for (const id of week) assert.ok(!only.has(id), `weekend-only ${id} in week 1`);
+});
+
+const daysLeft = (today) => {
+  const start = Date.UTC(...schedule.start.split('-').map((x, k) => (k === 1 ? Number(x) - 1 : Number(x))));
+  const end = start + schedule.days.length * 86400000;
+  return Math.round((end - Math.max(start, Date.parse(today))) / 86400000);
+};
+
+test('the schedule has at least 90 days left (extend it with --days before it runs out)', () => {
+  const left = daysLeft(new Date().toISOString().slice(0, 10));
+  assert.ok(left >= 90, `only ${left} days of schedule left: run python3 scripts/build_data.py --days <more> and release`);
+});
+
+test('the builder warns when fewer than 90 days are left', () => {
+  const root = resolve(import.meta.dirname, '..');
+  const tmp = mkdtempSync(join(tmpdir(), 'gd-'));
+  try {
+    cpSync(join(root, 'scripts'), join(tmp, 'scripts'), { recursive: true });
+    cpSync(join(root, 'data'), join(tmp, 'data'), { recursive: true });
+    const run = (today) => {
+      const r = spawnSync('python3', ['-I', join(tmp, 'scripts', 'build_data.py'), '--today', today], { encoding: 'utf-8' });
+      assert.equal(r.status, 0, r.stderr + r.stdout);
+      return r.stdout;
+    };
+    const endDay = new Date(Date.UTC(2026, 10, 1) + schedule.days.length * 86400000);
+    const iso = (d) => d.toISOString().slice(0, 10);
+    assert.match(run(iso(new Date(endDay.getTime() - 89 * 86400000))), /WARNING: only 89 days of schedule left/);
+    assert.doesNotMatch(run(iso(new Date(endDay.getTime() - 90 * 86400000))), /WARNING/);
+    assert.doesNotMatch(run('2026-10-01'), /WARNING/, 'before launch the whole schedule is ahead');
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('after launch the schedule only grows: it starts with the days of the last release (data/schedule.released.json)', () => {
+  const file = resolve(import.meta.dirname, '..', 'data', 'schedule.released.json');
+  if (!existsSync(file)) return; // created by the release script at the first tagged release
+  const released = JSON.parse(readFileSync(file, 'utf-8'));
+  assert.equal(schedule.start, released.start, 'start date is frozen');
+  assert.ok(schedule.days.length >= released.days.length);
+  assert.deepEqual(schedule.days.slice(0, released.days.length), released.days, 'released days must never change');
 });
 
 test('answerIdFor is deterministic, 1-based, never throws', () => {

@@ -1,6 +1,6 @@
 {
   "name": "grapedle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Grapedle, a daily grape-guessing game for Vino by Palazzo",
@@ -8,6 +8,8 @@
     "data": "python3 scripts/build_data.py",
     "build": "node scripts/build.mjs",
     "test": "node --test \"tests/*.test.js\"",
+    "release:check": "node scripts/release-check.mjs",
+    "release:freeze": "node scripts/release-check.mjs --freeze",
     "check:hints": "node -e \"import('./scripts/hints.mjs').then(async m=>{const g=(await import('./data/grapes.json',{with:{type:'json'}})).default;const f=m.checkHints(g);console.log(f.length?f.join('\\\\n'):'hints ok');process.exit(f.length?1:0)})\""
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import {
-  compare, area, flavour, region, climate, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
+  compare, area, areaBand, flavour, region, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
 } from '../src/feedback.js';
 import { overlap, similarGrapes } from '../src/similar.js';
 
@@ -12,25 +12,25 @@ const desc = {
   e: { cluster: 'floral' }, f: { cluster: 'floral' }, g: { cluster: 'herbal' }, h: { cluster: 'herbal' },
 };
 const ctry = { FR: { lat: 46.5, lon: 2.5 }, DE: { lat: 49.8, lon: 8.5 }, NZ: { lat: -41.5, lon: 174 } };
-// Flat shortcuts (country, region, lat, lon, climate) describe one region; `regions` gives the full list.
-const g = ({ country = 'FR', region = 'Rhône', lat = 44.3, lon = 4.8, climate = 'warm', regions, ...o } = {}) => ({
+// Flat shortcuts (country, region, lat, lon) describe one region; `regions` gives the full list.
+const g = ({ country = 'FR', region = 'Rhône', lat = 44.3, lon = 4.8, regions, ...o } = {}) => ({
   id: 'x', colour: 'red', flavours: null, areaHa: 1000,
-  regions: regions || [{ name: region, country, lat, lon, climate }], ...o,
+  regions: regions || [{ name: region, country, lat, lon }], ...o,
 });
 const R = {
-  Alsace: { name: 'Alsace', country: 'FR', lat: 48.2, lon: 7.35, climate: 'koel' },
-  Veneto: { name: 'Veneto', country: 'IT', lat: 45.55, lon: 11.2, climate: 'heet' },
-  Rhone: { name: 'Rhône', country: 'FR', lat: 44.3, lon: 4.8, climate: 'warm' },
-  Aragon: { name: 'Aragón', country: 'ES', lat: 41.6, lon: -1.3, climate: 'heet' },
-  Loire: { name: 'Loire', country: 'FR', lat: 47.3, lon: 0, climate: 'koel' },
-  Marlborough: { name: 'Marlborough', country: 'NZ', lat: -41.5, lon: 173.9, climate: 'koel' },
-  Mendoza: { name: 'Mendoza', country: 'AR', lat: -33.3, lon: -68.8, climate: 'heet' },
+  Alsace: { name: 'Alsace', country: 'FR', lat: 48.2, lon: 7.35 },
+  Veneto: { name: 'Veneto', country: 'IT', lat: 45.55, lon: 11.2 },
+  Rhone: { name: 'Rhône', country: 'FR', lat: 44.3, lon: 4.8 },
+  Aragon: { name: 'Aragón', country: 'ES', lat: 41.6, lon: -1.3 },
+  Loire: { name: 'Loire', country: 'FR', lat: 47.3, lon: 0 },
+  Marlborough: { name: 'Marlborough', country: 'NZ', lat: -41.5, lon: 173.9 },
+  Mendoza: { name: 'Mendoza', country: 'AR', lat: -33.3, lon: -68.8 },
 };
 const st = (guess, answer, key) => compare(guess, answer, { descriptors: desc, countries: ctry }).find((c) => c.key === key);
 
-test('five columns in plan order', () => {
-  assert.deepEqual(COLUMNS, ['colour', 'region', 'climate', 'area', 'flavour']);
-  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 5);
+test('four columns in plan order (no climate column)', () => {
+  assert.deepEqual(COLUMNS, ['colour', 'region', 'area', 'flavour']);
+  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 4);
 });
 
 test('self compare is all green with no arrows or distances', () => {
@@ -38,7 +38,7 @@ test('self compare is all green with no arrows or distances', () => {
   for (const c of compare(a, a, { descriptors: desc, countries: ctry })) {
     assert.equal(c.status, 'green', c.key); assert.equal(c.arrow, null); assert.equal(c.km, null);
   }
-  const unk = g({ id: 's', climate: null, flavours: null, areaHa: null });
+  const unk = g({ id: 's', flavours: null, areaHa: null });
   for (const c of compare(unk, unk, { descriptors: desc, countries: ctry })) assert.equal(c.status, 'green');
 });
 
@@ -110,28 +110,29 @@ test('bearing on real data: Mosel to Rhône points south, Rioja to Rhône east/n
   assert.ok(a.km >= 600 && a.km <= 700, String(a.km));
 });
 
-test('climate: three classes, exact or red, grey when unknown', () => {
-  const c = (a, b) => st(g({ id: 'a', climate: a }), g({ id: 'b', climate: b }), 'climate').status;
-  assert.equal(c('warm', 'warm'), 'green');
-  assert.equal(c('koel', 'warm'), 'red');
-  assert.equal(c('heet', 'warm'), 'red');
-  assert.equal(c('koel', 'heet'), 'red');
-  assert.equal(c(null, 'heet'), 'grey');
-  assert.equal(c('heet', null), 'grey');
-  assert.equal(climate(g({ climate: 'koel' }), g({ climate: 'koel' })), 'green');
-});
-
-test('area: neutral arrow toward the answer, green only for the same grape, tie shows =', () => {
-  assert.deepEqual(area(500, 1000), { status: 'neutral', arrow: 'up', tie: false }, 'answer has more');
-  assert.deepEqual(area(5000, 1000), { status: 'neutral', arrow: 'down', tie: false }, 'answer has less');
-  assert.deepEqual(area(999, 1000), { status: 'neutral', arrow: 'up', tie: false }, 'no partial credit near the answer');
-  assert.deepEqual(area(1000, 1000), { status: 'neutral', arrow: null, tie: true });
+test('area bands: ratio answer/guess, exact boundary ownership', () => {
+  const band = (guess, answer) => areaBand(guess, answer);
+  // r >= 5 up3 | 2 <= r < 5 up2 | 1.25 <= r < 2 up1 | 0.8 < r < 1.25 same | 0.5 < r <= 0.8 down1 | 0.2 < r <= 0.5 down2 | r <= 0.2 down3
+  assert.equal(band(100, 1000), 'up3'); assert.equal(band(100, 500), 'up3', 'r = 5 belongs to >5x');
+  assert.equal(band(100, 499), 'up2'); assert.equal(band(100, 200), 'up2', 'r = 2 belongs to 2-5x');
+  assert.equal(band(100, 199), 'up1'); assert.equal(band(100, 125), 'up1', 'r = 1.25 belongs to a bit more');
+  assert.equal(band(100, 124), 'same'); assert.equal(band(100, 100), 'same'); assert.equal(band(100, 81), 'same');
+  assert.equal(band(100, 80), 'down1', 'r = 0.8 belongs to a bit less');
+  assert.equal(band(100, 51), 'down1');
+  assert.equal(band(100, 50), 'down2', 'r = 0.5 belongs to 2-5x less');
+  assert.equal(band(100, 21), 'down2');
+  assert.equal(band(100, 20), 'down3', 'r = 0.2 belongs to >5x less');
+  assert.equal(band(100, 1), 'down3');
+  assert.deepEqual(area(100, 1000), { status: 'neutral', arrow: 'up', band: 'up3' });
+  assert.deepEqual(area(1000, 100), { status: 'neutral', arrow: 'down', band: 'down3' });
+  assert.deepEqual(area(1000, 1000), { status: 'neutral', arrow: null, band: 'same' });
+  assert.deepEqual(area(1000, 1100), { status: 'neutral', arrow: null, band: 'same' }, 'about the same: neutral tile, no arrow');
   assert.equal(area(null, 1000).status, 'grey');
   assert.equal(area(1000, 0).status, 'grey');
   const same = st(g({ id: 'q', areaHa: 5 }), g({ id: 'q', areaHa: 5 }), 'area');
-  assert.equal(same.status, 'green');
-  const tie = st(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 5 }), 'area');
-  assert.equal(tie.status, 'neutral'); assert.equal(tie.tie, true);
+  assert.equal(same.status, 'green'); assert.equal(same.band, null); assert.equal(same.arrow, null);
+  const other = st(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 5 }), 'area');
+  assert.equal(other.status, 'neutral', 'green only for the same grape'); assert.equal(other.band, 'same');
 });
 
 test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, red otherwise, grey unknown', () => {
@@ -154,41 +155,45 @@ test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, r
 
 test('share symbols per cell', () => {
   const cells = compare(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 9, colour: 'white' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '🟩', '⬆️', '⬜']);
+  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬆️', '⬜']);
   const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(down[3]), '⬇️');
+  assert.equal(shareSymbol(down[2]), '⬇️');
   const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(tie[3]), '🟰');
+  assert.equal(shareSymbol(tie[2]), '↔️');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(win.map(shareSymbol), Array(5).fill('🟩'));
+  assert.deepEqual(win.map(shareSymbol), Array(4).fill('🟩'));
 });
 
 test('similar grapes: same colour, stocked, most identical aromas, tie-break shared families', () => {
-  const ans = { id: 'ans', colour: 'white', flavours: ['a', 'c', 'e'] };
+  const FR = [{ name: 'X', country: 'FR' }], DE = [{ name: 'Y', country: 'DE' }];
+  const ans = { id: 'ans', colour: 'white', flavours: ['a', 'c', 'e'], regions: FR };
   const pool = [
-    { id: 'p1', name: 'P1', stocked: true, colour: 'white', flavours: ['a', 'c'] },
-    { id: 'p2', name: 'P2', stocked: true, colour: 'white', flavours: ['a', 'x'] },
-    { id: 'p3', name: 'P3', stocked: true, colour: 'white', flavours: ['b', 'd', 'f'] },
+    { id: 'p1', name: 'P1', stocked: true, colour: 'white', flavours: ['a', 'c'], regions: DE },
+    { id: 'p2', name: 'P2', stocked: true, colour: 'white', flavours: ['a', 'x'], regions: FR },
+    { id: 'p3', name: 'P3', stocked: true, colour: 'white', flavours: ['a', 'x'], regions: DE },
+    { id: 'p7', name: 'P7', stocked: true, colour: 'white', flavours: ['a', 'e'], regions: DE },
     { id: 'p4', name: 'P4', stocked: true, colour: 'red', flavours: ['a', 'c', 'e'] },
     { id: 'p5', name: 'P5', stocked: false, colour: 'white', flavours: ['a', 'c', 'e'] },
     { id: 'p6', name: 'P6', stocked: true, colour: 'white', flavours: null },
     { id: 'ans', name: 'Ans', stocked: true, colour: 'white', flavours: ['a', 'c', 'e'] },
   ];
-  assert.deepEqual(similarGrapes(ans, pool, desc, 3).map((x) => x.id), ['p1', 'p2', 'p3']);
+  // p3: 1 identical aroma but another country is not similar enough; p2: 1 identical + same country is
+  assert.deepEqual(similarGrapes(ans, pool, desc, 5).map((x) => x.id), ['p1', 'p7', 'p2']);
+  assert.ok(!similarGrapes(ans, pool, desc, 9).some((x) => x.id === 'p3'));
   assert.deepEqual(overlap(['a', 'c'], ['a', 'c', 'e'], desc), { identical: 2, families: 2 });
   assert.deepEqual(similarGrapes({ ...ans, flavours: null }, pool, desc), []);
-  // p2 (1 identical) beats p3 (0 identical, 3 families); with equal identical counts families decide
+  // with equal identical counts the shared families decide
   const tie = [
-    { id: 't1', name: 'T1', stocked: true, colour: 'white', flavours: ['a', 'x'] },
-    { id: 't2', name: 'T2', stocked: true, colour: 'white', flavours: ['a', 'd'] },
+    { id: 't1', name: 'T1', stocked: true, colour: 'white', flavours: ['a', 'c', 'x'] },
+    { id: 't2', name: 'T2', stocked: true, colour: 'white', flavours: ['a', 'c', 'h'] },
   ];
-  assert.deepEqual(similarGrapes({ id: 'z', colour: 'white', flavours: ['a', 'c'] }, tie, desc).map((x) => x.id), ['t2', 't1']);
+  assert.deepEqual(similarGrapes({ id: 'z', colour: 'white', flavours: ['a', 'c', 'g'] }, tie, desc).map((x) => x.id), ['t2', 't1']);
+  // nothing close enough: no wine tiles
+  assert.deepEqual(similarGrapes({ id: 'z', colour: 'white', flavours: ['g', 'h'], regions: FR }, pool, desc), []);
 });
 
 // ---- up to two signature regions ----
 const reg = (guess, answer) => st(g({ id: 'a', regions: guess }), g({ id: 'b', regions: answer }), 'region');
-const clim = (guess, answer) => st(g({ id: 'a', regions: guess.map((c) => ({ ...R.Rhone, name: c, climate: c })) }),
-  g({ id: 'b', regions: answer.map((c) => ({ ...R.Rhone, name: c, climate: c })) }), 'climate');
 
 test('region, single vs single: same green, other region same country yellow with km, other country red', () => {
   assert.equal(reg([R.Rhone], [R.Rhone]).status, 'green');
@@ -240,17 +245,7 @@ test('region: closest pair decides km and arrow', () => {
   assert.deepEqual(reg([R.Marlborough, R.Loire], [R.Rhone, R.Aragon]), c);
 });
 
-test('climate sets: identical green, one class in common yellow (bold = shared), none red', () => {
-  assert.equal(clim(['koel', 'heet'], ['heet', 'koel']).status, 'green');
-  assert.equal(climate(g({ regions: [R.Alsace, R.Veneto] }), g({ regions: [R.Loire, R.Mendoza] })), 'green');
-  assert.equal(climate(g({ regions: [R.Alsace] }), g({ regions: [R.Alsace, R.Veneto] })), 'yellow');
-  assert.equal(climate(g({ regions: [R.Rhone] }), g({ regions: [R.Alsace, R.Veneto] })), 'red');
-  assert.equal(climate(g({ regions: [R.Alsace, R.Veneto] }), g({ regions: [R.Alsace] })), 'yellow');
-  const cell = st(g({ id: 'a', regions: [R.Alsace, R.Veneto] }), g({ id: 'b', regions: [R.Loire] }), 'climate');
-  assert.equal(cell.status, 'yellow'); assert.deepEqual(cell.hit, ['koel']);
-});
-
 test('share emoji follow tile colour for the new yellow states', () => {
   const cells = compare(g({ id: 'a', regions: [R.Alsace] }), g({ id: 'b', regions: [R.Alsace, R.Veneto] }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(cells[1]), '🟨'); assert.equal(shareSymbol(cells[2]), '🟨');
+  assert.equal(shareSymbol(cells[1]), '🟨');
 });

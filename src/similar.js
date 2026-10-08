@@ -1,5 +1,7 @@
 import { descriptors as defDesc } from './data.js';
 
+const countryOf = (g) => (g.regions && g.regions[0] && g.regions[0].country) || null;
+
 /** Identical aromas and shared aroma families between two grapes' flavour lists. */
 export function overlap(a, b, desc = defDesc) {
   if (!a || !b) return { identical: 0, families: 0 };
@@ -9,7 +11,8 @@ export function overlap(a, b, desc = defDesc) {
 }
 
 /**
- * Stocked grapes that resemble the answer: same colour, most identical aromas, ties broken by
+ * Stocked grapes that resemble the answer: same colour and either at least 2 identical aromas, or 1
+ * identical aroma plus the same primary-region country. Most identical aromas first, ties broken by
  * shared aroma families, then name. The answer itself is excluded. Unknown flavours rank nothing.
  */
 export function similarGrapes(answer, grapes, desc = defDesc, limit = 3) {
@@ -17,6 +20,7 @@ export function similarGrapes(answer, grapes, desc = defDesc, limit = 3) {
   return grapes
     .filter((g) => g.stocked && g.id !== answer.id && g.colour === answer.colour && g.flavours && g.flavours.length)
     .map((g) => ({ g, ...overlap(g.flavours, answer.flavours, desc) }))
+    .filter((x) => x.identical >= 2 || (x.identical >= 1 && countryOf(x.g) !== null && countryOf(x.g) === countryOf(answer)))
     .sort((x, y) => y.identical - x.identical || y.families - x.families || x.g.name.localeCompare(y.g.name))
     .slice(0, limit)
     .map((x) => x.g);

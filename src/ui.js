@@ -1,10 +1,11 @@
-import { countries, descriptors, schedule } from './data.js';
-import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf, climatesOf } from './feedback.js';
-import { createGame, shareText, letterPattern, MAX_GUESSES, HINT_AT } from './game.js';
+import { countries, descriptors, schedule, grapes } from './data.js';
+import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf } from './feedback.js';
+import { createGame, shareText, firstLetter, MAX_GUESSES, HINT_AT } from './game.js';
+import { answerIdFor } from './schedule.js';
 import { makeT, pickLang } from './i18n.js';
 import { search, exact } from './search.js';
 import { createStore, computeStats } from './storage.js';
-import { puzzleNumber, msUntilNextPuzzle } from './date.js';
+import { puzzleNumber, msUntilNextPuzzle, msUntilStart, puzzleDate, formatYmd } from './date.js';
 import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS_URL, SHOP_PAGE } from './shop.js';
 import { norm } from './text.js';
 
@@ -35,7 +36,84 @@ function readQuery() {
   try { return new URLSearchParams(globalThis.location.search); } catch (e) { return new URLSearchParams(); }
 }
 
-export function mount(root) {
+
+const DEV = typeof __GD_DEV__ !== 'undefined' && __GD_DEV__;
+const AGE_VERIFIED_KEY = 'vinoByPalazzoAgeVerified';
+const PRACTICE_MAX_LIST = 60;
+/** Puzzle numbers whose 'start' event already fired in this page view. */
+const startedPuzzles = new Set();
+
+/**
+ * True while the host page's age gate (#age-gate) is on screen. When the gate is not in the DOM yet
+ * and the visitor is not verified, treat it as blocking for a short grace period (it may still be injected).
+ */
+function ageGateBlocking(graceUntil) {
+  const gate = document.getElementById('age-gate');
+  if (gate) {
+    if (gate.classList.contains('hidden') || gate.hidden) return false;
+    try {
+      const cs = globalThis.getComputedStyle(gate);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+    } catch (e) { /* treat as visible */ }
+    return true;
+  }
+  let verified = false;
+  try { verified = globalThis.localStorage.getItem(AGE_VERIFIED_KEY) === 'true'; } catch (e) { /* unknown */ }
+  return !verified && Date.now() < graceUntil;
+}
+
+/** Runs `cb` once the age gate is gone (immediately when it is not showing). Returns a cancel function. */
+function whenAgeGateClear(isAlive, cb) {
+  const grace = Date.now() + 1500;
+  const cleanups = [];
+  let stopped = false;
+  const stop = () => { stopped = true; while (cleanups.length) { try { cleanups.pop()(); } catch (e) { /* ignore */ } } };
+  const check = () => {
+    if (stopped) return;
+    if (!isAlive()) { stop(); return; }
+    if (!ageGateBlocking(grace)) { stop(); cb(); }
+  };
+  if (!ageGateBlocking(grace)) { cb(); return stop; }
+  try {
+    const mo = new MutationObserver(check);
+    const gate = document.getElementById('age-gate');
+    if (gate) {
+      mo.observe(gate, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
+      if (gate.parentNode) mo.observe(gate.parentNode, { childList: true });
+    }
+    // the gate may still be injected during the first seconds
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+    cleanups.push(() => mo.disconnect());
+    const t0 = setTimeout(() => { if (!stopped && !gate) check(); }, 1550);
+    cleanups.push(() => clearTimeout(t0));
+  } catch (e) { /* the poll below still works */ }
+  const poll = setInterval(check, 500);
+  cleanups.push(() => clearInterval(poll));
+  for (const [target, ev] of [[globalThis, 'storage'], [document, 'visibilitychange']]) {
+    if (target && target.addEventListener) { target.addEventListener(ev, check); cleanups.push(() => target.removeEventListener(ev, check)); }
+  }
+  return stop;
+}
+
+export function mount(root, opts) {
+  if (typeof root._gdTeardown === 'function') { try { root._gdTeardown(); } catch (e) { /* ignore */ } root._gdTeardown = null; }
+  try {
+    return mountInner(root, opts || {});
+  } catch (e) {
+    if (typeof root._gdTeardown === 'function') { try { root._gdTeardown(); } catch (e2) { /* ignore */ } root._gdTeardown = null; }
+    try { globalThis.localStorage.removeItem('gd:v2'); } catch (e2) { /* no storage */ }
+    if (opts && opts.retried) {
+      root.textContent = '';
+      const p = document.createElement('p');
+      p.textContent = 'Grapedle kon niet starten. Vernieuw de pagina.';
+      root.appendChild(p);
+      return null;
+    }
+    return mount(root, { ...(opts || {}), retried: true });
+  }
+}
+
+function mountInner(root, opts) {
   const q = readQuery();
   const store = createStore();
   if (q.get('reset') === '1') store.reset();
@@ -43,28 +121,43 @@ export function mount(root) {
   if (q.get('lang')) { store.state.lang = lang; store.save(); }
   let t = makeT(lang);
   const mock = q.get('mockShop');
-  // ?day=N, or data-day="N" on the root (used by the preview page, where
-  // the query string is not available).
-  const dayParam = parseInt(q.get('day') || root.getAttribute('data-day'), 10);
+  // Dev-only: ?day=N (data-day on the root, used by the preview page) shows puzzle N without saving,
+  // ?now=YYYY-MM-DD[THH:MM] pretends it is that moment in Amsterdam time (clock keeps running).
+  const dayParam = DEV ? parseInt(q.get('day') || root.getAttribute('data-day'), 10) : NaN;
   const debugDay = Number.isFinite(dayParam) && dayParam > 0 ? dayParam : null;
+  let fakeBase = null;
+  if (DEV && q.get('now')) {
+    const raw = q.get('now');
+    const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(raw) ? raw + 'T10:00:00Z' : raw);
+    if (!isNaN(d.getTime())) fakeBase = { at: d.getTime(), real: Date.now() };
+  }
+  const now = () => (fakeBase ? new Date(fakeBase.at + (Date.now() - fakeBase.real)) : new Date());
 
   const numFmt = () => new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'nl-NL');
-  let game, shopItems, shopPhase = 'loading', toastTimer = null, tickTimer = null, justAdded = false;
+  let game, shopItems, shopPhase = 'loading', toastTimer = null, justAdded = false, justWon = false;
+  let mode = 'daily'; // 'daily' | 'teaser' | 'practice'
+  let practiceN = null; // puzzle number of a practice game, null for a random pre-launch grape or random pick
+  let cur;
+  let alive = true;
+  let tickTimer = null;
+  const cleanups = [];
 
   root.textContent = '';
+  root.style.removeProperty('min-height'); // the Code Block placeholder reserves height until the game is here
   root.classList.add('gd-root');
   const uid = 'gd' + Math.random().toString(36).slice(2, 7);
 
   // ---- skeleton ----
   const headerEl = h('header', { class: 'gd-header' });
-  const noteEl = h('p', { class: 'gd-note', hidden: true });
+  const noteEl = h('div', { class: 'gd-note', hidden: true });
+  const teaserEl = h('section', { class: 'gd-teaser', hidden: true });
   const playEl = h('div', { class: 'gd-play' });
   const hintsEl = h('div', { class: 'gd-hints', hidden: true });
   const endEl = h('section', { class: 'gd-end', hidden: true, 'aria-labelledby': uid + '-end' });
   const boardEl = h('div', { class: 'gd-board' });
   const live = h('div', { class: 'gd-sr', 'aria-live': 'polite', 'aria-atomic': 'true', role: 'status' });
   const modalHost = h('div', { class: 'gd-modals' });
-  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
+  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, teaserEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
   root.appendChild(app);
 
   // layout follows the width of the host column, not the viewport
@@ -73,7 +166,14 @@ export function mount(root) {
     root.setAttribute('data-gd-layout', w >= 640 ? 'wide' : 'narrow');
   }
   setLayout();
-  try { new ResizeObserver(setLayout).observe(root); } catch (e) { globalThis.addEventListener && globalThis.addEventListener('resize', setLayout); }
+  try {
+    const ro = new ResizeObserver(setLayout);
+    ro.observe(root);
+    cleanups.push(() => ro.disconnect());
+  } catch (e) {
+    globalThis.addEventListener && globalThis.addEventListener('resize', setLayout);
+    cleanups.push(() => globalThis.removeEventListener && globalThis.removeEventListener('resize', setLayout));
+  }
 
   const announce = (msg) => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 30); };
 
@@ -81,7 +181,6 @@ export function mount(root) {
   const countryName = (c) => (c && countries[c] ? countries[c][lang] : '?');
   const fmtNum = (n) => numFmt().format(n);
   const regionNames = (g) => regionsOf(g).map((r) => r.name || countryName(r.country));
-  const climateNames = (g) => climatesOf(g).map((c) => t('v_' + c));
   /** "A / B" as nodes, names in `hit` bold. */
   const joined = (names, hit) => {
     const bold = new Set(hit || []);
@@ -100,7 +199,7 @@ export function mount(root) {
   function track(action, extra) {
     try {
       const dl = globalThis.dataLayer;
-      if (Array.isArray(dl)) dl.push({ event: 'grapedle', action, puzzle: game ? game.puzzle : null, ...extra });
+      if (Array.isArray(dl)) dl.push({ event: 'grapedle', action, puzzle: game && mode === 'daily' ? game.puzzle : null, ...extra });
     } catch (e) { /* analytics must never break the game */ }
   }
 
@@ -110,17 +209,14 @@ export function mount(root) {
     return g.flavours.map((d) => h('span', { class: 'gd-chip' + (shared.has(d) ? ' gd-chip-hit' : '') }, aromaName(d)));
   }
 
+  const areaKey = (cell) => (cell.band === 'same' ? 'area_same_band' : 'area_' + cell.band);
   function areaText(cell) {
     if (cell.status === 'green') return t('area_same');
-    if (cell.arrow === 'up') return t('area_more');
-    if (cell.arrow === 'down') return t('area_less');
-    return cell.tie ? t('area_tie') : null;
+    return cell.band ? t(areaKey(cell)) : null;
   }
   function areaSr(cell) {
     if (cell.status === 'green') return t('area_same_sr');
-    if (cell.arrow === 'up') return t('area_more_sr');
-    if (cell.arrow === 'down') return t('area_less_sr');
-    return cell.tie ? t('area_tie_sr') : t('unknownValue');
+    return cell.band ? t(areaKey(cell) + '_sr') : t('unknownValue');
   }
 
   const colLabel = (k) => t('col_' + k);
@@ -139,12 +235,6 @@ export function mount(root) {
           plain += `, ${t('km', { n: fmtNum(cell.km) })} ${t('toward', { dir: t('dir_' + cell.dir) })}`;
         }
         break;
-      case 'climate': {
-        const names = climateNames(g);
-        main = names.length ? names.join(' / ') : null; plain = main;
-        if (cell.status === 'yellow' && cell.hit && cell.hit.length) nodes = joined(names, cell.hit.map((c) => t('v_' + c)));
-        break;
-      }
       case 'area': main = areaText(cell); plain = areaSr(cell); break;
       default: break;
     }
@@ -169,8 +259,9 @@ export function mount(root) {
     }, code.toUpperCase());
     headerEl.textContent = '';
     headerEl.append(
-      h('h2', { class: 'gd-title' }, t('puzzle', { n: game.puzzle })),
+      h('h2', { class: 'gd-title' }, mode === 'daily' && game ? t('puzzle', { n: game.puzzle }) : 'Grapedle'),
       h('div', { class: 'gd-tools' },
+        mode === 'practice' ? null : h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: (e) => openPractice(e.currentTarget) }, t('practice')),
         h('div', { class: 'gd-langs', role: 'group', 'aria-label': t('lang') }, langBtn('nl'), langBtn('en')),
         h('button', { type: 'button', class: 'gd-icon', 'aria-label': t('help'), title: t('help'), html: ICON_HELP, onclick: (e) => openHelp(e.currentTarget) }),
         h('button', { type: 'button', class: 'gd-icon', 'aria-label': t('stats'), title: t('stats'), html: ICON_STATS, onclick: (e) => openStats(e.currentTarget) })));
@@ -186,28 +277,32 @@ export function mount(root) {
 
   // ---- board ----
   function renderBoard() {
-    const rows = game.rows();
+    const rows = game ? game.rows() : [];
     boardEl.textContent = '';
-    if (!rows.length) return;
-    const cols = h('div', { class: 'gd-cols', 'aria-hidden': 'true' }, h('span', { class: 'gd-colname' }, t('grapeCol')),
+    boardEl.hidden = !game;
+    if (!game) return;
+    // an empty board still shows the column headers, so newcomers see what they will get
+    const cols = h('div', { class: 'gd-cols' + (rows.length ? '' : ' gd-cols-empty'), 'aria-hidden': 'true' }, h('span', { class: 'gd-colname' }, t('grapeCol')),
       h('div', { class: 'gd-colgrid' }, COLUMNS.map((k) => h('span', { class: 'gd-col' }, colLabel(k)))));
+    if (!rows.length) { boardEl.append(cols); return; }
     const list = h('ol', { class: 'gd-rows', reversed: true });
     rows.slice().reverse().forEach((r, idx) => {
       const isNew = justAdded && idx === 0;
-      list.appendChild(h('li', { class: 'gd-row' + (isNew ? ' gd-new' : '') },
+      const isWin = isNew && justWon;
+      list.appendChild(h('li', { class: 'gd-row' + (isNew ? ' gd-new' : '') + (isWin ? ' gd-win' : '') },
         h('div', { class: 'gd-name' }, r.grape.name),
         h('div', { class: 'gd-tiles' }, r.cells.map((c, i) => buildTile(c, r.grape, i)))));
     });
     boardEl.append(cols, list);
-    justAdded = false;
+    justAdded = false; justWon = false;
   }
 
   // ---- input / autocomplete ----
-  let results = [], active = -1, input, listEl, msgEl, counterEl;
+  let results = [], active = -1, explicit = false, input, listEl, msgEl, counterEl;
   function renderPlay() {
     playEl.textContent = '';
-    playEl.hidden = game.status !== 'playing';
-    if (game.status !== 'playing') return;
+    playEl.hidden = !game || game.status !== 'playing';
+    if (playEl.hidden) return;
     const listId = uid + '-list';
     input = h('input', {
       type: 'text', class: 'gd-input', role: 'combobox', 'aria-expanded': 'false', 'aria-controls': listId,
@@ -215,28 +310,43 @@ export function mount(root) {
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off', spellcheck: 'false', enterkeyhint: 'go',
     });
     listEl = h('ul', { class: 'gd-list', id: listId, role: 'listbox', hidden: true, 'aria-label': t('placeholder') });
-    msgEl = h('p', { class: 'gd-msg' });
+    msgEl = h('p', { class: 'gd-msg', role: 'status' });
     counterEl = h('p', { class: 'gd-counter' }, t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES }));
     const btn = h('button', { type: 'submit', class: 'gd-btn' }, t('guessBtn'));
     const form = h('form', { class: 'gd-form', autocomplete: 'off', novalidate: true, onsubmit: (e) => { e.preventDefault(); submitTyped(); } },
       h('div', { class: 'gd-field' }, input, listEl), btn);
     playEl.append(form, msgEl, counterEl);
 
-    input.addEventListener('input', () => { msgEl.textContent = ''; results = search(input.value); active = results.findIndex((r) => !game.has(r.grape.id)); renderList(); });
+    input.addEventListener('input', () => { msgEl.textContent = ''; results = search(input.value); active = -1; explicit = false; renderList(); });
     input.addEventListener('blur', () => setTimeout(closeList, 120));
     input.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        if (!results.length) return;
+        if (!results.length) {
+          if (!input.value.trim()) return;
+          results = search(input.value); renderList();
+          if (!results.length) return;
+        }
         e.preventDefault();
         const dir = e.key === 'ArrowDown' ? 1 : -1;
         let i = active;
         for (let n = 0; n < results.length; n++) {
           i = (i + dir + results.length) % results.length;
-          if (!game.has(results[i].grape.id)) { active = i; break; }
+          if (!game.has(results[i].grape.id)) { active = i; explicit = true; break; }
         }
-        renderList();
+        paintActive(true);
       } else if (e.key === 'Escape') { closeList(); }
     });
+  }
+
+  function paintActive(scroll) {
+    if (!listEl) return;
+    [...listEl.children].forEach((li, i) => {
+      li.classList.toggle('gd-opt-on', i === active);
+      li.setAttribute('aria-selected', i === active ? 'true' : 'false');
+    });
+    if (active >= 0) input.setAttribute('aria-activedescendant', uid + '-o' + active); else input.removeAttribute('aria-activedescendant');
+    const on = listEl.querySelector('.gd-opt-on');
+    if (scroll && on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest' });
   }
 
   function renderList() {
@@ -244,47 +354,58 @@ export function mount(root) {
     const open = results.length > 0;
     listEl.hidden = !open;
     input.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (active >= 0) input.setAttribute('aria-activedescendant', uid + '-o' + active); else input.removeAttribute('aria-activedescendant');
     results.forEach((r, i) => {
       const done = game.has(r.grape.id);
       const li = h('li', {
-        id: uid + '-o' + i, role: 'option', class: 'gd-opt' + (i === active ? ' gd-opt-on' : '') + (done ? ' gd-opt-done' : ''),
-        'aria-selected': i === active ? 'true' : 'false', 'aria-disabled': done ? 'true' : null,
+        id: uid + '-o' + i, role: 'option', class: 'gd-opt' + (done ? ' gd-opt-done' : ''),
+        'aria-selected': 'false', 'aria-disabled': done ? 'true' : null,
         onmousedown: (e) => { e.preventDefault(); if (!done) submit(r.grape.id); },
-      }, ...(r.via ? [h('span', { class: 'gd-opt-via' }, r.via), h('span', { class: 'gd-opt-arrow', 'aria-hidden': 'true' }, '\u2192'), h('span', { class: 'gd-opt-name' }, r.grape.name)]
+        onmousemove: () => { if (!done && active !== i) { active = i; explicit = true; paintActive(false); } },
+      }, ...(r.via ? [h('span', { class: 'gd-opt-via' }, r.via), h('span', { class: 'gd-opt-arrow', 'aria-hidden': 'true' }, '→'), h('span', { class: 'gd-opt-name' }, r.grape.name)]
         : [h('span', { class: 'gd-opt-name' }, r.grape.name)]),
       done ? h('span', { class: 'gd-opt-note' }, t('alreadyGuessed')) : null);
       listEl.appendChild(li);
     });
-    const on = listEl.querySelector('.gd-opt-on');
-    if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest' });
+    paintActive(false);
   }
-  function closeList() { if (!listEl) return; results = []; active = -1; renderList(); }
+  function closeList() { if (!listEl) return; results = []; active = -1; explicit = false; renderList(); }
 
+  function note(msg) { msgEl.textContent = msg; announce(msg); }
+
+  /**
+   * Enter submits only for an exact name/synonym, a single remaining suggestion, or a suggestion the
+   * player picked with the arrow keys or the pointer. Anything else opens the list and asks to pick.
+   */
   function submitTyped() {
     const v = input.value.trim();
     if (!v) return;
-    if (active >= 0 && results[active]) return submit(results[active].grape.id);
+    if (explicit && active >= 0 && results[active] && !game.has(results[active].grape.id)) return submit(results[active].grape.id);
     const g = exact(v);
     if (g) {
-      if (game.has(g.id)) { msgEl.textContent = t('alreadyGuessed'); return; }
+      if (game.has(g.id)) return note(t('alreadyGuessed'));
       return submit(g.id);
     }
-    const top = search(v).find((r) => !game.has(r.grape.id));
-    if (top) return submit(top.grape.id);
-    msgEl.textContent = t('unknownGrape');
-    announce(t('unknownGrape'));
+    const found = search(v);
+    if (!found.length) return note(t('unknownGrape'));
+    const open = found.filter((r) => !game.has(r.grape.id));
+    if (found.length === 1) {
+      if (!open.length) return note(t('alreadyGuessed'));
+      return submit(open[0].grape.id);
+    }
+    results = found; active = -1; explicit = false; renderList();
+    note(t('pickFromList'));
   }
 
   function submit(id) {
     const row = game.guess(id);
     if (!row) return;
     justAdded = true;
-    track('guess', { guess: row.grape.id, n: game.guesses.length });
+    justWon = game.status === 'won';
+    if (mode === 'daily') track('guess', { guess: row.grape.id, n: game.guesses.length });
     const parts = row.cells.map((c) => `${colLabel(c.key)} ${t('st_' + c.status)}`).join(', ');
     const left = MAX_GUESSES - game.guesses.length;
     announce(`${row.grape.name}. ${parts}.` + (game.status === 'playing' ? ' ' + t('guessesLeft', { n: left }) : ''));
-    results = []; active = -1;
+    results = []; active = -1; explicit = false;
     renderBoard();
     renderHints();
     if (game.status === 'playing') {
@@ -293,7 +414,7 @@ export function mount(root) {
       input.focus();
     } else {
       renderPlay(); renderEnd();
-      track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
+      if (mode === 'daily') track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
       const hd = endEl.querySelector('.gd-end-title');
       if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: false }); }
       announce(endMessage());
@@ -302,12 +423,13 @@ export function mount(root) {
 
   // ---- hints ----
   function hintText(n) {
-    const v = n === 1 ? game.answer.hint[lang] : letterPattern(game.answer.name);
+    const v = n === 1 ? game.answer.hint[lang] : firstLetter(game.answer.name);
     return t('hint' + n, { v });
   }
 
   function renderHints() {
     hintsEl.textContent = '';
+    if (!game) { hintsEl.hidden = true; return; }
     const over = game.status !== 'playing';
     const used = game.hints;
     const nodes = [];
@@ -320,7 +442,7 @@ export function mount(root) {
           type: 'button', class: 'gd-btn gd-btn-ghost gd-hintbtn', disabled: !ready,
           onclick: () => {
             if (!game.useHint(n)) return;
-            track('hint', { hint: n, guesses: game.guesses.length });
+            if (mode === 'daily') track('hint', { hint: n, guesses: game.guesses.length });
             announce(hintText(n));
             renderHints();
             if (input && input.isConnected) input.focus();
@@ -341,38 +463,44 @@ export function mount(root) {
   function facts(g) {
     const rows = [
       [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
-      [colLabel('climate'), climateNames(g).join(' / ') || null],
       [t('aromas'), g.flavours && g.flavours.length ? g.flavours.map(aromaName).join(', ') : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
   }
 
   function productTiles(list, kind) {
-    return h('ul', { class: 'gd-products' }, list.map((p) => h('li', { class: 'gd-product' },
-      h('a', { class: 'gd-product-link', href: withUtm(p.url), 'data-gd-link': kind },
-        p.image ? h('img', { class: 'gd-product-img', src: p.image, alt: '', loading: 'lazy' }) : h('span', { class: 'gd-product-img gd-product-ph' }),
-        h('span', { class: 'gd-product-title' }, p.title),
-        p.price ? h('span', { class: 'gd-product-price' }, formatPrice(p.price, lang)) : null))));
+    return h('ul', { class: 'gd-products' }, list.map((p) => {
+      const price = p.price ? formatPrice(p.price, lang) : '';
+      return h('li', { class: 'gd-product' },
+        h('a', { class: 'gd-product-link', href: withUtm(p.url), 'data-gd-link': kind },
+          p.image ? h('img', { class: 'gd-product-img', src: p.image, alt: '', loading: 'lazy' }) : h('span', { class: 'gd-product-img gd-product-ph' }),
+          h('span', { class: 'gd-product-title' }, p.title),
+          price ? h('span', { class: 'gd-product-price' }, price) : null));
+    }));
   }
 
-  const tastingsLink = () => h('a', { class: 'gd-btn gd-btn-ghost', href: withUtm(TASTINGS_URL), 'data-gd-link': 'tastings' }, t('tastingsCta'));
+  const tastingsBlock = () => h('div', { class: 'gd-tastings' },
+    h('p', { class: 'gd-muted' }, t('tastingsText')),
+    h('a', { class: 'gd-btn gd-btn-ghost', href: withUtm(TASTINGS_URL), 'data-gd-link': 'tastings' }, t('tastingsCta')));
 
   /**
    * Shop block. Stocked grape: its wines (up to 4) and a shop link. Not stocked: "Lijkt op", up to 3
-   * wines of similar stocked grapes. If the shop does not answer in time or nothing matches, the
-   * answer card stays and a tastings link replaces the tiles.
+   * wines of clearly similar stocked grapes. Without tiles (shop down, no match, nothing similar) the
+   * block stays empty and only the tastings link below it remains.
    */
   function renderShop(box) {
     box.textContent = '';
     const a = game.answer;
     if (shopPhase === 'loading') {
-      box.append(h('h3', { class: 'gd-h3' }, a.stocked ? t('shopTitle') : t('similarTitle')), h('p', { class: 'gd-muted' }, t('shopLoading')));
+      box.hidden = false;
+      box.append(h('p', { class: 'gd-muted' }, t('shopLoading')));
       return;
     }
     const items = shopItems;
     if (a.stocked) {
       const list = items ? productsFor(items, a.id) : [];
       if (list.length) {
+        box.hidden = false;
         box.append(h('h3', { class: 'gd-h3' }, t('shopTitle')), productTiles(list, 'product'),
           h('a', { class: 'gd-btn gd-btn-ghost', href: withUtm(SHOP_PAGE), 'data-gd-link': 'shop' }, t('shopCta')));
         return;
@@ -380,43 +508,61 @@ export function mount(root) {
     } else {
       const list = items ? similarProducts(items, a) : [];
       if (list.length) {
-        box.append(h('h3', { class: 'gd-h3' }, t('similarTitle')), h('p', { class: 'gd-muted' }, t('similarIntro')), productTiles(list, 'similar'), tastingsLink());
+        box.hidden = false;
+        box.append(h('h3', { class: 'gd-h3' }, t('similarTitle')), h('p', { class: 'gd-muted' }, t('similarIntro')), productTiles(list, 'similar'));
         return;
       }
     }
-    box.append(h('p', { class: 'gd-muted' }, t('tastingsText')), tastingsLink());
+    box.hidden = true;
   }
 
   function renderEnd() {
-    const over = game.status !== 'playing';
+    const over = !!game && game.status !== 'playing';
     endEl.hidden = !over;
     endEl.textContent = '';
     if (!over) return;
     const won = game.status === 'won';
+    const daily = mode === 'daily';
     const shopBox = h('div', { class: 'gd-shop' });
     renderShop(shopBox);
     if (shopPhase === 'loading') {
       const gid = game.answer.id;
-      loadItems({ mock }).then((l) => { shopItems = l; shopPhase = 'done'; if (game.answer.id === gid) renderShop(shopBox); });
+      loadItems({ mock }).then((l) => { shopItems = l; shopPhase = 'done'; if (alive && game && game.answer.id === gid) renderShop(shopBox); });
     }
     const small = smallName(game.answer);
-    const shareBtn = h('button', { type: 'button', class: 'gd-btn', onclick: doShare }, t('share'));
-    const countdown = h('p', { class: 'gd-countdown' }, t('next') + ' ', h('strong', { class: 'gd-clock' }, clockText()));
-    endEl.append(
+    const cheer = won ? t('cheer' + Math.min(6, Math.max(1, game.guesses.length))) : null;
+    const fact = game.answer.fact && game.answer.fact[lang];
+    const shareBtn = h('button', { type: 'button', class: 'gd-btn gd-btn-share', onclick: doShare }, t('share'));
+    endEl.append(...[
       h('h3', { class: 'gd-end-title', id: uid + '-end' }, endMessage()),
+      cheer ? h('p', { class: 'gd-cheer' }, cheer) : null,
       h('div', { class: 'gd-answer' + (won ? ' gd-answer-won' : '') },
-        h('p', { class: 'gd-kicker' }, t('answerTitle')),
+        h('p', { class: 'gd-kicker' }, daily ? t('answerTitle') : t('practiceAnswerTitle')),
         h('p', { class: 'gd-answer-name' }, game.answer.name),
         small ? h('p', { class: 'gd-answer-small' }, small) : null,
-        facts(game.answer)),
+        facts(game.answer),
+        fact ? h('p', { class: 'gd-did' }, h('strong', null, t('didYouKnow') + ': '), fact) : null),
+      daily ? h('div', { class: 'gd-share' }, shareBtn) : null,
+      daily ? h('p', { class: 'gd-countdown' }, t('next') + ' ', h('strong', { class: 'gd-clock' }, clockText())) : null,
+      daily ? h('div', { class: 'gd-practice-cta' }, h('button', { type: 'button', class: 'gd-btn gd-btn-ghost', onclick: (e) => openPractice(e.currentTarget) }, t('practice')))
+        : h('div', { class: 'gd-practice-cta' },
+          h('button', { type: 'button', class: 'gd-btn', onclick: () => startPractice(null) }, t('practiceAgain')),
+          h('button', { type: 'button', class: 'gd-btn gd-btn-ghost', onclick: () => leavePractice() }, t('practiceDaily'))),
       shopBox,
-      h('div', { class: 'gd-share' }, shareBtn, countdown));
+      tastingsBlock()].filter(Boolean));
   }
 
   function clockText() {
-    const s = Math.max(0, Math.floor(msUntilNextPuzzle(new Date()) / 1000));
+    const s = Math.max(0, Math.floor(msUntilNextPuzzle(now()) / 1000));
     const p = (n) => String(n).padStart(2, '0');
     return `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`;
+  }
+
+  function teaserClock() {
+    const s = Math.max(0, Math.floor(msUntilStart(now(), schedule.start) / 1000));
+    const p = (n) => String(n).padStart(2, '0');
+    const d = Math.floor(s / 86400), r = s % 86400;
+    return `${d} ${t('days')} ${p(Math.floor(r / 3600))}:${p(Math.floor((r % 3600) / 60))}:${p(r % 60)}`;
   }
 
   async function doShare(e) {
@@ -449,7 +595,13 @@ export function mount(root) {
         h('h2', { class: 'gd-dialog-title', id: uid + '-dt' }, title),
         h('button', { type: 'button', class: 'gd-icon', 'aria-label': t('close'), onclick: () => dlg.close(), html: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' })),
       body);
-    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    // a click on the backdrop reports the dialog as target; only close when it is really outside the box
+    dlg.addEventListener('click', (e) => {
+      if (e.target !== dlg) return;
+      const r = dlg.getBoundingClientRect();
+      const out = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      if (out) dlg.close();
+    });
     dlg.addEventListener('close', () => { dlg.remove(); if (opener && opener.focus && opener.isConnected) opener.focus(); else if (input && input.isConnected) input.focus(); });
     modalHost.textContent = '';
     modalHost.appendChild(dlg);
@@ -467,24 +619,27 @@ export function mount(root) {
   function openHelp(opener) {
     const body = h('div', { class: 'gd-dialog-body' },
       h('p', null, t('helpIntro')),
-      h('ul', { class: 'gd-help-list' }, COLUMNS.map((k) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
-      h('p', null, t('helpHints')),
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
         demoTile('green', colLabel('colour'), t('v_red')),
         demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),
-        demoTile('red', colLabel('climate'), t('v_koel')),
-        demoTile('neutral', colLabel('area'), t('area_less')),
+        demoTile('neutral', colLabel('area'), t('area_down2')),
         demoTile('grey', colLabel('flavour'), '–')),
-      h('p', { class: 'gd-muted' }, t('helpExample')),
-      h('p', { class: 'gd-muted' }, t('helpFooter')),
-      h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')));
+      h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')),
+      h('details', { class: 'gd-details' },
+        h('summary', null, t('helpMore')),
+        h('div', { class: 'gd-details-body' },
+          h('ul', { class: 'gd-help-list' }, COLUMNS.map((k) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
+          h('p', null, t('helpHints')),
+          h('p', { class: 'gd-muted' }, t('helpExample')),
+          h('p', { class: 'gd-muted' }, t('helpFooter')))));
     openModal(t('helpTitle'), body, opener);
   }
 
   function openStats(opener) {
-    const st = computeStats(store.state.history, game.puzzle);
+    const todayN = mode === 'daily' && game ? game.puzzle : Math.max(1, puzzleNumber(now(), schedule.start));
+    const st = computeStats(store.state.history, todayN);
     const max = Math.max(1, ...st.dist);
-    const todayTries = store.state.history[game.puzzle];
+    const todayTries = store.state.history[todayN];
     const num = (v, l) => h('div', { class: 'gd-stat' }, h('strong', { class: 'gd-stat-n' }, String(v)), h('span', null, l));
     const body = h('div', { class: 'gd-dialog-body' },
       h('div', { class: 'gd-statgrid' }, num(st.played, t('played')), num(st.winPct, t('winPct')), num(st.current, t('streak')), num(st.best, t('best'))),
@@ -496,47 +651,143 @@ export function mount(root) {
     openModal(t('statsTitle'), body, opener);
   }
 
+  // ---- practice ----
+  /** Past puzzle numbers, newest first, at most PRACTICE_MAX_LIST. Never today's or a future one. */
+  function pastPuzzles() {
+    const today = puzzleNumber(now(), schedule.start);
+    const out = [];
+    for (let n = today - 1; n >= 1 && out.length < PRACTICE_MAX_LIST; n--) out.push(n);
+    return out;
+  }
+  /** Before launch: pool grapes, minus the first two weeks of answers so nothing upcoming is given away. */
+  function prelaunchPool() {
+    const soon = new Set(schedule.days.slice(0, 14));
+    return grapes.filter((g) => g.answer && !soon.has(g.id));
+  }
+
+  function openPractice(opener) {
+    const past = pastPuzzles();
+    const dlg = { el: null };
+    const pick = (n) => { dlg.el.close(); startPractice(n); };
+    const body = h('div', { class: 'gd-dialog-body' },
+      h('p', null, t('practiceIntro')),
+      h('button', { type: 'button', class: 'gd-btn', onclick: () => pick(null) }, t('practiceRandom')),
+      past.length ? h('h3', { class: 'gd-h3' }, t('practiceListLabel')) : null,
+      past.length ? h('ul', { class: 'gd-practice-list' }, past.map((n) => h('li', null,
+        h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-practice-item', onclick: () => pick(n) },
+          h('strong', null, '#' + n), ' ', formatYmd(puzzleDate(n, schedule.start), lang, true))))) : null);
+    dlg.el = openModal(t('practiceTitle'), body, opener);
+  }
+
+  function startPractice(n) {
+    const today = puzzleNumber(now(), schedule.start);
+    let answerId, puzzle = null;
+    if (n === null && today > 1) n = 1 + Math.floor(Math.random() * (today - 1));
+    if (n !== null) { puzzle = n; answerId = answerIdFor(n, schedule); } else {
+      const pool = prelaunchPool();
+      answerId = pool[Math.floor(Math.random() * pool.length)].id;
+    }
+    if (mode !== 'practice') { returnTo = mode; }
+    mode = 'practice'; practiceN = puzzle;
+    game = createGame({ puzzle: puzzle || 0, store, persist: false, answerId });
+    shopItems = shopItems || null;
+    results = []; active = -1;
+    renderAll();
+    if (mode === 'practice' && input && input.isConnected) { try { input.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+    try { root.scrollIntoView && root.scrollIntoView({ block: 'nearest' }); } catch (e) { /* ignore */ }
+  }
+  let returnTo = 'daily';
+  function leavePractice() { practiceN = null; start(); }
+
   // ---- lifecycle ----
   function currentPuzzle() {
-    if (debugDay) return { n: debugDay, persist: false };
-    const raw = puzzleNumber(new Date(), schedule.start);
-    return raw < 1 ? { n: 1, persist: false, preview: true } : { n: raw, persist: true };
+    if (debugDay) return { mode: 'daily', n: debugDay, persist: false };
+    const raw = puzzleNumber(now(), schedule.start);
+    return raw < 1 ? { mode: 'teaser', n: 0, persist: false } : { mode: 'daily', n: raw, persist: true };
+  }
+
+  function renderTeaser() {
+    teaserEl.textContent = '';
+    teaserEl.hidden = mode !== 'teaser';
+    if (mode !== 'teaser') return;
+    teaserEl.append(
+      h('h3', { class: 'gd-teaser-title', id: uid + '-end' }, t('teaserTitle', { date: formatYmd(schedule.start, lang) })),
+      h('p', { class: 'gd-muted' }, t('teaserText')),
+      h('p', { class: 'gd-teaser-clock' }, h('strong', { class: 'gd-clock gd-tclock' }, teaserClock())),
+      h('button', { type: 'button', class: 'gd-btn', onclick: () => startPractice(null) }, t('teaserPractice')));
+  }
+
+  function renderNote() {
+    noteEl.textContent = '';
+    const practicing = mode === 'practice';
+    noteEl.hidden = !practicing;
+    if (!practicing) return;
+    noteEl.append(
+      h('span', { class: 'gd-note-text' }, practiceN ? t('practiceLabel', { n: practiceN }) : t('practiceLabelRandom')),
+      h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: () => leavePractice() }, returnTo === 'teaser' ? t('back') : t('practiceDaily')));
   }
 
   function renderAll() {
-    renderHeader(); renderPlay(); renderHints(); renderBoard(); renderEnd();
+    renderHeader(); renderNote(); renderTeaser(); renderPlay(); renderHints(); renderBoard(); renderEnd();
     root.setAttribute('lang', lang);
-    noteEl.hidden = !(cur && cur.preview);
-    noteEl.textContent = cur && cur.preview ? t('preview') : '';
   }
 
-  let cur;
   function start() {
     cur = currentPuzzle();
-    game = createGame({ puzzle: cur.n, store, persist: cur.persist });
+    mode = cur.mode;
+    practiceN = null;
     shopItems = null; shopPhase = 'loading';
+    if (mode === 'teaser') game = null;
+    else game = createGame({ puzzle: cur.n, store, persist: cur.persist });
     renderAll();
-    if (game.status === 'playing' && game.guesses.length === 0) track('start');
-    if (!store.state.seenHelp && game.guesses.length === 0) {
-      store.state.seenHelp = true; store.save();
-      openHelp(null);
+    if (mode === 'daily' && game.status === 'playing' && game.guesses.length === 0 && !startedPuzzles.has(game.puzzle)) {
+      startedPuzzles.add(game.puzzle);
+      track('start');
+    }
+    if (mode === 'daily' && !store.state.seenHelp && game.guesses.length === 0) {
+      // never open a modal over the host page's age gate: wait until it is gone
+      const cancel = whenAgeGateClear(() => alive && root.isConnected, () => {
+        if (!alive || mode !== 'daily' || store.state.seenHelp || game.guesses.length) return;
+        store.state.seenHelp = true; store.save();
+        openHelp(null);
+      });
+      cleanups.push(cancel);
     }
   }
-  start();
-  endEl.addEventListener('click', (e) => {
+
+  function teardown() {
+    alive = false;
+    clearTimeout(toastTimer);
+    clearInterval(tickTimer);
+    while (cleanups.length) { try { cleanups.pop()(); } catch (e) { /* ignore */ } }
+  }
+  root._gdTeardown = teardown;
+
+  function safeStart() {
+    try { start(); } catch (e) {
+      store.reset();
+      throw e;
+    }
+  }
+  safeStart();
+
+  const onEndClick = (e) => {
     const a = e.target && e.target.closest ? e.target.closest('a[data-gd-link]') : null;
     if (a) track('shop_click', { link: a.getAttribute('data-gd-link'), href: a.getAttribute('href') });
-  });
+  };
+  endEl.addEventListener('click', onEndClick);
 
-  clearInterval(tickTimer);
   tickTimer = setInterval(() => {
-    const clock = root.querySelector('.gd-clock');
-    if (clock) clock.textContent = clockText();
-    if (!debugDay && root.isConnected) {
-      const n = currentPuzzle().n;
-      if (n !== game.puzzle && cur.persist) start();
+    if (!root.isConnected) { teardown(); return; }
+    const clock = root.querySelector(mode === 'teaser' ? '.gd-tclock' : '.gd-clock');
+    if (clock) clock.textContent = mode === 'teaser' ? teaserClock() : clockText();
+    if (!debugDay) {
+      const c = currentPuzzle();
+      const changed = c.mode !== cur.mode || c.n !== cur.n;
+      if (changed && mode !== 'practice') { try { start(); } catch (e) { teardown(); mount(root, { retried: true }); } }
+      else if (changed) { cur = c; returnTo = c.mode; }
     }
   }, 1000);
 
-  return { store, get game() { return game; } };
+  return { store, get game() { return game; }, teardown };
 }

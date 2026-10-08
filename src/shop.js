@@ -48,11 +48,22 @@ export function matchItems(items, grapeId, map = shopGrapes) {
   return items.filter((it) => Array.isArray(it.categories) && it.categories.some((c) => cats.has(norm(lastSegment(c)))));
 }
 
-const toProduct = (it) => ({ title: it.title, url: it.fullUrl, image: it.assetUrl || '', price: priceOf(it) });
+/** Only https: and relative URLs from the shop feed are used for href/src; anything else is dropped (''). */
+export function safeUrl(u) {
+  const s = String(u == null ? '' : u).trim();
+  if (!s || /[\u0000-\u001f\\]/.test(s)) return '';
+  if (/^https:\/\/[^/\s]/i.test(s)) return s;
+  if (/^\/(?![/\\])/.test(s)) return s;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(s) || s.startsWith('//')) return '';
+  return /^[\w.~-]/.test(s) ? s : '';
+}
+
+const toProduct = (it) => ({ title: String(it.title == null ? '' : it.title), url: safeUrl(it.fullUrl), image: safeUrl(it.assetUrl), price: priceOf(it) });
+const hasLink = (p) => !!p.url;
 
 /** Up to `limit` product tiles for a grape. */
 export function productsFor(items, grapeId, { map = shopGrapes, limit = 4 } = {}) {
-  return matchItems(items, grapeId, map).slice(0, limit).map(toProduct);
+  return matchItems(items, grapeId, map).map(toProduct).filter(hasLink).slice(0, limit);
 }
 
 /**
@@ -60,12 +71,12 @@ export function productsFor(items, grapeId, { map = shopGrapes, limit = 4 } = {}
  * identical aromas, then shared families). One wine per grape first, then second wines.
  */
 export function similarProducts(items, answer, { map = shopGrapes, limit = 3, all = grapes, desc = descriptors } = {}) {
-  const lists = similarGrapes(answer, all, desc, 8).map((g) => matchItems(items, g.id, map)).filter((l) => l.length);
+  const lists = similarGrapes(answer, all, desc, 8).map((g) => matchItems(items, g.id, map).map(toProduct).filter(hasLink)).filter((l) => l.length);
   const out = [];
   for (let round = 0; out.length < limit; round++) {
     let any = false;
     for (const l of lists) {
-      if (l[round] && out.length < limit) { out.push(toProduct(l[round])); any = true; }
+      if (l[round] && out.length < limit) { out.push(l[round]); any = true; }
     }
     if (!any) break;
   }
