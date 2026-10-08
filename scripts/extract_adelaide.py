@@ -12,6 +12,8 @@ run:
 
 Output columns: prime, colour (W/R/G as in the source; G = pink-skinned,
 treated as white in the game), origin, origin_source, area_ha, area_year,
+area_2000_ha, area_2016_ha, trend_2010_2023_pct (like-for-like: countries
+reporting the variety in both 2010 and 2023),
 top1-top3 (countries by 2023 area), synonyms.
 """
 
@@ -41,9 +43,15 @@ def main(folder, out_path):
     world = {r["prime"]: r for r in rows(folder, "(b) Varieties 2000 to 2023.xlsx", "World ranking 2023")}
 
     by_country = collections.defaultdict(list)
+    # Like-for-like trend: only countries reporting the variety in both 2010
+    # and 2023, so changes in reporting coverage don't read as plantings.
+    trend = collections.defaultdict(lambda: [0.0, 0.0])
     for r in rows(folder, "(b) Varieties 2000 to 2023.xlsx", "All countries"):
         if r["area2023"]:
             by_country[r["prime"]].append((r["area2023"], r["country"]))
+        if r["area2010"] and r["area2023"]:
+            trend[r["prime"]][0] += r["area2010"]
+            trend[r["prime"]][1] += r["area2023"]
 
     out = []
     for prime, w in world.items():
@@ -62,6 +70,12 @@ def main(folder, out_path):
             "origin_source": source,
             "area_ha": round(area) if area else "",
             "area_year": year or "",
+            "area_2000_ha": round(w["area2000"]) if w["area2000"] else "",
+            "area_2016_ha": round(w["area2016"]) if w["area2016"] else "",
+            "trend_2010_2023_pct": (
+                round((trend[prime][1] - trend[prime][0]) / trend[prime][0] * 100, 1)
+                if trend[prime][0] >= 1 else ""
+            ),
             "top1": top[0][1] if len(top) > 0 else "",
             "top2": top[1][1] if len(top) > 1 else "",
             "top3": top[2][1] if len(top) > 2 else "",
