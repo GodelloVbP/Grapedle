@@ -18,6 +18,7 @@ import sys
 
 NUM = r"-?\d+(?:\.\d+)?"
 ROW = re.compile(r"^(.+?)\s+((?:" + NUM + r"\s+){11}" + NUM + r")$")
+SUBTOTALS = {"Top 120", "All", "white varieties", "red varieties"}
 SECTION = re.compile(r"^(Old World|New World|World)(?: \(cont\.\))?\s+2000\s+2016")
 
 
@@ -35,7 +36,8 @@ def main(text_path, out_path):
             section = m.group(1)
             continue
         m = ROW.match(s)
-        if m and section == "World":
+        # Skip subtotal rows ("Top 120", "All", "white varieties").
+        if m and section == "World" and m.group(1).strip() not in SUBTOTALS:
             v = m.group(2).split()
             # Columns: 2000 area, cool, temp, warm, hot, GST, then the same for 2016.
             world[m.group(1).strip()] = v[6:]
