@@ -306,5 +306,31 @@
     "source": "Gatinois, Explore Wine Maps (owner's copy)",
     "unmapped": [],
     "notes": ""
+  },
+  {
+    "id": "lambrusco-salamino",
+    "aromas": [
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'cherry' mapped to red-cherry, 'plum' to black-plum"
   }
 ]
