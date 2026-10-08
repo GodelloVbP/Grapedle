@@ -1,11 +1,12 @@
-import { byId, countries, descriptors, schedule } from './data.js';
-import { COLUMNS, STATUS_SYMBOL, trendClass } from './feedback.js';
-import { createGame, shareText, MAX_GUESSES } from './game.js';
+import { countries, descriptors, schedule } from './data.js';
+import { COLUMNS, ARROWS, STATUS_SYMBOL } from './feedback.js';
+import { createGame, shareText, letterPattern, MAX_GUESSES, HINT_AT } from './game.js';
 import { makeT, pickLang } from './i18n.js';
 import { search, exact } from './search.js';
 import { createStore, computeStats } from './storage.js';
 import { puzzleNumber, msUntilNextPuzzle } from './date.js';
-import { loadProducts, formatPrice, categoriesFor } from './shop.js';
+import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS_URL, SHOP_PAGE } from './shop.js';
+import { norm } from './text.js';
 
 const ICON_HELP = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2"/><path d="M12 17.6v.1"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>';
@@ -48,7 +49,7 @@ export function mount(root) {
   const debugDay = Number.isFinite(dayParam) && dayParam > 0 ? dayParam : null;
 
   const numFmt = () => new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'nl-NL');
-  let game, products = null, toastTimer = null, tickTimer = null, justAdded = false, resultTries = null;
+  let game, shopItems, shopPhase = 'loading', toastTimer = null, tickTimer = null, justAdded = false;
 
   root.textContent = '';
   root.classList.add('gd-root');
@@ -58,11 +59,12 @@ export function mount(root) {
   const headerEl = h('header', { class: 'gd-header' });
   const noteEl = h('p', { class: 'gd-note', hidden: true });
   const playEl = h('div', { class: 'gd-play' });
+  const hintsEl = h('div', { class: 'gd-hints', hidden: true });
   const endEl = h('section', { class: 'gd-end', hidden: true, 'aria-labelledby': uid + '-end' });
   const boardEl = h('div', { class: 'gd-board' });
   const live = h('div', { class: 'gd-sr', 'aria-live': 'polite', 'aria-atomic': 'true', role: 'status' });
   const modalHost = h('div', { class: 'gd-modals' });
-  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, playEl, endEl, boardEl, live, modalHost);
+  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
   root.appendChild(app);
 
   // layout follows the width of the host column, not the viewport
@@ -77,60 +79,65 @@ export function mount(root) {
 
   // ---- helpers ----
   const countryName = (c) => (c && countries[c] ? countries[c][lang] : '?');
-  const grapeName = (id) => (byId.get(id) ? byId.get(id).name : id);
   const fmtNum = (n) => numFmt().format(n);
+  const regionName = (g) => g.region || countryName(g.country);
+  const aromaName = (d) => (descriptors[d] ? descriptors[d][lang] : d);
+  /** Official name in small print, only when it adds something to the display name. */
+  const smallName = (g) => (g.small ? g.small[lang] : norm(g.name).includes(norm(g.official)) ? null : g.official);
 
-  function tileValue(key, g, cell) {
-    switch (key) {
-      case 'colour': return t('v_' + g.colour);
-      case 'origin': return countryName(g.origin);
-      case 'top': return g.topCountries && g.topCountries.length ? countryName(g.topCountries[0]) : null;
-      case 'parents': return g.parents && g.parents.length ? g.parents.map(grapeName).join(' × ') : null;
-      case 'climate': return g.climate ? t('v_' + g.climate) : null;
-      case 'ripening': return g.ripening ? t('v_' + g.ripening) : null;
-      case 'area': return g.areaHa ? fmtNum(g.areaHa) : null;
-      case 'trend': return trendText(g.trendPct);
-      default: return null;
-    }
+  /** Analytics: only when the host page runs GTM (window.dataLayer is an array). */
+  function track(action, extra) {
+    try {
+      const dl = globalThis.dataLayer;
+      if (Array.isArray(dl)) dl.push({ event: 'grapedle', action, puzzle: game ? game.puzzle : null, ...extra });
+    } catch (e) { /* analytics must never break the game */ }
   }
 
   function flavourNodes(g, cell) {
     if (!g.flavours || !g.flavours.length) return null;
     const shared = new Set(cell.shared || []);
-    return g.flavours.map((d) => {
-      const name = descriptors[d] ? descriptors[d][lang] : d;
-      return h('span', { class: 'gd-chip' + (shared.has(d) ? ' gd-chip-hit' : '') }, name);
-    });
+    return g.flavours.map((d) => h('span', { class: 'gd-chip' + (shared.has(d) ? ' gd-chip-hit' : '') }, aromaName(d)));
   }
 
-  function trendText(pct) {
-    const c = trendClass(pct);
-    if (c < 0) return null;
-    let r = Math.round(pct);
-    const txt = trendClass(r) === c ? String(Math.abs(r)) : Math.abs(pct).toFixed(1);
-    const sign = pct > 0 && r !== 0 ? '+' : pct < 0 ? '\u2212' : '';
-    const glyph = c >= 3 ? '\u2197' : c === 2 ? '\u2192' : '\u2198';
-    return `${sign}${txt}% ${glyph}`;
+  function areaText(cell) {
+    if (cell.status === 'green') return t('area_same');
+    if (cell.arrow === 'up') return t('area_more');
+    if (cell.arrow === 'down') return t('area_less');
+    return cell.tie ? t('area_tie') : null;
   }
-  const trendLabel = (pct) => { const c = trendClass(pct); return c < 0 ? null : t('trend_' + c); };
+  function areaSr(cell) {
+    if (cell.status === 'green') return t('area_same_sr');
+    if (cell.arrow === 'up') return t('area_more_sr');
+    if (cell.arrow === 'down') return t('area_less_sr');
+    return cell.tie ? t('area_tie_sr') : t('unknownValue');
+  }
 
   const colLabel = (k) => t('col_' + k);
-  const shortLabel = (k) => (k === 'top' || k === 'trend' ? t('short_' + k) : k === 'area' ? t('col_area') : colLabel(k));
 
   function buildTile(cell, g, i) {
-    const val = cell.key === 'flavour' ? flavourNodes(g, cell) : tileValue(cell.key, g, cell);
-    const known = val !== null && !(Array.isArray(val) && !val.length);
-    const arrow = cell.arrow ? (cell.arrow === 'up' ? '↑' : '↓') : '';
-    const plain = cell.key === 'flavour'
-      ? (g.flavours || []).map((d) => (descriptors[d] ? descriptors[d][lang] : d)).join(', ')
-      : cell.key === 'trend' && val ? `${val.replace(/ .$/, '')} (${trendLabel(g.trendPct)})` : (val || t('unknownValue'));
-    const srText = `${colLabel(cell.key)}: ${plain || t('unknownValue')}${cell.arrow ? ', ' + (cell.arrow === 'up' ? t('up') : t('down')) : ''}, ${t('st_' + cell.status)}`;
-    const valEl = h('span', { class: 'gd-val' + (cell.key === 'flavour' ? ' gd-val-chips' : '') },
-      cell.key === 'flavour' ? (known ? val : '–') : (known ? val : '–'),
-      arrow ? h('span', { class: 'gd-arrow' }, arrow) : null);
-    return h('div', { class: 'gd-tile gd-s-' + cell.status, style: `--i:${i}` },
-      h('span', { class: 'gd-lbl', 'aria-hidden': 'true' }, shortLabel(cell.key)),
-      h('span', { class: 'gd-sym', 'aria-hidden': 'true' }, STATUS_SYMBOL[cell.status]),
+    let main = null, sub = null, plain = '';
+    switch (cell.key) {
+      case 'colour': main = t('v_' + g.colour); plain = main; break;
+      case 'region':
+        main = regionName(g); plain = main;
+        if (cell.km) {
+          sub = `${t('km', { n: fmtNum(cell.km) })} ${ARROWS[cell.dir]}`;
+          plain += `, ${t('km', { n: fmtNum(cell.km) })} ${t('toward', { dir: t('dir_' + cell.dir) })}`;
+        }
+        break;
+      case 'climate': main = g.climate ? t('v_' + g.climate) : null; plain = main; break;
+      case 'area': main = areaText(cell); plain = areaSr(cell); break;
+      default: break;
+    }
+    const chips = cell.key === 'flavour' ? flavourNodes(g, cell) : null;
+    if (cell.key === 'flavour') plain = (g.flavours || []).map(aromaName).join(', ');
+    const srStatus = t('st_' + cell.status);
+    const srText = `${colLabel(cell.key)}: ${plain || t('unknownValue')}${srStatus ? ', ' + srStatus : ''}`;
+    const valEl = h('span', { class: 'gd-val' + (chips ? ' gd-val-chips' : '') }, chips || main || '–',
+      sub ? h('span', { class: 'gd-sub' }, sub) : null);
+    return h('div', { class: `gd-tile gd-k-${cell.key} gd-s-${cell.status}`, style: `--i:${i}` },
+      h('span', { class: 'gd-lbl', 'aria-hidden': 'true' }, colLabel(cell.key)),
+      STATUS_SYMBOL[cell.status] ? h('span', { class: 'gd-sym', 'aria-hidden': 'true' }, STATUS_SYMBOL[cell.status]) : null,
       h('span', { 'aria-hidden': 'true', class: 'gd-body' }, valEl),
       h('span', { class: 'gd-sr' }, srText));
   }
@@ -254,21 +261,56 @@ export function mount(root) {
     const row = game.guess(id);
     if (!row) return;
     justAdded = true;
+    track('guess', { guess: row.grape.id, n: game.guesses.length });
     const parts = row.cells.map((c) => `${colLabel(c.key)} ${t('st_' + c.status)}`).join(', ');
     const left = MAX_GUESSES - game.guesses.length;
     announce(`${row.grape.name}. ${parts}.` + (game.status === 'playing' ? ' ' + t('guessesLeft', { n: left }) : ''));
     results = []; active = -1;
     renderBoard();
+    renderHints();
     if (game.status === 'playing') {
       input.value = ''; closeList(); msgEl.textContent = '';
       counterEl.textContent = t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES });
       input.focus();
     } else {
       renderPlay(); renderEnd();
+      track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
       const hd = endEl.querySelector('.gd-end-title');
       if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: false }); }
       announce(endMessage());
     }
+  }
+
+  // ---- hints ----
+  function hintText(n) {
+    const v = n === 1 ? game.answer.hint[lang] : letterPattern(game.answer.name);
+    return t('hint' + n, { v });
+  }
+
+  function renderHints() {
+    hintsEl.textContent = '';
+    const over = game.status !== 'playing';
+    const used = game.hints;
+    const nodes = [];
+    for (const n of [1, 2]) {
+      if (used.includes(n)) {
+        nodes.push(h('p', { class: 'gd-hint' }, hintText(n)));
+      } else if (!over) {
+        const ready = game.hintReady(n);
+        nodes.push(h('button', {
+          type: 'button', class: 'gd-btn gd-btn-ghost gd-hintbtn', disabled: !ready,
+          onclick: () => {
+            if (!game.useHint(n)) return;
+            track('hint', { hint: n, guesses: game.guesses.length });
+            announce(hintText(n));
+            renderHints();
+            if (input && input.isConnected) input.focus();
+          },
+        }, t('hint' + n + 'Btn'), ready ? null : h('span', { class: 'gd-hint-lock' }, ' · ' + t('hintLocked', { n: HINT_AT[n - 1] }))));
+      }
+    }
+    hintsEl.hidden = !nodes.length;
+    hintsEl.append(...nodes);
   }
 
   // ---- end panel ----
@@ -279,25 +321,51 @@ export function mount(root) {
 
   function facts(g) {
     const rows = [
-      [colLabel('colour'), t('v_' + g.colour)],
-      [colLabel('origin'), countryName(g.origin)],
-      [colLabel('top'), g.topCountries.length ? g.topCountries.map(countryName).join(', ') : null],
-      [colLabel('parents'), g.parents && g.parents.length ? g.parents.map(grapeName).join(' × ') : null],
+      [t('region'), g.region ? `${g.region}, ${countryName(g.country)}` : countryName(g.country)],
       [colLabel('climate'), g.climate ? t('v_' + g.climate) : null],
-      [colLabel('ripening'), g.ripening ? t('v_' + g.ripening) : null],
-      [colLabel('flavour'), g.flavours && g.flavours.length ? g.flavours.map((d) => (descriptors[d] ? descriptors[d][lang] : d)).join(', ') : null],
-      [colLabel('area'), g.areaHa ? fmtNum(g.areaHa) : null],
-      [colLabel('trend'), trendText(g.trendPct) ? trendText(g.trendPct) + ' (' + trendLabel(g.trendPct) + ')' : null],
+      [t('aromas'), g.flavours && g.flavours.length ? g.flavours.map(aromaName).join(', ') : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
   }
 
-  function productTiles(list) {
+  function productTiles(list, kind) {
     return h('ul', { class: 'gd-products' }, list.map((p) => h('li', { class: 'gd-product' },
-      h('a', { class: 'gd-product-link', href: p.url },
+      h('a', { class: 'gd-product-link', href: withUtm(p.url), 'data-gd-link': kind },
         p.image ? h('img', { class: 'gd-product-img', src: p.image, alt: '', loading: 'lazy' }) : h('span', { class: 'gd-product-img gd-product-ph' }),
         h('span', { class: 'gd-product-title' }, p.title),
         p.price ? h('span', { class: 'gd-product-price' }, formatPrice(p.price, lang)) : null))));
+  }
+
+  const tastingsLink = () => h('a', { class: 'gd-btn gd-btn-ghost', href: withUtm(TASTINGS_URL), 'data-gd-link': 'tastings' }, t('tastingsCta'));
+
+  /**
+   * Shop block. Stocked grape: its wines (up to 4) and a shop link. Not stocked: "Lijkt op", up to 3
+   * wines of similar stocked grapes. If the shop does not answer in time or nothing matches, the
+   * answer card stays and a tastings link replaces the tiles.
+   */
+  function renderShop(box) {
+    box.textContent = '';
+    const a = game.answer;
+    if (shopPhase === 'loading') {
+      box.append(h('h3', { class: 'gd-h3' }, a.stocked ? t('shopTitle') : t('similarTitle')), h('p', { class: 'gd-muted' }, t('shopLoading')));
+      return;
+    }
+    const items = shopItems;
+    if (a.stocked) {
+      const list = items ? productsFor(items, a.id) : [];
+      if (list.length) {
+        box.append(h('h3', { class: 'gd-h3' }, t('shopTitle')), productTiles(list, 'product'),
+          h('a', { class: 'gd-btn gd-btn-ghost', href: withUtm(SHOP_PAGE), 'data-gd-link': 'shop' }, t('shopCta')));
+        return;
+      }
+    } else {
+      const list = items ? similarProducts(items, a) : [];
+      if (list.length) {
+        box.append(h('h3', { class: 'gd-h3' }, t('similarTitle')), h('p', { class: 'gd-muted' }, t('similarIntro')), productTiles(list, 'similar'), tastingsLink());
+        return;
+      }
+    }
+    box.append(h('p', { class: 'gd-muted' }, t('tastingsText')), tastingsLink());
   }
 
   function renderEnd() {
@@ -307,19 +375,12 @@ export function mount(root) {
     if (!over) return;
     const won = game.status === 'won';
     const shopBox = h('div', { class: 'gd-shop' });
-    const fillShop = (list) => {
-      shopBox.textContent = '';
-      shopBox.append(h('h3', { class: 'gd-h3' }, t('shopTitle')));
-      if (list === null) shopBox.append(h('p', { class: 'gd-muted' }, t('shopLoading')));
-      else if (list.length) shopBox.append(productTiles(list));
-      else shopBox.append(h('p', { class: 'gd-muted' }, t('shopNone')));
-      if (list !== null) shopBox.append(h('a', { class: 'gd-btn gd-btn-ghost', href: '/winkel' }, t('shopCta')));
-    };
-    fillShop(products);
-    if (products === null) {
+    renderShop(shopBox);
+    if (shopPhase === 'loading') {
       const gid = game.answer.id;
-      loadProducts(gid, { mock }).then((l) => { products = l; if (game.answer.id === gid) fillShop(l); });
+      loadItems({ mock }).then((l) => { shopItems = l; shopPhase = 'done'; if (game.answer.id === gid) renderShop(shopBox); });
     }
+    const small = smallName(game.answer);
     const shareBtn = h('button', { type: 'button', class: 'gd-btn', onclick: doShare }, t('share'));
     const countdown = h('p', { class: 'gd-countdown' }, t('next') + ' ', h('strong', { class: 'gd-clock' }, clockText()));
     endEl.append(
@@ -327,6 +388,7 @@ export function mount(root) {
       h('div', { class: 'gd-answer' + (won ? ' gd-answer-won' : '') },
         h('p', { class: 'gd-kicker' }, t('answerTitle')),
         h('p', { class: 'gd-answer-name' }, game.answer.name),
+        small ? h('p', { class: 'gd-answer-small' }, small) : null,
         facts(game.answer)),
       shopBox,
       h('div', { class: 'gd-share' }, shareBtn, countdown));
@@ -340,7 +402,8 @@ export function mount(root) {
 
   async function doShare(e) {
     const btn = e.currentTarget;
-    const text = shareText({ puzzle: game.puzzle, rows: game.rows(), won: game.status === 'won' });
+    const text = shareText({ puzzle: game.puzzle, rows: game.rows(), won: game.status === 'won', hints: game.hints.length });
+    track('share');
     const coarse = globalThis.matchMedia && globalThis.matchMedia('(pointer: coarse)').matches;
     if (coarse && navigator.share) {
       try { await navigator.share({ text }); return; } catch (err) { if (err && err.name === 'AbortError') return; }
@@ -375,12 +438,25 @@ export function mount(root) {
     return dlg;
   }
 
+  function demoTile(status, label, main, sub) {
+    return h('div', { class: `gd-tile gd-demo gd-s-${status}` },
+      h('span', { class: 'gd-lbl gd-lbl-on' }, label),
+      STATUS_SYMBOL[status] ? h('span', { class: 'gd-sym' }, STATUS_SYMBOL[status]) : null,
+      h('span', { class: 'gd-body' }, h('span', { class: 'gd-val' }, main, sub ? h('span', { class: 'gd-sub' }, sub) : null)));
+  }
+
   function openHelp(opener) {
     const body = h('div', { class: 'gd-dialog-body' },
       h('p', null, t('helpIntro')),
-      h('ul', { class: 'gd-help-list' }, COLUMNS.map((k, i) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
-      h('p', { class: 'gd-help-legend' }, t('helpLegend')),
-      h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' }, ['green', 'yellow', 'red', 'grey'].map((s) => h('span', { class: 'gd-tile gd-demo gd-s-' + s }, h('span', { class: 'gd-sym' }, STATUS_SYMBOL[s])))),
+      h('ul', { class: 'gd-help-list' }, COLUMNS.map((k) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
+      h('p', null, t('helpHints')),
+      h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
+        demoTile('green', colLabel('colour'), t('v_red')),
+        demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),
+        demoTile('red', colLabel('climate'), t('v_koel')),
+        demoTile('neutral', colLabel('area'), t('area_less')),
+        demoTile('grey', colLabel('flavour'), '–')),
+      h('p', { class: 'gd-muted' }, t('helpExample')),
       h('p', { class: 'gd-muted' }, t('helpFooter')),
       h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')));
     openModal(t('helpTitle'), body, opener);
@@ -409,7 +485,7 @@ export function mount(root) {
   }
 
   function renderAll() {
-    renderHeader(); renderPlay(); renderBoard(); renderEnd();
+    renderHeader(); renderPlay(); renderHints(); renderBoard(); renderEnd();
     root.setAttribute('lang', lang);
     noteEl.hidden = !(cur && cur.preview);
     noteEl.textContent = cur && cur.preview ? t('preview') : '';
@@ -419,14 +495,19 @@ export function mount(root) {
   function start() {
     cur = currentPuzzle();
     game = createGame({ puzzle: cur.n, store, persist: cur.persist });
-    products = null;
+    shopItems = null; shopPhase = 'loading';
     renderAll();
+    if (game.status === 'playing' && game.guesses.length === 0) track('start');
     if (!store.state.seenHelp && game.guesses.length === 0) {
       store.state.seenHelp = true; store.save();
       openHelp(null);
     }
   }
   start();
+  endEl.addEventListener('click', (e) => {
+    const a = e.target && e.target.closest ? e.target.closest('a[data-gd-link]') : null;
+    if (a) track('shop_click', { link: a.getAttribute('data-gd-link'), href: a.getAttribute('href') });
+  });
 
   clearInterval(tickTimer);
   tickTimer = setInterval(() => {

@@ -9,23 +9,67 @@ import grapes from '../data/grapes.json' with { type: 'json' };
 import { answerIdFor } from '../src/schedule.js';
 import { amsterdamYmd, puzzleNumber, msUntilNextPuzzle } from '../src/date.js';
 
+const byId = new Map(grapes.map((g) => [g.id, g]));
 const answers = grapes.filter((g) => g.answer).map((g) => g.id);
+const N = answers.length;
+/** Weekday (0 = Sunday) of puzzle day index i (0-based) on the Amsterdam calendar. */
+const weekday = (i) => new Date(Date.UTC(...schedule.start.split('-').map((x, k) => (k === 1 ? Number(x) - 1 : Number(x))))  + i * 86400000).getUTCDay();
 
-test('schedule covers >= 2 years of answer-pool grapes', () => {
+test('schedule covers >= 2 years of answer-pool grapes, in whole cycles', () => {
   assert.equal(schedule.start, '2026-11-01');
   assert.ok(schedule.days.length >= 730);
+  assert.equal(schedule.days.length % N, 0);
   const pool = new Set(answers);
   for (const id of schedule.days) assert.ok(pool.has(id), id);
 });
 
-test('no repeat within a cycle, no consecutive duplicates', () => {
-  const n = answers.length;
-  for (let i = 0; i + n <= schedule.days.length; i += n) {
-    assert.equal(new Set(schedule.days.slice(i, i + n)).size, n, 'cycle at ' + i);
+test('no repeat within a cycle, no near repeats across cycles', () => {
+  for (let i = 0; i + N <= schedule.days.length; i += N) {
+    assert.equal(new Set(schedule.days.slice(i, i + N)).size, N, 'cycle at ' + i);
   }
-  const tail = schedule.days.slice(Math.floor(schedule.days.length / n) * n);
-  assert.equal(new Set(tail).size, tail.length);
-  for (let i = 1; i < schedule.days.length; i++) assert.notEqual(schedule.days[i], schedule.days[i - 1], 'day ' + i);
+  const last = new Map();
+  schedule.days.forEach((id, i) => {
+    if (last.has(id)) assert.ok(i - last.get(id) >= 3, `${id} repeats after ${i - last.get(id)} days`);
+    last.set(id, i);
+  });
+});
+
+test('weekend-only grapes appear only on Saturday and Sunday (Europe/Amsterdam calendar)', () => {
+  const only = new Set(grapes.filter((g) => g.weekendOnly).map((g) => g.id));
+  assert.equal(only.size, 9);
+  let seen = 0;
+  schedule.days.forEach((id, i) => {
+    if (!only.has(id)) return;
+    seen++;
+    const w = weekday(i);
+    assert.ok(w === 0 || w === 6, `${id} on day ${i} (weekday ${w})`);
+  });
+  assert.ok(seen >= 9 * (schedule.days.length / N));
+  assert.equal(weekday(0), 0, '2026-11-01 is a Sunday');
+});
+
+test('grapes sharing a signature region are at least 7 days apart', () => {
+  const lastIn = new Map();
+  schedule.days.forEach((id, i) => {
+    const r = byId.get(id).region;
+    if (lastIn.has(r)) {
+      const [j, other] = lastIn.get(r);
+      if (other !== id) assert.ok(i - j >= 7, `${other} (day ${j}) and ${id} (day ${i}) share ${r}`);
+    }
+    lastIn.set(r, [i, id]);
+  });
+});
+
+test('Corvina family spacing: Corvina and Corvinone 21 days, Rondinella 14 days from both', () => {
+  const gap = { 'corvina-veronese|corvinone': 21, 'corvinone|corvina-veronese': 21, 'rondinella|corvina-veronese': 14, 'corvina-veronese|rondinella': 14, 'rondinella|corvinone': 14, 'corvinone|rondinella': 14 };
+  const fam = new Set(['corvina-veronese', 'corvinone', 'rondinella']);
+  const hist = [];
+  schedule.days.forEach((id, i) => {
+    if (!fam.has(id)) return;
+    for (const [j, o] of hist) if (o !== id) assert.ok(i - j >= gap[`${id}|${o}`], `${o} (day ${j}) and ${id} (day ${i})`);
+    hist.push([i, id]);
+  });
+  assert.ok(hist.length >= 3 * (schedule.days.length / N));
 });
 
 test('answerIdFor is deterministic, 1-based, never throws', () => {
@@ -44,15 +88,14 @@ test('builder is append-only and deterministic', () => {
     rmSync(join(tmp, 'data', 'schedule.json'));
     const run = (days) => {
       const r = spawnSync('python3', ['-I', join(tmp, 'scripts', 'build_data.py'), '--days', String(days)], { encoding: 'utf-8' });
-      assert.equal(r.status, 0, r.stderr);
+      assert.equal(r.status, 0, r.stderr + r.stdout);
       return JSON.parse(readFileSync(join(tmp, 'data', 'schedule.json'), 'utf-8')).days;
     };
-    const a = run(150), b = run(400), c = run(400);
-    assert.equal(a.length, 150);
-    assert.deepEqual(b.slice(0, 150), a, 'extending keeps existing days');
+    const a = run(N * 3), b = run(N * 5), c = run(N * 5);
+    assert.equal(a.length, N * 3);
+    assert.deepEqual(b.slice(0, N * 3), a, 'extending keeps existing days');
     assert.deepEqual(c, b, 'rerun is a no-op');
-    assert.deepEqual(a, schedule.days.slice(0, 150), 'matches committed schedule');
-    for (let i = 1; i < b.length; i++) assert.notEqual(b[i], b[i - 1]);
+    assert.deepEqual(a, schedule.days.slice(0, N * 3), 'matches committed schedule');
   } finally { rmSync(tmp, { recursive: true, force: true }); }
 });
 

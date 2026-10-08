@@ -1,7 +1,7 @@
-export const KEY = 'gd:v1';
+export const KEY = 'gd:v2';
 
 function fresh() {
-  return { v: 1, lang: null, seenHelp: false, guesses: {}, history: {} };
+  return { v: 2, lang: null, seenHelp: false, guesses: {}, hints: {}, history: {} };
 }
 
 /**
@@ -15,14 +15,14 @@ export function createStore() {
     const raw = globalThis.localStorage.getItem(KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      if (p && p.v === 1 && typeof p === 'object') state = { ...fresh(), ...p };
+      if (p && p.v === 2 && typeof p === 'object') state = { ...fresh(), ...p };
     }
   } catch (e) { ok = false; }
 
   function save() {
     // keep the guess log small: only the 40 most recent puzzles
     const keys = Object.keys(state.guesses).map(Number).sort((a, b) => b - a);
-    for (const k of keys.slice(40)) delete state.guesses[k];
+    for (const k of keys.slice(40)) { delete state.guesses[k]; if (state.hints) delete state.hints[k]; }
     try { globalThis.localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { ok = false; }
   }
   function reset() {

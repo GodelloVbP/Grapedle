@@ -1,9 +1,23 @@
-import { shopGrapes } from './data.js';
-import mockShop from '../tests/fixtures/shop.json' with { type: 'json' };
+import { shopGrapes, grapes, descriptors } from './data.js';
 import { norm } from './text.js';
+import { similarGrapes } from './similar.js';
 
 const SHOP_URL = '/winkel';
+export const SHOP_PAGE = '/winkel';
+export const TASTINGS_URL = 'https://www.vinobypalazzo.nl/wijnproeverijen';
+export const FETCH_TIMEOUT_MS = 4000;
+const UTM = 'utm_source=grapedle&utm_medium=game';
 let cache = null;
+
+/** Append the Grapedle UTM parameters, respecting an existing query string and fragment. */
+export function withUtm(url) {
+  const s = String(url == null ? '' : url);
+  if (!s) return s;
+  const hash = s.indexOf('#');
+  const base = hash >= 0 ? s.slice(0, hash) : s, frag = hash >= 0 ? s.slice(hash) : '';
+  if (/[?&]utm_source=/.test(base)) return s;
+  return base + (base.includes('?') ? (/[?&]$/.test(base) ? '' : '&') : '?') + UTM + frag;
+}
 
 /** Shop category names that map to a grape id. */
 export function categoriesFor(grapeId, map = shopGrapes) {
@@ -34,43 +48,81 @@ export function matchItems(items, grapeId, map = shopGrapes) {
   return items.filter((it) => Array.isArray(it.categories) && it.categories.some((c) => cats.has(norm(lastSegment(c)))));
 }
 
-async function fetchJson(url) {
-  const res = await fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+const toProduct = (it) => ({ title: it.title, url: it.fullUrl, image: it.assetUrl || '', price: priceOf(it) });
+
+/** Up to `limit` product tiles for a grape. */
+export function productsFor(items, grapeId, { map = shopGrapes, limit = 4 } = {}) {
+  return matchItems(items, grapeId, map).slice(0, limit).map(toProduct);
+}
+
+/**
+ * Up to `limit` wines of the stocked grapes that look most like the answer (same colour, most
+ * identical aromas, then shared families). One wine per grape first, then second wines.
+ */
+export function similarProducts(items, answer, { map = shopGrapes, limit = 3, all = grapes, desc = descriptors } = {}) {
+  const lists = similarGrapes(answer, all, desc, 8).map((g) => matchItems(items, g.id, map)).filter((l) => l.length);
+  const out = [];
+  for (let round = 0; out.length < limit; round++) {
+    let any = false;
+    for (const l of lists) {
+      if (l[round] && out.length < limit) { out.push(toProduct(l[round])); any = true; }
+    }
+    if (!any) break;
+  }
+  return out;
+}
+
+async function fetchJson(url, signal) {
+  const res = await fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal });
   if (!res.ok) throw new Error('shop ' + res.status);
   return res.json();
 }
 
-async function loadAll() {
-  if (cache) return cache;
+async function loadAll(signal) {
   const items = [];
   let url = SHOP_URL + '?format=json';
   for (let page = 0; page < 8 && url; page++) {
-    const data = await fetchJson(url);
+    const data = await fetchJson(url, signal);
     if (Array.isArray(data.items)) items.push(...data.items);
     const next = data.pagination && data.pagination.nextPageUrl;
     url = next ? (next.includes('format=json') ? next : next + (next.includes('?') ? '&' : '?') + 'format=json') : null;
   }
-  return (cache = items);
+  return items;
+}
+
+/** Dev-only fixture (never in the production bundle: the flag is a build-time constant). */
+async function mockItems(mode, map) {
+  if (mode === 'fail') throw new Error('mock failure');
+  if (mode === 'none') return [];
+  const fx = (await import('../tests/fixtures/shop.json', { with: { type: 'json' } })).default;
+  const cats = [...new Set(Object.values(map))].map((id) => categoriesFor(id, map)[0]);
+  return cats.flatMap((cat) => fx.items.map((it) => ({ ...it, title: `${it.title} (${cat})`, categories: [cat] })));
 }
 
 /**
- * Resolve up to 4 product tiles for a grape. Never throws: failure or no match gives [].
- * ?mockShop=1 uses the fixture (re-categorised to today's grape); ?mockShop=none returns no products.
+ * All shop items, or null when the shop cannot be reached within the timeout (4 s by default).
+ * Never throws. ?mockShop=1|none|fail uses the fixture in the dev build only.
  */
-export async function loadProducts(grapeId, { mock = null, map = shopGrapes } = {}) {
-  try {
-    let items;
-    if (mock) {
-      if (mock === 'none') return [];
-      const cat = categoriesFor(grapeId, map)[0];
-      items = mockShop.items.map((it) => (cat ? { ...it, categories: [cat] } : it));
-    } else items = await loadAll();
-    return matchItems(items, grapeId, map).slice(0, 4).map((it) => ({
-      title: it.title, url: it.fullUrl, image: it.assetUrl || '', price: priceOf(it),
-    }));
-  } catch (e) {
-    return [];
+export async function loadItems({ mock = null, map = shopGrapes, timeoutMs = FETCH_TIMEOUT_MS } = {}) {
+  if (mock && typeof __GD_DEV__ !== 'undefined' && __GD_DEV__) {
+    try { return await mockItems(mock, map); } catch (e) { return null; }
   }
+  if (cache) return cache;
+  const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  let timer;
+  const timeout = new Promise((_, rej) => { timer = setTimeout(() => { if (ctl) ctl.abort(); rej(new Error('shop timeout')); }, timeoutMs); });
+  try {
+    const items = await Promise.race([loadAll(ctl && ctl.signal), timeout]);
+    return (cache = items);
+  } catch (e) {
+    return null;
+  } finally { clearTimeout(timer); }
+}
+
+/** Product tiles for one grape; [] on failure or no match. */
+export async function loadProducts(grapeId, opts = {}) {
+  const items = await loadItems(opts);
+  return items ? productsFor(items, grapeId, { map: opts.map || shopGrapes }) : [];
 }
 
 export function formatPrice(p, lang) {

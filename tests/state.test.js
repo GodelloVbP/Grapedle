@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStore, computeStats, KEY } from '../src/storage.js';
-import { createGame, shareText, MAX_GUESSES } from '../src/game.js';
+import { createGame, shareText, letterPattern, MAX_GUESSES, HINT_AT } from '../src/game.js';
 import { schedule } from '../src/data.js';
-import { priceOf, matchItems, lastSegment, loadProducts, formatPrice } from '../src/shop.js';
+import { priceOf, matchItems, lastSegment, loadProducts, loadItems, productsFor, similarProducts, withUtm, formatPrice, TASTINGS_URL } from '../src/shop.js';
 import { pickLang, makeT, STRINGS } from '../src/i18n.js';
 import { norm } from '../src/text.js';
+import { grapes as allGrapes, byId, shopGrapes } from '../src/data.js';
 
 function withStorage(impl, fn) {
   const had = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
@@ -94,7 +95,65 @@ test('stats and streaks', () => {
   assert.equal(computeStats({}, 1).winPct, 0);
 });
 
-test('share text', () => {
+test('storage key is gd:v2 and old v1 data is ignored', () => {
+  assert.equal(KEY, 'gd:v2');
+  const ls = memory();
+  ls.setItem('gd:v1', JSON.stringify({ v: 1, guesses: { 1: ['merlot'] }, history: {} }));
+  withStorage(() => ls, () => assert.deepEqual(createStore().state.guesses, {}));
+});
+
+test('hints unlock after 3 and 5 guesses, lock when the game ends, and persist', () => {
+  const ls = memory();
+  withStorage(() => ls, () => {
+    let store = createStore();
+    let game = createGame({ puzzle: 7, store });
+    assert.deepEqual(HINT_AT, [3, 5]);
+    const wrongs = [...new Set(schedule.days)].filter((id) => id !== game.answer.id);
+    assert.equal(game.hintReady(1), false);
+    assert.equal(game.useHint(1), false);
+    game.guess(wrongs[0]); game.guess(wrongs[1]);
+    assert.equal(game.hintReady(1), false, 'locked at 2 guesses');
+    game.guess(wrongs[2]);
+    assert.equal(game.hintReady(1), true);
+    assert.equal(game.hintReady(2), false);
+    assert.equal(game.useHint(1), true);
+    assert.equal(game.useHint(1), false, 'once only');
+    game.guess(wrongs[3]);
+    assert.equal(game.hintReady(2), false);
+    game.guess(wrongs[4]);
+    assert.equal(game.hintReady(2), true);
+    store = createStore();
+    game = createGame({ puzzle: 7, store });
+    assert.deepEqual(game.hints, [1], 'used hints survive a reload');
+    assert.equal(game.useHint(2), true);
+    game.guess(game.answer.id);
+    assert.equal(game.status, 'won');
+    assert.deepEqual(game.hints, [1, 2]);
+    // locked once the game is over: an unused hint can no longer be opened
+    const g2 = createGame({ puzzle: 8, store });
+    const w2 = wrongs.filter((id) => id !== g2.answer.id);
+    for (let i = 0; i < 6; i++) g2.guess(w2[i]);
+    assert.equal(g2.status, 'lost');
+    assert.equal(g2.hintReady(1), false); assert.equal(g2.hintReady(2), false);
+    const dbg = createGame({ puzzle: 9, store, persist: false });
+    for (let i = 0; i < 3; i++) dbg.guess(wrongs.filter((id) => id !== dbg.answer.id)[i]);
+    dbg.useHint(1);
+    assert.equal(store.state.hints[9], undefined, 'debug mode does not persist hints');
+  });
+});
+
+test('hint 2: first letter plus one underscore per letter; spaces, slashes and hyphens stay', () => {
+  assert.equal(letterPattern('Corvina'), 'C _ _ _ _ _ _');
+  assert.equal(letterPattern('Corvinone'), 'C _ _ _ _ _ _ _ _');
+  assert.notEqual(letterPattern('Corvina'), letterPattern('Corvinone'));
+  assert.equal(letterPattern('Pinot Noir'), 'P _ _ _ _   _ _ _ _');
+  assert.equal(letterPattern('Zinfandel / Primitivo'), 'Z _ _ _ _ _ _ _ _   /   _ _ _ _ _ _ _ _ _');
+  assert.equal(letterPattern('Müller-Thurgau'), 'M _ _ _ _ _ - _ _ _ _ _ _ _');
+  assert.equal(letterPattern('Albariño'), 'A _ _ _ _ _ _ _');
+  assert.equal(letterPattern("Nero d'Avola"), "N _ _ _   _ ' _ _ _ _ _");
+});
+
+test('share text: head line with hints, X/6 on loss, one emoji line per guess', () => {
   const store = createStore();
   const game = createGame({ puzzle: 42, store, persist: false });
   const other = schedule.days.find((id) => id !== game.answer.id);
@@ -102,12 +161,46 @@ test('share text', () => {
   const lines = shareText({ puzzle: 42, rows: game.rows(), won: true }).split('\n');
   assert.equal(lines[0], 'Grapedle #42 2/6');
   assert.equal(lines.length, 4);
-  assert.match(lines[1], /^[🟩🟨🟥⬜]{9}$/u);
-  assert.equal(lines[2], '🟩'.repeat(9));
+  assert.match(lines[1], /^(🟩|🟨|🟥|⬜)(🟩|🟨|🟥)(🟩|🟥|⬜)(⬆️|⬇️|🟰|🟩)(🟩|🟨|🟥|⬜)$/u);
+  assert.equal(lines[2], '🟩'.repeat(5));
   assert.equal(lines[3], 'vinobypalazzo.nl/grapedle');
+  assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 1 }).split('\n')[0], 'Grapedle #42 2/6 💡');
+  assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 2 }).split('\n')[0], 'Grapedle #42 2/6 💡💡');
+  // loss: X/6 and six lines
+  const lost = createGame({ puzzle: 43, store, persist: false });
+  const wr = [...new Set(schedule.days)].filter((id) => id !== lost.answer.id);
+  for (let i = 0; i < 6; i++) lost.guess(wr[i]);
+  const l = shareText({ puzzle: 43, rows: lost.rows(), won: false, hints: 2 }).split('\n');
+  assert.equal(l[0], 'Grapedle #43 X/6 💡💡');
+  assert.equal(l.length, 8);
+  for (const row of l.slice(1, 7)) assert.equal([...row.replace(/⬆️|⬇️/g, 'A')].length, 5);
+  // exact example from the plan: a won game where the last row is all green
+  const fake = (cells) => ({ cells: cells.map((s, i) => ({ key: ['colour', 'region', 'climate', 'area', 'flavour'][i], status: s[0], arrow: s[1] || null, tie: false })) });
+  const rows = [
+    fake([['red'], ['yellow'], ['red'], ['neutral', 'down'], ['yellow']]),
+    fake([['red'], ['green'], ['green'], ['neutral', 'up'], ['yellow']]),
+    fake([['green'], ['green'], ['green'], ['neutral', 'down'], ['green']]),
+    fake([['green'], ['green'], ['green'], ['green'], ['green']]),
+  ];
+  assert.equal(shareText({ puzzle: 12, rows, won: true, hints: 1 }),
+    'Grapedle #12 4/6 💡\n🟥🟨🟥⬇️🟨\n🟥🟩🟩⬆️🟨\n🟩🟩🟩⬇️🟩\n🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
+  const unknown = shareText({ puzzle: 1, rows: [fake([['green'], ['red'], ['green'], ['neutral', 'up'], ['grey']])], won: false }).split('\n')[1];
+  assert.equal(unknown, '🟩🟥🟩⬆️⬜');
 });
 
-test('shop: category matching handles nested names, price, mock', async () => {
+test('UTM parameters are appended correctly', () => {
+  assert.equal(withUtm('/winkel'), '/winkel?utm_source=grapedle&utm_medium=game');
+  assert.equal(withUtm('https://www.vinobypalazzo.nl/wijnproeverijen'), 'https://www.vinobypalazzo.nl/wijnproeverijen?utm_source=grapedle&utm_medium=game');
+  assert.equal(withUtm('/winkel/x?variant=2'), '/winkel/x?variant=2&utm_source=grapedle&utm_medium=game');
+  assert.equal(withUtm('/winkel/x?'), '/winkel/x?utm_source=grapedle&utm_medium=game');
+  assert.equal(withUtm('/winkel/x#top'), '/winkel/x?utm_source=grapedle&utm_medium=game#top');
+  assert.equal(withUtm('/winkel/x?a=1#top'), '/winkel/x?a=1&utm_source=grapedle&utm_medium=game#top');
+  const once = withUtm('/winkel/x');
+  assert.equal(withUtm(once), once, 'never doubled');
+  assert.equal(TASTINGS_URL, 'https://www.vinobypalazzo.nl/wijnproeverijen');
+});
+
+test('shop: category matching handles nested names, price, products', () => {
   assert.equal(lastSegment('Druivensoort/Syrah'), 'Syrah');
   assert.equal(lastSegment('Syrah'), 'Syrah');
   const items = [
@@ -117,18 +210,58 @@ test('shop: category matching handles nested names, price, mock', async () => {
   assert.deepEqual(matchItems(items, 'syrah').map((i) => i.title), ['A', 'B']);
   assert.deepEqual(matchItems([{ title: 'T', categories: ['Tinta de Toro (Tempranillo)'] }, { title: 'U', categories: ['Druiven/Tempranillo'] }], 'tempranillo').length, 2);
   assert.deepEqual(matchItems([{ title: 'G', categories: ['Grenache'] }, { title: 'H', categories: ['Garnacha'] }], 'garnacha-tinta').length, 2);
+  assert.deepEqual(matchItems([{ title: 'S', categories: ['Roter Sylvaner'] }], 'silvaner').length, 1);
   assert.equal(matchItems(items, 'riesling').length, 0);
+  assert.equal(productsFor(Array.from({ length: 9 }, (_, i) => ({ title: 'S' + i, categories: ['Syrah'] })), 'syrah').length, 4, 'at most 4 tiles');
   assert.deepEqual(priceOf({ structuredContent: { priceMoney: { value: '14.95', currency: 'EUR' } } }), { value: 14.95, currency: 'EUR', from: false });
   assert.equal(priceOf({ structuredContent: { variants: [{ priceMoney: { value: '21.00' } }, { priceMoney: { value: '18.50' } }] } }).value, 18.5);
   assert.equal(priceOf({}), null);
   assert.match(formatPrice({ value: 14.95, currency: 'EUR', from: false }, 'nl'), /14,95/);
-  const mock = await loadProducts('merlot', { mock: '1' });
-  assert.ok(mock.length >= 1 && mock.length <= 4);
-  assert.ok(mock[0].title && mock[0].url);
-  assert.deepEqual(await loadProducts('merlot', { mock: 'none' }), []);
-  // fetch failure: no throw, empty list
-  const f = globalThis.fetch; globalThis.fetch = () => Promise.reject(new Error('offline'));
-  try { assert.deepEqual(await loadProducts('merlot'), []); } finally { globalThis.fetch = f; }
+});
+
+test('shop: similar wines for a grape we do not stock (max 3, same colour, one per grape first)', () => {
+  const answer = byId.get('chardonnay'); // not stocked
+  assert.ok(!answer.stocked);
+  const cats = (id) => Object.keys(shopGrapes).filter((c) => shopGrapes[c] === id)[0];
+  const stockedWhite = allGrapes.filter((g) => g.stocked && g.colour === 'white');
+  const items = stockedWhite.flatMap((g) => [1, 2].map((n) => ({ title: `${g.id}-${n}`, categories: [cats(g.id)], fullUrl: '/x' })));
+  const out = similarProducts(items, answer);
+  assert.equal(out.length, 3);
+  const grapesOut = out.map((p) => p.title.replace(/-\d$/, ''));
+  assert.equal(new Set(grapesOut).size, 3, 'three different grapes first');
+  for (const id of grapesOut) assert.equal(byId.get(id).colour, 'white');
+  // only one similar grape in the shop: its wines fill the slots
+  const one = similarProducts(items.filter((i) => i.title.startsWith('pinot-gris')), answer);
+  assert.deepEqual(one.map((p) => p.title), ['pinot-gris-1', 'pinot-gris-2']);
+  assert.deepEqual(similarProducts([], answer), []);
+});
+
+test('shop: dev fixture works only with the dev flag; failures and timeouts give null / []', async () => {
+  globalThis.__GD_DEV__ = true;
+  try {
+    const items = await loadItems({ mock: '1' });
+    assert.ok(items.length >= 1);
+    const mock = await loadProducts('merlot', { mock: '1' });
+    assert.ok(mock.length >= 1 && mock.length <= 4);
+    assert.ok(mock[0].title && mock[0].url);
+    assert.deepEqual(await loadProducts('merlot', { mock: 'none' }), []);
+    assert.equal(await loadItems({ mock: 'fail' }), null);
+  } finally { delete globalThis.__GD_DEV__; }
+  // without the flag a ?mockShop= value is ignored and the real fetch runs
+  const f = globalThis.fetch;
+  try {
+    globalThis.fetch = () => Promise.reject(new Error('offline'));
+    assert.equal(await loadItems({ mock: '1' }), null);
+    assert.deepEqual(await loadProducts('merlot'), []);
+    // a shop that never answers is cut off at the timeout
+    globalThis.fetch = (url, opts) => new Promise((_, rej) => { opts.signal.addEventListener('abort', () => rej(new Error('aborted'))); });
+    const t0 = Date.now();
+    assert.equal(await loadItems({ timeoutMs: 80 }), null);
+    assert.ok(Date.now() - t0 < 1000);
+    // an HTTP error is a failure too
+    globalThis.fetch = async () => ({ ok: false, status: 500, json: async () => ({}) });
+    assert.equal(await loadItems({}), null);
+  } finally { globalThis.fetch = f; }
 });
 
 test('i18n: both languages complete, lang selection', () => {
@@ -140,7 +273,12 @@ test('i18n: both languages complete, lang selection', () => {
   assert.equal(pickLang('fr', 'xx'), 'nl');
   assert.equal(makeT('nl')('win', { n: 4 }), 'Goed geraden in 4 pogingen');
   assert.equal(makeT('en')('lose', { grape: 'Syrah' }), 'Unlucky! It was Syrah');
-  assert.equal(makeT('nl')('trend_0'), 'sterk krimpend');
-  assert.equal(makeT('en')('trend_4'), 'growing fast');
+  assert.equal(makeT('nl')('hint1', { v: 'Barolo' }), 'Bekend van: Barolo');
+  assert.equal(makeT('en')('hint1', { v: 'Barolo' }), 'Known for: Barolo');
+  assert.equal(makeT('nl')('area_more'), '↑ meer');
+  assert.equal(makeT('nl')('area_less'), '↓ minder');
+  assert.match(makeT('nl')('help_flavour'), /minstens 2 aroma/);
+  assert.match(makeT('en')('help_flavour'), /at least 2 aromas/);
+  for (const lang of ['nl', 'en']) for (const k of ['colour', 'region', 'climate', 'area', 'flavour']) assert.ok(STRINGS[lang]['help_' + k] && STRINGS[lang]['col_' + k], k);
   assert.equal(norm('Spätburgunder'), 'spatburgunder');
 });

@@ -2,412 +2,169 @@
  "AL": {
   "nl": "Albanië",
   "en": "Albania",
-  "borders": [
-   "ME",
-   "MK",
-   "GR"
-  ]
- },
- "AM": {
-  "nl": "Armenië",
-  "en": "Armenia",
-  "borders": [
-   "GE",
-   "TR"
-  ]
+  "lat": 41.0,
+  "lon": 20.0
  },
  "AR": {
   "nl": "Argentinië",
   "en": "Argentina",
-  "borders": [
-   "CL",
-   "BR",
-   "UY"
-  ]
+  "lat": -33.0,
+  "lon": -68.8
  },
  "AT": {
   "nl": "Oostenrijk",
   "en": "Austria",
-  "borders": [
-   "DE",
-   "CZ",
-   "SK",
-   "HU",
-   "SI",
-   "IT",
-   "CH"
-  ]
+  "lat": 47.8,
+  "lon": 15.5
  },
  "AU": {
   "nl": "Australië",
   "en": "Australia",
-  "borders": []
- },
- "BE": {
-  "nl": "België",
-  "en": "Belgium",
-  "borders": [
-   "FR",
-   "LU",
-   "DE",
-   "NL"
-  ]
+  "lat": -34.5,
+  "lon": 139.0
  },
  "BG": {
   "nl": "Bulgarije",
   "en": "Bulgaria",
-  "borders": [
-   "RO",
-   "RS",
-   "MK",
-   "GR",
-   "TR"
-  ]
+  "lat": 42.7,
+  "lon": 25.5
  },
  "BR": {
   "nl": "Brazilië",
   "en": "Brazil",
-  "borders": [
-   "AR",
-   "UY",
-   "PE"
-  ]
- },
- "CA": {
-  "nl": "Canada",
-  "en": "Canada",
-  "borders": [
-   "US"
-  ]
+  "lat": -29.0,
+  "lon": -51.5
  },
  "CH": {
   "nl": "Zwitserland",
   "en": "Switzerland",
-  "borders": [
-   "DE",
-   "FR",
-   "IT",
-   "AT"
-  ]
+  "lat": 46.8,
+  "lon": 7.5
  },
  "CL": {
   "nl": "Chili",
   "en": "Chile",
-  "borders": [
-   "AR",
-   "PE"
-  ]
- },
- "CN": {
-  "nl": "China",
-  "en": "China",
-  "borders": [
-   "RU"
-  ]
+  "lat": -34.5,
+  "lon": -71.0
  },
  "CY": {
   "nl": "Cyprus",
   "en": "Cyprus",
-  "borders": []
- },
- "CZ": {
-  "nl": "Tsjechië",
-  "en": "Czechia",
-  "borders": [
-   "DE",
-   "PL",
-   "SK",
-   "AT"
-  ]
+  "lat": 35.0,
+  "lon": 33.0
  },
  "DE": {
   "nl": "Duitsland",
   "en": "Germany",
-  "borders": [
-   "PL",
-   "CZ",
-   "AT",
-   "CH",
-   "FR",
-   "LU",
-   "BE",
-   "NL"
-  ]
+  "lat": 49.8,
+  "lon": 8.5
  },
  "ES": {
   "nl": "Spanje",
   "en": "Spain",
-  "borders": [
-   "FR",
-   "PT"
-  ]
+  "lat": 40.4,
+  "lon": -3.7
  },
  "FR": {
   "nl": "Frankrijk",
   "en": "France",
-  "borders": [
-   "BE",
-   "LU",
-   "DE",
-   "CH",
-   "IT",
-   "ES"
-  ]
- },
- "GB": {
-  "nl": "Verenigd Koninkrijk",
-  "en": "United Kingdom",
-  "borders": []
+  "lat": 46.5,
+  "lon": 2.5
  },
  "GE": {
   "nl": "Georgië",
   "en": "Georgia",
-  "borders": [
-   "RU",
-   "AM",
-   "TR"
-  ]
+  "lat": 42.0,
+  "lon": 45.0
  },
  "GR": {
   "nl": "Griekenland",
   "en": "Greece",
-  "borders": [
-   "AL",
-   "MK",
-   "BG",
-   "TR"
-  ]
+  "lat": 39.0,
+  "lon": 22.0
  },
  "HR": {
   "nl": "Kroatië",
   "en": "Croatia",
-  "borders": [
-   "SI",
-   "HU",
-   "RS",
-   "ME"
-  ]
+  "lat": 45.0,
+  "lon": 16.0
  },
  "HU": {
   "nl": "Hongarije",
   "en": "Hungary",
-  "borders": [
-   "AT",
-   "SK",
-   "UA",
-   "RO",
-   "RS",
-   "HR",
-   "SI"
-  ]
+  "lat": 47.3,
+  "lon": 20.0
  },
  "IT": {
   "nl": "Italië",
   "en": "Italy",
-  "borders": [
-   "FR",
-   "CH",
-   "AT",
-   "SI"
-  ]
- },
- "JP": {
-  "nl": "Japan",
-  "en": "Japan",
-  "borders": []
- },
- "LB": {
-  "nl": "Libanon",
-  "en": "Lebanon",
-  "borders": []
- },
- "LU": {
-  "nl": "Luxemburg",
-  "en": "Luxembourg",
-  "borders": [
-   "BE",
-   "DE",
-   "FR"
-  ]
- },
- "MA": {
-  "nl": "Marokko",
-  "en": "Morocco",
-  "borders": []
+  "lat": 43.0,
+  "lon": 12.5
  },
  "MD": {
   "nl": "Moldavië",
   "en": "Moldova",
-  "borders": [
-   "RO",
-   "UA"
-  ]
- },
- "ME": {
-  "nl": "Montenegro",
-  "en": "Montenegro",
-  "borders": [
-   "HR",
-   "RS",
-   "AL"
-  ]
+  "lat": 47.0,
+  "lon": 28.5
  },
  "MK": {
   "nl": "Noord-Macedonië",
   "en": "North Macedonia",
-  "borders": [
-   "AL",
-   "BG",
-   "GR",
-   "RS"
-  ]
- },
- "MX": {
-  "nl": "Mexico",
-  "en": "Mexico",
-  "borders": [
-   "US"
-  ]
- },
- "NL": {
-  "nl": "Nederland",
-  "en": "Netherlands",
-  "borders": [
-   "BE",
-   "DE"
-  ]
+  "lat": 41.6,
+  "lon": 21.7
  },
  "NZ": {
   "nl": "Nieuw-Zeeland",
   "en": "New Zealand",
-  "borders": []
+  "lat": -41.5,
+  "lon": 174.0
  },
  "PE": {
   "nl": "Peru",
   "en": "Peru",
-  "borders": [
-   "BR",
-   "CL"
-  ]
- },
- "PL": {
-  "nl": "Polen",
-  "en": "Poland",
-  "borders": [
-   "DE",
-   "CZ",
-   "SK",
-   "UA",
-   "RU"
-  ]
+  "lat": -14.0,
+  "lon": -75.7
  },
  "PT": {
   "nl": "Portugal",
   "en": "Portugal",
-  "borders": [
-   "ES"
-  ]
+  "lat": 40.5,
+  "lon": -8.0
  },
  "RO": {
   "nl": "Roemenië",
   "en": "Romania",
-  "borders": [
-   "UA",
-   "MD",
-   "BG",
-   "RS",
-   "HU"
-  ]
- },
- "RS": {
-  "nl": "Servië",
-  "en": "Serbia",
-  "borders": [
-   "HU",
-   "RO",
-   "BG",
-   "MK",
-   "ME",
-   "HR"
-  ]
+  "lat": 45.5,
+  "lon": 25.0
  },
  "RU": {
   "nl": "Rusland",
   "en": "Russia",
-  "borders": [
-   "PL",
-   "UA",
-   "GE",
-   "CN"
-  ]
+  "lat": 45.0,
+  "lon": 40.0
  },
  "SI": {
   "nl": "Slovenië",
   "en": "Slovenia",
-  "borders": [
-   "IT",
-   "AT",
-   "HU",
-   "HR"
-  ]
- },
- "SK": {
-  "nl": "Slowakije",
-  "en": "Slovakia",
-  "borders": [
-   "CZ",
-   "PL",
-   "UA",
-   "HU",
-   "AT"
-  ]
- },
- "TN": {
-  "nl": "Tunesië",
-  "en": "Tunisia",
-  "borders": []
+  "lat": 46.1,
+  "lon": 15.0
  },
  "TR": {
   "nl": "Turkije",
   "en": "Turkey",
-  "borders": [
-   "GR",
-   "BG",
-   "GE",
-   "AM"
-  ]
- },
- "UA": {
-  "nl": "Oekraïne",
-  "en": "Ukraine",
-  "borders": [
-   "PL",
-   "SK",
-   "HU",
-   "RO",
-   "MD",
-   "RU"
-  ]
+  "lat": 39.0,
+  "lon": 30.0
  },
  "US": {
   "nl": "Verenigde Staten",
   "en": "United States",
-  "borders": [
-   "CA",
-   "MX"
-  ]
- },
- "UY": {
-  "nl": "Uruguay",
-  "en": "Uruguay",
-  "borders": [
-   "AR",
-   "BR"
-  ]
+  "lat": 37.5,
+  "lon": -120.5
  },
  "ZA": {
   "nl": "Zuid-Afrika",
   "en": "South Africa",
-  "borders": []
+  "lat": -33.9,
+  "lon": 18.9
  }
 }

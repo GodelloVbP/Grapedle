@@ -332,5 +332,53 @@
     "source": "Gatinois, Explore Wine Maps (owner's copy)",
     "unmapped": [],
     "notes": "'cherry' mapped to red-cherry, 'plum' to black-plum"
+  },
+  {
+    "id": "graciano",
+    "aromas": [
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-pepper",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "mint",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'peppermint' mapped to mint"
+  },
+  {
+    "id": "tempranillo",
+    "aromas": [
+      {
+        "d": "raspberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "spices"
+    ],
+    "notes": "'plum' mapped to black-plum; 'spices' too vague to map"
   }
 ]

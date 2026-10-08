@@ -1,8 +1,20 @@
 import { byId, schedule } from './data.js';
-import { compare } from './feedback.js';
+import { compare, shareSymbol } from './feedback.js';
 import { answerIdFor } from './schedule.js';
 
 export const MAX_GUESSES = 6;
+/** Guesses needed before hint 1 and hint 2 unlock. */
+export const HINT_AT = [3, 5];
+
+/** "C _ _ _ _ _ _": first letter, then one underscore per letter. Spaces, slashes and hyphens stay as they are. */
+export function letterPattern(name) {
+  let first = true;
+  return [...String(name)].map((ch) => {
+    if (!/\p{L}/u.test(ch)) return ch;
+    if (first) { first = false; return ch.toUpperCase(); }
+    return '_';
+  }).join(' ');
+}
 
 /**
  * Game core without DOM. `persist` false (debug ?day=) keeps results out of storage.
@@ -14,16 +26,32 @@ export function createGame({ puzzle, store, persist = true, sched = schedule }) 
   // a stored game is final once the answer is in or the six guesses are used
   const cut = ids.indexOf(answer.id);
   if (cut >= 0) ids = ids.slice(0, cut + 1);
+  const savedHints = persist && store.state.hints && store.state.hints[puzzle];
+  const used = Array.isArray(savedHints) ? [...new Set(savedHints.filter((n) => n === 1 || n === 2))].sort() : [];
 
   const api = {
     puzzle, answer,
     get guesses() { return ids.slice(); },
+    get hints() { return used.slice(); },
     get status() {
       if (ids.includes(answer.id)) return 'won';
       return ids.length >= MAX_GUESSES ? 'lost' : 'playing';
     },
     has: (id) => ids.includes(id),
     rows: () => ids.map((id) => ({ grape: byId.get(id), cells: compare(byId.get(id), answer) })),
+    /** Hint n (1 or 2) can be opened: enough guesses, not used yet, game still running. */
+    hintReady: (n) => api.status === 'playing' && !used.includes(n) && ids.length >= HINT_AT[n - 1],
+    useHint(n) {
+      if (!api.hintReady(n)) return false;
+      used.push(n);
+      used.sort();
+      if (persist) {
+        store.state.hints = store.state.hints || {};
+        store.state.hints[puzzle] = used.slice();
+        store.save();
+      }
+      return true;
+    },
     guess(id) {
       if (api.status !== 'playing') return null;
       const g = byId.get(id);
@@ -46,9 +74,9 @@ export function createGame({ puzzle, store, persist = true, sched = schedule }) 
   return api;
 }
 
-export function shareText({ puzzle, rows, won, url = 'vinobypalazzo.nl/grapedle' }) {
-  const sym = { green: '🟩', yellow: '🟨', red: '🟥', grey: '⬜' };
-  const head = `Grapedle #${puzzle} ${won ? rows.length : 'X'}/${MAX_GUESSES}`;
-  const lines = rows.map((r) => r.cells.map((c) => sym[c.status]).join(''));
+/** Share text: head line (with one 💡 per hint used), one emoji line per guess, link. */
+export function shareText({ puzzle, rows, won, hints = 0, url = 'vinobypalazzo.nl/grapedle' }) {
+  const head = `Grapedle #${puzzle} ${won ? rows.length : 'X'}/${MAX_GUESSES}` + (hints > 0 ? ' ' + '💡'.repeat(hints) : '');
+  const lines = rows.map((r) => r.cells.map(shareSymbol).join(''));
   return [head, ...lines, url].join('\n');
 }
