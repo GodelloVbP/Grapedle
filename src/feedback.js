@@ -8,10 +8,16 @@ export const ARROWS = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
 const cell = (key, status, extra) => ({ key, status, arrow: null, ...extra });
 const rad = (d) => (d * Math.PI) / 180;
 
-/** [lat, lon] of a grape's region point; falls back to its country point. */
-export function pointOf(g, ctry = defCountries) {
-  if (g.lat !== null && g.lat !== undefined && g.lon !== null && g.lon !== undefined) return [g.lat, g.lon];
-  const c = ctry[g.country];
+/** Signature regions of a grape: 1 or 2 entries { name, country, lat, lon, climate }. */
+export const regionsOf = (g) => (g && g.regions) || [];
+
+/** Identity of a named region (the same name in another country is another region). */
+export const regionKey = (r) => (r.name ? `${r.country}|${r.name}` : null);
+
+/** [lat, lon] of a region point; falls back to its country point. */
+export function pointOf(r, ctry = defCountries) {
+  if (r.lat !== null && r.lat !== undefined && r.lon !== null && r.lon !== undefined) return [r.lat, r.lon];
+  const c = ctry[r.country];
   return c ? [c.lat, c.lon] : null;
 }
 
@@ -38,21 +44,56 @@ export function directionIndex(deg) {
 /** Distance shown to the player: rounded to 50 km, never below 50. */
 export const roundKm = (km) => Math.max(50, Math.round(km / 50) * 50);
 
-/** Region column: same region green, same country yellow, else red; yellow and red carry km + direction. */
-export function region(guess, answer, ctry = defCountries) {
-  const sameRegion = guess.region && answer.region && guess.region === answer.region && guess.country === answer.country;
-  if (sameRegion) return { status: 'green', km: null, dir: null };
-  if (!guess.country || !answer.country) return { status: 'grey', km: null, dir: null };
-  const status = guess.country === answer.country ? 'yellow' : 'red';
-  const a = pointOf(guess, ctry), b = pointOf(answer, ctry);
-  if (!a || !b) return { status, km: null, dir: null };
-  return { status, km: roundKm(distanceKm(a, b)), dir: directionIndex(bearingDeg(a, b)) };
+/** Names of the guess's regions that are also an answer region (guess order). */
+export function sharedRegions(guess, answer) {
+  const ak = new Set(regionsOf(answer).map(regionKey).filter(Boolean));
+  return regionsOf(guess).filter((r) => ak.has(regionKey(r))).map((r) => r.name);
 }
 
-/** Climate: three classes derived from the signature region. */
+/**
+ * Region column over the sets of signature regions.
+ * Green: identical sets. Yellow: at least one region in common ('overlap', no distance) or, failing
+ * that, a shared country. Red otherwise. Country-yellow and red carry km + 8-way arrow for the closest
+ * pair of points (guess to answer).
+ */
+export function region(guess, answer, ctry = defCountries) {
+  const G = regionsOf(guess), A = regionsOf(answer);
+  const gk = new Set(G.map(regionKey).filter(Boolean)), ak = new Set(A.map(regionKey).filter(Boolean));
+  if (gk.size && gk.size === ak.size && [...gk].every((k) => ak.has(k))) return { status: 'green', km: null, dir: null, hit: [] };
+  if (!G.length || !A.length || !G[0].country || !A[0].country) return { status: 'grey', km: null, dir: null, hit: [] };
+  const hit = sharedRegions(guess, answer);
+  if (hit.length) return { status: 'yellow', km: null, dir: null, hit };
+  const aCountries = new Set(A.map((r) => r.country));
+  const status = G.some((r) => aCountries.has(r.country)) ? 'yellow' : 'red';
+  let best = null;
+  for (const x of G) for (const y of A) {
+    const p = pointOf(x, ctry), q = pointOf(y, ctry);
+    if (!p || !q) continue;
+    const d = distanceKm(p, q);
+    if (!best || d < best.d) best = { d, p, q };
+  }
+  if (!best) return { status, km: null, dir: null, hit: [] };
+  return { status, km: roundKm(best.d), dir: directionIndex(bearingDeg(best.p, best.q)), hit: [] };
+}
+
+/** Distinct climate classes of a grape's regions, in region order. */
+export function climatesOf(g) {
+  return [...new Set(regionsOf(g).map((r) => r.climate).filter(Boolean))];
+}
+
+/** Climate classes of the guess that the answer also has. */
+export function sharedClimates(guess, answer) {
+  const a = new Set(climatesOf(answer));
+  return climatesOf(guess).filter((c) => a.has(c));
+}
+
+/** Climate: green identical sets of classes, yellow at least one class in common, red none. */
 export function climate(guess, answer) {
-  if (!guess.climate || !answer.climate) return 'grey';
-  return guess.climate === answer.climate ? 'green' : 'red';
+  const G = climatesOf(guess), A = climatesOf(answer);
+  if (!G.length || !A.length) return 'grey';
+  const shared = G.filter((c) => A.includes(c));
+  if (shared.length === G.length && shared.length === A.length) return 'green';
+  return shared.length ? 'yellow' : 'red';
 }
 
 /**
@@ -93,13 +134,13 @@ export function compare(guess, answer, ctx = {}) {
   const out = [];
   out.push(cell('colour', guess.colour === answer.colour ? 'green' : 'red'));
   const r = region(guess, answer, ctry);
-  out.push(cell('region', r.status, { km: r.km, dir: r.dir }));
-  out.push(cell('climate', climate(guess, answer)));
+  out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit }));
+  out.push(cell('climate', climate(guess, answer), { hit: sharedClimates(guess, answer) }));
   const a = area(guess.areaHa, answer.areaHa);
   out.push(cell('area', a.status, { arrow: a.arrow, tie: a.tie }));
   const f = flavour(guess, answer, desc);
   out.push(cell('flavour', f.status, { shared: f.shared, families: f.families }));
-  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; c.tie = false; }
+  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; c.tie = false; if (c.hit) c.hit = []; }
   return out;
 }
 

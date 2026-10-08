@@ -1,5 +1,5 @@
 import { countries, descriptors, schedule } from './data.js';
-import { COLUMNS, ARROWS, STATUS_SYMBOL } from './feedback.js';
+import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf, climatesOf } from './feedback.js';
 import { createGame, shareText, letterPattern, MAX_GUESSES, HINT_AT } from './game.js';
 import { makeT, pickLang } from './i18n.js';
 import { search, exact } from './search.js';
@@ -80,7 +80,18 @@ export function mount(root) {
   // ---- helpers ----
   const countryName = (c) => (c && countries[c] ? countries[c][lang] : '?');
   const fmtNum = (n) => numFmt().format(n);
-  const regionName = (g) => g.region || countryName(g.country);
+  const regionNames = (g) => regionsOf(g).map((r) => r.name || countryName(r.country));
+  const climateNames = (g) => climatesOf(g).map((c) => t('v_' + c));
+  /** "A / B" as nodes, names in `hit` bold. */
+  const joined = (names, hit) => {
+    const bold = new Set(hit || []);
+    const out = [];
+    names.forEach((n, i) => {
+      if (i) out.push(' / ');
+      out.push(bold.has(n) ? h('strong', { class: 'gd-hit' }, n) : n);
+    });
+    return out;
+  };
   const aromaName = (d) => (descriptors[d] ? descriptors[d][lang] : d);
   /** Official name in small print, only when it adds something to the display name. */
   const smallName = (g) => (g.small ? g.small[lang] : norm(g.name).includes(norm(g.official)) ? null : g.official);
@@ -115,17 +126,25 @@ export function mount(root) {
   const colLabel = (k) => t('col_' + k);
 
   function buildTile(cell, g, i) {
-    let main = null, sub = null, plain = '';
+    let main = null, sub = null, plain = '', nodes = null;
     switch (cell.key) {
       case 'colour': main = t('v_' + g.colour); plain = main; break;
       case 'region':
-        main = regionName(g); plain = main;
+        main = regionNames(g).join(' / '); plain = main;
+        nodes = cell.status === 'yellow' && cell.hit && cell.hit.length && regionNames(g).length > 1 ? joined(regionNames(g), cell.hit)
+          : cell.status === 'yellow' && cell.hit && cell.hit.length ? [h('strong', { class: 'gd-hit' }, main)] : null;
+        if (cell.hit && cell.hit.length) plain += `, ${t('overlap')}: ${cell.hit.join(', ')}`;
         if (cell.km) {
           sub = `${t('km', { n: fmtNum(cell.km) })} ${ARROWS[cell.dir]}`;
           plain += `, ${t('km', { n: fmtNum(cell.km) })} ${t('toward', { dir: t('dir_' + cell.dir) })}`;
         }
         break;
-      case 'climate': main = g.climate ? t('v_' + g.climate) : null; plain = main; break;
+      case 'climate': {
+        const names = climateNames(g);
+        main = names.length ? names.join(' / ') : null; plain = main;
+        if (cell.status === 'yellow' && cell.hit && cell.hit.length) nodes = joined(names, cell.hit.map((c) => t('v_' + c)));
+        break;
+      }
       case 'area': main = areaText(cell); plain = areaSr(cell); break;
       default: break;
     }
@@ -133,7 +152,7 @@ export function mount(root) {
     if (cell.key === 'flavour') plain = (g.flavours || []).map(aromaName).join(', ');
     const srStatus = t('st_' + cell.status);
     const srText = `${colLabel(cell.key)}: ${plain || t('unknownValue')}${srStatus ? ', ' + srStatus : ''}`;
-    const valEl = h('span', { class: 'gd-val' + (chips ? ' gd-val-chips' : '') }, chips || main || '–',
+    const valEl = h('span', { class: 'gd-val' + (chips ? ' gd-val-chips' : '') }, chips || nodes || main || '–',
       sub ? h('span', { class: 'gd-sub' }, sub) : null);
     return h('div', { class: `gd-tile gd-k-${cell.key} gd-s-${cell.status}`, style: `--i:${i}` },
       h('span', { class: 'gd-lbl', 'aria-hidden': 'true' }, colLabel(cell.key)),
@@ -321,8 +340,8 @@ export function mount(root) {
 
   function facts(g) {
     const rows = [
-      [t('region'), g.region ? `${g.region}, ${countryName(g.country)}` : countryName(g.country)],
-      [colLabel('climate'), g.climate ? t('v_' + g.climate) : null],
+      [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
+      [colLabel('climate'), climateNames(g).join(' / ') || null],
       [t('aromas'), g.flavours && g.flavours.length ? g.flavours.map(aromaName).join(', ') : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));

@@ -51,7 +51,7 @@ test('weekend-only grapes appear only on Saturday and Sunday (Europe/Amsterdam c
 test('grapes sharing a signature region are at least 7 days apart', () => {
   const lastIn = new Map();
   schedule.days.forEach((id, i) => {
-    const r = byId.get(id).region;
+    const r = byId.get(id).regions[0].name; // primary region only
     if (lastIn.has(r)) {
       const [j, other] = lastIn.get(r);
       if (other !== id) assert.ok(i - j >= 7, `${other} (day ${j}) and ${id} (day ${i}) share ${r}`);

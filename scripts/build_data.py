@@ -296,14 +296,20 @@ def build_grapes(report):
         rec.update({"synonyms": [], "colour": colour})
         s = sig.get(gid)
         if s:
-            rec.update({"country": s["country_iso2"], "region": s["region"],
-                        "lat": float(s["lat"]), "lon": float(s["lon"]), "climate": s["climate3"]})
+            regs = [{"name": s["region"], "country": s["country_iso2"], "lat": float(s["lat"]),
+                     "lon": float(s["lon"]), "climate": s["climate3"]}]
+            clim_src = f"Anderson & Nelgen 2020, Table 75: {s['table75_rows']}; growing-season temperature {s['gst_c']} °C"
+            if s.get("region2"):
+                regs.append({"name": s["region2"], "country": s["country2_iso2"], "lat": float(s["lat2"]),
+                             "lon": float(s["lon2"]), "climate": s["climate3_2"]})
+                clim_src += f" | {s['region2']}: Table 75: {s['table75_rows_2']}; growing-season temperature {s['gst_c_2']} °C"
+            rec["regions"] = regs
             src["region"] = f"Signature region, hand-placed point: {s['note']}" if s["note"] else "Signature region, hand-placed point"
-            src["climate"] = f"Anderson & Nelgen 2020, Table 75: {s['table75_rows']}; growing-season temperature {s['gst_c']} °C"
+            src["climate"] = clim_src
         else:
             c = clim.get(prime)
-            rec.update({"country": tops[0] if tops else origin, "region": None, "lat": None, "lon": None,
-                        "climate": CLIMATE3.get(c)})
+            rec["regions"] = [{"name": None, "country": tops[0] if tops else origin, "lat": None, "lon": None,
+                               "climate": CLIMATE3.get(c)}]
             src["region"] = "Most-planted country (Adelaide 2023); country point"
             src["climate"] = "Computed from Adelaide 2016 regional data and Anderson & Nelgen 2020 Table 75, collapsed to koel/warm/heet"
         rec["areaHa"] = int(round(area)) if area > 0 else None
@@ -346,7 +352,7 @@ def build_grapes(report):
         if not a["origin"] or a["origin"] == "USSR":
             continue
         rec = record(a, pr)
-        if not rec["country"] or not rec["areaHa"]:
+        if not rec["regions"][0]["country"] or not rec["areaHa"]:
             continue
         grapes.append(rec)
         seen.add(rec["id"])
@@ -467,7 +473,7 @@ def build_schedule(pool, cycles, start):
     seq = list(cur["days"])
     ids = sorted(g["id"] for g in pool)
     n = len(ids)
-    region = {g["id"]: g["region"] for g in pool}
+    region = {g["id"]: g["regions"][0]["name"] for g in pool}  # primary region only
     weekend_only = {g["id"] for g in pool if g.get("weekendOnly")}
     if len(seq) % n or any(i not in region for i in seq):
         raise SystemExit("schedule.json does not match the answer pool: it is append-only from launch; "
@@ -573,7 +579,7 @@ def main():
 
     write_json(os.path.join(OUT, "grapes.json"), grapes, oneline=True)
 
-    used = sorted({g["country"] for g in grapes})
+    used = sorted({r["country"] for g in grapes for r in g["regions"]})
     cdata = json.load(open(os.path.join(ROOT, "scripts", "countries_data.json"), encoding="utf-8"))
     for c in used:
         if c not in cdata:
@@ -601,7 +607,7 @@ def main():
     sch = build_schedule(pool, cycles, args.start)
     print(f"grapes: {len(grapes)} (answers {len(pool)}), countries: {len(countries)}, "
           f"schedule days: {len(sch['days'])}, synonyms: {sum(len(g['synonyms']) for g in grapes)}")
-    print("null climate:", [g["id"] for g in grapes if g["climate"] is None])
+    print("null climate:", [g["id"] for g in grapes if g["regions"][0]["climate"] is None])
     print("no area:", [g["id"] for g in grapes if not g["areaHa"]])
     print("pool grapes without aromas:", [g["id"] for g in pool if not g["flavours"]])
     print(f"synonym collisions dropped: {len(report['collisions'])}")

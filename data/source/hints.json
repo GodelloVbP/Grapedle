@@ -1,57 +1,387 @@
 [
-  {"id":"cabernet-sauvignon","hint_nl":"Médoc","hint_en":"Médoc","source":"https://www.thewinedoctor.com/regionalguides/bordeaux_2013_03_redvarieties_01_cabernetsauvignon.shtml","notes":"Bordeaux guide to Cabernet Sauvignon; Médoc taken from that guide's subject matter, not confirmed in snippet."},
-  {"id":"merlot","hint_nl":"Pomerol","hint_en":"Pomerol","source":"https://ak.st.laithwaites.co.uk/wine/pomerol-wine","notes":""},
-  {"id":"tempranillo","hint_nl":"Rioja","hint_en":"Rioja","source":"https://vinepair.com/articles/learn-rioja-tempranillo-infographic/","notes":""},
-  {"id":"chardonnay","hint_nl":"Chablis","hint_en":"Chablis","source":"https://www.britannica.com/plant/chardonnay-grape","notes":""},
-  {"id":"syrah","hint_nl":"Hermitage","hint_en":"Hermitage","source":"https://www.falstaff.com/en/news/syrah-in-focus-part-1-the-french-homelands","notes":""},
-  {"id":"garnacha-tinta","hint_nl":"Châteauneuf-du-Pape","hint_en":"Châteauneuf-du-Pape","source":"https://vinepair.com/wine-101/learn-grenache-garnacha-wine/","notes":"Grape guide; Châteauneuf link not confirmed in snippet."},
-  {"id":"sauvignon-blanc","hint_nl":"Sancerre","hint_en":"Sancerre","source":"https://vins-centre-loire.com/en/les-vins-de-sancerre/","notes":""},
-  {"id":"pinot-noir","hint_nl":"Bourgogne","hint_en":"Burgundy","source":"https://www.burgundywine.com/?p=2198","notes":""},
-  {"id":"pinot-gris","hint_nl":"Elzas","hint_en":"Alsace","source":"https://www.avenuedesvins.fr/en/vins-aoc-alsace-pinot-gris-26.html","notes":"Alsace is also the region behind the Gewürztraminer hint (Alsace Grand Cru); the two overlap at region level."},
-  {"id":"riesling","hint_nl":"Mosel","hint_en":"Mosel","source":"https://thespritz.substack.com/p/classic-wine-regions-mosel-valley","notes":""},
-  {"id":"cot","hint_nl":"Mendoza","hint_en":"Mendoza","source":"https://en.wikipedia.org/wiki/Malbec","notes":"Cahors is the historic home of this grape; Mendoza chosen as the association Dutch buyers know from Argentine Malbec."},
-  {"id":"cabernet-franc","hint_nl":"Chinon","hint_en":"Chinon","source":"https://bevx.com/wine/chinon-the-loires-best-kept-secret/","notes":""},
-  {"id":"chenin-blanc","hint_nl":"Vouvray","hint_en":"Vouvray","source":"https://www.intowine.com/vouvray-region-frances-loire-valley-home-chenin-blanc","notes":""},
-  {"id":"sangiovese","hint_nl":"Chianti","hint_en":"Chianti","source":"https://weibel.inteco.ch/en/ueber-uns/capisci/Chianti-Classico","notes":""},
-  {"id":"nebbiolo","hint_nl":"Barolo","hint_en":"Barolo","source":"https://winefolly.com/review/barolo-barbaresco-italy-nebbiolo-regions/","notes":""},
-  {"id":"barbera","hint_nl":"Asti","hint_en":"Asti","source":"https://wineinsiders.com/blogs/wine-101-types-of-wines-grapes/barbera-dasti-vs-barbera-dalba","notes":"Barbera d'Asti; avoids Asti Spumante association with Muscat."},
-  {"id":"muscat-blanc-a-petits-grains","hint_nl":"Beaumes-de-Venise","hint_en":"Beaumes-de-Venise","source":"https://www.laywheeler.com/our-producers/domaine-de-durban","notes":"Producer page for a Muscat de Beaumes-de-Venise; confirms appellation, grape link inferred."},
-  {"id":"viognier","hint_nl":"Condrieu","hint_en":"Condrieu","source":"https://www.decanter.com/features/viognier-246278/","notes":""},
-  {"id":"gewurztraminer","hint_nl":"Elzas Grand Cru","hint_en":"Alsace Grand Cru","source":"https://tastefrance.com/essentials/wine-and-spirits/alsace-gewurztraminer-aoc","notes":"Source is the Alsace Gewurztraminer AOC page; Grand Cru wording comes from the brief and is not confirmed by this page."},
-  {"id":"semillon","hint_nl":"Sauternes","hint_en":"Sauternes","source":"https://jeroboams.co.uk/advice-centre/buyers-guide/sauternes-wine-region-and-semillon-grape-guide/","notes":""},
-  {"id":"tribidrag","hint_nl":"Californië","hint_en":"California","source":"https://drycreekvineyard.com/?p=6341","notes":"Zinfandel is the common name; Tribidrag/Crljenak origin is Croatia, which a Dutch customer would not know. California is the association."},
-  {"id":"carmenere","hint_nl":"Chili","hint_en":"Chile","source":"https://www.thedrinksbusiness.com/2023/01/top-10-carmeneres-from-chile/","notes":""},
-  {"id":"pinotage","hint_nl":"Stellenbosch","hint_en":"Stellenbosch","source":"https://en.wikipedia.org/wiki/Pinotage","notes":""},
-  {"id":"gamay-noir","hint_nl":"Beaujolais","hint_en":"Beaujolais","source":"https://www.beaujolais.com/en/?p=1506","notes":""},
-  {"id":"pinot-blanc","hint_nl":"Alto Adige","hint_en":"Alto Adige","source":"https://en.wikipedia.org/wiki/Pinot_blanc","notes":"Alsace also grows Pinot Blanc; Alto Adige chosen to avoid overlapping with the Pinot Gris hint."},
-  {"id":"gruner-veltliner","hint_nl":"Wachau","hint_en":"Wachau","source":"https://www.decanter.com/features/lesser-known-grapes-gruner-veltliner-249162/","notes":""},
-  {"id":"mazuelo","hint_nl":"Corbières","hint_en":"Corbières","source":"https://wineguide.wein.plus/wine-regions/corbieres-aoc","notes":"Mazuelo is Carignan in the Languedoc; the Carignan name is not used in the hint."},
-  {"id":"cinsaut","hint_nl":"Provence","hint_en":"Provence","source":"https://jeroboams.co.uk/advice-centre/buyers-guide/cinsault-wine-buyers-guide/","notes":"Cinsault is a rosé blending grape in Provence; region-level hint."},
-  {"id":"montepulciano","hint_nl":"Abruzzen","hint_en":"Abruzzo","source":"https://www.vinovest.co/blog/montepulciano-dabruzzo","notes":""},
-  {"id":"prosecco","hint_nl":"Conegliano-Valdobbiadene","hint_en":"Conegliano-Valdobbiadene","source":"https://en.wikipedia.org/wiki/Glera_(grape)","notes":"Glera is the grape behind Prosecco; Prosecco not used in the hint."},
-  {"id":"monastrell","hint_nl":"Jumilla","hint_en":"Jumilla","source":"https://www.foodswinesfromspain.com/en/wine/articles/2016/september/the-jumilla-wine-route--the-domain-of-the-monastrell-grape-varie","notes":"Monastrell is Mourvèdre; Jumilla is its main Spanish home."},
-  {"id":"alvarinho","hint_nl":"Rías Baixas","hint_en":"Rías Baixas","source":"https://en.wikipedia.org/wiki/Albari%C3%B1o","notes":""},
-  {"id":"macabeo","hint_nl":"Cava","hint_en":"Cava","source":"https://www.cava.wine/en/origin-cava/authorised-grape-varieties","notes":"Official Cava authorised grape varieties page."},
-  {"id":"melon","hint_nl":"Sèvre-et-Maine","hint_en":"Sèvre-et-Maine","source":"https://divineloire.fr/en/grapes/melon-de-bourgogne/","notes":"Muscadet is the display-name appellation and is not used; Sèvre-et-Maine link not confirmed in snippet."},
-  {"id":"aglianico","hint_nl":"Taurasi","hint_en":"Taurasi","source":"https://en.wikipedia.org/wiki/Taurasi_(wine)","notes":""},
-  {"id":"lambrusco-salamino","hint_nl":"Emilia-Romagna","hint_en":"Emilia-Romagna","source":"https://italianwinecentral.com/denomination/lambrusco-salamino-di-santa-croce-doc/","notes":"Region-level hint; Santa Croce DOC page not opened."},
-  {"id":"vermentino","hint_nl":"Sardinië","hint_en":"Sardinia","source":"https://www.gamberorossointernational.com/news/the-5-best-vermentinos-from-sardinia-selected-by-gambero-rosso-with-a-winery-awarded-for-the-first-time/","notes":"Gallura is the top appellation but is not famous to Dutch buyers."},
-  {"id":"verdejo","hint_nl":"Rueda","hint_en":"Rueda","source":"https://wineinsiders.com/blogs/wine-101-types-of-wines-grapes/rueda-verdejo","notes":""},
-  {"id":"nero-d-avola","hint_nl":"Sicilië","hint_en":"Sicily","source":"https://en.wikipedia.org/wiki/Nero_d%27Avola","notes":"Region-level hint."},
-  {"id":"zweigelt","hint_nl":"Neusiedlersee","hint_en":"Neusiedlersee","source":"https://www.bauraulacvins.ch/en/p/red-wines/austria/burgenland/neusiedlersee/zweigelt-reserve-2019-40043819.html","notes":"Changed from Burgenland to Neusiedlersee so it does not overlap the Blaufränkisch hint Mittelburgenland; source page is the Neusiedlersee Zweigelt."},
-  {"id":"blaufrankisch","hint_nl":"Mittelburgenland","hint_en":"Mittelburgenland","source":"https://magazine.wein.plus/the-land-of-blaufraenkisch-wine-growing-regions-in-austria-mittelburgenland","notes":""},
-  {"id":"muller-thurgau","hint_nl":"Rheinhessen","hint_en":"Rheinhessen","source":"https://www.rheinhessen.de/en/mueller-thurgau","notes":""},
-  {"id":"auxerrois","hint_nl":"Luxemburg","hint_en":"Luxembourg","source":"https://vinovoss.com/grapes/auxerrois/","notes":"Auxerrois is also grown in Alsace, which was avoided to limit overlap. Luxembourg association not confirmed in snippet."},
-  {"id":"corvina-veronese","hint_nl":"Amarone","hint_en":"Amarone","source":"https://www.amaronetours.it/wines/amarone/grape-varietals","notes":"Corvina is the main grape of Amarone; Valpolicella hint given to Corvinone and Bardolino to Rondinella for distinctness."},
-  {"id":"corvinone","hint_nl":"Valpolicella","hint_en":"Valpolicella","source":"https://en.wikipedia.org/wiki/Corvinone","notes":"Only the Valpolicella family hint is used; it is shared in principle with Corvina's home area, so this is the least distinct of the three."},
-  {"id":"croatina","hint_nl":"Oltrepò Pavese","hint_en":"Oltrepò Pavese","source":"https://www.falstaff.com/en/grape-varieties/croatina","notes":"Grape profile; Oltrepò Pavese link not confirmed in snippet. Croatina is the main grape of Bonarda dell'Oltrepò Pavese."},
-  {"id":"garganega","hint_nl":"Soave","hint_en":"Soave","source":"https://en.wikipedia.org/wiki/Garganega","notes":""},
-  {"id":"garnacha-blanca","hint_nl":"Priorat","hint_en":"Priorat","source":"https://www.falstaff.com/en/grape-varieties/garnacha-blanca","notes":"Priorat link not confirmed in snippet."},
-  {"id":"graciano","hint_nl":"Navarra","hint_en":"Navarra","source":"https://championwinecellars.com/2016-vina-zorzal-navarra-graciano/","notes":"Graciano is a Rioja blend grape, but Rioja is the hint for Tempranillo, so Navarra was used."},
-  {"id":"marsanne","hint_nl":"Saint-Péray","hint_en":"Saint-Péray","source":"https://en.wikipedia.org/wiki/Marsanne","notes":""},
-  {"id":"rondinella","hint_nl":"Bardolino","hint_en":"Bardolino","source":"https://en.wikipedia.org/wiki/Rondinella","notes":"Bardolino blends use Rondinella alongside Corvina; not confirmed in snippet."},
-  {"id":"roussanne","hint_nl":"Rhône","hint_en":"Rhône","source":"https://en.wikipedia.org/wiki/Roussanne","notes":"Region-level hint; Hermitage, Saint-Péray and Châteauneuf are taken by other grapes' hints."},
-  {"id":"silvaner","hint_nl":"Franken","hint_en":"Franconia","source":"https://sonnenhotels.de/en/blog/swr-silvaner-franken-leitrebsorte","notes":""},
-  {"id":"trousseau","hint_nl":"Arbois","hint_en":"Arbois","source":"https://www.yapp.co.uk/jura-arbois-trousseau-domaine-jean-louis-tissot-2017","notes":""},
-  {"id":"verdicchio-bianco","hint_nl":"Castelli di Jesi","hint_en":"Castelli di Jesi","source":"https://www.bbr.com/region-3879-verdicchio-dei-castelli-di-jesi","notes":"Verdicchio dei Castelli di Jesi DOC."}
+  {
+    "id": "cabernet-sauvignon",
+    "hint_nl": "Médoc",
+    "hint_en": "Médoc",
+    "source": "https://www.thewinedoctor.com/regionalguides/bordeaux_2013_03_redvarieties_01_cabernetsauvignon.shtml",
+    "notes": "Bordeaux guide to Cabernet Sauvignon; Médoc taken from that guide's subject matter, not confirmed in snippet."
+  },
+  {
+    "id": "merlot",
+    "hint_nl": "Pomerol",
+    "hint_en": "Pomerol",
+    "source": "https://ak.st.laithwaites.co.uk/wine/pomerol-wine",
+    "notes": ""
+  },
+  {
+    "id": "tempranillo",
+    "hint_nl": "Ribera del Duero",
+    "hint_en": "Ribera del Duero",
+    "source": "https://en.wikipedia.org/wiki/Tempranillo",
+    "notes": "Wikipedia: Tempranillo constitutes 90-100% of Ribera del Duero wines. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "chardonnay",
+    "hint_nl": "Chablis",
+    "hint_en": "Chablis",
+    "source": "https://www.britannica.com/plant/chardonnay-grape",
+    "notes": ""
+  },
+  {
+    "id": "syrah",
+    "hint_nl": "Hermitage",
+    "hint_en": "Hermitage",
+    "source": "https://www.falstaff.com/en/news/syrah-in-focus-part-1-the-french-homelands",
+    "notes": ""
+  },
+  {
+    "id": "garnacha-tinta",
+    "hint_nl": "Châteauneuf-du-Pape",
+    "hint_en": "Châteauneuf-du-Pape",
+    "source": "https://vinepair.com/wine-101/learn-grenache-garnacha-wine/",
+    "notes": "Grape guide; Châteauneuf link not confirmed in snippet."
+  },
+  {
+    "id": "sauvignon-blanc",
+    "hint_nl": "Sancerre",
+    "hint_en": "Sancerre",
+    "source": "https://vins-centre-loire.com/en/les-vins-de-sancerre/",
+    "notes": ""
+  },
+  {
+    "id": "pinot-noir",
+    "hint_nl": "Gevrey-Chambertin",
+    "hint_en": "Gevrey-Chambertin",
+    "source": "https://en.wikipedia.org/wiki/Pinot_noir",
+    "notes": "Listed under Notable wines in the Pinot noir infobox (Gevrey-Chambertin, Nuits-Saint-Georges). Wikipedia does not spell out the grape share; Burgundy red appellation, Pinot noir only. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "pinot-gris",
+    "hint_nl": "Elzas",
+    "hint_en": "Alsace",
+    "source": "https://www.avenuedesvins.fr/en/vins-aoc-alsace-pinot-gris-26.html",
+    "notes": "Alsace is also the region behind the Gewürztraminer hint (Alsace Grand Cru); the two overlap at region level."
+  },
+  {
+    "id": "riesling",
+    "hint_nl": "Piesport",
+    "hint_en": "Piesport",
+    "source": "https://en.wikipedia.org/wiki/Piesport",
+    "notes": "Wikipedia: Traditionally it is mainly Riesling grapes grown here. Village in the Mosel, so more specific than the region shown. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "cot",
+    "hint_nl": "Cahors",
+    "hint_en": "Cahors",
+    "source": "https://en.wikipedia.org/wiki/Malbec",
+    "notes": "Wikipedia: Cahors is the stronghold of Malbec, where AOC rules require at least 70% Malbec in the blend. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "cabernet-franc",
+    "hint_nl": "Chinon",
+    "hint_en": "Chinon",
+    "source": "https://bevx.com/wine/chinon-the-loires-best-kept-secret/",
+    "notes": ""
+  },
+  {
+    "id": "chenin-blanc",
+    "hint_nl": "Vouvray",
+    "hint_en": "Vouvray",
+    "source": "https://www.intowine.com/vouvray-region-frances-loire-valley-home-chenin-blanc",
+    "notes": ""
+  },
+  {
+    "id": "sangiovese",
+    "hint_nl": "Chianti",
+    "hint_en": "Chianti",
+    "source": "https://weibel.inteco.ch/en/ueber-uns/capisci/Chianti-Classico",
+    "notes": ""
+  },
+  {
+    "id": "nebbiolo",
+    "hint_nl": "Barolo",
+    "hint_en": "Barolo",
+    "source": "https://winefolly.com/review/barolo-barbaresco-italy-nebbiolo-regions/",
+    "notes": ""
+  },
+  {
+    "id": "barbera",
+    "hint_nl": "Asti",
+    "hint_en": "Asti",
+    "source": "https://wineinsiders.com/blogs/wine-101-types-of-wines-grapes/barbera-dasti-vs-barbera-dalba",
+    "notes": "Barbera d'Asti; avoids Asti Spumante association with Muscat."
+  },
+  {
+    "id": "muscat-blanc-a-petits-grains",
+    "hint_nl": "Beaumes-de-Venise",
+    "hint_en": "Beaumes-de-Venise",
+    "source": "https://www.laywheeler.com/our-producers/domaine-de-durban",
+    "notes": "Producer page for a Muscat de Beaumes-de-Venise; confirms appellation, grape link inferred."
+  },
+  {
+    "id": "viognier",
+    "hint_nl": "Condrieu",
+    "hint_en": "Condrieu",
+    "source": "https://www.decanter.com/features/viognier-246278/",
+    "notes": ""
+  },
+  {
+    "id": "gewurztraminer",
+    "hint_nl": "Elzas Grand Cru",
+    "hint_en": "Alsace Grand Cru",
+    "source": "https://tastefrance.com/essentials/wine-and-spirits/alsace-gewurztraminer-aoc",
+    "notes": "Source is the Alsace Gewurztraminer AOC page; Grand Cru wording comes from the brief and is not confirmed by this page."
+  },
+  {
+    "id": "semillon",
+    "hint_nl": "Sauternes",
+    "hint_en": "Sauternes",
+    "source": "https://jeroboams.co.uk/advice-centre/buyers-guide/sauternes-wine-region-and-semillon-grape-guide/",
+    "notes": ""
+  },
+  {
+    "id": "tribidrag",
+    "hint_nl": "Californië",
+    "hint_en": "California",
+    "source": "https://drycreekvineyard.com/?p=6341",
+    "notes": "Zinfandel is the common name; Tribidrag/Crljenak origin is Croatia, which a Dutch customer would not know. California is the association."
+  },
+  {
+    "id": "carmenere",
+    "hint_nl": "Chili",
+    "hint_en": "Chile",
+    "source": "https://www.thedrinksbusiness.com/2023/01/top-10-carmeneres-from-chile/",
+    "notes": ""
+  },
+  {
+    "id": "pinotage",
+    "hint_nl": "Cape Blend",
+    "hint_en": "Cape Blend",
+    "source": "https://en.wikipedia.org/wiki/Pinotage",
+    "notes": "Wikipedia: Pinotage is a required component (30-70%) of Cape blends. Style name, not a grape name. Pinotage is not the majority grape in Cape Blend, so this is a secondary-role hint. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "gamay-noir",
+    "hint_nl": "Morgon",
+    "hint_en": "Morgon",
+    "source": "https://www.jancisrobinson.com/learn/grape-varieties/red/gamay",
+    "notes": "Jancis Robinson: Morgon and Moulin-a-Vent are made exclusively from Gamay grapes. Beaujolais cru. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "pinot-blanc",
+    "hint_nl": "Alto Adige",
+    "hint_en": "Alto Adige",
+    "source": "https://en.wikipedia.org/wiki/Pinot_blanc",
+    "notes": "Alsace also grows Pinot Blanc; Alto Adige chosen to avoid overlapping with the Pinot Gris hint."
+  },
+  {
+    "id": "gruner-veltliner",
+    "hint_nl": "Weinviertel",
+    "hint_en": "Weinviertel",
+    "source": "https://en.wikipedia.org/wiki/Gr%C3%BCner_Veltliner",
+    "notes": "Wikipedia: in the Weinviertel, where it is the only permitted grape variety (Weinviertel DAC). Lower Austria sub-region, not Wachau. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "mazuelo",
+    "hint_nl": "Corbières",
+    "hint_en": "Corbières",
+    "source": "https://wineguide.wein.plus/wine-regions/corbieres-aoc",
+    "notes": "Mazuelo is Carignan in the Languedoc; the Carignan name is not used in the hint."
+  },
+  {
+    "id": "cinsaut",
+    "hint_nl": "Château Musar (Libanon)",
+    "hint_en": "Château Musar (Lebanon)",
+    "source": "https://en.wikipedia.org/wiki/Cinsault",
+    "notes": "Wikipedia: Cinsaut is an important component in the blend of Lebanon's Chateau Musar. Estate wine, weaker than an appellation hint; the page does not name Cinsaut as the majority grape. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "montepulciano",
+    "hint_nl": "Abruzzen",
+    "hint_en": "Abruzzo",
+    "source": "https://www.vinovest.co/blog/montepulciano-dabruzzo",
+    "notes": ""
+  },
+  {
+    "id": "prosecco",
+    "hint_nl": "Conegliano-Valdobbiadene",
+    "hint_en": "Conegliano-Valdobbiadene",
+    "source": "https://en.wikipedia.org/wiki/Glera_(grape)",
+    "notes": "Glera is the grape behind Prosecco; Prosecco not used in the hint."
+  },
+  {
+    "id": "monastrell",
+    "hint_nl": "Bandol",
+    "hint_en": "Bandol",
+    "source": "https://en.wikipedia.org/wiki/Mourv%C3%A8dre",
+    "notes": "Wikipedia: Bandol is the AOC region that most prominently features Mourvedre (red must contain at least 50%). Mourvedre is the French name of Monastrell; the Jumilla link is not used here. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "alvarinho",
+    "hint_nl": "Monção e Melgaço",
+    "hint_en": "Monção e Melgaço (Portugal)",
+    "source": "https://en.wikipedia.org/wiki/Albari%C3%B1o",
+    "notes": "Wikipedia: In Portugal Alvarinho is only authorised to be grown in Monção and Melgaço (Vinho Verde sub-region). (replaced a hint that only named the region)"
+  },
+  {
+    "id": "macabeo",
+    "hint_nl": "Cava",
+    "hint_en": "Cava",
+    "source": "https://www.cava.wine/en/origin-cava/authorised-grape-varieties",
+    "notes": "Official Cava authorised grape varieties page."
+  },
+  {
+    "id": "melon",
+    "hint_nl": "Sèvre-et-Maine",
+    "hint_en": "Sèvre-et-Maine",
+    "source": "https://divineloire.fr/en/grapes/melon-de-bourgogne/",
+    "notes": "Muscadet is the display-name appellation and is not used; Sèvre-et-Maine link not confirmed in snippet."
+  },
+  {
+    "id": "aglianico",
+    "hint_nl": "Taurasi",
+    "hint_en": "Taurasi",
+    "source": "https://en.wikipedia.org/wiki/Taurasi_(wine)",
+    "notes": ""
+  },
+  {
+    "id": "lambrusco-salamino",
+    "hint_nl": "Modena",
+    "hint_en": "Modena",
+    "source": "https://en.wikipedia.org/wiki/Lambrusco",
+    "notes": "Wikipedia: Lambrusco is grown principally around the central provinces of Modena, Parma, Reggio-Emilia and Mantua. Weakest-specific option: a province, but more specific than the region shown. Avoid Sorbara and Grasparossa, which are grape variety names. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "vermentino",
+    "hint_nl": "Sardinië",
+    "hint_en": "Sardinia",
+    "source": "https://www.gamberorossointernational.com/news/the-5-best-vermentinos-from-sardinia-selected-by-gambero-rosso-with-a-winery-awarded-for-the-first-time/",
+    "notes": "Gallura is the top appellation but is not famous to Dutch buyers."
+  },
+  {
+    "id": "verdejo",
+    "hint_nl": "Rueda",
+    "hint_en": "Rueda",
+    "source": "https://wineinsiders.com/blogs/wine-101-types-of-wines-grapes/rueda-verdejo",
+    "notes": ""
+  },
+  {
+    "id": "nero-d-avola",
+    "hint_nl": "Sicilië",
+    "hint_en": "Sicily",
+    "source": "https://en.wikipedia.org/wiki/Nero_d%27Avola",
+    "notes": "Region-level hint."
+  },
+  {
+    "id": "zweigelt",
+    "hint_nl": "Neusiedlersee",
+    "hint_en": "Neusiedlersee",
+    "source": "https://www.bauraulacvins.ch/en/p/red-wines/austria/burgenland/neusiedlersee/zweigelt-reserve-2019-40043819.html",
+    "notes": "Changed from Burgenland to Neusiedlersee so it does not overlap the Blaufränkisch hint Mittelburgenland; source page is the Neusiedlersee Zweigelt."
+  },
+  {
+    "id": "blaufrankisch",
+    "hint_nl": "Leithaberg",
+    "hint_en": "Leithaberg",
+    "source": "https://en.wikipedia.org/wiki/Blaufr%C3%A4nkisch",
+    "notes": "Wikipedia: Leithaberg DAC, in the slate and limestone hills around the Leitha Mountains, must be at least 85% Blaufrankisch. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "muller-thurgau",
+    "hint_nl": "Liebfraumilch",
+    "hint_en": "Liebfraumilch",
+    "source": "https://www.jancisrobinson.com/learn/grape-varieties/white/muller-thurgau",
+    "notes": "Jancis Robinson: It is almost invariably the major ingredient in Liebfraumilch and Germany's other cheap QbA blends. Wine style, not a region. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "auxerrois",
+    "hint_nl": "Luxemburg",
+    "hint_en": "Luxembourg",
+    "source": "https://vinovoss.com/grapes/auxerrois/",
+    "notes": "Auxerrois is also grown in Alsace, which was avoided to limit overlap. Luxembourg association not confirmed in snippet."
+  },
+  {
+    "id": "corvina-veronese",
+    "hint_nl": "Amarone",
+    "hint_en": "Amarone",
+    "source": "https://www.amaronetours.it/wines/amarone/grape-varietals",
+    "notes": "Corvina is the main grape of Amarone; Valpolicella hint given to Corvinone and Bardolino to Rondinella for distinctness."
+  },
+  {
+    "id": "corvinone",
+    "hint_nl": "Valpolicella",
+    "hint_en": "Valpolicella",
+    "source": "https://en.wikipedia.org/wiki/Corvinone",
+    "notes": "Only the Valpolicella family hint is used; it is shared in principle with Corvina's home area, so this is the least distinct of the three."
+  },
+  {
+    "id": "croatina",
+    "hint_nl": "Coste della Sesia",
+    "hint_en": "Coste della Sesia",
+    "source": "https://en.wikipedia.org/wiki/Croatina",
+    "notes": "Wikipedia: Coste della Sesia Croatina DOC requires 85-100% Croatina. Obscure DOC; Oltrepo Pavese Bonarda (synonym) and Gutturnio (30-45% only) were rejected. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "garganega",
+    "hint_nl": "Soave",
+    "hint_en": "Soave",
+    "source": "https://en.wikipedia.org/wiki/Garganega",
+    "notes": ""
+  },
+  {
+    "id": "garnacha-blanca",
+    "hint_nl": "Châteauneuf-du-Pape",
+    "hint_en": "Châteauneuf-du-Pape",
+    "source": "https://en.wikipedia.org/wiki/Grenache_blanc",
+    "notes": "Wikipedia: Grenache blanc is a major component in the white wines of the Châteauneuf-du-Pape AOC. Grenache is a synonym of Garnacha and must not appear in the hint; it does not. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "graciano",
+    "hint_nl": "Navarra",
+    "hint_en": "Navarra",
+    "source": "https://championwinecellars.com/2016-vina-zorzal-navarra-graciano/",
+    "notes": "Graciano is a Rioja blend grape, but Rioja is the hint for Tempranillo, so Navarra was used."
+  },
+  {
+    "id": "marsanne",
+    "hint_nl": "Saint-Péray",
+    "hint_en": "Saint-Péray",
+    "source": "https://en.wikipedia.org/wiki/Marsanne",
+    "notes": ""
+  },
+  {
+    "id": "rondinella",
+    "hint_nl": "Bardolino",
+    "hint_en": "Bardolino",
+    "source": "https://en.wikipedia.org/wiki/Rondinella",
+    "notes": "Bardolino blends use Rondinella alongside Corvina; not confirmed in snippet."
+  },
+  {
+    "id": "roussanne",
+    "hint_nl": "Hermitage",
+    "hint_en": "Hermitage",
+    "source": "https://en.wikipedia.org/wiki/Roussanne",
+    "notes": "Wikipedia: Roussanne is one of only two permitted white varieties in the Hermitage AOC (with Marsanne). Northern Rhone appellation. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "silvaner",
+    "hint_nl": "Würzburger Stein",
+    "hint_en": "Würzburger Stein",
+    "source": "https://en.wikipedia.org/wiki/W%C3%BCrzburger_Stein",
+    "notes": "Wikipedia: the primary grapes of Würzburger Stein are Riesling and Silvaner. Famous Franconian vineyard. Silvaner is only one of two main grapes there. (replaced a hint that only named the region)"
+  },
+  {
+    "id": "trousseau",
+    "hint_nl": "Arbois",
+    "hint_en": "Arbois",
+    "source": "https://www.yapp.co.uk/jura-arbois-trousseau-domaine-jean-louis-tissot-2017",
+    "notes": ""
+  },
+  {
+    "id": "verdicchio-bianco",
+    "hint_nl": "Castelli di Jesi",
+    "hint_en": "Castelli di Jesi",
+    "source": "https://www.bbr.com/region-3879-verdicchio-dei-castelli-di-jesi",
+    "notes": "Verdicchio dei Castelli di Jesi DOC."
+  }
 ]

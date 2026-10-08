@@ -27,33 +27,46 @@ test('answer pool is exactly the 55 ids in answer_pool.csv; every other grape st
 test('every grape has colour, country, area; pool grapes also region, climate and a hint', () => {
   for (const g of grapes) {
     assert.ok(['white', 'red'].includes(g.colour), g.id);
-    assert.ok(countries[g.country], `${g.id} country ${g.country}`);
+    assert.ok(g.regions.length >= 1 && g.regions.length <= 2, g.id);
+    for (const r of g.regions) assert.ok(countries[r.country], `${g.id} country ${r.country}`);
     assert.ok(g.areaHa > 0, g.id);
     assert.ok(g.sources && typeof g.sources === 'object', g.id);
-    assert.ok(g.climate === null || ['koel', 'warm', 'heet'].includes(g.climate), g.id);
+    for (const r of g.regions) assert.ok(r.climate === null || ['koel', 'warm', 'heet'].includes(r.climate), g.id);
+    for (const old of ['region', 'lat', 'lon', 'climate', 'country']) assert.ok(!(old in g), `${g.id}.${old}`);
     for (const old of ['origin', 'topCountries', 'parents', 'ripening', 'trendPct']) assert.ok(!(old in g), `${g.id}.${old}`);
   }
   for (const g of pool) {
-    assert.ok(g.region && typeof g.region === 'string', g.id);
-    assert.ok(Number.isFinite(g.lat) && Number.isFinite(g.lon), g.id);
-    assert.ok(['koel', 'warm', 'heet'].includes(g.climate), g.id);
+    for (const r of g.regions) {
+      assert.ok(r.name && typeof r.name === 'string', g.id);
+      assert.ok(Number.isFinite(r.lat) && Number.isFinite(r.lon), g.id);
+      assert.ok(['koel', 'warm', 'heet'].includes(r.climate), g.id);
+    }
     assert.ok(g.hint && g.hint.nl && g.hint.en, g.id);
     assert.ok(g.sources.region && g.sources.climate && g.sources.hint, g.id);
   }
 });
 
 test('signature regions: file coordinates and climate land in the records; others use a country point', () => {
-  const sig = csv('signature_regions.csv');
+  // quote-aware split: notes may contain commas
+  const sig = readFileSync(new URL('../data/source/signature_regions.csv', import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1)
+    .map((l) => [...l.matchAll(/("([^"]|"")*"|[^,]*)(,|$)/g)].slice(0, -1).map((m) => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
   assert.equal(sig.length, 110);
   for (const r of sig) {
     const g = byId.get(r[0]);
     assert.ok(g, r[0]);
-    assert.equal(g.region, r[1]); assert.equal(g.country, r[2]);
-    assert.equal(g.lat, Number(r[3])); assert.equal(g.lon, Number(r[4])); assert.equal(g.climate, r[5]);
+    const x = g.regions[0];
+    assert.equal(x.name, r[1]); assert.equal(x.country, r[2]);
+    assert.equal(x.lat, Number(r[3])); assert.equal(x.lon, Number(r[4])); assert.equal(x.climate, r[5]);
+    // columns 10.. : note is r[9]; the second region follows (region2, country2, lat2, lon2, climate3_2, gst_c_2, table75_rows_2)
+    const second = r[10] || '';
+    assert.equal(g.regions.length, second ? 2 : 1, g.id);
+    if (second) assert.deepEqual([g.regions[1].name, g.regions[1].country, g.regions[1].lat, g.regions[1].lon, g.regions[1].climate],
+      [r[10], r[11], Number(r[12]), Number(r[13]), r[14]]);
   }
   const sigIds = new Set(sig.map((r) => r[0]));
   for (const g of grapes.filter((x) => !sigIds.has(x.id))) {
-    assert.equal(g.region, null, g.id); assert.equal(g.lat, null, g.id);
+    assert.equal(g.regions.length, 1, g.id);
+    assert.equal(g.regions[0].name, null, g.id); assert.equal(g.regions[0].lat, null, g.id);
   }
   for (const [c, v] of Object.entries(countries)) {
     assert.ok(v.nl && v.en, c);
@@ -62,7 +75,7 @@ test('signature regions: file coordinates and climate land in the records; other
   assert.deepEqual([countries.FR.lat, countries.FR.lon], [46.5, 2.5]);
   assert.deepEqual([countries.US.lat, countries.US.lon], [37.5, -120.5]);
   assert.deepEqual([countries.AR.lat, countries.AR.lon], [-33, -68.8]);
-  const used = new Set(grapes.map((g) => g.country));
+  const used = new Set(grapes.flatMap((g) => g.regions.map((r) => r.country)));
   for (const c of used) assert.ok(countries[c], 'missing ' + c);
   for (const c of Object.keys(countries)) assert.ok(used.has(c), 'unused country ' + c);
 });
@@ -185,4 +198,19 @@ test('descriptors use WSET clusters, including nutty and earthy', () => {
   }
   assert.ok(Object.values(descriptors).some((d) => d.cluster === 'nutty'));
   assert.ok(Object.values(descriptors).some((d) => d.cluster === 'earthy'));
+});
+
+test('the eight dual-region grapes, and a region name always has one point and one climate', () => {
+  const dual = Object.fromEntries(grapes.filter((g) => g.regions.length === 2).map((g) => [g.id, g.regions.map((r) => r.name).join(' / ')]));
+  assert.deepEqual(dual, {
+    'pinot-gris': 'Alsace / Veneto', 'garnacha-tinta': 'Rhône / Aragón', 'sauvignon-blanc': 'Loire / Marlborough',
+    'chenin-blanc': 'Loire / Stellenbosch', syrah: 'Rhône / Barossa', cot: 'Cahors / Mendoza',
+    chardonnay: 'Bourgogne / California', 'cabernet-franc': 'Loire / Bordeaux',
+  });
+  const seen = new Map();
+  for (const g of grapes) for (const r of g.regions) {
+    if (!r.name) continue;
+    const key = `${r.country}|${r.name}`, val = JSON.stringify([r.lat, r.lon, r.climate]);
+    if (seen.has(key)) assert.equal(val, seen.get(key), `${g.id} ${key}`); else seen.set(key, val);
+  }
 });

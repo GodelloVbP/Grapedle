@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import {
-  compare, area, flavour, region, climate, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
+  compare, area, flavour, region, climate, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
 } from '../src/feedback.js';
 import { overlap, similarGrapes } from '../src/similar.js';
 
@@ -12,7 +12,20 @@ const desc = {
   e: { cluster: 'floral' }, f: { cluster: 'floral' }, g: { cluster: 'herbal' }, h: { cluster: 'herbal' },
 };
 const ctry = { FR: { lat: 46.5, lon: 2.5 }, DE: { lat: 49.8, lon: 8.5 }, NZ: { lat: -41.5, lon: 174 } };
-const g = (o) => ({ id: 'x', colour: 'red', country: 'FR', region: 'Rhône', lat: 44.3, lon: 4.8, climate: 'warm', flavours: null, areaHa: 1000, ...o });
+// Flat shortcuts (country, region, lat, lon, climate) describe one region; `regions` gives the full list.
+const g = ({ country = 'FR', region = 'Rhône', lat = 44.3, lon = 4.8, climate = 'warm', regions, ...o } = {}) => ({
+  id: 'x', colour: 'red', flavours: null, areaHa: 1000,
+  regions: regions || [{ name: region, country, lat, lon, climate }], ...o,
+});
+const R = {
+  Alsace: { name: 'Alsace', country: 'FR', lat: 48.2, lon: 7.35, climate: 'koel' },
+  Veneto: { name: 'Veneto', country: 'IT', lat: 45.55, lon: 11.2, climate: 'heet' },
+  Rhone: { name: 'Rhône', country: 'FR', lat: 44.3, lon: 4.8, climate: 'warm' },
+  Aragon: { name: 'Aragón', country: 'ES', lat: 41.6, lon: -1.3, climate: 'heet' },
+  Loire: { name: 'Loire', country: 'FR', lat: 47.3, lon: 0, climate: 'koel' },
+  Marlborough: { name: 'Marlborough', country: 'NZ', lat: -41.5, lon: 173.9, climate: 'koel' },
+  Mendoza: { name: 'Mendoza', country: 'AR', lat: -33.3, lon: -68.8, climate: 'heet' },
+};
 const st = (guess, answer, key) => compare(guess, answer, { descriptors: desc, countries: ctry }).find((c) => c.key === key);
 
 test('five columns in plan order', () => {
@@ -85,7 +98,7 @@ test('bearing and 8-way arrows', () => {
 
 test('bearing on real data: Mosel to Rhône points south, Rioja to Rhône east/north-east', () => {
   const mosel = byId.get('riesling'), rioja = byId.get('tempranillo'), rhone = byId.get('syrah');
-  assert.equal(mosel.region, 'Mosel'); assert.equal(rioja.region, 'Rioja'); assert.equal(rhone.region, 'Rhône');
+  assert.equal(mosel.regions[0].name, 'Mosel'); assert.equal(rioja.regions[0].name, 'Rioja'); assert.equal(rhone.regions[0].name, 'Rhône');
   const a = compare(mosel, rhone).find((c) => c.key === 'region');
   assert.equal(a.status, 'red');
   assert.ok([4, 5].includes(a.dir), 'Mosel to Rhône: S or SW, got ' + ARROWS[a.dir]);
@@ -105,7 +118,7 @@ test('climate: three classes, exact or red, grey when unknown', () => {
   assert.equal(c('koel', 'heet'), 'red');
   assert.equal(c(null, 'heet'), 'grey');
   assert.equal(c('heet', null), 'grey');
-  assert.equal(climate({ climate: 'koel' }, { climate: 'koel' }), 'green');
+  assert.equal(climate(g({ climate: 'koel' }), g({ climate: 'koel' })), 'green');
 });
 
 test('area: neutral arrow toward the answer, green only for the same grape, tie shows =', () => {
@@ -170,4 +183,74 @@ test('similar grapes: same colour, stocked, most identical aromas, tie-break sha
     { id: 't2', name: 'T2', stocked: true, colour: 'white', flavours: ['a', 'd'] },
   ];
   assert.deepEqual(similarGrapes({ id: 'z', colour: 'white', flavours: ['a', 'c'] }, tie, desc).map((x) => x.id), ['t2', 't1']);
+});
+
+// ---- up to two signature regions ----
+const reg = (guess, answer) => st(g({ id: 'a', regions: guess }), g({ id: 'b', regions: answer }), 'region');
+const clim = (guess, answer) => st(g({ id: 'a', regions: guess.map((c) => ({ ...R.Rhone, name: c, climate: c })) }),
+  g({ id: 'b', regions: answer.map((c) => ({ ...R.Rhone, name: c, climate: c })) }), 'climate');
+
+test('region, single vs single: same green, other region same country yellow with km, other country red', () => {
+  assert.equal(reg([R.Rhone], [R.Rhone]).status, 'green');
+  const fr = reg([R.Alsace], [R.Rhone]);
+  assert.equal(fr.status, 'yellow'); assert.ok(fr.km > 0 && fr.dir !== null); assert.deepEqual(fr.hit, []);
+  const far = reg([R.Marlborough], [R.Rhone]);
+  assert.equal(far.status, 'red'); assert.ok(far.km > 15000 && far.dir !== null);
+});
+
+test('region, dual answer vs single guess: overlap is yellow without km, matching region listed', () => {
+  const c = reg([R.Alsace], [R.Alsace, R.Veneto]);
+  assert.equal(c.status, 'yellow'); assert.equal(c.km, null); assert.equal(c.dir, null);
+  assert.deepEqual(c.hit, ['Alsace']);
+  assert.deepEqual(sharedRegions(g({ regions: [R.Veneto, R.Alsace] }), g({ regions: [R.Alsace, R.Loire] })), ['Alsace']);
+  // overlap beats the country rule even when the other guess region is in the answer's country
+  assert.equal(reg([R.Alsace, R.Rhone], [R.Alsace, R.Veneto]).km, null);
+});
+
+test('region, dual vs dual: identical sets green (order and grape irrelevant), partial yellow overlap', () => {
+  assert.equal(reg([R.Alsace, R.Veneto], [R.Veneto, R.Alsace]).status, 'green');
+  assert.equal(reg([R.Alsace], [R.Alsace]).status, 'green');
+  const p = reg([R.Loire, R.Rhone], [R.Rhone, R.Aragon]);
+  assert.equal(p.status, 'yellow'); assert.equal(p.km, null); assert.deepEqual(p.hit, ['Rhône']);
+  // a subset is not identical
+  assert.equal(reg([R.Alsace], [R.Alsace, R.Veneto]).status, 'yellow');
+});
+
+test('region, no common region: same country anywhere is yellow with distance, else red', () => {
+  const c = reg([R.Loire, R.Marlborough], [R.Rhone, R.Aragon]);
+  assert.equal(c.status, 'yellow'); assert.ok(c.km > 0);
+  const r = reg([R.Marlborough, R.Mendoza], [R.Rhone, R.Aragon]);
+  assert.equal(r.status, 'red');
+});
+
+test('region: closest pair decides km and arrow', () => {
+  // guess Marlborough + Loire vs answer Rhône + Aragón: the closest pair is Loire to Rhône
+  const c = reg([R.Marlborough, R.Loire], [R.Aragon, R.Rhone]);
+  const d = distanceKm([R.Loire.lat, R.Loire.lon], [R.Rhone.lat, R.Rhone.lon]);
+  assert.equal(c.km, roundKm(d));
+  assert.equal(c.dir, directionIndex(bearingDeg([R.Loire.lat, R.Loire.lon], [R.Rhone.lat, R.Rhone.lon])));
+  assert.equal(ARROWS[c.dir], '↘', 'Loire to Rhône points south-east');
+  // Mendoza + Veneto guess vs Alsace answer: Veneto is nearer, Alsace lies north-west of Veneto
+  const v = reg([R.Mendoza, R.Veneto], [R.Alsace]);
+  assert.equal(v.status, 'red');
+  assert.equal(v.km, roundKm(distanceKm([R.Veneto.lat, R.Veneto.lon], [R.Alsace.lat, R.Alsace.lon])));
+  assert.equal(v.dir, directionIndex(bearingDeg([R.Veneto.lat, R.Veneto.lon], [R.Alsace.lat, R.Alsace.lon])));
+  assert.equal(ARROWS[v.dir], '↖');
+  // order of the answer's regions does not matter
+  assert.deepEqual(reg([R.Marlborough, R.Loire], [R.Rhone, R.Aragon]), c);
+});
+
+test('climate sets: identical green, one class in common yellow (bold = shared), none red', () => {
+  assert.equal(clim(['koel', 'heet'], ['heet', 'koel']).status, 'green');
+  assert.equal(climate(g({ regions: [R.Alsace, R.Veneto] }), g({ regions: [R.Loire, R.Mendoza] })), 'green');
+  assert.equal(climate(g({ regions: [R.Alsace] }), g({ regions: [R.Alsace, R.Veneto] })), 'yellow');
+  assert.equal(climate(g({ regions: [R.Rhone] }), g({ regions: [R.Alsace, R.Veneto] })), 'red');
+  assert.equal(climate(g({ regions: [R.Alsace, R.Veneto] }), g({ regions: [R.Alsace] })), 'yellow');
+  const cell = st(g({ id: 'a', regions: [R.Alsace, R.Veneto] }), g({ id: 'b', regions: [R.Loire] }), 'climate');
+  assert.equal(cell.status, 'yellow'); assert.deepEqual(cell.hit, ['koel']);
+});
+
+test('share emoji follow tile colour for the new yellow states', () => {
+  const cells = compare(g({ id: 'a', regions: [R.Alsace] }), g({ id: 'b', regions: [R.Alsace, R.Veneto] }), { descriptors: desc, countries: ctry });
+  assert.equal(shareSymbol(cells[1]), '🟨'); assert.equal(shareSymbol(cells[2]), '🟨');
 });
