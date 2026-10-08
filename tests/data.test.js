@@ -10,7 +10,7 @@ import { norm } from '../src/text.js';
 const byId = new Map(grapes.map((g) => [g.id, g]));
 // Known source gaps, reported in the build notes. None in the answer pool at present.
 const KNOWN_GAPS = {};
-const CLUSTERS = new Set(['floral', 'green-fruit', 'citrus', 'stone-fruit', 'tropical', 'red-fruit', 'black-fruit', 'dried-fruit', 'herbaceous', 'herbal', 'pungent-spice', 'other']);
+const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 'stone-fruit', 'tropical', 'red-fruit', 'black-fruit', 'dried-fruit', 'herbaceous', 'herbal', 'pungent-spice', 'other']);
 
 test('pool sizes and ids', () => {
   assert.equal(grapes.filter((g) => g.answer).length, 111);

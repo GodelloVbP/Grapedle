@@ -1,0 +1,310 @@
+[
+  {
+    "id": "auxerrois",
+    "aromas": [
+      {
+        "d": "grass",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "lemon",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "honey",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "mazuelo",
+    "aromas": [
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "dried-herbs",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "spices"
+    ],
+    "notes": "'garrigue' mapped to dried-herbs; 'spices' too vague to map"
+  },
+  {
+    "id": "croatina",
+    "aromas": [
+      {
+        "d": "raspberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "forest-floor",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'plum' mapped to black-plum throughout"
+  },
+  {
+    "id": "corvina-veronese",
+    "aromas": [
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "almond",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'cherry' mapped to red-cherry throughout"
+  },
+  {
+    "id": "corvinone",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "montepulciano",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "mushroom",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "monastrell",
+    "aromas": [
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blueberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "aglianico",
+    "aromas": [
+      {
+        "d": "rose",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "verdicchio-bianco",
+    "aromas": [
+      {
+        "d": "lemon",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "fennel",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "almond",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "trousseau",
+    "aromas": [
+      {
+        "d": "redcurrant",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-pepper",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  },
+  {
+    "id": "macabeo",
+    "aromas": [
+      {
+        "d": "green-apple",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "grapefruit",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "fennel",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'apple' mapped to green-apple"
+  },
+  {
+    "id": "rondinella",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "grass",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "almond",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": ""
+  }
+]
