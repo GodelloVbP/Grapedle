@@ -1,0 +1,123 @@
+variety,area_2016_ha,cool_pct,temperate_pct,warm_pct,hot_pct,avg_gst_c
+Pinot Meunier,14695,96,2,2,0,14.7
+Silvaner,6072,35,65,0,0,15.2
+Dornfelder,7871,17,82,0,0,15.2
+Müller-Thurgau,19501,38,59,2,1,15.4
+Grüner Veltliner,19118,11,87,2,0,15.6
+Chasselas,7377,31,56,11,1,15.7
+Blauer Portugieser,6590,7,78,14,1,15.7
+Zweigelt,9068,8,87,6,0,15.8
+Melon,9551,0,100,0,0,15.9
+Pinot Blanc,13779,25,50,16,9,16.1
+Concord,10544,2,76,5,17,16.1
+Riesling,59805,23,41,33,3,16.2
+Blaufränkisch,17180,10,66,23,2,16.4
+Pinot Noir,105480,28,37,28,7,16.4
+Tsolikouri,7903,0,100,0,0,16.6
+Gewürztraminer,12823,10,48,34,8,16.6
+Vranac,9503,0,100,0,0,16.7
+Gamay Noir,26221,3,27,69,0,16.8
+Saperavi,6478,0,73,24,2,17.0
+Rkatsiteli,51374,0,50,48,2,17.1
+Dimyat,9696,0,68,32,0,17.1
+Moldova,12375,0,0,100,0,17.2
+Aligoté,26929,0,8,92,0,17.2
+Alvarinho,5545,0,1,97,2,17.2
+Graševina,24384,2,41,52,6,17.3
+Bianca,9766,0,49,51,0,17.3
+Muscat Ottonel,12464,0,15,85,0,17.5
+Mencía,11052,0,47,30,23,17.5
+Cabernet Franc,56052,1,53,20,26,17.5
+Listan Prieto,10267,0,37,57,5,17.6
+Loureiro,4696,0,0,92,8,17.6
+Fetească Albă,13382,0,0,100,0,17.7
+Sauvignon Blanc,124700,2,35,45,19,17.7
+Verdejo,17931,0,64,0,35,17.7
+Fetească Regală,12991,0,0,100,0,17.7
+white varieties,10300,0,0,100,0,17.8
+Pinot Gris,48570,9,31,25,35,17.8
+Trebbiano Toscano,120343,0,61,8,31,17.9
+Tinta Barroca,4926,0,0,76,24,18.0
+Pamid,9961,0,3,97,0,18.1
+Yan 73,4800,0,0,100,0,18.1
+Carmenère,22486,0,1,92,7,18.2
+Merlot,266440,1,33,44,23,18.2
+Chardonnay,201649,7,23,39,31,18.2
+Sémillon,18693,0,55,18,27,18.2
+Touriga Franca,14224,0,0,63,37,18.3
+Nebbiolo,7997,1,1,77,22,18.4
+Cabernet Sauvignon,310671,0,14,57,29,18.5
+Muscat Blanc à Petits Grains,33739,1,9,64,26,18.6
+Marufo,4683,0,0,48,52,18.6
+Touriga Nacional,11722,0,0,50,50,18.6
+Bonarda Piemontese,5926,0,0,68,32,18.7
+Arinto de Bucelas,5409,0,0,46,54,18.7
+Isabella,17813,0,0,34,66,18.8
+Verdicchio Bianco,4682,0,0,91,9,18.8
+Tempranillo,219379,0,25,19,56,18.8
+Viognier,16063,1,3,62,34,18.9
+Síria,7037,0,1,36,63,18.9
+Barbera,17824,0,0,69,31,18.9
+Tannat,5611,0,14,32,54,19.0
+Alicante Henri Bouschet,36031,0,2,41,57,19.1
+Aglianico,9734,0,0,27,73,19.1
+Trincadeira,10510,0,0,31,69,19.1
+Garnacha Tinta,150096,0,6,36,58,19.1
+Côt,52233,0,5,46,49,19.2
+Garnacha Blanca,7409,0,1,54,45,19.2
+Muscat of Hamburg,7680,1,8,15,75,19.2
+Prosecco,20109,0,0,3,97,19.3
+Corvina Veronese,6240,0,0,0,100,19.3
+Caladoc,5258,0,0,41,59,19.3
+Mazuelo,47312,0,1,58,41,19.4
+Lambrusco Salamino,6228,0,0,3,97,19.4
+Syrah,181185,0,4,46,51,19.4
+Fernão Pires,12211,0,0,17,83,19.4
+Cinsaut,22926,0,4,42,55,19.4
+Trebbiano Romagnolo,19059,0,0,0,100,19.4
+Petit Verdot,8124,0,9,27,64,19.5
+Durif,4807,0,3,38,59,19.5
+Sangiovese,73464,0,0,12,88,19.5
+Baga,6750,0,0,12,88,19.5
+Montepulciano,32935,0,0,17,83,19.5
+Airén,203801,0,0,0,100,19.6
+Tinto Velasco,5369,0,0,0,100,19.6
+Vermentino,11483,0,0,22,78,19.6
+Chenin Blanc,32221,0,28,4,67,19.7
+Castelão,12580,0,0,4,96,19.7
+Macabeo,38625,0,5,10,85,19.8
+Muscat Blanc à Petits Grains (,8258,0,0,37,63,19.9
+Malvasia Bianca di Candia,9685,0,1,6,93,20.0
+Parellada,7137,0,0,0,100,20.0
+Xarello,8534,0,0,0,100,20.0
+Pedro Giménez,15576,0,0,34,66,20.2
+Garganega,8554,0,0,1,99,20.3
+Palomino Fino,23190,0,10,20,71,20.3
+Muscat of Alexandria,34805,0,11,21,68,20.3
+Gaglioppo,4626,0,0,25,75,20.3
+Tribidrag,33649,0,3,15,82,20.3
+Bobal,59189,0,0,0,100,20.4
+Chelva,5029,0,3,0,97,20.5
+Lambrusco Maestri,5657,0,0,3,97,20.5
+Cayetana Blanca,36401,0,0,0,100,20.7
+Italia,5188,0,1,3,96,20.7
+Negroamaro,11449,0,0,0,100,20.7
+Monastrell,51930,0,0,11,89,20.8
+Torrontés Riojano,8859,0,1,12,87,20.8
+Douce Noire,19733,0,0,17,83,20.8
+Pinotage,7132,0,0,1,98,20.8
+Colombard,29996,0,6,22,72,20.8
+Criolla Grande,15596,0,0,9,91,20.8
+Roditis,8463,0,0,0,100,21.0
+Pedro Ximénez,8810,0,0,0,100,21.3
+Inzolia,4740,0,0,0,100,21.4
+Nero d'Avola,14281,0,0,0,99,21.5
+Catarratto Bianco,28613,0,0,0,100,21.5
+Grillo,7383,0,0,0,100,21.5
+Cereza,28887,0,0,4,96,21.6
+Ruby Cabernet,5309,0,0,0,100,21.9
+Savatiano,10268,0,0,0,100,22.4
+Rubired,4916,0,0,0,100,22.8
+Sultaniye,5325,0,0,0,100,24.1
+Top 120,3725659,3,19,31,47,18.7
+All,4483128,3,18,35,44,18.6
