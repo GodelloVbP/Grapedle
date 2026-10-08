@@ -1,0 +1,416 @@
+{
+ "AL": {
+  "nl": "Albanië",
+  "en": "Albania",
+  "borders": [
+   "ME",
+   "MK",
+   "GR"
+  ]
+ },
+ "AM": {
+  "nl": "Armenië",
+  "en": "Armenia",
+  "borders": [
+   "GE",
+   "TR"
+  ]
+ },
+ "AR": {
+  "nl": "Argentinië",
+  "en": "Argentina",
+  "borders": [
+   "CL",
+   "BR",
+   "UY"
+  ]
+ },
+ "AT": {
+  "nl": "Oostenrijk",
+  "en": "Austria",
+  "borders": [
+   "DE",
+   "CZ",
+   "SK",
+   "HU",
+   "SI",
+   "IT",
+   "CH"
+  ]
+ },
+ "AU": {
+  "nl": "Australië",
+  "en": "Australia",
+  "borders": []
+ },
+ "BE": {
+  "nl": "België",
+  "en": "Belgium",
+  "borders": [
+   "FR",
+   "LU",
+   "DE",
+   "NL"
+  ]
+ },
+ "BG": {
+  "nl": "Bulgarije",
+  "en": "Bulgaria",
+  "borders": [
+   "RO",
+   "RS",
+   "MK",
+   "GR",
+   "TR"
+  ]
+ },
+ "BR": {
+  "nl": "Brazilië",
+  "en": "Brazil",
+  "borders": [
+   "AR",
+   "UY",
+   "PE"
+  ]
+ },
+ "CA": {
+  "nl": "Canada",
+  "en": "Canada",
+  "borders": [
+   "US"
+  ]
+ },
+ "CH": {
+  "nl": "Zwitserland",
+  "en": "Switzerland",
+  "borders": [
+   "DE",
+   "FR",
+   "IT",
+   "AT"
+  ]
+ },
+ "CL": {
+  "nl": "Chili",
+  "en": "Chile",
+  "borders": [
+   "AR",
+   "PE"
+  ]
+ },
+ "CN": {
+  "nl": "China",
+  "en": "China",
+  "borders": [
+   "RU"
+  ]
+ },
+ "CY": {
+  "nl": "Cyprus",
+  "en": "Cyprus",
+  "borders": []
+ },
+ "CZ": {
+  "nl": "Tsjechië",
+  "en": "Czechia",
+  "borders": [
+   "DE",
+   "PL",
+   "SK",
+   "AT"
+  ]
+ },
+ "DE": {
+  "nl": "Duitsland",
+  "en": "Germany",
+  "borders": [
+   "PL",
+   "CZ",
+   "AT",
+   "CH",
+   "FR",
+   "LU",
+   "BE",
+   "NL"
+  ]
+ },
+ "ES": {
+  "nl": "Spanje",
+  "en": "Spain",
+  "borders": [
+   "FR",
+   "PT",
+   "MA"
+  ]
+ },
+ "FR": {
+  "nl": "Frankrijk",
+  "en": "France",
+  "borders": [
+   "BE",
+   "LU",
+   "DE",
+   "CH",
+   "IT",
+   "ES"
+  ]
+ },
+ "GB": {
+  "nl": "Verenigd Koninkrijk",
+  "en": "United Kingdom",
+  "borders": []
+ },
+ "GE": {
+  "nl": "Georgië",
+  "en": "Georgia",
+  "borders": [
+   "RU",
+   "AM",
+   "TR"
+  ]
+ },
+ "GR": {
+  "nl": "Griekenland",
+  "en": "Greece",
+  "borders": [
+   "AL",
+   "MK",
+   "BG",
+   "TR"
+  ]
+ },
+ "HR": {
+  "nl": "Kroatië",
+  "en": "Croatia",
+  "borders": [
+   "SI",
+   "HU",
+   "RS",
+   "ME"
+  ]
+ },
+ "HU": {
+  "nl": "Hongarije",
+  "en": "Hungary",
+  "borders": [
+   "AT",
+   "SK",
+   "UA",
+   "RO",
+   "RS",
+   "HR",
+   "SI"
+  ]
+ },
+ "IT": {
+  "nl": "Italië",
+  "en": "Italy",
+  "borders": [
+   "FR",
+   "CH",
+   "AT",
+   "SI"
+  ]
+ },
+ "JP": {
+  "nl": "Japan",
+  "en": "Japan",
+  "borders": []
+ },
+ "LB": {
+  "nl": "Libanon",
+  "en": "Lebanon",
+  "borders": []
+ },
+ "LU": {
+  "nl": "Luxemburg",
+  "en": "Luxembourg",
+  "borders": [
+   "BE",
+   "DE",
+   "FR"
+  ]
+ },
+ "MA": {
+  "nl": "Marokko",
+  "en": "Morocco",
+  "borders": [
+   "ES"
+  ]
+ },
+ "MD": {
+  "nl": "Moldavië",
+  "en": "Moldova",
+  "borders": [
+   "RO",
+   "UA"
+  ]
+ },
+ "ME": {
+  "nl": "Montenegro",
+  "en": "Montenegro",
+  "borders": [
+   "HR",
+   "RS",
+   "AL"
+  ]
+ },
+ "MK": {
+  "nl": "Noord-Macedonië",
+  "en": "North Macedonia",
+  "borders": [
+   "AL",
+   "BG",
+   "GR",
+   "RS"
+  ]
+ },
+ "MX": {
+  "nl": "Mexico",
+  "en": "Mexico",
+  "borders": [
+   "US"
+  ]
+ },
+ "NL": {
+  "nl": "Nederland",
+  "en": "Netherlands",
+  "borders": [
+   "BE",
+   "DE"
+  ]
+ },
+ "NZ": {
+  "nl": "Nieuw-Zeeland",
+  "en": "New Zealand",
+  "borders": []
+ },
+ "PE": {
+  "nl": "Peru",
+  "en": "Peru",
+  "borders": [
+   "BR",
+   "CL"
+  ]
+ },
+ "PL": {
+  "nl": "Polen",
+  "en": "Poland",
+  "borders": [
+   "DE",
+   "CZ",
+   "SK",
+   "UA",
+   "RU"
+  ]
+ },
+ "PT": {
+  "nl": "Portugal",
+  "en": "Portugal",
+  "borders": [
+   "ES"
+  ]
+ },
+ "RO": {
+  "nl": "Roemenië",
+  "en": "Romania",
+  "borders": [
+   "UA",
+   "MD",
+   "BG",
+   "RS",
+   "HU"
+  ]
+ },
+ "RS": {
+  "nl": "Servië",
+  "en": "Serbia",
+  "borders": [
+   "HU",
+   "RO",
+   "BG",
+   "MK",
+   "ME",
+   "HR"
+  ]
+ },
+ "RU": {
+  "nl": "Rusland",
+  "en": "Russia",
+  "borders": [
+   "PL",
+   "UA",
+   "GE",
+   "CN"
+  ]
+ },
+ "SI": {
+  "nl": "Slovenië",
+  "en": "Slovenia",
+  "borders": [
+   "IT",
+   "AT",
+   "HU",
+   "HR"
+  ]
+ },
+ "SK": {
+  "nl": "Slowakije",
+  "en": "Slovakia",
+  "borders": [
+   "CZ",
+   "PL",
+   "UA",
+   "HU",
+   "AT"
+  ]
+ },
+ "TN": {
+  "nl": "Tunesië",
+  "en": "Tunisia",
+  "borders": []
+ },
+ "TR": {
+  "nl": "Turkije",
+  "en": "Turkey",
+  "borders": [
+   "GR",
+   "BG",
+   "GE",
+   "AM"
+  ]
+ },
+ "UA": {
+  "nl": "Oekraïne",
+  "en": "Ukraine",
+  "borders": [
+   "PL",
+   "SK",
+   "HU",
+   "RO",
+   "MD",
+   "RU"
+  ]
+ },
+ "US": {
+  "nl": "Verenigde Staten",
+  "en": "United States",
+  "borders": [
+   "CA",
+   "MX"
+  ]
+ },
+ "UY": {
+  "nl": "Uruguay",
+  "en": "Uruguay",
+  "borders": [
+   "AR",
+   "BR"
+  ]
+ },
+ "ZA": {
+  "nl": "Zuid-Afrika",
+  "en": "South Africa",
+  "borders": []
+ }
+}

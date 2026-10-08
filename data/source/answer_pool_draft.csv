@@ -1,0 +1,113 @@
+group,common,prime,colour,origin,area_ha,top1,climate
+classic,Cabernet Sauvignon,Cabernet Sauvignon,R,France,279479,France,warm
+classic,Merlot,Merlot,R,France,257778,France,warm
+classic,Tempranillo,Tempranillo,R,Spain,226805,Spain,warm
+classic,Chardonnay,Chardonnay,W,France,222927,France,warm
+classic,Syrah,Syrah,R,France,189409,France,hot
+classic,Garnacha Tinta,Garnacha Tinta,R,Spain,154375,France,hot
+classic,Sauvignon Blanc,Sauvignon Blanc,W,France,144031,France,warm
+classic,Pinot Noir,Pinot Noir,R,France,131983,France,temperate
+classic,Pinot Gris,Pinot Gris,G,France,67930,Italy,warm
+classic,Riesling,Riesling,W,Germany,53421,Germany,temperate
+classic,Trebbiano Toscano,Trebbiano Toscano,W,Italy,148576,France,warm
+classic,Malbec,Côt,R,France,60412,Argentina,hot
+classic,Cabernet Franc,Cabernet Franc,R,France,45295,France,warm
+classic,Chenin Blanc,Chenin Blanc,W,France,30859,South Africa,hot
+classic,Sangiovese,Sangiovese,R,Italy,66769,Italy,hot
+classic,Nebbiolo,Nebbiolo,R,Italy,7364,Italy,warm
+classic,Barbera,Barbera,R,Italy,19662,Italy,warm
+classic,Muscat Blanc à Petits Grains,Muscat Blanc à Petits Grains,W,Greece,36052,Italy,warm
+classic,Muscat of Alexandria,Muscat of Alexandria,W,Greece,30218,Spain,hot
+classic,Viognier,Viognier,W,France,13557,France,warm
+classic,Gewürztraminer,Gewürztraminer,W,Germany,14089,France,temperate
+classic,Sémillon,Sémillon,W,France,16986,France,warm
+classic,Zinfandel,Tribidrag,R,Croatia,30675,United States,hot
+classic,Carmenère,Carmenère,R,France,14824,Chile,warm
+classic,Pinotage,Pinotage,R,South Africa,6628,South Africa,hot
+classic,Gamay Noir,Gamay Noir,R,France,23127,France,temperate
+classic,Pinot Blanc,Pinot Blanc,W,France,16458,Germany,temperate
+classic,Grüner Veltliner,Grüner Veltliner,W,Austria,19082,Austria,temperate
+classic,Mazuelo,Mazuelo,R,Spain,43602,France,hot
+classic,Cinsaut,Cinsaut,R,France,27189,France,hot
+classic,Montepulciano,Montepulciano,R,Italy,30889,Italy,hot
+classic,Glera,Prosecco,W,Italy,41990,Italy,hot
+classic,Monastrell,Monastrell,R,Spain,44051,Spain,hot
+classic,Petit Verdot,Petit Verdot,R,France,9606,Spain,hot
+classic,Albariño,Alvarinho,W,Portugal,10657,Spain,warm
+classic,Torrontés Riojano,Torrontés Riojano,W,Argentina,7914,Argentina,hot
+classic,Macabeo,Macabeo,W,Spain,58160,Spain,hot
+classic,Airén,Airén,W,Spain,190426,Spain,hot
+classic,Melon,Melon,W,France,8594,France,temperate
+classic,Aglianico,Aglianico,R,Italy,9604,Italy,hot
+focus,Auxerrois,Auxerrois,W,France,3020,France,temperate
+focus,Silvaner,Silvaner,W,Austria,6249,Germany,temperate
+focus,Muscat Ottonel,Muscat Ottonel,W,France,13493,Romania,warm
+focus,Chasselas,Chasselas,W,Switzerland,6185,Switzerland,temperate
+focus,Pinot Meunier,Pinot Meunier,R,France,23037,France,cool
+focus,Marsanne,Marsanne,W,France,1450,France,warm
+focus,Roussanne,Roussanne,W,France,2367,France,warm
+focus,Garnacha Blanca,Garnacha Blanca,W,Spain,10058,France,hot
+focus,Clairette,Clairette,W,France,2078,France,hot
+focus,Piquepoul Blanc,Piquepoul Blanc,W,France,2013,France,warm
+focus,Aligoté,Aligoté,W,France,24990,Moldova,warm
+focus,Savagnin,Savagnin Blanc,W,France,1344,France,temperate
+focus,Trousseau,Trousseau,R,France,1486,Portugal,warm
+focus,Poulsard,Poulsard,R,France,90,France,temperate
+focus,Mondeuse Noire,Mondeuse Noire,R,France,284,France,warm
+focus,Jacquère,Jacquere,W,France,822,France,warm
+focus,Altesse,Altesse,W,France,295,France,warm
+focus,Tannat,Tannat,R,France,4862,France,hot
+focus,Négrette,Négrette,R,France,400,France,warm
+focus,Mauzac,Mauzac Blanc,W,France,1530,France,warm
+focus,Colombard,Colombard,W,France,30083,France,hot
+focus,Gros Manseng,Gros Manseng,W,France,3344,France,warm
+focus,Petit Manseng,Petit Manseng,W,France,505,France,warm
+focus,Vermentino,Vermentino,W,Italy,18129,Italy,hot
+focus,Braquet Noir,Braquet Noir,R,France,12,France,hot
+focus,Pineau d'Aunis,Pineau d'Aunis,R,France,347,France,temperate
+focus,Corvina Veronese,Corvina Veronese,R,Italy,7362,Italy,hot
+focus,Corvinone,Corvinone,R,Italy,0,Argentina,hot
+focus,Rondinella,Rondinella,R,Italy,2784,Italy,hot
+focus,Molinara,Molinara,R,Italy,866,Italy,hot
+focus,Garganega,Garganega,W,Italy,13389,Italy,hot
+focus,Verdicchio Bianco,Verdicchio Bianco,W,Italy,4702,Italy,warm
+focus,Croatina,Croatina,R,Croatia,21,Argentina,warm
+focus,Dolcetto,Dolcetto,R,Italy,4265,Italy,warm
+focus,Arneis,Arneis,W,Italy,1270,Italy,warm
+focus,Cortese,Cortese,W,Italy,3363,Italy,warm
+focus,Grignolino,Grignolino,R,Italy,773,Italy,warm
+focus,Lagrein,Lagrein,R,Italy,637,Italy,temperate
+focus,Schiava Grossa,Schiava Grossa,R,Italy,2089,Germany,cool
+focus,Teroldego,Teroldego,R,Italy,1223,Italy,temperate
+focus,Refosco dal Peduncolo Rosso,Refosco dal Peduncolo Rosso,R,Italy,1058,Italy,warm
+focus,Friulano,Sauvignonasse,W,France,3532,Italy,warm
+focus,Ribolla Gialla,Ribolla Gialla,W,Italy,2050,Italy,warm
+focus,Timorasso,Timorasso,W,Italy,123,,warm
+focus,Erbaluce,Erbaluce,W,Italy,316,,warm
+focus,Brachetto del Piemonte,Brachetto del Piemonte,R,Italy,1212,Italy,warm
+focus,Lambrusco Salamino,Lambrusco Salamino,R,Italy,5364,Italy,hot
+discovery,Graciano,Graciano,R,Spain,3225,Spain,warm
+discovery,Godello,Godello,W,Spain,3061,Spain,warm
+discovery,Verdejo,Verdejo,W,Spain,25320,Spain,warm
+discovery,Mencía,Mencía,R,Spain,11629,Spain,warm
+discovery,Bobal,Bobal,R,Spain,53452,Spain,hot
+discovery,Xarel-lo,Xarello,W,Spain,11229,Spain,hot
+discovery,Touriga Nacional,Touriga Nacional,R,Portugal,13591,Portugal,warm
+discovery,Touriga Franca,Touriga Franca,R,Portugal,15146,Portugal,warm
+discovery,Baga,Baga,R,Portugal,7203,Portugal,hot
+discovery,Assyrtiko,Assyrtiko,W,Greece,2165,Greece,hot
+discovery,Xinomavro,Xinomavro,R,Greece,2167,Greece,warm
+discovery,Agiorgitiko,Agiorgitiko,R,Greece,3158,Greece,hot
+discovery,Furmint,Furmint,W,Hungary,4219,Hungary,temperate
+discovery,Blaufränkisch,Blaufränkisch,R,Austria,15714,Hungary,temperate
+discovery,Zweigelt,Zweigelt,R,Austria,8483,Austria,temperate
+discovery,Saint Laurent,Sankt Laurent,R,Austria,2749,Czechia,temperate
+discovery,Welschriesling,Graševina,W,Croatia,24349,Romania,warm
+discovery,Müller-Thurgau,Müller-Thurgau,W,Germany,18353,Germany,temperate
+discovery,Saperavi,Saperavi,R,Georgia,21513,Georgia,temperate
+discovery,Nero d'Avola,Nero d'Avola,R,Italy,20192,Italy,hot
+discovery,Fiano,Fiano,W,Italy,2799,Italy,hot
+discovery,Plavac Mali,Plavac Mali,R,Croatia,500,North Macedonia,warm
+discovery,Nerello Mascalese,Nerello Mascalese,R,Italy,2990,Italy,hot
+shop,Silvaner (R),Silvaner (R),W,Austria,25,Germany,cool
+shop,Castets,Castets,R,France,0,France,temperate

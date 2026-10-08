@@ -1,0 +1,16 @@
+{
+  "name": "grapedle",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Grapedle, a daily grape-guessing game for Vino by Palazzo",
+  "scripts": {
+    "data": "python3 scripts/build_data.py",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/",
+    "size": "node scripts/size.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

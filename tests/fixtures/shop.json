@@ -1,0 +1,9 @@
+{
+  "items": [
+    {"id": "m1", "title": "Mock Rood Reserva 2020", "fullUrl": "/winkel/mock-rood-reserva", "assetUrl": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Crect width='100' height='130' fill='%23eae0d2'/%3E%3Cpath d='M45 15h10v35l10 15v50H35V65l10-15z' fill='%23714b4b'/%3E%3C/svg%3E", "categories": ["Merlot"], "structuredContent": {"priceMoney": {"currency": "EUR", "value": "14.95"}}},
+    {"id": "m2", "title": "Mock Cuvée Rouge 2019", "fullUrl": "/winkel/mock-cuvee-rouge", "assetUrl": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Crect width='100' height='130' fill='%23f7f2ea'/%3E%3Cpath d='M45 15h10v35l10 15v50H35V65l10-15z' fill='%239a5151'/%3E%3C/svg%3E", "categories": ["Merlot", "Cabernet Sauvignon"], "structuredContent": {"variants": [{"priceMoney": {"currency": "EUR", "value": "18.50"}}, {"priceMoney": {"currency": "EUR", "value": "21.00"}}]}},
+    {"id": "m3", "title": "Mock Blanc 2022", "fullUrl": "/winkel/mock-blanc", "assetUrl": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Crect width='100' height='130' fill='%23e0d2c2'/%3E%3Cpath d='M45 15h10v35l10 15v50H35V65l10-15z' fill='%23d9b783'/%3E%3C/svg%3E", "categories": ["Riesling"], "structuredContent": {"priceMoney": {"currency": "EUR", "value": "12.00"}}},
+    {"id": "m4", "title": "Mock Reserva zonder prijs", "fullUrl": "/winkel/mock-zonder-prijs", "assetUrl": "", "categories": ["Merlot"]}
+  ],
+  "pagination": {}
+}
