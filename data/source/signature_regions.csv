@@ -1,0 +1,111 @@
+id,region,country_iso2,lat,lon,climate3,gst_c,table75_rows,most_planted_alt,note
+cabernet-sauvignon,Bordeaux,FR,44.90,-0.35,koel,16.9,Gironde [Temperate],Chile (O'Higgins/Maule); Napa; Languedoc,Médoc/left bank
+merlot,Bordeaux,FR,44.90,-0.35,koel,16.9,Gironde [Temperate],,Pomerol/Saint-Émilion; Gironde 72.9k ha
+tempranillo,Rioja,ES,42.45,-2.45,warm,17.7,La Rioja [Warm],Castilla-La Mancha (68.9k ha),Rioja best known; Ribera del Duero also in Castilla y León
+chardonnay,Bourgogne,FR,47.10,4.85,koel,15.7,Bourgogne; Cote-d'Or 15.6 [Temperate],Champagne (10.7k ha); California; Languedoc,Chablis/Meursault
+syrah,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Languedoc (Hérault 15.1k ha); Australia (Barossa Shiraz),"Northern Rhône (Hermitage, Côte-Rôtie); Rhône point is the combined Côtes du Rhône mean"
+garnacha-tinta,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Castilla-La Mancha 21.2k; Aragón 15.3k; Vaucluse 23.1k,"DISPUTED: Grenache/Châteauneuf for Dutch shop context; Spain (Garnacha, Campo de Borja/Priorat) is the alternative"
+sauvignon-blanc,Marlborough,NZ,-41.50,173.90,koel,15.7,Marlborough [Temperate],Loire/Sancerre; Bordeaux (Gironde 6.2k ha),Marlborough 24.6k ha and the modern signature; Sancerre is the French classic
+pinot-noir,Bourgogne,FR,47.10,4.85,koel,15.7,Bourgogne; Cote-d'Or 15.6 [Temperate],Champagne (13.1k ha); Oregon; Germany (Spätburgunder),Côte d'Or
+pinot-gris,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],Alsace (Haut-Rhin 1.6k ha); Friuli,Pinot Grigio; Alsace is the Pinot Gris style
+riesling,Mosel,DE,49.90,7.00,koel,14.4,Mosel [Cool],Rheinhessen-Pfalz (11.0k ha); Alsace,Mosel iconic; Rheingau/Pfalz alternatives
+trebbiano-toscano,Toscana,IT,43.45,11.25,heet,19.1,Toscana [Hot],"Charente (Ugni Blanc/Cognac, ~50k ha); Puglia",Not strongly region-linked; Charente is by far most planted
+cot,Mendoza,AR,-33.30,-68.80,heet,20.2,Mendoza [Hot],Cahors (origin); Chile O'Higgins,Luján de Cuyo/Uco Valley
+cabernet-franc,Loire,FR,47.30,0.00,koel,15.8,Maine-et-Loire 15.9; Indre-et-Loire 15.6 (mean) [Temperate],Gironde (9.8k ha),Chinon/Saumur-Champigny; Saint-Émilion alternative
+chenin-blanc,Loire,FR,47.30,0.00,koel,15.8,Maine-et-Loire 15.9; Indre-et-Loire 15.6 (mean) [Temperate],South Africa (Breedekloof/Paarl/Swartland),Vouvray/Anjou; South Africa most planted
+sangiovese,Toscana,IT,43.45,11.25,heet,19.1,Toscana [Hot],,Chianti/Brunello
+nebbiolo,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Barolo/Barbaresco
+barbera,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Asti/Alba
+muscat-blanc-a-petits-grains,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],Languedoc/Rhône (Beaumes-de-Venise); Samos,Moscato d'Asti
+muscat-of-alexandria,Valencia,ES,39.50,-0.50,heet,21.5,Comunidad Valenciana; Valencia [Hot],"Chile (Ñuble 3.5k ha, Pisco); Andalucía; Pyrénées-Orientales",Moscatel de Valencia; Málaga/Setúbal also known
+viognier,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Languedoc (Hérault 2.2k ha); Sicilia,Condrieu
+gewurztraminer,Alsace,FR,48.20,7.35,koel,15.6,Alsace; Bas-Rhin; Haut-Rhin [Temperate],,Haut-Rhin
+semillon,Bordeaux,FR,44.90,-0.35,koel,16.9,Gironde [Temperate],Hunter Valley/Riverina; Chile Maule,Sauternes
+tribidrag,Puglia,IT,40.60,17.20,heet,20.7,Puglia [Hot],California Zinfandel (Lodi 5.9k ha),Primitivo (Manduria); Zinfandel is the American name
+carmenere,Colchagua,CL,-34.60,-71.20,warm,18.3,O'Higgins [Warm],,O'Higgins 5.6k ha
+pinotage,Stellenbosch,ZA,-33.90,18.85,heet,19.7,Stellenbosch [Hot],Swartland/Paarl (similar area),Stellenbosch 1.0k ha vs Swartland 1.3k
+gamay-noir,Beaujolais,FR,46.10,4.65,warm,17.4,Rhone (departement) [Warm],Switzerland (Valais/Vaud),Rhône département 14.4k ha
+pinot-blanc,Alsace,FR,48.20,7.35,koel,15.6,Alsace; Bas-Rhin; Haut-Rhin [Temperate],"Pfalz/Baden (Weissburgunder, 2.9k+1.3k ha)",Alsace Pinot Blanc
+gruner-veltliner,Wachau,AT,48.40,15.50,koel,14.5,Wachau [Cool],"Weinviertel (6.9k ha, the most planted)",Wachau 829 ha; Kamptal 2.0k ha; all Cool/Temperate = koel anyway
+mazuelo,Languedoc,FR,43.50,3.30,warm,18.9,Languedoc Roussillon [Warm],Priorat/Cataluña (2.1k ha); Sardegna,"Carignan: Aude 9.6k ha, Hérault 8.4k ha; Priorat (Cariñena) is the alternative"
+cinsaut,Provence,FR,43.50,6.10,heet,19.2,Var; PACA 19.3 [Hot],Languedoc (Hérault 7.0k ha); South Africa; Morocco,Provence rosé (Var 6.3k ha)
+montepulciano,Abruzzo,IT,42.30,14.10,heet,19.3,Abruzzo [Hot],,17.1k ha
+prosecco,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],Friuli-Venezia Giulia (6.5k ha),Glera; Conegliano-Valdobbiadene
+monastrell,Jumilla,ES,38.45,-1.30,heet,22.4,Region de Murcia [Hot],Castilla-La Mancha 13.2k; Murcia 15.6k; Bandol (Provence),Mourvèdre; Jumilla/Yecla in Murcia
+petit-verdot,Bordeaux,FR,44.90,-0.35,koel,16.9,Gironde [Temperate],Castilla-La Mancha (1.7k ha),"Gironde 1.5k ha, blending grape"
+alvarinho,Rías Baixas,ES,42.40,-8.70,warm,17.2,Galicia [Warm],Vinho Verde/Minho (3.8k ha),Galicia 6.3k ha
+torrontes-riojano,Salta,AR,-26.07,-65.98,heet,19.9,Salta [Hot],La Rioja/Chilecito (1.4k ha),Cafayate 556 ha + San Carlos 320 ha
+macabeo,Penedès,ES,41.40,1.75,heet,20.0,Barcelona; Cataluña [Hot],Castilla-La Mancha (23.6k ha); Rioja (Viura),Cava; Cataluña 12.1k ha
+airen,La Mancha,ES,39.20,-3.00,heet,19.6,Castilla-La Mancha; Ciudad Real 20.1 [Hot],,Castilla-La Mancha 187k ha
+melon,Loire,FR,47.30,0.00,koel,15.8,Maine-et-Loire 15.9; Indre-et-Loire 15.6 (mean) [Temperate],,"Muscadet/Pays Nantais (Loire-Atlantique 8.0k ha, 15.9 Temperate)"
+aglianico,Campania,IT,40.95,14.85,heet,19.5,Campania (Avellino 18.4 Warm) [Hot],Basilicata (Vulture 1.1k ha),Taurasi; Campania 7.5k ha
+auxerrois,Alsace,FR,48.20,7.35,koel,15.6,Alsace; Bas-Rhin; Haut-Rhin [Temperate],,Alsace 2.5k ha
+silvaner,Franken,DE,49.80,9.95,koel,14.4,Franken [Cool],Rheinhessen-Pfalz (2.5k ha),Franken Bocksbeutel; Unterfranken 1.5k ha
+muscat-ottonel,Alsace,FR,48.20,7.35,koel,15.6,Alsace; Bas-Rhin; Haut-Rhin [Temperate],Romania/Bulgaria (most planted); Burgenland,"DISPUTED: not significant in regional file; Alsace is the French original, plantings sit in Romania/Bulgaria"
+chasselas,Vaud,CH,46.50,6.75,koel,15.2,Vaud [Temperate],Germany Baden (Gutedel 1.1k ha); Valais,"Vaud 2.2k ha, Lavaux"
+pinot-meunier,Champagne,FR,49.00,3.95,koel,14.7,Marne [Cool],Württemberg (Samtrot),10.3k ha
+marsanne,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Languedoc (Aude),"Hermitage/Saint-Joseph; Drôme 428 ha, Ardèche 347 ha"
+roussanne,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Languedoc (Gard 677 ha),Hermitage/Châteauneuf; Rhône presence in Vaucluse 455 ha
+garnacha-blanca,Priorat,ES,41.20,0.80,heet,20.0,Tarragona [Hot],Languedoc (Hérault 1.7k ha); Terra Alta/Cataluña 2.3k ha,Cataluña is leading; Priorat/Terra Alta
+clairette,Rhône,FR,44.30,4.80,warm,18.1,Drome 17.6; Vaucluse 19.5; Ardeche 17.1 (mean) [Warm],Languedoc (Gard 432 ha); Vaucluse 732 ha,Clairette de Die (Drôme 394 ha); southern Rhône (Vaucluse) is the largest
+piquepoul-blanc,Languedoc,FR,43.50,3.30,warm,18.9,Languedoc Roussillon [Warm],,"Picpoul de Pinet, Hérault 2.0k ha"
+aligote,Bourgogne,FR,47.10,4.85,koel,15.7,Bourgogne; Cote-d'Or 15.6 [Temperate],Crimea 5.1k ha; Romania,Bouzeron; Bourgogne 2.0k ha
+savagnin-blanc,Jura,FR,46.75,5.65,koel,16.0,Jura [Temperate],"Valais (Heida, 212 ha)",Vin Jaune
+trousseau,Jura,FR,46.75,5.65,koel,16.0,Jura [Temperate],"Trás-os-Montes (Bastardo, 834 ha)",Arbois
+poulsard,Jura,FR,46.75,5.65,koel,16.0,Jura [Temperate],,Arbois/Jura
+mondeuse-noire,Savoie,FR,45.60,5.95,koel,15.7,Savoie [Temperate],,Savoie/Arbin
+jacquere,Savoie,FR,45.60,5.95,koel,15.7,Savoie [Temperate],,"Apremont/Abymes, 821 ha"
+altesse,Savoie,FR,45.60,5.95,koel,15.7,Savoie [Temperate],,"Roussette de Savoie, 287 ha"
+tannat,Sud-Ouest,FR,43.60,0.30,warm,17.4,Gers; Midi Pyrenees [Warm],Uruguay (largest world plantings),Madiran (Gers+Pyrénées-Atlantiques)
+negrette,Sud-Ouest,FR,43.60,0.30,warm,17.4,Gers; Midi Pyrenees [Warm],,"Fronton, Tarn-et-Garonne"
+mauzac-blanc,Languedoc,FR,43.50,3.30,warm,18.9,Languedoc Roussillon [Warm],"Gaillac (Tarn, 643 ha)","Limoux (Aude 886 ha), Blanquette"
+colombard,Sud-Ouest,FR,43.60,0.30,warm,17.4,Gers; Midi Pyrenees [Warm],South Africa (Olifants River 2.2k ha); California (Fresno 5.2k ha),"Côtes de Gascogne, Gers 7.6k ha"
+gros-manseng,Sud-Ouest,FR,43.60,0.30,warm,17.4,Gers; Midi Pyrenees [Warm],,"Jurançon, Gers 2.9k ha"
+petit-manseng,Sud-Ouest,FR,43.60,0.30,warm,17.4,Gers; Midi Pyrenees [Warm],,Jurançon
+vermentino,Sardegna,IT,40.10,9.00,heet,20.4,Sardegna [Hot],"Provence (Var 2.6k ha, Rolle); Corse; Toscana",Gallura 6.7k ha
+braquet-noir,Provence,FR,43.50,6.10,heet,19.2,Var; PACA 19.3 [Hot],,"Bellet (Nice, Alpes-Maritimes 19.0 Warm vs Var 19.2 Hot); not in regional file"
+pineau-d-aunis,Loire,FR,47.30,0.00,koel,15.8,Maine-et-Loire 15.9; Indre-et-Loire 15.6 (mean) [Temperate],,"Coteaux du Loir, Loir-et-Cher"
+corvina-veronese,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],,"Valpolicella/Amarone, 7.3k ha"
+corvinone,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],,Valpolicella
+rondinella,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],,"Valpolicella, 2.8k ha"
+molinara,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],,"Valpolicella, 806 ha"
+garganega,Veneto,IT,45.55,11.20,heet,19.3,Veneto [Hot],"Sicilia (3.7k ha, Grecanico)","Soave/Gambellara, 9.0k ha"
+verdicchio-bianco,Marche,IT,43.45,13.15,warm,18.9,Marche [Warm],Lombardia 2.0k ha (Trebbiano di Lugana),Castelli di Jesi; synonym Trebbiano di Soave/Lugana accounts for Lombardia/Veneto plantings
+croatina,Oltrepò Pavese,IT,44.95,9.10,warm,18.4,Pavia [Warm],Argentina (Bonarda confusion),Bonarda dell'Oltrepò; Piemonte also; no regional rows in file
+dolcetto,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Dogliani/Alba
+arneis,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Roero
+cortese,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Gavi
+grignolino,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Asti/Monferrato
+lagrein,Alto Adige,IT,46.45,11.25,koel,14.6,Bolzano-Bozen [Cool],,Bolzano
+schiava-grossa,Alto Adige,IT,46.45,11.25,koel,14.6,Bolzano-Bozen [Cool],"Württemberg (Trollinger, 1.9k ha, the only region listed in the file)","DISPUTED: Vernatsch/Schiava known from Alto Adige (Kalterersee, Santa Maddalena)"
+teroldego,Trentino,IT,46.15,11.10,koel,15.8,Trento [Temperate],,"Campo Rotaliano, 1.0k ha"
+refosco-dal-peduncolo-rosso,Friuli,IT,46.00,13.40,warm,18.5,Friuli-Venezia Giulia [Warm],,"Colli Orientali, 726 ha"
+sauvignonasse,Friuli,IT,46.00,13.40,warm,18.5,Friuli-Venezia Giulia [Warm],"Chile Maule (Sauvignon Vert, 390 ha)",Friulano; 1.6k ha
+ribolla-gialla,Friuli,IT,46.00,13.40,warm,18.5,Friuli-Venezia Giulia [Warm],"Slovenia (Goriška Brda, 384 ha)",Collio/Oslavia
+timorasso,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Colli Tortonesi; not in regional file
+erbaluce,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,Caluso; not in regional file
+brachetto-del-piemonte,Piemonte,IT,44.65,8.05,warm,18.1,Piemonte [Warm],,"Brachetto d'Acqui, 1.2k ha"
+lambrusco-salamino,Emilia-Romagna,IT,44.60,10.90,heet,19.4,Emilia-Romagna [Hot],,"Modena/Reggio, 5.3k ha"
+graciano,Rioja,ES,42.45,-2.45,warm,17.7,La Rioja [Warm],Castilla-La Mancha (869 ha),Rioja 972 ha
+godello,Valdeorras,ES,42.40,-7.00,warm,17.2,Galicia [Warm],Douro (695 ha); Bierzo,Galicia 1.4k ha
+verdejo,Rueda,ES,41.40,-4.90,warm,17.0,Valladolid [Warm],,Castilla y León 19.1k ha
+mencia,Bierzo,ES,42.60,-6.70,koel,16.3,Leon [Temperate],"Galicia (Ribeira Sacra); Dão (Jaen, 3.1k ha)",Castilla y León 5.0k ha
+bobal,Utiel-Requena,ES,39.50,-1.20,heet,21.5,Valencia [Hot],Castilla-La Mancha (31.0k ha),Valencia 22.3k ha
+xarello,Penedès,ES,41.40,1.75,heet,20.0,Barcelona; Cataluña [Hot],,"Cataluña 11.0k ha, Cava"
+touriga-nacional,Douro,PT,41.15,-7.60,warm,17.6,Alto Tras-os-Montes [Warm],Dão (2.9k ha); Alentejo,Douro 5.0k ha
+touriga-franca,Douro,PT,41.15,-7.60,warm,17.6,Alto Tras-os-Montes [Warm],,Douro 12.2k ha
+baga,Bairrada,PT,40.45,-8.45,heet,19.2,Beira Litoral [Hot],,Beira Atlântico 6.3k ha
+assyrtiko,Santorini,GR,36.40,25.43,heet,22.1,Notio Aigaio [Hot],,Notio Aigaio 1.3k ha
+xinomavro,Naoussa,GR,40.63,22.07,heet,19.7,Kentriki Makedonia [Hot],"Dytiki Makedonia/Amyndeo (1.3k ha, 18.0 Warm)",Naoussa; Kentriki Makedonia 757 ha
+agiorgitiko,Nemea,GR,37.82,22.67,heet,20.3,Peloponnissos [Hot],,Peloponnissos 3.0k ha
+furmint,Tokaj,HU,48.12,21.40,koel,15.8,Tokaj [Temperate],,Észak-Magyarország 3.5k ha
+blaufrankisch,Burgenland,AT,47.75,16.70,koel,15.9,Burgenland [Temperate],Hungary Dél-Alföld/Kékfrankos (2.7k ha); Württemberg (Lemberger),Mittelburgenland 1.0k ha
+zweigelt,Burgenland,AT,47.75,16.70,koel,15.9,Burgenland [Temperate],Weinviertel (1.8k ha),Neusiedlersee 1.4k ha
+sankt-laurent,Burgenland,AT,47.75,16.70,koel,15.9,Burgenland [Temperate],Pfalz (532 ha); Thermenregion,Neusiedlersee 220 ha; Pfalz is the larger area
+grasevina,Slavonija,HR,45.50,18.00,warm,17.3,Slavonija [Warm],Romania/Hungary (Olaszrizling); Austria (Welschriesling),DISPUTED: Croatian regional rows absent from file; Welschriesling Burgenland/Weinviertel alternative
+muller-thurgau,Rheinhessen,DE,49.80,8.20,koel,15.6,Rheinhessen [Temperate],Baden (1.8k ha); Franken,Rheinhessen-Pfalz 5.6k ha
+saperavi,Kakheti,GE,41.90,45.60,koel,16.6,Georgia (Telavi) [Temperate],Krasnodar (2.0k ha),Kakheti 17.4k ha
+nero-d-avola,Sicilia,IT,37.60,14.00,heet,21.5,Sicilia [Hot],,19.6k ha
+fiano,Campania,IT,40.95,14.85,heet,19.5,Campania (Avellino 18.4 Warm) [Hot],Puglia (589 ha),Fiano di Avellino
+plavac-mali,Dalmatia,HR,43.00,17.10,heet,21.3,Srednja Juzna Dalmacija [Hot],,Pelješac; Croatian regional rows absent from file
+nerello-mascalese,Sicilia,IT,37.60,14.00,heet,21.5,Sicilia [Hot],,Etna; 2.9k ha
