@@ -42,7 +42,9 @@ export function mount(root) {
   if (q.get('lang')) { store.state.lang = lang; store.save(); }
   let t = makeT(lang);
   const mock = q.get('mockShop');
-  const dayParam = parseInt(q.get('day'), 10);
+  // ?day=N, or data-day="N" on the root (used by the preview page, where
+  // the query string is not available).
+  const dayParam = parseInt(q.get('day') || root.getAttribute('data-day'), 10);
   const debugDay = Number.isFinite(dayParam) && dayParam > 0 ? dayParam : null;
 
   const numFmt = () => new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'nl-NL');

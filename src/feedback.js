@@ -7,11 +7,11 @@ export const RIPENING_ORDER = ['early', 'mid', 'late'];
 const cell = (key, status, extra) => ({ key, status, arrow: null, ...extra });
 const known = (v) => v !== null && v !== undefined;
 
-function ordered(order, a, b) {
+/** Climate and ripening: exact match or wrong, no partial credit. */
+function exact(order, a, b) {
   const i = order.indexOf(a), j = order.indexOf(b);
   if (i < 0 || j < 0) return 'grey';
-  const d = Math.abs(i - j);
-  return d === 0 ? 'green' : d === 1 ? 'yellow' : 'red';
+  return i === j ? 'green' : 'red';
 }
 
 /** Parentage: parents is null/[] (unknown) or an array of grape ids. */
@@ -39,16 +39,11 @@ export function flavour(guess, answer, desc = defDesc) {
   return { status, shared };
 }
 
-/** Planted area: green within 10 %, yellow within 50 % of the answer (inclusive, integer maths). */
+/** Planted area: higher/lower only. Green only on an identical figure. */
 export function area(guessHa, answerHa) {
   if (!(guessHa > 0) || !(answerHa > 0)) return { status: 'grey', arrow: null };
-  const diff = Math.abs(guessHa - answerHa);
-  let status;
-  if (diff * 10 <= answerHa) status = 'green';
-  else if (diff * 2 <= answerHa) status = 'yellow';
-  else status = 'red';
-  const arrow = guessHa < answerHa ? 'up' : guessHa > answerHa ? 'down' : null;
-  return { status: status, arrow: status === 'green' ? null : arrow };
+  if (guessHa === answerHa) return { status: 'green', arrow: null };
+  return { status: 'red', arrow: guessHa < answerHa ? 'up' : 'down' };
 }
 
 export const TREND_CLASSES = ['strongly-shrinking', 'shrinking', 'stable', 'growing', 'strongly-growing'];
@@ -101,8 +96,8 @@ export function compare(guess, answer, ctx = {}) {
   out.push(cell('top', t));
 
   out.push(cell('parents', parentage(guess, answer)));
-  out.push(cell('climate', ordered(CLIMATE_ORDER, guess.climate, answer.climate)));
-  out.push(cell('ripening', ordered(RIPENING_ORDER, guess.ripening, answer.ripening)));
+  out.push(cell('climate', exact(CLIMATE_ORDER, guess.climate, answer.climate)));
+  out.push(cell('ripening', exact(RIPENING_ORDER, guess.ripening, answer.ripening)));
 
   const f = flavour(guess, answer, desc);
   out.push(cell('flavour', f.status, { shared: f.shared }));

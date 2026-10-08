@@ -64,18 +64,18 @@ test('parentage with fixtures', () => {
   assert.equal(parentage(P('a', ['p1']), P('b', ['p1', 'p2'])), 'yellow');
 });
 
-test('climate and ripening ordinal', () => {
+test('climate and ripening: exact or red, no yellow', () => {
   const c = (a, b) => st(g({ id: 'a', climate: a }), g({ id: 'b', climate: b }), 'climate').status;
   assert.equal(c('warm', 'warm'), 'green');
-  assert.equal(c('cool', 'temperate'), 'yellow');
-  assert.equal(c('hot', 'warm'), 'yellow');
+  assert.equal(c('cool', 'temperate'), 'red');
+  assert.equal(c('hot', 'warm'), 'red');
   assert.equal(c('cool', 'warm'), 'red');
   assert.equal(c('cool', 'hot'), 'red');
   assert.equal(c(null, 'hot'), 'grey');
   const r = (a, b) => st(g({ id: 'a', ripening: a }), g({ id: 'b', ripening: b }), 'ripening').status;
   assert.equal(r('early', 'early'), 'green');
-  assert.equal(r('early', 'mid'), 'yellow');
-  assert.equal(r('mid', 'late'), 'yellow');
+  assert.equal(r('early', 'mid'), 'red');
+  assert.equal(r('mid', 'late'), 'red');
   assert.equal(r('early', 'late'), 'red');
   assert.equal(r(null, 'late'), 'grey');
   assert.equal(r('late', null), 'grey');
@@ -93,19 +93,12 @@ test('flavour: green >=2 shared, yellow 1 shared or >=2 shared clusters, red els
   assert.equal(f(['a'], null).status, 'grey');
 });
 
-test('area: exact 10 % and 50 % edges, arrows toward the answer', () => {
+test('area: higher/lower arrows only, green on identical figure', () => {
   assert.deepEqual(area(1000, 1000), { status: 'green', arrow: null });
-  assert.equal(area(900, 1000).status, 'green');
-  assert.equal(area(1100, 1000).status, 'green');
-  assert.equal(area(899, 1000).status, 'yellow');
-  assert.equal(area(1101, 1000).status, 'yellow');
-  assert.equal(area(500, 1000).status, 'yellow');
-  assert.equal(area(1500, 1000).status, 'yellow');
-  assert.equal(area(499, 1000).status, 'red');
-  assert.equal(area(1501, 1000).status, 'red');
+  assert.deepEqual(area(990, 1000), { status: 'red', arrow: 'up' }, 'no partial credit near the answer');
+  assert.deepEqual(area(1010, 1000), { status: 'red', arrow: 'down' });
   assert.equal(area(100, 1000).arrow, 'up');
   assert.equal(area(5000, 1000).arrow, 'down');
-  assert.equal(area(900, 1000).arrow, null, 'green has no arrow');
   assert.equal(area(null, 1000).status, 'grey');
   assert.equal(area(1000, null).status, 'grey');
 });
