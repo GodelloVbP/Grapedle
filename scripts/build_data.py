@@ -285,7 +285,7 @@ def load_body(problems):
     return out
 
 
-STYLE_IDS = ("sparkling", "sweet", "fortified", "rose", "oaked", "fresh", "blend")
+STYLE_IDS = ("sparkling", "sweet", "fortified", "rose", "oaked", "fresh", "aromatic", "blend")
 
 
 def load_styles(problems):

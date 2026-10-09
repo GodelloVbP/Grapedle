@@ -38,5 +38,10 @@
   "nl": "Droog & stil",
   "en": "Dry & still",
   "emoji": "🍷"
+ },
+ "aromatic": {
+  "nl": "Aromatisch",
+  "en": "Aromatic",
+  "emoji": "🌺"
  }
 }

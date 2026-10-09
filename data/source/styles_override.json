@@ -32,11 +32,11 @@
  {
   "id": "muscat-blanc-a-petits-grains",
   "styles": [
+   "aromatic",
    "sparkling",
-   "sweet",
-   "fortified"
+   "sweet"
   ],
-  "note": "Asti/Moscato d'Asti, late harvest, Muscat de Beaumes-de-Venise (Sonnet check vs Wine Folly/Wikipedia)"
+  "note": "Owner-approved new 'aromatic' style; Asti/Moscato, late harvest; fortified (VDN) dropped as minor"
  },
  {
   "id": "montepulciano",
@@ -134,9 +134,9 @@
  {
   "id": "viognier",
   "styles": [
-   "fresh"
+   "aromatic"
   ],
-  "note": "removed weak: oaked; added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+  "note": "Owner: Viognier is aromatic as a style; 'oaked' was wrong"
  },
  {
   "id": "tribidrag",
@@ -159,5 +159,13 @@
    "blend"
   ],
   "note": "removed weak: oaked (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "gewurztraminer",
+  "styles": [
+   "aromatic",
+   "sweet"
+  ],
+  "note": "Owner-approved new 'aromatic' style; strongly aromatic, also VT/SGN sweet"
  }
 ]

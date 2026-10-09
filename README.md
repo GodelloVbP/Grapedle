@@ -1,6 +1,6 @@
 # Grapedle
 
-A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on six attributes: colour (kleur), signature region (regio, with distance and direction), body (body, light to full with an arrow towards the answer), world planted area (aanplant, the guess's own hectares with an arrow towards the answer) flavour profile (smaakprofiel, as emoji chips) and common style (stijl: sparkling, sweet, fortified, rosé, oaked, crisp, blend). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
+A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on six attributes: colour (kleur), signature region (regio, with distance and direction), body (body, light to full with an arrow towards the answer), world planted area (aanplant, the guess's own hectares with an arrow towards the answer) flavour profile (smaakprofiel, as emoji chips) and common style (stijl: sparkling, sweet, fortified, rosé, oaked, crisp, aromatic, blend). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
 
 The game is a static bundle served from this repo through jsDelivr and embedded on a Squarespace page with a single code block. There is no backend.
 
