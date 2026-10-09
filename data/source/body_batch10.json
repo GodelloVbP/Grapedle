@@ -1,22 +1,27 @@
 [
- {
-  "id": "alicante-henri-bouschet",
-  "body": "Full Body",
-  "url": "https://winefolly.com/grapes/alicante-bouschet/"
- },
- {
-  "id": "falanghina-flegrea",
-  "body": "Medium-Light Body",
-  "url": "https://winefolly.com/grapes/falanghina/"
- },
- {
-  "id": "torrontes-riojano",
-  "body": "Medium-Light Body",
-  "url": "https://winefolly.com/grapes/torrontes/"
- },
- {
-  "id": "refosco-dal-peduncolo-rosso",
-  "body": "Medium-Full Body",
-  "url": "https://winefolly.com/grapes/refosco/"
- }
+  {
+    "id": "alicante-henri-bouschet",
+    "body": "Full Body",
+    "url": "https://winefolly.com/grapes/alicante-bouschet/"
+  },
+  {
+    "id": "falanghina-flegrea",
+    "body": "Medium-Light Body",
+    "url": "https://winefolly.com/grapes/falanghina/"
+  },
+  {
+    "id": "torrontes-riojano",
+    "body": "Medium-Light Body",
+    "url": "https://winefolly.com/grapes/torrontes/"
+  },
+  {
+    "id": "refosco-dal-peduncolo-rosso",
+    "body": "Medium-Full Body",
+    "url": "https://winefolly.com/grapes/refosco/"
+  },
+  {
+    "id": "clairette",
+    "body": "Full Body",
+    "url": "https://www.jancisrobinson.com/learn/grape-varieties/white/clairette"
+  }
 ]
