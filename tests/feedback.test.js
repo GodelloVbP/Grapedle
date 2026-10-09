@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import {
-  compare, area, areaBand, flavour, region, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
+  compare, area, roundArea, formatArea, flavour, region, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
 } from '../src/feedback.js';
 import { overlap, similarGrapes } from '../src/similar.js';
 
@@ -110,29 +110,33 @@ test('bearing on real data: Mosel to Rhône points south, Rioja to Rhône east/n
   assert.ok(a.km >= 600 && a.km <= 700, String(a.km));
 });
 
-test('area bands: ratio answer/guess, exact boundary ownership', () => {
-  const band = (guess, answer) => areaBand(guess, answer);
-  // r >= 5 up3 | 2 <= r < 5 up2 | 1.25 <= r < 2 up1 | 0.8 < r < 1.25 same | 0.5 < r <= 0.8 down1 | 0.2 < r <= 0.5 down2 | r <= 0.2 down3
-  assert.equal(band(100, 1000), 'up3'); assert.equal(band(100, 500), 'up3', 'r = 5 belongs to >5x');
-  assert.equal(band(100, 499), 'up2'); assert.equal(band(100, 200), 'up2', 'r = 2 belongs to 2-5x');
-  assert.equal(band(100, 199), 'up1'); assert.equal(band(100, 125), 'up1', 'r = 1.25 belongs to a bit more');
-  assert.equal(band(100, 124), 'same'); assert.equal(band(100, 100), 'same'); assert.equal(band(100, 81), 'same');
-  assert.equal(band(100, 80), 'down1', 'r = 0.8 belongs to a bit less');
-  assert.equal(band(100, 51), 'down1');
-  assert.equal(band(100, 50), 'down2', 'r = 0.5 belongs to 2-5x less');
-  assert.equal(band(100, 21), 'down2');
-  assert.equal(band(100, 20), 'down3', 'r = 0.2 belongs to >5x less');
-  assert.equal(band(100, 1), 'down3');
-  assert.deepEqual(area(100, 1000), { status: 'neutral', arrow: 'up', band: 'up3' });
-  assert.deepEqual(area(1000, 100), { status: 'neutral', arrow: 'down', band: 'down3' });
-  assert.deepEqual(area(1000, 1000), { status: 'neutral', arrow: null, band: 'same' });
-  assert.deepEqual(area(1000, 1100), { status: 'neutral', arrow: null, band: 'same' }, 'about the same: neutral tile, no arrow');
-  assert.equal(area(null, 1000).status, 'grey');
-  assert.equal(area(1000, 0).status, 'grey');
+test('area: arrow points to the answer, value is the guess area rounded to 2 significant figures', () => {
+  assert.deepEqual(area(280000, 19000), { status: 'neutral', arrow: 'down', value: 280000 }, 'answer has less: down');
+  assert.deepEqual(area(19000, 280000), { status: 'neutral', arrow: 'up', value: 19000 }, 'answer has more: up');
+  assert.deepEqual(area(1000, 1000), { status: 'neutral', arrow: null, value: 1000 }, 'exactly equal: no arrow');
+  assert.equal(area(1000, 1001).arrow, 'up'); assert.equal(area(1001, 1000).arrow, 'down');
+  assert.equal(area(null, 1000).status, 'grey'); assert.equal(area(1000, 0).status, 'grey');
+  assert.equal(area(null, 1000).value, null);
   const same = st(g({ id: 'q', areaHa: 5 }), g({ id: 'q', areaHa: 5 }), 'area');
-  assert.equal(same.status, 'green'); assert.equal(same.band, null); assert.equal(same.arrow, null);
+  assert.equal(same.status, 'green'); assert.equal(same.arrow, null); assert.equal(same.value, 5);
   const other = st(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 5 }), 'area');
-  assert.equal(other.status, 'neutral', 'green only for the same grape'); assert.equal(other.band, 'same');
+  assert.equal(other.status, 'neutral', 'green only for the same grape'); assert.equal(other.arrow, null);
+  const cs = st(g({ id: 'cab', areaHa: 276543 }), g({ id: 'gv', areaHa: 19012 }), 'area');
+  assert.equal(cs.arrow, 'down'); assert.equal(cs.value, 280000);
+});
+
+test('area rounding: 2 significant figures', () => {
+  assert.equal(roundArea(276543), 280000); assert.equal(roundArea(19012), 19000);
+  assert.equal(roundArea(19500), 20000); assert.equal(roundArea(1234), 1200);
+  assert.equal(roundArea(99), 99); assert.equal(roundArea(7), 7); assert.equal(roundArea(1), 1);
+  assert.equal(roundArea(994999), 990000); assert.equal(roundArea(995000), 1000000);
+});
+
+test('area locale formatting: nl dot, en comma', () => {
+  assert.equal(formatArea(276543, 'nl'), '280.000 ha'); assert.equal(formatArea(276543, 'en'), '280,000 ha');
+  assert.equal(formatArea(19012, 'nl'), '19.000 ha'); assert.equal(formatArea(19012, 'en'), '19,000 ha');
+  assert.equal(formatArea(1234567, 'nl'), '1.200.000 ha'); assert.equal(formatArea(1234567, 'en'), '1,200,000 ha');
+  assert.equal(formatArea(850, 'nl'), '850 ha'); assert.equal(formatArea(12, 'en'), '12 ha');
 });
 
 test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, red otherwise, grey unknown', () => {
@@ -159,7 +163,7 @@ test('share symbols per cell', () => {
   const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
   assert.equal(shareSymbol(down[2]), '⬇️');
   const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(tie[2]), '↔️');
+  assert.equal(shareSymbol(tie[2]), '↔️', 'exactly equal areas');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
   assert.deepEqual(win.map(shareSymbol), Array(4).fill('🟩'));
 });
@@ -248,4 +252,13 @@ test('region: closest pair decides km and arrow', () => {
 test('share emoji follow tile colour for the new yellow states', () => {
   const cells = compare(g({ id: 'a', regions: [R.Alsace] }), g({ id: 'b', regions: [R.Alsace, R.Veneto] }), { descriptors: desc, countries: ctry });
   assert.equal(shareSymbol(cells[1]), '🟨');
+});
+
+test('flavour: familyHit lists non-identical guess aromas whose family the answer has', () => {
+  const f = flavour({ flavours: ['a', 'c', 'g'] }, { flavours: ['b', 'c', 'e'] }, desc);
+  assert.deepEqual(f.shared, ['c']);
+  assert.deepEqual(f.familyHit, ['a'], 'a is citrus like b; g (herbal) has no family match; c is identical, not family');
+  assert.deepEqual(flavour({ flavours: null }, { flavours: ['a'] }, desc).familyHit, []);
+  const cell = st(g({ id: 'x', flavours: ['a', 'g'] }), g({ id: 'y', flavours: ['b'] }), 'flavour');
+  assert.deepEqual(cell.familyHit, ['a']);
 });

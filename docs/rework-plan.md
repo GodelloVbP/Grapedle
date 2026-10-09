@@ -1,6 +1,6 @@
 # Grapedle rework plan — v3 (final, executing)
 
-Updated 2026-10-09 after the owner review (four columns, band-based Aanplant, first-letter hint 2, practice mode, teaser, release process). Reviewed twice by two reviewers each round (one with full project context, one cold). v2 → v3 resolves every round-2 finding. v0 was never live; schedule, data and storage change freely until launch day, which becomes the start of the append-only rule.
+Updated 2026-10-09 after the owner review (four columns, number-and-arrow Aanplant, emoji Smaakprofiel, first-letter hint 2, practice mode, teaser, release process). Reviewed twice by two reviewers each round (one with full project context, one cold). v2 → v3 resolves every round-2 finding. v0 was never live; schedule, data and storage change freely until launch day, which becomes the start of the append-only rule.
 
 ## Game constants
 - One daily puzzle. 6 guesses. Puzzle #1 = launch date (set in `data/schedule.json` `start`). Day changes at 00:00 Europe/Amsterdam.
@@ -25,8 +25,8 @@ The 40 classics minus Airén, Muscat of Alexandria, Petit Verdot, Trebbiano Tosc
 |---|---|---|
 | 1 | Kleur | 🟩 same colour, 🟥 otherwise. Pink-skinned counts as white. |
 | 2 | Regio (signature region: where the grape is best known — Rhône for Marsanne, Rioja for Tempranillo, Mendoza for Malbec; up to two) | 🟩 same region set (two different grapes from one region also give 🟩); 🟨 a region in common (no distance) or the same country; 🟥 otherwise. Country-yellow and red tiles show distance in km (rounded to 50) and an 8-way arrow, the initial great-circle bearing from the guess's region point to the answer's. |
-| 3 | Aanplant (world planted area, Adelaide, latest year per country) | Neutral tile with a band of r = answerHa / guessHa: r ≥ 5 "↑ >5× meer"; 2 ≤ r < 5 "↑ 2–5× meer"; 1.25 ≤ r < 2 "↑ iets meer"; 0.8 < r < 1.25 "≈ ongeveer gelijk"; 0.5 < r ≤ 0.8 "↓ iets minder"; 0.2 < r ≤ 0.5 "↓ 2–5× minder"; r ≤ 0.2 "↓ >5× minder". 🟩 only for the same grape. |
-| 4 | Smaakprofiel (3–4 WSET primary aromas) | 🟩 ≥2 identical aromas; 🟨 1 identical aroma, or ≥3 shared aroma families; 🟥 otherwise; ⬜ "onbekend" when either grape has no aroma data. The tile lists the guess's aromas, identical ones bold. Families = the `cluster` field in `data/descriptors.json`. |
+| 3 | Aanplant (world planted area, Adelaide, latest year per country) | Neutral tile with the guess's own world area rounded to 2 significant figures (nl "280.000 ha", en "280,000 ha") and an arrow pointing to the answer: ↑ answer has more, ↓ less, "=" exactly equal areas of different grapes. 🟩 (with its number) only for the same grape. |
+| 4 | Smaakprofiel (3–4 WSET primary aromas) | 🟩 ≥2 identical aromas; 🟨 1 identical aroma, or ≥3 shared aroma families; 🟥 otherwise; ⬜ "onbekend" when either grape has no aroma data. The tile lists the guess's aromas as chips "emoji label" (`emoji` field in `data/descriptors.json`, Emoji 13.0 or older, label always shown). Identical aromas: filled green chip with ✓, bold. Aromas whose family matches one of the answer's families: yellow outline. Families = the `cluster` field. Legend under the board: "✓ groen = zelfde aroma, gele rand = zelfde soort aroma". |
 
 The climate column of the earlier plan was dropped; climate is not part of the data or the bundle.
 
@@ -40,7 +40,7 @@ Help: first visit shows one line, the example row and "Begrepen" without scrolli
 Display the name customers know, official name in small print on the answer card: Grenache (Garnacha Tinta), Carignan (Mazuelo), Muscadet (Melon), Prosecco (Glera), Friulano, Malbec, Zinfandel / Primitivo, Albariño, Welschriesling. Shop categories keep their names via `shop-grapes.json` (Garnacha and Grenache both → garnacha-tinta; Roter Sylvaner → silvaner; Maturana Tinta → trousseau).
 
 ## Result screen
-Order: result line (a win adds a one-line cheer by guess count: Onwaarschijnlijk!, Meesterlijk, Uitstekend, Mooi, Goed gedaan, Op het nippertje) → answer card (name, official name in small print, regions, aromas, an optional sourced "Wist je dat" line) → share button → countdown → "Oefenen" → shop section → tastings link. The winning row flips and pulses (not with prefers-reduced-motion).
+Order: result line (a win adds a one-line cheer by guess count: Onwaarschijnlijk!, Meesterlijk, Uitstekend, Mooi, Goed gedaan, Op het nippertje) → answer card (name, official name in small print, regions, aromas as emoji chips, an optional sourced "Wist je dat" line) → share button → countdown → "Oefenen" → shop section → tastings link. The winning row flips and pulses (not with prefers-reduced-motion).
 - Stocked: up to 4 wine tiles. Not stocked: "Lijkt op" — up to 3 stocked wines of the same colour with at least 2 identical aromas (or 1 identical plus the same primary-region country); otherwise no tiles, only the tastings link. A tile without a price has no price line.
 - Shop fetch times out after 4 s; on failure show the answer card and the tastings link, never empty tiles. Only https: and relative URLs from the feed are used.
 - Links carry `utm_source=grapedle&utm_medium=game`. If `window.dataLayer` exists (the site runs GTM), push events: start (once per puzzle per page view), guess, hint, win, loss, share, shop_click. Practice pushes none.
@@ -57,7 +57,7 @@ Grapedle #12 4/6 💡
 🟩🟩🟩🟩
 vinobypalazzo.nl/grapedle
 ```
-Order: kleur, regio, aanplant, smaak. ⬆️/⬇️ for any up/down band, ↔️ for about the same, 🟩 correct; ⬜ for unknown flavour. Clipboard fallback when `navigator.share` is missing.
+Order: kleur, regio, aanplant, smaak. ⬆️/⬇️ for the arrow direction, ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown flavour. Clipboard fallback when `navigator.share` is missing.
 
 ## Data jobs
 1. Signature regions (Sonnet, then owner sign-off for the 56): for the 111 old-pool grapes, one curated wine region each with country, a hand-placed lat/lon and a source note. The other ~150 guessable grapes use their top country and a country point.

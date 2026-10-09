@@ -1,5 +1,5 @@
 import { countries, descriptors, schedule, grapes } from './data.js';
-import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf } from './feedback.js';
+import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf, formatArea } from './feedback.js';
 import { createGame, shareText, firstLetter, MAX_GUESSES, HINT_AT } from './game.js';
 import { answerIdFor } from './schedule.js';
 import { makeT, pickLang } from './i18n.js';
@@ -203,20 +203,32 @@ function mountInner(root, opts) {
     } catch (e) { /* analytics must never break the game */ }
   }
 
+  /** Aroma chips "emoji label": identical aroma = filled green chip with a check, same family = yellow outline. */
+  function aromaChip(d, cell, big) {
+    const hit = (cell.shared || []).includes(d), fam = (cell.familyHit || []).includes(d);
+    const info = descriptors[d];
+    return h('span', { class: 'gd-chip' + (big ? ' gd-chip-lg' : '') + (hit ? ' gd-chip-hit' : fam ? ' gd-chip-fam' : '') },
+      info && info.emoji ? h('span', { class: 'gd-chip-e', 'aria-hidden': 'true' }, info.emoji) : null,
+      hit ? h('span', { class: 'gd-chip-ok', 'aria-hidden': 'true' }, '✓') : null,
+      h('span', { class: 'gd-chip-t' }, aromaName(d)));
+  }
   function flavourNodes(g, cell) {
     if (!g.flavours || !g.flavours.length) return null;
-    const shared = new Set(cell.shared || []);
-    return g.flavours.map((d) => h('span', { class: 'gd-chip' + (shared.has(d) ? ' gd-chip-hit' : '') }, aromaName(d)));
+    return g.flavours.map((d) => aromaChip(d, cell, false));
   }
+  const flavourSr = (g, cell) => (g.flavours || []).map((d) => aromaName(d) + ((cell.shared || []).includes(d) ? ` (${t('sameAroma')})` : (cell.familyHit || []).includes(d) ? ` (${t('sameKind')})` : '')).join(', ');
 
-  const areaKey = (cell) => (cell.band === 'same' ? 'area_same_band' : 'area_' + cell.band);
+  const areaArrow = (cell) => (cell.arrow === 'up' ? '↑' : cell.arrow === 'down' ? '↓' : '=');
   function areaText(cell) {
-    if (cell.status === 'green') return t('area_same');
-    return cell.band ? t(areaKey(cell)) : null;
+    if (cell.status === 'green') return `${formatArea(cell.value, lang)}`;
+    if (cell.value === null || cell.value === undefined) return null;
+    return `${formatArea(cell.value, lang)} ${areaArrow(cell)}`;
   }
   function areaSr(cell) {
-    if (cell.status === 'green') return t('area_same_sr');
-    return cell.band ? t(areaKey(cell) + '_sr') : t('unknownValue');
+    if (cell.value === null || cell.value === undefined) return t('unknownValue');
+    const n = formatArea(cell.value, lang);
+    if (cell.status === 'green') return `${n}, ${t('area_same_sr')}`;
+    return `${n}, ${t('area_' + (cell.arrow || 'eq') + '_sr')}`;
   }
 
   const colLabel = (k) => t('col_' + k);
@@ -239,7 +251,7 @@ function mountInner(root, opts) {
       default: break;
     }
     const chips = cell.key === 'flavour' ? flavourNodes(g, cell) : null;
-    if (cell.key === 'flavour') plain = (g.flavours || []).map(aromaName).join(', ');
+    if (cell.key === 'flavour') plain = flavourSr(g, cell);
     const srStatus = t('st_' + cell.status);
     const srText = `${colLabel(cell.key)}: ${plain || t('unknownValue')}${srStatus ? ', ' + srStatus : ''}`;
     const valEl = h('span', { class: 'gd-val' + (chips ? ' gd-val-chips' : '') }, chips || nodes || main || '–',
@@ -293,7 +305,7 @@ function mountInner(root, opts) {
         h('div', { class: 'gd-name' }, r.grape.name),
         h('div', { class: 'gd-tiles' }, r.cells.map((c, i) => buildTile(c, r.grape, i)))));
     });
-    boardEl.append(cols, list);
+    boardEl.append(cols, list, h('p', { class: 'gd-legend' }, t('legend')));
     justAdded = false; justWon = false;
   }
 
@@ -463,7 +475,7 @@ function mountInner(root, opts) {
   function facts(g) {
     const rows = [
       [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
-      [t('aromas'), g.flavours && g.flavours.length ? g.flavours.map(aromaName).join(', ') : null],
+      [t('aromas'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
   }
@@ -622,7 +634,7 @@ function mountInner(root, opts) {
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
         demoTile('green', colLabel('colour'), t('v_red')),
         demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),
-        demoTile('neutral', colLabel('area'), t('area_down2')),
+        demoTile('neutral', colLabel('area'), formatArea(280000, lang) + ' ↓'),
         demoTile('grey', colLabel('flavour'), '–')),
       h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')),
       h('details', { class: 'gd-details' },

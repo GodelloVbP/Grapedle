@@ -28,6 +28,8 @@ Full spec: https://claude.ai/code/artifact/ec2d449d-3aee-4533-979f-24cad0284fc3 
 - Tinta de Toro is Tempranillo. Grenache is Garnacha Tinta. Carignan is Mazuelo. Trebbiano di Soave is Verdicchio. Shop categories may keep their own names; `data/shop-grapes.json` maps them.
 - Pink-skinned grapes (source colour `G`) count as white.
 - Wine-name aliases (Prosecco, Moscato, Moscato d'Asti, Cava) are synonyms in `EXTRA_SYNONYMS`; regions (Rioja) are never aliased. Hints must not contain these synonyms.
+- Aanplant tile: the guess's own world area rounded to 2 significant figures (`.` thousands separator in nl, `,` in en) plus an arrow towards the answer (↑ answer has more, ↓ less, `=` exactly equal for different grapes); neutral colour, 🟩 only for the same grape. There are no magnitude bands.
+- Every descriptor in `data/descriptors.json` has an `emoji` from Unicode Emoji 13.0 or older (no 14+ emoji such as 🪻, 🫚, 🍋‍🟩); avoid duplicates within a family. Chips always show emoji plus label; identical aroma = green filled chip with ✓, same family = yellow outline.
 - Flavour descriptors: ids from `data/descriptors.json` only. Sources in order of precedence: the owner's copy of Gatinois, *Explore Wine Maps* (`aromas_book.json`), then Wine Folly, Jancis Robinson and Wikipedia (`aromas_batch*.json`); aromas confirmed by two of those sites rank first.
 - Optional `data/source/facts.json` ([{id, fact_nl, fact_en, source}]) gives the end screen a sourced "Wist je dat" line; never invent facts.
 - Every non-trivial field records its source in the record's `sources` object.

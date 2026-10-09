@@ -91,11 +91,17 @@
 #grapedle-root .gd-val { display: flex; flex-direction: column; align-items: center; gap: 1px; }
 #grapedle-root .gd-sub { font-size: .72rem; font-weight: 600; white-space: nowrap; opacity: .9; }
 #grapedle-root .gd-lbl { display: none; font-weight: 400; font-size: .64rem; text-transform: uppercase; letter-spacing: .05em; opacity: .85; }
-#grapedle-root .gd-val-chips { flex-direction: row; flex-wrap: wrap; gap: 2px; justify-content: center; }
-#grapedle-root .gd-chip { display: inline-block; padding: 1px 5px; border-radius: 999px; font-size: .68rem; border: 1px solid currentColor; opacity: .75; }
+#grapedle-root .gd-val-chips { flex-direction: row; flex-wrap: wrap; gap: 3px; justify-content: center; }
+#grapedle-root .gd-chip { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 999px; font-size: .68rem; line-height: 1.25; border: 2px solid transparent; background: rgba(255,255,255,.55); color: var(--gd-ink); max-width: 100%; text-align: left; }
+#grapedle-root .gd-chip-e { font-size: .9em; line-height: 1; }
+#grapedle-root .gd-chip-t { overflow-wrap: anywhere; min-width: 0; }
+#grapedle-root .gd-chip-hit { background: #2f6b3a; border-color: #2f6b3a; color: #fff; font-weight: 700; }
+#grapedle-root .gd-chip-fam { border-color: #f0b400; background: #fff3c4; }
+#grapedle-root .gd-chip-ok { font-weight: 800; }
+#grapedle-root .gd-chip-lg { font-size: .85rem; padding: 2px 8px; }
+#grapedle-root .gd-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+#grapedle-root .gd-legend { margin: 10px 0 0; font-size: .75rem; color: var(--gd-ink-soft); }
 #grapedle-root .gd-hit { font-weight: 800; }
-#grapedle-root .gd-chip-hit { opacity: 1; font-weight: 700; background: rgba(255,255,255,.55); }
-#grapedle-root .gd-s-red .gd-chip-hit { background: rgba(0,0,0,.25); }
 
 #grapedle-root .gd-rows { display: flex; flex-direction: column; gap: 10px; }
 #grapedle-root .gd-name { font-weight: 600; color: var(--gd-brand); }
@@ -106,7 +112,7 @@
 #grapedle-root[data-gd-layout="wide"] .gd-colgrid, #grapedle-root[data-gd-layout="wide"] .gd-tiles { display: grid; gap: 4px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 #grapedle-root[data-gd-layout="wide"] .gd-cols { margin-bottom: 6px; font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: var(--gd-ink-soft); font-weight: 600; }
 #grapedle-root[data-gd-layout="wide"] .gd-col { text-align: center; align-self: end; overflow-wrap: anywhere; }
-#grapedle-root[data-gd-layout="wide"] .gd-tile { min-height: 64px; }
+#grapedle-root[data-gd-layout="wide"] .gd-tile { min-height: 64px; height: auto; }
 #grapedle-root[data-gd-layout="wide"] .gd-row { align-items: center; }
 #grapedle-root[data-gd-layout="wide"] .gd-name { font-size: .9rem; overflow-wrap: anywhere; }
 

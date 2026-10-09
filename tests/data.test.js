@@ -229,3 +229,21 @@ test('the nine dual-region grapes, and a region name always has one point', () =
     if (seen.has(key)) assert.equal(val, seen.get(key), `${g.id} ${key}`); else seen.set(key, val);
   }
 });
+
+test('descriptors have an emoji (Unicode Emoji 13.0 or older, no 15.x-only picks)', () => {
+  const tooNew = ['🍋‍🟩', '🪻', '🫚', '🫛', '🫎', '🪼', '🪽', '🪿', '🫏', '🩷', '🩵', '🩶', '🛜', '🐦‍⬛'];
+  for (const [id, d] of Object.entries(descriptors)) {
+    assert.ok(typeof d.emoji === 'string' && d.emoji.length > 0, id);
+    assert.ok(!tooNew.includes(d.emoji), `${id}: ${d.emoji} is too new`);
+  }
+  // An emoji may repeat within a family: aromas without a literal emoji use
+  // the family's emoji, and every chip also shows the text label.
+  // It must never be shared ACROSS families, except the cherry and grape pairs.
+  const fam = new Map();
+  const allowed = new Set(['🍒', '🍇']);
+  for (const [id, d] of Object.entries(descriptors)) {
+    const prev = fam.get(d.emoji);
+    assert.ok(!prev || prev === d.cluster || allowed.has(d.emoji), `${id}: ${d.emoji} also used in family ${prev}`);
+    fam.set(d.emoji, d.cluster);
+  }
+});

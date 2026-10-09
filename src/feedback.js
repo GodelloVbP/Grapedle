@@ -76,27 +76,26 @@ export function region(guess, answer, ctry = defCountries) {
   return { status, km: roundKm(best.d), dir: directionIndex(bearingDeg(best.p, best.q)), hit: [] };
 }
 
-/**
- * Planted area: how much more or less the answer has, as a band of the ratio r = answerHa / guessHa.
- * r >= 5 up3 | 2 <= r < 5 up2 | 1.25 <= r < 2 up1 | 0.8 < r < 1.25 same | 0.5 < r <= 0.8 down1 |
- * 0.2 < r <= 0.5 down2 | r <= 0.2 down3. Every band is a neutral tile (green only for the same grape,
- * set in compare); arrow is 'up', 'down' or null (about the same).
- */
-export function areaBand(guessHa, answerHa) {
-  const r = answerHa / guessHa;
-  if (r >= 5) return 'up3';
-  if (r >= 2) return 'up2';
-  if (r >= 1.25) return 'up1';
-  if (r > 0.8) return 'same';
-  if (r > 0.5) return 'down1';
-  if (r > 0.2) return 'down2';
-  return 'down3';
+/** World area as shown to the player: rounded to 2 significant figures (280000 for 276543). */
+export function roundArea(ha) {
+  return Number(Number(ha).toPrecision(2));
 }
 
+/** "280.000 ha" (nl) or "280,000 ha" (en). Manual grouping, so it does not depend on the runtime's ICU data. */
+export function formatArea(ha, lang) {
+  const sep = lang === 'en' ? ',' : '.';
+  return String(roundArea(ha)).replace(/\B(?=(\d{3})+(?!\d))/g, sep) + ' ha';
+}
+
+/**
+ * Planted area: the cell shows the GUESS's own world area (rounded to 2 significant figures, `value`) and
+ * an arrow pointing to the answer: 'up' when the answer has more, 'down' when it has less, null when the
+ * two areas are exactly equal ('='). The tile is neutral; green only for the same grape (set in compare).
+ */
 export function area(guessHa, answerHa) {
-  if (!(guessHa > 0) || !(answerHa > 0)) return { status: 'grey', arrow: null, band: null };
-  const band = areaBand(guessHa, answerHa);
-  return { status: 'neutral', arrow: band.startsWith('up') ? 'up' : band.startsWith('down') ? 'down' : null, band };
+  if (!(guessHa > 0) || !(answerHa > 0)) return { status: 'grey', arrow: null, value: null };
+  const arrow = answerHa > guessHa ? 'up' : answerHa < guessHa ? 'down' : null;
+  return { status: 'neutral', arrow, value: roundArea(guessHa) };
 }
 
 /**
@@ -105,20 +104,22 @@ export function area(guessHa, answerHa) {
  */
 export function flavour(guess, answer, desc = defDesc) {
   const gf = guess.flavours, af = answer.flavours;
-  if (!gf || !af || !gf.length || !af.length) return { status: 'grey', shared: [], families: 0 };
+  if (!gf || !af || !gf.length || !af.length) return { status: 'grey', shared: [], families: 0, familyHit: [] };
   const shared = gf.filter((d) => af.includes(d));
   const clusters = (list) => new Set(list.map((d) => desc[d] && desc[d].cluster).filter(Boolean));
   const ac = clusters(af);
   const families = [...clusters(gf)].filter((c) => ac.has(c)).length;
+  // guess aromas that are not identical but belong to a family the answer also has (yellow outline in the UI)
+  const familyHit = gf.filter((d) => !af.includes(d) && desc[d] && ac.has(desc[d].cluster));
   let status = 'red';
   if (shared.length >= 2) status = 'green';
   else if (shared.length === 1 || families >= 3) status = 'yellow';
-  return { status, shared, families };
+  return { status, shared, families, familyHit };
 }
 
 /**
  * Compare a guess with the answer. Returns four cells in COLUMNS order:
- * { key, status: green|yellow|red|grey|neutral, arrow: up|down|null, band, ... }.
+ * { key, status: green|yellow|red|grey|neutral, arrow: up|down|null, value (area), ... }.
  * ctx = { descriptors, countries } can be injected for tests.
  */
 export function compare(guess, answer, ctx = {}) {
@@ -129,17 +130,17 @@ export function compare(guess, answer, ctx = {}) {
   const r = region(guess, answer, ctry);
   out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit }));
   const a = area(guess.areaHa, answer.areaHa);
-  out.push(cell('area', a.status, { arrow: a.arrow, band: a.band }));
+  out.push(cell('area', a.status, { arrow: a.arrow, value: a.value }));
   const f = flavour(guess, answer, desc);
-  out.push(cell('flavour', f.status, { shared: f.shared, families: f.families }));
-  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.band = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; }
+  out.push(cell('flavour', f.status, { shared: f.shared, families: f.families, familyHit: f.familyHit }));
+  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; }
   return out;
 }
 
 export const STATUS_EMOJI = { green: '🟩', yellow: '🟨', red: '🟥', grey: '⬜', neutral: '⬜' };
 export const STATUS_SYMBOL = { green: '✓', yellow: '~', red: '✗', grey: '?', neutral: '' };
 
-/** One share-line symbol per cell. Area: ⬆️ the answer has more, ⬇️ less, ↔️ about the same, 🟩 correct. */
+/** One share-line symbol per cell. Area: ⬆️ the answer has more, ⬇️ less, ↔️ exactly equal, 🟩 correct. */
 export function shareSymbol(c) {
   if (c.key === 'area') {
     if (c.status === 'green') return '🟩';

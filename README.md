@@ -1,6 +1,6 @@
 # Grapedle
 
-A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on four attributes: colour (kleur), signature region (regio, with distance and direction), world planted area (aanplant, as a how-much-more/less band) and flavour profile (smaakprofiel). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
+A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on four attributes: colour (kleur), signature region (regio, with distance and direction), world planted area (aanplant, the guess's own hectares with an arrow towards the answer) and flavour profile (smaakprofiel, as emoji chips). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
 
 The game is a static bundle served from this repo through jsDelivr and embedded on a Squarespace page with a single code block. There is no backend.
 
@@ -52,10 +52,12 @@ The schedule needs at least 90 days ahead: the build prints a warning and a test
 |---|---|---|---|
 | Kleur | same colour (pink counts as white) | | other colour |
 | Regio | same signature region | same country, with km (rounded to 50) and an 8-way arrow | other country, km and arrow |
-| Aanplant | only the same grape | | neutral tile with a band, see below |
+| Aanplant | only the same grape | | neutral tile with the guess's hectares and an arrow, see below |
 | Smaakprofiel | at least 2 identical aromas | 1 identical aroma, or 3 shared aroma families | no overlap; grey when unknown |
 
-Aanplant band, with r = answer hectares / guess hectares: r >= 5 "↑ >5× meer"; 2 <= r < 5 "↑ 2–5× meer"; 1.25 <= r < 2 "↑ iets meer"; 0.8 < r < 1.25 "≈ ongeveer gelijk"; 0.5 < r <= 0.8 "↓ iets minder"; 0.2 < r <= 0.5 "↓ 2–5× minder"; r <= 0.2 "↓ >5× minder". Share emoji: ⬆️/⬇️ for any up/down band, ↔️ about the same, 🟩 correct.
+Aanplant shows the guess's own world area rounded to 2 significant figures ("280.000 ha" in nl, "280,000 ha" in en) and an arrow pointing to the answer: ↑ the answer has more, ↓ it has less, "=" when the areas are exactly equal (different grapes). The same grape is green with its number. Help line: "Aanplant: hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder." Share emoji: ⬆️/⬇️, ↔️ equal, 🟩 correct.
+
+Smaakprofiel shows the guess's aromas as chips "emoji label" (`emoji` per descriptor in `data/descriptors.json`, Unicode Emoji 13.0 or older; the label is always shown). An aroma identical to one of the answer's is a filled green chip with ✓ and bold; an aroma whose family (`cluster`) matches one of the answer's families gets a yellow outline; others are plain. A legend line sits under the board and in the help. The end screen's answer card lists the answer's aromas as chips too.
 
 Hints: after 3 guesses "Bekend van" (appellation or wine), after 5 guesses the first letter ("Begint met C"). Each hint used adds a 💡 to the share text. State is stored under `gd:v2` and normalised on load (damaged data never breaks the game).
 

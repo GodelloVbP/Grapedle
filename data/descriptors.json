@@ -2,301 +2,361 @@
   "acacia": {
     "cluster": "floral",
     "en": "Acacia blossom",
-    "nl": "Acaciabloesem"
+    "nl": "Acaciabloesem",
+    "emoji": "🌼"
   },
   "honeysuckle": {
     "cluster": "floral",
     "en": "Honeysuckle",
-    "nl": "Kamperfoelie"
+    "nl": "Kamperfoelie",
+    "emoji": "🌸"
   },
   "elderflower": {
     "cluster": "floral",
     "en": "Elderflower",
-    "nl": "Vlierbloesem"
+    "nl": "Vlierbloesem",
+    "emoji": "💮"
   },
   "chamomile": {
     "cluster": "floral",
     "en": "Chamomile",
-    "nl": "Kamille"
+    "nl": "Kamille",
+    "emoji": "🌼"
   },
   "rose": {
     "cluster": "floral",
     "en": "Rose",
-    "nl": "Roos"
+    "nl": "Roos",
+    "emoji": "🌹"
   },
   "violet": {
     "cluster": "floral",
     "en": "Violet",
-    "nl": "Viooltjes"
+    "nl": "Viooltjes",
+    "emoji": "💜"
   },
   "orange-blossom": {
     "cluster": "floral",
     "en": "Orange blossom",
-    "nl": "Oranjebloesem"
+    "nl": "Oranjebloesem",
+    "emoji": "🌺"
   },
   "green-apple": {
     "cluster": "green-fruit",
     "en": "Green apple",
-    "nl": "Groene appel"
+    "nl": "Groene appel",
+    "emoji": "🍏"
   },
   "red-apple": {
     "cluster": "green-fruit",
     "en": "Red apple",
-    "nl": "Rode appel"
+    "nl": "Rode appel",
+    "emoji": "🍎"
   },
   "gooseberry": {
     "cluster": "green-fruit",
     "en": "Gooseberry",
-    "nl": "Kruisbes"
+    "nl": "Kruisbes",
+    "emoji": "🥝"
   },
   "pear": {
     "cluster": "green-fruit",
     "en": "Pear",
-    "nl": "Peer"
+    "nl": "Peer",
+    "emoji": "🍐"
   },
   "quince": {
     "cluster": "green-fruit",
     "en": "Quince",
-    "nl": "Kweepeer"
+    "nl": "Kweepeer",
+    "emoji": "🍏"
   },
   "green-grape": {
     "cluster": "green-fruit",
     "en": "Grape",
-    "nl": "Druif"
+    "nl": "Druif",
+    "emoji": "🍇"
   },
   "grapefruit": {
     "cluster": "citrus",
     "en": "Grapefruit",
-    "nl": "Grapefruit"
+    "nl": "Grapefruit",
+    "emoji": "🍊"
   },
   "lemon": {
     "cluster": "citrus",
     "en": "Lemon",
-    "nl": "Citroen"
+    "nl": "Citroen",
+    "emoji": "🍋"
   },
   "lime": {
     "cluster": "citrus",
     "en": "Lime",
-    "nl": "Limoen"
+    "nl": "Limoen",
+    "emoji": "🍋"
   },
   "orange-peel": {
     "cluster": "citrus",
     "en": "Orange peel",
-    "nl": "Sinaasappelschil"
+    "nl": "Sinaasappelschil",
+    "emoji": "🍊"
   },
   "peach": {
     "cluster": "stone-fruit",
     "en": "Peach",
-    "nl": "Perzik"
+    "nl": "Perzik",
+    "emoji": "🍑"
   },
   "apricot": {
     "cluster": "stone-fruit",
     "en": "Apricot",
-    "nl": "Abrikoos"
+    "nl": "Abrikoos",
+    "emoji": "🍑"
   },
   "nectarine": {
     "cluster": "stone-fruit",
     "en": "Nectarine",
-    "nl": "Nectarine"
+    "nl": "Nectarine",
+    "emoji": "🍑"
   },
   "banana": {
     "cluster": "tropical",
     "en": "Banana",
-    "nl": "Banaan"
+    "nl": "Banaan",
+    "emoji": "🍌"
   },
   "lychee": {
     "cluster": "tropical",
     "en": "Lychee",
-    "nl": "Lychee"
+    "nl": "Lychee",
+    "emoji": "🍍"
   },
   "mango": {
     "cluster": "tropical",
     "en": "Mango",
-    "nl": "Mango"
+    "nl": "Mango",
+    "emoji": "🥭"
   },
   "melon": {
     "cluster": "tropical",
     "en": "Melon",
-    "nl": "Meloen"
+    "nl": "Meloen",
+    "emoji": "🍈"
   },
   "passion-fruit": {
     "cluster": "tropical",
     "en": "Passion fruit",
-    "nl": "Passievrucht"
+    "nl": "Passievrucht",
+    "emoji": "🍍"
   },
   "pineapple": {
     "cluster": "tropical",
     "en": "Pineapple",
-    "nl": "Ananas"
+    "nl": "Ananas",
+    "emoji": "🍍"
   },
   "redcurrant": {
     "cluster": "red-fruit",
     "en": "Redcurrant",
-    "nl": "Rode bes"
+    "nl": "Rode bes",
+    "emoji": "🍓"
   },
   "cranberry": {
     "cluster": "red-fruit",
     "en": "Cranberry",
-    "nl": "Veenbes"
+    "nl": "Veenbes",
+    "emoji": "🍓"
   },
   "raspberry": {
     "cluster": "red-fruit",
     "en": "Raspberry",
-    "nl": "Framboos"
+    "nl": "Framboos",
+    "emoji": "🍓"
   },
   "strawberry": {
     "cluster": "red-fruit",
     "en": "Strawberry",
-    "nl": "Aardbei"
+    "nl": "Aardbei",
+    "emoji": "🍓"
   },
   "red-cherry": {
     "cluster": "red-fruit",
     "en": "Red cherry",
-    "nl": "Rode kers"
+    "nl": "Rode kers",
+    "emoji": "🍒"
   },
   "red-plum": {
     "cluster": "red-fruit",
     "en": "Red plum",
-    "nl": "Rode pruim"
+    "nl": "Rode pruim",
+    "emoji": "🍓"
   },
   "blackcurrant": {
     "cluster": "black-fruit",
     "en": "Blackcurrant",
-    "nl": "Zwarte bes"
+    "nl": "Zwarte bes",
+    "emoji": "🫐"
   },
   "blackberry": {
     "cluster": "black-fruit",
     "en": "Blackberry",
-    "nl": "Braam"
+    "nl": "Braam",
+    "emoji": "🫐"
   },
   "blueberry": {
     "cluster": "black-fruit",
     "en": "Blueberry",
-    "nl": "Blauwe bes"
+    "nl": "Blauwe bes",
+    "emoji": "🫐"
   },
   "black-cherry": {
     "cluster": "black-fruit",
     "en": "Black cherry",
-    "nl": "Zwarte kers"
+    "nl": "Zwarte kers",
+    "emoji": "🍒"
   },
   "black-plum": {
     "cluster": "black-fruit",
     "en": "Black plum",
-    "nl": "Zwarte pruim"
+    "nl": "Zwarte pruim",
+    "emoji": "🫐"
   },
   "fig": {
     "cluster": "dried-fruit",
     "en": "Fig",
-    "nl": "Vijg"
+    "nl": "Vijg",
+    "emoji": "🍇"
   },
   "prune": {
     "cluster": "dried-fruit",
     "en": "Prune",
-    "nl": "Gedroogde pruim"
+    "nl": "Gedroogde pruim",
+    "emoji": "🍇"
   },
   "raisin": {
     "cluster": "dried-fruit",
     "en": "Raisin",
-    "nl": "Rozijn"
+    "nl": "Rozijn",
+    "emoji": "🍇"
   },
   "green-pepper": {
     "cluster": "herbaceous",
     "en": "Green bell pepper",
-    "nl": "Groene paprika"
+    "nl": "Groene paprika",
+    "emoji": "🫑"
   },
   "grass": {
     "cluster": "herbaceous",
     "en": "Grass",
-    "nl": "Gras"
+    "nl": "Gras",
+    "emoji": "🌱"
   },
   "tomato-leaf": {
     "cluster": "herbaceous",
     "en": "Tomato leaf",
-    "nl": "Tomatenblad"
+    "nl": "Tomatenblad",
+    "emoji": "🍅"
   },
   "asparagus": {
     "cluster": "herbaceous",
     "en": "Asparagus",
-    "nl": "Asperge"
+    "nl": "Asperge",
+    "emoji": "🌱"
   },
   "blackcurrant-leaf": {
     "cluster": "herbaceous",
     "en": "Blackcurrant leaf",
-    "nl": "Zwartebessenblad"
+    "nl": "Zwartebessenblad",
+    "emoji": "🍃"
   },
   "eucalyptus": {
     "cluster": "herbal",
     "en": "Eucalyptus",
-    "nl": "Eucalyptus"
+    "nl": "Eucalyptus",
+    "emoji": "🌲"
   },
   "mint": {
     "cluster": "herbal",
     "en": "Mint",
-    "nl": "Munt"
+    "nl": "Munt",
+    "emoji": "🌿"
   },
   "lavender": {
     "cluster": "herbal",
     "en": "Lavender",
-    "nl": "Lavendel"
+    "nl": "Lavendel",
+    "emoji": "🌿"
   },
   "fennel": {
     "cluster": "herbal",
     "en": "Fennel",
-    "nl": "Venkel"
+    "nl": "Venkel",
+    "emoji": "🌿"
   },
   "dried-herbs": {
     "cluster": "herbal",
     "en": "Dried herbs",
-    "nl": "Gedroogde kruiden"
+    "nl": "Gedroogde kruiden",
+    "emoji": "🌾"
   },
   "black-pepper": {
     "cluster": "pungent-spice",
     "en": "Black pepper",
-    "nl": "Zwarte peper"
+    "nl": "Zwarte peper",
+    "emoji": "🧂"
   },
   "white-pepper": {
     "cluster": "pungent-spice",
     "en": "White pepper",
-    "nl": "Witte peper"
+    "nl": "Witte peper",
+    "emoji": "🧂"
   },
   "liquorice": {
     "cluster": "pungent-spice",
     "en": "Liquorice",
-    "nl": "Drop"
+    "nl": "Drop",
+    "emoji": "🍬"
   },
   "wet-stones": {
     "cluster": "other",
     "en": "Wet stones",
-    "nl": "Natte steen"
+    "nl": "Natte steen",
+    "emoji": "🪨"
   },
   "flint": {
     "cluster": "other",
     "en": "Flint",
-    "nl": "Vuursteen"
+    "nl": "Vuursteen",
+    "emoji": "🔥"
   },
   "wet-wool": {
     "cluster": "other",
     "en": "Wet wool",
-    "nl": "Natte wol"
+    "nl": "Natte wol",
+    "emoji": "🐑"
   },
   "almond": {
     "cluster": "nutty",
     "en": "Almond",
-    "nl": "Amandel"
+    "nl": "Amandel",
+    "emoji": "🌰"
   },
   "honey": {
     "cluster": "other",
     "en": "Honey",
-    "nl": "Honing"
+    "nl": "Honing",
+    "emoji": "🍯"
   },
   "forest-floor": {
     "cluster": "earthy",
     "en": "Forest floor",
-    "nl": "Bosgrond"
+    "nl": "Bosgrond",
+    "emoji": "🍂"
   },
   "mushroom": {
     "cluster": "earthy",
     "en": "Mushroom",
-    "nl": "Paddenstoel"
+    "nl": "Paddenstoel",
+    "emoji": "🍄"
   }
 }

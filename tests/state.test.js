@@ -325,15 +325,9 @@ test('i18n: both languages complete, lang selection', () => {
   assert.equal(makeT('en')('lose', { grape: 'Syrah' }), 'Unlucky! It was Syrah');
   assert.equal(makeT('nl')('hint1', { v: 'Barolo' }), 'Bekend van: Barolo');
   assert.equal(makeT('en')('hint1', { v: 'Barolo' }), 'Known for: Barolo');
-  assert.equal(makeT('nl')('area_up3'), '↑ >5× meer');
-  assert.equal(makeT('nl')('area_up2'), '↑ 2–5× meer');
-  assert.equal(makeT('nl')('area_up1'), '↑ iets meer');
-  assert.equal(makeT('nl')('area_same_band'), '≈ ongeveer gelijk');
-  assert.equal(makeT('nl')('area_down1'), '↓ iets minder');
-  assert.equal(makeT('nl')('area_down2'), '↓ 2–5× minder');
-  assert.equal(makeT('nl')('area_down3'), '↓ >5× minder');
-  assert.equal(makeT('en')('area_up1'), '↑ a bit more');
-  assert.equal(makeT('en')('area_same_band'), '≈ about the same');
+  assert.equal(makeT('nl')('help_area'), 'hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder.');
+  assert.equal(makeT('nl')('legend'), '✓ groen = zelfde aroma, gele rand = zelfde soort aroma');
+  assert.ok(!('area_up3' in STRINGS.nl) && !('area_up3' in STRINGS.en), 'band strings are gone');
   assert.match(makeT('nl')('help_flavour'), /minstens 2 aroma/);
   assert.match(makeT('en')('help_flavour'), /at least 2 aromas/);
   for (const lang of ['nl', 'en']) for (const k of ['colour', 'region', 'area', 'flavour']) assert.ok(STRINGS[lang]['help_' + k] && STRINGS[lang]['col_' + k], k);
