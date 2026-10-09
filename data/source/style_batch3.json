@@ -1,0 +1,20 @@
+[
+{"id":"tempranillo","styles":["oaked","fortified"],"evidence":[{"style":"oaked","url":"https://winefolly.com/grapes/tempranillo/","quote":"Top-level Tempranillo wines often age in oak"},{"style":"fortified","url":"https://winefolly.com/grapes/tempranillo/","quote":"a major blending grape used in Port"}]},
+{"id":"garnacha-tinta","styles":["rose","blend","fortified"],"evidence":[{"style":"rose","url":"https://en.wikipedia.org/wiki/Grenache","quote":"Grenache is the principal grape behind the rosés of Tavel and Lirac"},{"style":"blend","url":"https://en.wikipedia.org/wiki/Grenache","quote":"often used as a blending component"},{"style":"fortified","url":"https://en.wikipedia.org/wiki/Grenache","quote":"makes Grenache well adapted to the production of fortified wines"}]},
+{"id":"pinot-gris","styles":["fresh","sweet"],"evidence":[{"style":"fresh","url":"https://winefolly.com/grapes/pinot-gris/","quote":"Italian Pinot Grigio is normally considered the lightest and freshest."},{"style":"sweet","url":"https://winefolly.com/grapes/pinot-gris/","quote":"Vendanges Tardives and Sélection de Grains Nobles."}]},
+{"id":"cabernet-franc","styles":["blend","oaked"],"evidence":[{"style":"blend","url":"https://winefolly.com/grapes/cabernet-franc/","quote":"Normally found in blends with Merlot and possibly Cabernet Sauvignon"},{"style":"oaked","url":"https://winefolly.com/grapes/cabernet-franc/","quote":"aged in French oak for additional body and richness"}]},
+{"id":"nebbiolo","styles":["oaked"],"evidence":[{"style":"oaked","url":"https://en.wikipedia.org/wiki/Nebbiolo","quote":"the use of older large botti size barrels"}]},
+{"id":"viognier","styles":["oaked"],"evidence":[{"style":"oaked","url":"https://winefolly.com/grapes/viognier/","quote":"Winemakers often use oak barrels for aging Viognier"}]},
+{"id":"tribidrag","styles":["rose","sweet"],"evidence":[{"style":"rose","url":"https://winefolly.com/grapes/zinfandel/","quote":"It's also made into a sweet rosé called White Zinfandel."},{"style":"sweet","url":"https://winefolly.com/grapes/zinfandel/","quote":"A true sweet wine designation for Primitivo."}]},
+{"id":"gamay-noir","styles":[],"evidence":[]},
+{"id":"mazuelo","styles":["blend"],"evidence":[{"style":"blend","url":"https://winefolly.com/grapes/carignan/","quote":"It is commonly used in red wine blends with Grenache and Syrah."}]},
+{"id":"prosecco","styles":["sparkling"],"evidence":[{"style":"sparkling","url":"https://winefolly.com/grapes/prosecco/","quote":"Prosecco is a super food-friendly sparkling wine"}]},
+{"id":"macabeo","styles":["sparkling"],"evidence":[{"style":"sparkling","url":"https://winefolly.com/grapes/viura/","quote":"is the primary blending grape in Cava sparkling wines"}]},
+{"id":"lambrusco-salamino","styles":["sparkling"],"evidence":[{"style":"sparkling","url":"https://winefolly.com/grapes/lambrusco/","quote":"that are made into sparkling wines"}]},
+{"id":"nero-d-avola","styles":[],"evidence":[]},
+{"id":"muller-thurgau","styles":[],"evidence":[]},
+{"id":"corvinone","styles":["blend"],"evidence":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Corvinone","quote":"Corvinone is blended, along with Rondinella, Molinara and other autochthonous varieties"}]},
+{"id":"garnacha-blanca","styles":["blend","fortified"],"evidence":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Garnacha_blanca","quote":"often blended with Roussanne"},{"style":"fortified","url":"https://en.wikipedia.org/wiki/Garnacha_blanca","quote":"blended into some fortified vin doux naturel wines"}]},
+{"id":"rondinella","styles":["blend"],"evidence":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Rondinella","quote":"Rondinella always appears in these wines blended with Corvina."}]},
+{"id":"trousseau","styles":["fortified"],"evidence":[{"style":"fortified","url":"https://en.wikipedia.org/wiki/Trousseau_noir","quote":"It is part of the blend for port wine"}]}
+]

@@ -1,0 +1,83 @@
+[
+ {
+  "id": "cinsaut",
+  "styles": [
+   "blend",
+   "rose"
+  ],
+  "note": "Haiku batch kept 'fresh'; Provence/Languedoc rosé is the better-known style"
+ },
+ {
+  "id": "vermentino",
+  "styles": [
+   "fresh"
+  ],
+  "note": "oaked not supported as a common style"
+ },
+ {
+  "id": "verdicchio-bianco",
+  "styles": [
+   "fresh"
+  ],
+  "note": "sweet (passito) is a minor style"
+ },
+ {
+  "id": "sangiovese",
+  "styles": [
+   "oaked",
+   "blend"
+  ],
+  "note": "sweet came from vin santo, which is mostly Trebbiano; Chianti is a blend"
+ },
+ {
+  "id": "muscat-blanc-a-petits-grains",
+  "styles": [
+   "sparkling",
+   "sweet",
+   "fortified"
+  ],
+  "note": "Asti/Moscato d'Asti, late harvest, Muscat de Beaumes-de-Venise"
+ },
+ {
+  "id": "montepulciano",
+  "styles": [],
+  "note": "Cerasuolo rosé is a side style; the classic wine is dry still red"
+ },
+ {
+  "id": "corvina-veronese",
+  "styles": [
+   "blend",
+   "sweet"
+  ],
+  "note": "Valpolicella blend and Recioto; 'fresh' not supported"
+ },
+ {
+  "id": "silvaner",
+  "styles": [
+   "fresh"
+  ],
+  "note": "blend not supported"
+ },
+ {
+  "id": "tempranillo",
+  "styles": [
+   "oaked",
+   "blend"
+  ],
+  "note": "fortified not a common style; Rioja blends"
+ },
+ {
+  "id": "gamay-noir",
+  "styles": [
+   "fresh"
+  ],
+  "note": "Beaujolais is light and fresh"
+ },
+ {
+  "id": "muller-thurgau",
+  "styles": [
+   "fresh"
+  ],
+  "note": "light and fresh German/Alpine whites"
+ }
+]

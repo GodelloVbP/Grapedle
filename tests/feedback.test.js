@@ -28,9 +28,9 @@ const R = {
 };
 const st = (guess, answer, key) => compare(guess, answer, { descriptors: desc, countries: ctry }).find((c) => c.key === key);
 
-test('five columns in plan order (no climate column)', () => {
-  assert.deepEqual(COLUMNS, ['colour', 'region', 'body', 'area', 'flavour']);
-  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 5);
+test('six columns in plan order (no climate column)', () => {
+  assert.deepEqual(COLUMNS, ['colour', 'region', 'body', 'area', 'flavour', 'style']);
+  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 6);
 });
 
 test('self compare is all green with no arrows or distances', () => {
@@ -159,13 +159,13 @@ test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, r
 
 test('share symbols per cell', () => {
   const cells = compare(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 9, colour: 'white' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬆️', '⬜']);
+  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬆️', '⬜', '⬜']);
   const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
   assert.equal(shareSymbol(down[3]), '⬇️');
   const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
   assert.equal(shareSymbol(tie[3]), '↔️', 'exactly equal areas');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(win.map(shareSymbol), Array(5).fill('🟩'));
+  assert.deepEqual(win.map(shareSymbol), Array(6).fill('🟩'));
 });
 
 test('body: equal green, fuller/lighter arrow towards the answer, unknown either side grey', () => {
@@ -290,4 +290,15 @@ test('region parts: one entry per guess region, shared ones without distance, ot
   assert.ok(c.parts[1].km > 0 && c.parts[1].dir >= 0 && c.parts[1].dir < 8);
   const far = reg([R.Rhone], [R.Veneto]);
   assert.equal(far.parts.length, 1); assert.ok(far.parts[0].km > 0);
+});
+
+test('style: identical sets green, any common style yellow, none red, empty list = plain, null grey', () => {
+  const sty = (a, b) => st(g({ id: 'a', styles: a }), g({ id: 'b', styles: b }), 'style');
+  assert.equal(sty(['oaked', 'blend'], ['blend', 'oaked']).status, 'green');
+  const y = sty(['oaked', 'blend'], ['blend']);
+  assert.equal(y.status, 'yellow'); assert.deepEqual(y.shared, ['blend']);
+  assert.equal(sty(['sparkling'], ['oaked']).status, 'red');
+  assert.equal(sty([], []).status, 'green', 'two plain dry still wines');
+  assert.equal(sty([], ['oaked']).status, 'red', 'plain against a styled grape');
+  assert.equal(sty(null, ['oaked']).status, 'grey'); assert.equal(sty(['oaked'], undefined).status, 'grey');
 });

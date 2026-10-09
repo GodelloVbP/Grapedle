@@ -1,4 +1,4 @@
-import { countries, descriptors, schedule, grapes } from './data.js';
+import { countries, descriptors, styles as styleDefs, schedule, grapes } from './data.js';
 import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf, formatArea } from './feedback.js';
 import { createGame, shareText, firstLetter, MAX_GUESSES, HINT_AT } from './game.js';
 import { answerIdFor } from './schedule.js';
@@ -216,6 +216,17 @@ function mountInner(root, opts) {
     if (!g.flavours || !g.flavours.length) return null;
     return g.flavours.map((d) => aromaChip(d, cell, false));
   }
+  /** Style chips: a style the answer also has is a filled green chip with a check. */
+  const styleIds = (g) => (Array.isArray(g.styles) ? (g.styles.length ? g.styles : ['plain']) : null);
+  const styleName = (x) => (styleDefs[x] ? styleDefs[x][lang] : x);
+  function styleChip(x, cell, big) {
+    const hit = (cell.shared || []).includes(x), info = styleDefs[x];
+    return h('span', { class: 'gd-chip' + (big ? ' gd-chip-lg' : '') + (hit ? ' gd-chip-hit' : '') },
+      info && info.emoji ? h('span', { class: 'gd-chip-e', 'aria-hidden': 'true' }, info.emoji) : null,
+      hit ? h('span', { class: 'gd-chip-ok', 'aria-hidden': 'true' }, '✓') : null,
+      h('span', { class: 'gd-chip-t' }, styleName(x)));
+  }
+  const styleSr = (g, cell) => (styleIds(g) || []).map((x) => styleName(x) + ((cell.shared || []).includes(x) ? ` (${t('sameStyle')})` : '')).join(', ');
   const flavourSr = (g, cell) => (g.flavours || []).map((d) => aromaName(d) + ((cell.shared || []).includes(d) ? ` (${t('sameAroma')})` : (cell.familyHit || []).includes(d) ? ` (${t('sameKind')})` : '')).join(', ');
 
   const areaArrow = (cell) => (cell.arrow === 'up' ? '↑' : cell.arrow === 'down' ? '↓' : '=');
@@ -264,8 +275,13 @@ function mountInner(root, opts) {
       case 'area': main = areaText(cell); plain = areaSr(cell); break;
       default: break;
     }
-    const chips = cell.key === 'flavour' ? flavourNodes(g, cell) : null;
+    let chips = cell.key === 'flavour' ? flavourNodes(g, cell) : null;
     if (cell.key === 'flavour') plain = flavourSr(g, cell);
+    if (cell.key === 'style') {
+      const ids = styleIds(g);
+      chips = ids ? ids.map((x) => styleChip(x, cell, false)) : null;
+      plain = ids ? styleSr(g, cell) : '';
+    }
     const srStatus = t('st_' + cell.status);
     const srText = `${colLabel(cell.key)}: ${plain || t('unknownValue')}${srStatus ? ', ' + srStatus : ''}`;
     const valEl = h('span', { class: 'gd-val' + (chips ? ' gd-val-chips' : '') }, chips || nodes || main || '–',
@@ -490,6 +506,7 @@ function mountInner(root, opts) {
     const rows = [
       [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
       [colLabel('body'), g.body ? bodyName(g.body) : null],
+      [t('styleRow'), styleIds(g) ? h('span', { class: 'gd-chips' }, styleIds(g).map((x) => styleChip(x, {}, true))) : null],
       [t('aromas'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
@@ -651,7 +668,8 @@ function mountInner(root, opts) {
         demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),
         demoTile('yellow', colLabel('body'), bodyName(4) + ' ↓'),
         demoTile('red', colLabel('area'), formatArea(280000, lang) + ' ↓'),
-        demoTile('grey', colLabel('flavour'), '–')),
+        demoTile('grey', colLabel('flavour'), '–'),
+        demoTile('yellow', colLabel('style'), '🥂 ' + styleName('sparkling'))),
       h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')),
       h('details', { class: 'gd-details' },
         h('summary', null, t('helpMore')),

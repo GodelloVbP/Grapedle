@@ -285,6 +285,37 @@ def load_body(problems):
     return out
 
 
+STYLE_IDS = ("sparkling", "sweet", "fortified", "rose", "oaked", "fresh", "blend")
+
+
+def load_styles(problems):
+    """id -> (list of style ids, source). Haiku batches (Wine Folly/Wikipedia evidence) first, then
+    data/source/styles_override.json (reviewed corrections). An empty list means a plain dry still wine."""
+    out = {}
+    for n in (1, 2, 3):
+        path = os.path.join(SRC, f"style_batch{n}.json")
+        if not os.path.exists(path):
+            continue
+        for r in read_json(f"style_batch{n}.json"):
+            if r.get("styles") is None:
+                continue
+            bad = [x for x in r["styles"] if x not in STYLE_IDS]
+            if bad or len(r["styles"]) > 3:
+                problems.append(f"styles for {r['id']}: {r['styles']}")
+                continue
+            urls = sorted({e["url"] for e in r.get("evidence", []) if e.get("url")})
+            out[r["id"]] = (r["styles"], urls or None)
+    ov = os.path.join(SRC, "styles_override.json")
+    for r in (read_json("styles_override.json") if os.path.exists(ov) else []):
+        bad = [x for x in r["styles"] if x not in STYLE_IDS]
+        if bad or len(r["styles"]) > 3:
+            problems.append(f"styles override for {r['id']}: {r['styles']}")
+            continue
+        old = out.get(r["id"], (None, None))[1] or []
+        out[r["id"]] = (r["styles"], old + ["review: " + r["note"]])
+    return out
+
+
 def flavours_for(rec):
     """(descriptor ids, source list) for one aroma record; ([], []) when there are none."""
     if not rec:
@@ -317,6 +348,7 @@ def build_grapes(report):
     facts = {f["id"]: f for f in (read_json("facts.json") if os.path.exists(os.path.join(SRC, "facts.json")) else [])}
     aromas = load_aromas()
     bodies = load_body(report["problems"])
+    styles = load_styles(report["problems"])
     by_prime = {r["prime"]: r for r in adel}
     problems = report["problems"]
 
@@ -368,6 +400,10 @@ def build_grapes(report):
         rec["body"] = lvl
         if bsrc:
             src["body"] = bsrc
+        stl, ssrc = styles.get(gid, (None, None))
+        rec["styles"] = stl
+        if ssrc:
+            src["styles"] = ssrc
         h = hints.get(gid)
         if h:
             rec["hint"] = {"nl": h["hint_nl"], "en": h["hint_en"]}

@@ -1,6 +1,6 @@
 import { descriptors as defDesc, countries as defCountries } from './data.js';
 
-export const COLUMNS = ['colour', 'region', 'body', 'area', 'flavour'];
+export const COLUMNS = ['colour', 'region', 'body', 'area', 'flavour', 'style'];
 
 /** Eight compass arrows, clockwise from north. */
 export const ARROWS = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
@@ -158,7 +158,21 @@ export function flavour(guess, answer, desc = defDesc) {
 }
 
 /**
- * Compare a guess with the answer. Returns five cells in COLUMNS order:
+ * Common style (sparkling, sweet, fortified, rosé, oak-aged, crisp, blend; max 3 per grape). An empty list
+ * means a plain dry still wine and counts as the single style 'plain'. Green: identical sets. Yellow: at
+ * least one style in common. Red: none. Grey when either grape has no style data (null).
+ */
+export function style(guess, answer) {
+  const set = (l) => (Array.isArray(l) ? (l.length ? l : ['plain']) : null);
+  const gs = set(guess.styles), as = set(answer.styles);
+  if (!gs || !as) return { status: 'grey', shared: [] };
+  const shared = gs.filter((x) => as.includes(x));
+  if (gs.length === as.length && shared.length === gs.length) return { status: 'green', shared };
+  return { status: shared.length ? 'yellow' : 'red', shared };
+}
+
+/**
+ * Compare a guess with the answer. Returns six cells in COLUMNS order:
  * { key, status: green|yellow|red|grey|neutral, arrow: up|down|null, value (area), ... }.
  * ctx = { descriptors, countries } can be injected for tests.
  */
@@ -175,6 +189,8 @@ export function compare(guess, answer, ctx = {}) {
   out.push(cell('area', a.status, { arrow: a.arrow, value: a.value }));
   const f = flavour(guess, answer, desc);
   out.push(cell('flavour', f.status, { shared: f.shared, families: f.families, familyHit: f.familyHit }));
+  const sy = style(guess, answer);
+  out.push(cell('style', sy.status, { shared: sy.shared }));
   if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; if (c.parts) c.parts = c.parts.map((x) => ({ ...x, hit: true, km: null, dir: null })); }
   return out;
 }

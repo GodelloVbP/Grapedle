@@ -1,0 +1,42 @@
+{
+ "sparkling": {
+  "nl": "Bubbels",
+  "en": "Sparkling",
+  "emoji": "🥂"
+ },
+ "sweet": {
+  "nl": "Zoet",
+  "en": "Sweet",
+  "emoji": "🍯"
+ },
+ "fortified": {
+  "nl": "Versterkt",
+  "en": "Fortified",
+  "emoji": "🥃"
+ },
+ "rose": {
+  "nl": "Rosé",
+  "en": "Rosé",
+  "emoji": "🌸"
+ },
+ "oaked": {
+  "nl": "Eiken",
+  "en": "Oaked",
+  "emoji": "🪵"
+ },
+ "fresh": {
+  "nl": "Fris",
+  "en": "Crisp",
+  "emoji": "🍃"
+ },
+ "blend": {
+  "nl": "Blend",
+  "en": "Blend",
+  "emoji": "🧩"
+ },
+ "plain": {
+  "nl": "Droog & stil",
+  "en": "Dry & still",
+  "emoji": "🍷"
+ }
+}
