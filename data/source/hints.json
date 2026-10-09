@@ -438,5 +438,653 @@
     "source": "https://www.bbr.com/region-3879-verdicchio-dei-castelli-di-jesi",
     "notes": "Verdicchio dei Castelli di Jesi DOC.",
     "region": "Marche"
+  },
+  {
+    "id": "agiorgitiko",
+    "hint_nl": "Nemea",
+    "hint_en": "Nemea",
+    "source": "https://en.wikipedia.org/wiki/Agiorgitiko",
+    "notes": "Wikipedia: most widely associated with the red wines of Nemea.",
+    "region": ""
+  },
+  {
+    "id": "airen",
+    "hint_nl": "La Mancha",
+    "hint_en": "La Mancha",
+    "source": "https://en.wikipedia.org/wiki/Air%C3%A9n",
+    "notes": "Wikipedia: most abundant in the Valdepeñas and La Mancha DOs.",
+    "region": ""
+  },
+  {
+    "id": "alicante-henri-bouschet",
+    "hint_nl": "Alentejo",
+    "hint_en": "Alentejo",
+    "source": "https://en.wikipedia.org/wiki/Alicante_Bouschet",
+    "notes": "Wikipedia: thought to have found its true home in Portugal's Alentejo.",
+    "region": ""
+  },
+  {
+    "id": "aligote",
+    "hint_nl": "Bouzeron",
+    "hint_en": "Bouzeron",
+    "source": "https://en.wikipedia.org/wiki/Aligot%C3%A9",
+    "notes": "Wikipedia: Bouzeron is considered to represent the finest examples.",
+    "region": ""
+  },
+  {
+    "id": "altesse",
+    "hint_nl": "Roussette de Savoie",
+    "hint_en": "Roussette de Savoie",
+    "source": "https://en.wikipedia.org/wiki/Altesse",
+    "notes": "Wikipedia: the variety used for the appellation Roussette de Savoie.",
+    "region": ""
+  },
+  {
+    "id": "arneis",
+    "hint_nl": "Roero",
+    "hint_en": "Roero",
+    "source": "https://en.wikipedia.org/wiki/Arneis",
+    "notes": "Wikipedia: most commonly found in the hills of the Roero.",
+    "region": ""
+  },
+  {
+    "id": "assyrtiko",
+    "hint_nl": "Santorini",
+    "hint_en": "Santorini",
+    "source": "https://en.wikipedia.org/wiki/Assyrtiko",
+    "notes": "Wikipedia: indigenous to the island of Santorini.",
+    "region": ""
+  },
+  {
+    "id": "baga",
+    "hint_nl": "Bairrada",
+    "hint_en": "Bairrada",
+    "source": "https://en.wikipedia.org/wiki/Baga_(grape)",
+    "notes": "Wikipedia: planted primarily in the Bairrada DOC.",
+    "region": ""
+  },
+  {
+    "id": "blauer-portugieser",
+    "hint_nl": "Rheinhessen",
+    "hint_en": "Rheinhessen",
+    "source": "https://en.wikipedia.org/wiki/Blauer_Portugieser",
+    "notes": "Wikipedia: found primarily in Rheinhessen, Pfalz and Lower Austria.",
+    "region": ""
+  },
+  {
+    "id": "bobal",
+    "hint_nl": "Utiel-Requena",
+    "hint_en": "Utiel-Requena",
+    "source": "https://en.wikipedia.org/wiki/Bobal",
+    "notes": "Wikipedia: grown predominantly in Utiel-Requena.",
+    "region": ""
+  },
+  {
+    "id": "brachetto-del-piemonte",
+    "hint_nl": "Acqui DOCG",
+    "hint_en": "Acqui DOCG",
+    "source": "https://en.wikipedia.org/wiki/Brachetto",
+    "notes": "Wikipedia: the most notable wine is Brachetto d'Acqui; 'Brachetto' left out of the hint because it is a synonym.",
+    "region": ""
+  },
+  {
+    "id": "braquet-noir",
+    "hint_nl": "Bellet",
+    "hint_en": "Bellet",
+    "source": "https://en.wikipedia.org/wiki/Braquet",
+    "notes": "Wikipedia: grown particularly in the Bellet AOC.",
+    "region": ""
+  },
+  {
+    "id": "catarratto-bianco",
+    "hint_nl": "Sicilië",
+    "hint_en": "Sicily",
+    "source": "https://en.wikipedia.org/wiki/Catarratto",
+    "notes": "Wikipedia: planted primarily in Sicily, where it is the most widely planted grape.",
+    "region": ""
+  },
+  {
+    "id": "chasselas",
+    "hint_nl": "Valais",
+    "hint_en": "Valais",
+    "source": "https://en.wikipedia.org/wiki/Chasselas",
+    "notes": "Wikipedia: the main wine is Fendant in the canton of Valais; 'Fendant' left out because it names the grape's wine.",
+    "region": ""
+  },
+  {
+    "id": "ciliegiolo",
+    "hint_nl": "Chianti",
+    "hint_en": "Chianti",
+    "source": "https://en.wikipedia.org/wiki/Ciliegiolo",
+    "notes": "Wikipedia: a minor component of traditional blends such as Chianti.",
+    "region": ""
+  },
+  {
+    "id": "clairette",
+    "hint_nl": "Languedoc",
+    "hint_en": "Languedoc",
+    "source": "https://en.wikipedia.org/wiki/Clairette_blanche",
+    "notes": "Wikipedia: Clairette du Languedoc is made entirely from the grape; appellation name shortened because 'Clairette' is a synonym.",
+    "region": ""
+  },
+  {
+    "id": "colombard",
+    "hint_nl": "Cognac",
+    "hint_en": "Cognac",
+    "source": "https://en.wikipedia.org/wiki/Colombard",
+    "notes": "Wikipedia: traditionally grown in the Charentes and Gascony for distilling into Cognac and Armagnac.",
+    "region": ""
+  },
+  {
+    "id": "dolcetto",
+    "hint_nl": "Dogliani",
+    "hint_en": "Dogliani",
+    "source": "https://en.wikipedia.org/wiki/Dolcetto",
+    "notes": "Wikipedia: particularly associated with Dogliani and Diano d'Alba; Dolcetto di Dogliani is the notable wine ('Dolcetto' left out of the hint).",
+    "region": ""
+  },
+  {
+    "id": "cortese",
+    "hint_nl": "Gavi",
+    "hint_en": "Gavi",
+    "source": "https://en.wikipedia.org/wiki/Cortese",
+    "notes": "Wikipedia: most widely associated with the DOCG wine Cortese di Gavi ('Cortese' left out).",
+    "region": ""
+  },
+  {
+    "id": "dona-branca",
+    "hint_nl": "Galicië",
+    "hint_en": "Galicia",
+    "source": "https://en.wikipedia.org/wiki/Do%C3%B1a_Blanca",
+    "notes": "Wikipedia: grown primarily in the northwest Galicia region of Spain.",
+    "region": ""
+  },
+  {
+    "id": "erbaluce",
+    "hint_nl": "Caluso",
+    "hint_en": "Caluso",
+    "source": "https://en.wikipedia.org/wiki/Erbaluce",
+    "notes": "Wikipedia: Erbaluce di Caluso is a DOCG wine ('Erbaluce' left out).",
+    "region": ""
+  },
+  {
+    "id": "fiano",
+    "hint_nl": "Avellino",
+    "hint_en": "Avellino",
+    "source": "https://en.wikipedia.org/wiki/Fiano",
+    "notes": "Wikipedia: Fiano di Avellino is an Italian DOCG wine ('Fiano' left out).",
+    "region": ""
+  },
+  {
+    "id": "furmint",
+    "hint_nl": "Tokaj",
+    "hint_en": "Tokaj",
+    "source": "https://en.wikipedia.org/wiki/Furmint",
+    "notes": "Wikipedia: the principal grape in the better known Tokaji dessert wines.",
+    "region": ""
+  },
+  {
+    "id": "godello",
+    "hint_nl": "Valdeorras",
+    "hint_en": "Valdeorras",
+    "source": "https://en.wikipedia.org/wiki/Godello",
+    "notes": "Wikipedia: yields the best results in Valdeorras.",
+    "region": ""
+  },
+  {
+    "id": "greco",
+    "hint_nl": "Tufo",
+    "hint_en": "Tufo",
+    "source": "https://en.wikipedia.org/wiki/Greco_(grape)",
+    "notes": "Wikipedia: used to produce the DOCG wine Greco di Tufo ('Greco' left out).",
+    "region": ""
+  },
+  {
+    "id": "grignolino",
+    "hint_nl": "Asti",
+    "hint_en": "Asti",
+    "source": "https://en.wikipedia.org/wiki/Grignolino",
+    "notes": "Wikipedia: primarily planted in the Asti province of Piedmont.",
+    "region": ""
+  },
+  {
+    "id": "sauvignonasse",
+    "hint_nl": "Friuli-Venezia Giulia",
+    "hint_en": "Friuli-Venezia Giulia",
+    "source": "https://en.wikipedia.org/wiki/Sauvignonasse",
+    "notes": "Wikipedia: most noted homes are Friuli-Venezia Giulia and Goriska Brda.",
+    "region": ""
+  },
+  {
+    "id": "falanghina-flegrea",
+    "hint_nl": "Campi Flegrei",
+    "hint_en": "Campi Flegrei",
+    "source": "https://www.vino.com/en/denominazione/campi-flegrei",
+    "notes": "vino.com: the white Campi Flegrei wine rests on the white Falanghina variety.",
+    "region": ""
+  },
+  {
+    "id": "harslevelu",
+    "hint_nl": "Tokaji Aszú",
+    "hint_en": "Tokaji Aszú",
+    "source": "https://en.wikipedia.org/wiki/H%C3%A1rslevel%C5%B1",
+    "notes": "Wikipedia: in Tokaj-Hegyalja, blended with Furmint to produce Tokaji Aszú.",
+    "region": ""
+  },
+  {
+    "id": "inzolia",
+    "hint_nl": "Marsala",
+    "hint_en": "Marsala",
+    "source": "https://en.wikipedia.org/wiki/Inzolia",
+    "notes": "Wikipedia: planted primarily in western Sicily where it can be used to produce Marsala wine.",
+    "region": ""
+  },
+  {
+    "id": "jacquere",
+    "hint_nl": "Vin de Savoie",
+    "hint_en": "Vin de Savoie",
+    "source": "https://en.wikipedia.org/wiki/Jacqu%C3%A8re",
+    "notes": "Wikipedia: makes dry white wine such as Vin de Savoie.",
+    "region": ""
+  },
+  {
+    "id": "lagrein",
+    "hint_nl": "Zuid-Tirol",
+    "hint_en": "South Tyrol",
+    "source": "https://en.wikipedia.org/wiki/Lagrein",
+    "notes": "Wikipedia: native to the valleys of South Tyrol.",
+    "region": ""
+  },
+  {
+    "id": "marselan",
+    "hint_nl": "Languedoc",
+    "hint_en": "Languedoc",
+    "source": "https://en.wikipedia.org/wiki/Marselan",
+    "notes": "Wikipedia: grown mostly in the Languedoc wine region.",
+    "region": ""
+  },
+  {
+    "id": "mauzac-blanc",
+    "hint_nl": "Limoux",
+    "hint_en": "Limoux",
+    "source": "https://en.wikipedia.org/wiki/Mauzac",
+    "notes": "Wikipedia: mainly grown in the Limoux and Gaillac regions.",
+    "region": ""
+  },
+  {
+    "id": "mencia",
+    "hint_nl": "Bierzo",
+    "hint_en": "Bierzo",
+    "source": "https://en.wikipedia.org/wiki/Bierzo_(DO)",
+    "notes": "Wikipedia, Bierzo DO: among the reds, Mencía stands out.",
+    "region": ""
+  },
+  {
+    "id": "molinara",
+    "hint_nl": "Valpolicella",
+    "hint_en": "Valpolicella",
+    "source": "https://en.wikipedia.org/wiki/Molinara_(grape)",
+    "notes": "Wikipedia: adds acidity to the wines of Valpolicella and Bardolino.",
+    "region": ""
+  },
+  {
+    "id": "mondeuse-noire",
+    "hint_nl": "Savoie",
+    "hint_en": "Savoie",
+    "source": "https://en.wikipedia.org/wiki/Mondeuse_noire",
+    "notes": "Wikipedia: grown primarily in the Savoy region of eastern France.",
+    "region": ""
+  },
+  {
+    "id": "muscadelle",
+    "hint_nl": "Sauternes",
+    "hint_en": "Sauternes",
+    "source": "https://en.wikipedia.org/wiki/Muscadelle",
+    "notes": "Wikipedia: a minor constituent in the dry and sweet wines of Bordeaux, such as Sauternes.",
+    "region": ""
+  },
+  {
+    "id": "muscat-ottonel",
+    "hint_nl": "Alsace",
+    "hint_en": "Alsace",
+    "source": "https://en.wikipedia.org/wiki/Muscat_Ottonel",
+    "notes": "Wikipedia: in Alsace the designation Muscat d'Alsace is allowed for Muscat Ottonel.",
+    "region": ""
+  },
+  {
+    "id": "nerello-mascalese",
+    "hint_nl": "Etna",
+    "hint_en": "Etna",
+    "source": "https://en.wikipedia.org/wiki/Nerello_Mascalese",
+    "notes": "Wikipedia: used with Nerello Cappuccio in the Etna DOC.",
+    "region": ""
+  },
+  {
+    "id": "nero-di-troia",
+    "hint_nl": "Andria en Barletta",
+    "hint_en": "Andria and Barletta",
+    "source": "https://en.wikipedia.org/wiki/Nero_di_Troia",
+    "notes": "Wikipedia: grown in Apulia, particularly around Andria and Barletta.",
+    "region": ""
+  },
+  {
+    "id": "negrette",
+    "hint_nl": "Côtes du Frontonnais",
+    "hint_en": "Côtes du Frontonnais",
+    "source": "https://en.wikipedia.org/wiki/N%C3%A9grette",
+    "notes": "Wikipedia: Côtes du Frontonnais is the principal appellation using this variety.",
+    "region": ""
+  },
+  {
+    "id": "negroamaro",
+    "hint_nl": "Salice Salentino",
+    "hint_en": "Salice Salentino",
+    "source": "https://en.wikipedia.org/wiki/Negroamaro",
+    "notes": "Wikipedia cites Salice Salentino as its main example.",
+    "region": ""
+  },
+  {
+    "id": "palomino-fino",
+    "hint_nl": "Sherry",
+    "hint_en": "Sherry",
+    "source": "https://en.wikipedia.org/wiki/Palomino_(grape)",
+    "notes": "Wikipedia: best known for its use in the manufacture of sherry.",
+    "region": ""
+  },
+  {
+    "id": "parellada",
+    "hint_nl": "Cava",
+    "hint_en": "Cava",
+    "source": "https://en.wikipedia.org/wiki/Parellada",
+    "notes": "Wikipedia: one of the three traditional varieties used to make Cava.",
+    "region": ""
+  },
+  {
+    "id": "pedro-gimenez",
+    "hint_nl": "Mendoza",
+    "hint_en": "Mendoza",
+    "source": "https://en.wikipedia.org/wiki/Pedro_Gim%C3%A9nez",
+    "notes": "Wikipedia: grown predominantly in the Mendoza wine region.",
+    "region": ""
+  },
+  {
+    "id": "pedro-ximenez",
+    "hint_nl": "Montilla-Moriles",
+    "hint_en": "Montilla-Moriles",
+    "source": "https://en.wikipedia.org/wiki/Pedro_Xim%C3%A9nez",
+    "notes": "Wikipedia: the vast majority of plantings are in Montilla-Moriles.",
+    "region": ""
+  },
+  {
+    "id": "petit-manseng",
+    "hint_nl": "Jurançon",
+    "hint_en": "Jurançon",
+    "source": "https://en.wikipedia.org/wiki/Petit_Manseng",
+    "notes": "Wikipedia: usually incorporated into sweet wines of Jurançon and Pacherenc du Vic-Bilh.",
+    "region": ""
+  },
+  {
+    "id": "petit-verdot",
+    "hint_nl": "Médoc",
+    "hint_en": "Médoc",
+    "source": "https://en.wikipedia.org/wiki/Petit_Verdot",
+    "notes": "Wikipedia: almost all Petit Verdot in France is planted in Bordeaux, mostly in the Médoc.",
+    "region": ""
+  },
+  {
+    "id": "piedirosso",
+    "hint_nl": "Campania",
+    "hint_en": "Campania",
+    "source": "https://en.wikipedia.org/wiki/Piedirosso",
+    "notes": "Wikipedia: planted primarily in the Campania region.",
+    "region": ""
+  },
+  {
+    "id": "pineau-d-aunis",
+    "hint_nl": "Anjou en Touraine",
+    "hint_en": "Anjou and Touraine",
+    "source": "https://en.wikipedia.org/wiki/Pineau_d%27Aunis",
+    "notes": "Wikipedia: most closely associated with the Anjou and Touraine region of the middle Loire.",
+    "region": ""
+  },
+  {
+    "id": "pinot-meunier",
+    "hint_nl": "Champagne",
+    "hint_en": "Champagne",
+    "source": "https://en.wikipedia.org/wiki/Pinot_Meunier",
+    "notes": "Wikipedia: most noted for being one of the three main varieties in Champagne.",
+    "region": ""
+  },
+  {
+    "id": "piquepoul-blanc",
+    "hint_nl": "Pinet",
+    "hint_en": "Pinet",
+    "source": "https://en.wikipedia.org/wiki/Piquepoul",
+    "notes": "Wikipedia: Picpoul de Pinet is an AOC for white wines made exclusively from Piquepoul blanc ('Picpoul' left out).",
+    "region": ""
+  },
+  {
+    "id": "plavac-mali",
+    "hint_nl": "Dalmatië",
+    "hint_en": "Dalmatia",
+    "source": "https://en.wikipedia.org/wiki/Plavac_Mali",
+    "notes": "Wikipedia: the primary red wine grape grown along the Dalmatian coast.",
+    "region": ""
+  },
+  {
+    "id": "poulsard",
+    "hint_nl": "Jura",
+    "hint_en": "Jura",
+    "source": "https://en.wikipedia.org/wiki/Poulsard",
+    "notes": "Wikipedia: a red French wine grape variety from the Jura wine region.",
+    "region": ""
+  },
+  {
+    "id": "refosco",
+    "hint_nl": "Colli Orientali",
+    "hint_en": "Colli Orientali",
+    "source": "https://en.wikipedia.org/wiki/Refosco",
+    "notes": "Wikipedia: the most well known examples of Refosco come from the Colli Orientali region of Friuli.",
+    "region": ""
+  },
+  {
+    "id": "refosco-dal-peduncolo-rosso",
+    "hint_nl": "Friuli Venezia Giulia",
+    "hint_en": "Friuli Venezia Giulia",
+    "source": "https://en.wikipedia.org/wiki/Refosco_dal_Peduncolo_Rosso",
+    "notes": "Wikipedia: grown predominantly in the Friuli Venezia Giulia region.",
+    "region": ""
+  },
+  {
+    "id": "ribolla-gialla",
+    "hint_nl": "Friuli Venezia Giulia",
+    "hint_en": "Friuli Venezia Giulia",
+    "source": "https://en.wikipedia.org/wiki/Ribolla_Gialla",
+    "notes": "Wikipedia: grown most famously in Friuli Venezia Giulia.",
+    "region": ""
+  },
+  {
+    "id": "rkatsiteli",
+    "hint_nl": "Kakheti",
+    "hint_en": "Kakheti",
+    "source": "https://en.wikipedia.org/wiki/Rkatsiteli",
+    "notes": "Wikipedia: in Kakheti it was particularly known for its sweet dessert wines.",
+    "region": ""
+  },
+  {
+    "id": "sagrantino",
+    "hint_nl": "Montefalco",
+    "hint_en": "Montefalco",
+    "source": "https://en.wikipedia.org/wiki/Sagrantino",
+    "notes": "Wikipedia: grown in Umbria to make Montefalco Sagrantino and Montefalco Rosso ('Sagrantino' left out).",
+    "region": ""
+  },
+  {
+    "id": "sankt-laurent",
+    "hint_nl": "Neder-Oostenrijk",
+    "hint_en": "Lower Austria",
+    "source": "https://en.wikipedia.org/wiki/Saint_Laurent_(grape)",
+    "notes": "Wikipedia: primarily grown in Lower Austria and Burgenland.",
+    "region": ""
+  },
+  {
+    "id": "saperavi",
+    "hint_nl": "Kakheti",
+    "hint_en": "Kakheti",
+    "source": "https://en.wikipedia.org/wiki/Saperavi",
+    "notes": "Wikipedia: originated in the Kakheti region of eastern Georgia.",
+    "region": ""
+  },
+  {
+    "id": "savagnin-blanc",
+    "hint_nl": "Château-Chalon",
+    "hint_en": "Château-Chalon",
+    "source": "https://en.wikipedia.org/wiki/Savagnin",
+    "notes": "Wikipedia: the only grape allowed in the vin jaunes of Château-Chalon and L'Étoile.",
+    "region": ""
+  },
+  {
+    "id": "scheurebe",
+    "hint_nl": "Pfalz",
+    "hint_en": "Pfalz",
+    "source": "https://en.wikipedia.org/wiki/Scheurebe",
+    "notes": "Wikipedia: plantings are most common in Palatinate, Rheinhessen and Nahe.",
+    "region": ""
+  },
+  {
+    "id": "schiava-grossa",
+    "hint_nl": "Württemberg",
+    "hint_en": "Württemberg",
+    "source": "https://en.wikipedia.org/wiki/Schiava",
+    "notes": "Wikipedia: Schiava Grossa (Trollinger) is almost exclusively cultivated in the Württemberg wine region; synonym 'Trollinger' left out.",
+    "region": ""
+  },
+  {
+    "id": "tannat",
+    "hint_nl": "Madiran",
+    "hint_en": "Madiran",
+    "source": "https://en.wikipedia.org/wiki/Tannat",
+    "notes": "Wikipedia: historically grown in South West France in the Madiran AOC.",
+    "region": ""
+  },
+  {
+    "id": "teroldego",
+    "hint_nl": "Rotaliano",
+    "hint_en": "Rotaliano",
+    "source": "https://en.wikipedia.org/wiki/Teroldego",
+    "notes": "Wikipedia: Teroldego Rotaliano is made with this grape in Trentino ('Teroldego' left out).",
+    "region": ""
+  },
+  {
+    "id": "timorasso",
+    "hint_nl": "Piemonte",
+    "hint_en": "Piemonte",
+    "source": "https://en.wikipedia.org/wiki/Timorasso",
+    "notes": "Wikipedia: grown primarily in the Piedmont wine region.",
+    "region": ""
+  },
+  {
+    "id": "torrontes-riojano",
+    "hint_nl": "Salta",
+    "hint_en": "Salta",
+    "source": "https://en.wikipedia.org/wiki/Torront%C3%A9s",
+    "notes": "Wikipedia: the Salta region is particularly noted for its Torrontés.",
+    "region": ""
+  },
+  {
+    "id": "touriga-franca",
+    "hint_nl": "Douro",
+    "hint_en": "Douro",
+    "source": "https://en.wikipedia.org/wiki/Touriga_Franca",
+    "notes": "Wikipedia: grown on the steep arid slopes of the Douro.",
+    "region": ""
+  },
+  {
+    "id": "touriga-nacional",
+    "hint_nl": "Port",
+    "hint_en": "Port",
+    "source": "https://en.wikipedia.org/wiki/Touriga_Nacional",
+    "notes": "Wikipedia: plays a major part in the blends of the best ports.",
+    "region": ""
+  },
+  {
+    "id": "trebbiano-toscano",
+    "hint_nl": "Cognac en Armagnac",
+    "hint_en": "Cognac and Armagnac",
+    "source": "https://en.wikipedia.org/wiki/Trebbiano",
+    "notes": "Wikipedia: high acidity makes it important in Cognac and Armagnac production.",
+    "region": ""
+  },
+  {
+    "id": "verdelho",
+    "hint_nl": "Madeira",
+    "hint_en": "Madeira",
+    "source": "https://en.wikipedia.org/wiki/Verdelho",
+    "notes": "Wikipedia: most associated with the island of Madeira.",
+    "region": ""
+  },
+  {
+    "id": "vernaccia-di-san-gimignano",
+    "hint_nl": "Eerste Italiaanse DOC (1966)",
+    "hint_en": "First Italian DOC (1966)",
+    "source": "https://en.wikipedia.org/wiki/Vernaccia_di_San_Gimignano",
+    "notes": "Wikipedia: the first Italian wine awarded DOC status, in 1966; the town name is left out of the hint.",
+    "region": ""
+  },
+  {
+    "id": "dornfelder",
+    "hint_nl": "Rheinhessen en Pfalz",
+    "hint_en": "Rheinhessen and Pfalz",
+    "source": "https://en.wikipedia.org/wiki/Dornfelder",
+    "notes": "Wikipedia: particularly successful in Rheinhessen and the Palatinate.",
+    "region": ""
+  },
+  {
+    "id": "grasevina",
+    "hint_nl": "Kutjevo",
+    "hint_en": "Kutjevo",
+    "source": "https://en.wikipedia.org/wiki/Welschriesling",
+    "notes": "Wikipedia: the Croatian plantings are particularly in Kutjevo municipality and around Ilok.",
+    "region": ""
+  },
+  {
+    "id": "gros-manseng",
+    "hint_nl": "Pacherenc du Vic-Bilh",
+    "hint_en": "Pacherenc du Vic-Bilh",
+    "source": "https://en.wikipedia.org/wiki/Gros_Manseng",
+    "notes": "Wikipedia infobox: notable wines, Pacherenc du Vic-Bilh.",
+    "region": ""
+  },
+  {
+    "id": "muscat-of-alexandria",
+    "hint_nl": "Setúbal",
+    "hint_en": "Setúbal",
+    "source": "https://en.wikipedia.org/wiki/Muscat_of_Alexandria",
+    "notes": "Wikipedia: Vinho Moscatel is a sweet wine widely produced in the Setúbal Peninsula ('Moscatel' left out).",
+    "region": ""
+  },
+  {
+    "id": "grillo",
+    "hint_nl": "Marsala",
+    "hint_en": "Marsala",
+    "source": "https://en.wikipedia.org/wiki/Grillo",
+    "notes": "Wikipedia: widely used in Sicilian winemaking and in particular for making Marsala.",
+    "region": ""
+  },
+  {
+    "id": "xarello",
+    "hint_nl": "Cava",
+    "hint_en": "Cava",
+    "source": "https://en.wikipedia.org/wiki/Xarel%C2%B7lo",
+    "notes": "Wikipedia: one of the three traditional varieties used to make Cava.",
+    "region": ""
+  },
+  {
+    "id": "xinomavro",
+    "hint_nl": "Naoussa",
+    "hint_en": "Naoussa",
+    "source": "https://en.wikipedia.org/wiki/Xinomavro",
+    "notes": "Wikipedia: red wine from Xinomavro in the Naousa region is one of Greece's most important.",
+    "region": ""
   }
 ]

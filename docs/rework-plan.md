@@ -10,7 +10,9 @@ Updated 2026-10-09 after the owner review (five columns incl. body, number-and-a
 - Hint buttons unlock after 3 and 5 submitted guesses and lock when the game ends. Each hint used adds one 💡 to the share line.
 - Storage key `gd:v2`. Stats (played, win %, streak, best, distribution) and the countdown stay as in v0.
 
-## Answer pool (56)
+## Answer pool (all 136, owner decision 2026-10-09)
+Supersedes the list below: every grape is a possible daily answer, each with a sourced hint (Wikipedia, one URL per grape). The 32 most obscure grapes are weekend-only. The list below is the original 56 and stays for reference.
+
 The 40 classics minus Airén, Muscat of Alexandria, Petit Verdot, Trebbiano Toscano, Torrontés Riojano; plus Lambrusco (Salamino), Vermentino, Verdejo, Nero d'Avola, Zweigelt, Blaufränkisch, Müller-Thurgau; plus every stocked grape (Roter Sylvaner → Silvaner; Maturana Tinta → Trousseau). The ~55 other old-pool grapes stay guessable with full data (they return as a "Kenner" mode later).
 
 ## Schedule rules

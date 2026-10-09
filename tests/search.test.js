@@ -31,7 +31,7 @@ test('a prefix gives a list, never an exact hit: pool grapes first', () => {
 
 test('a non-pool grape without flavour data never takes the top slot while a pool grape matches', () => {
   const thin = grapes.filter((g) => !g.answer && !(g.flavours && g.flavours.length));
-  assert.ok(thin.length > 10);
+  // every grape is in the answer pool now, so there may be no such grape at all
   for (const g of thin.slice(0, 60)) {
     const q = g.name.slice(0, 4);
     const r = search(q);

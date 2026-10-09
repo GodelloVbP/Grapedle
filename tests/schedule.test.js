@@ -36,7 +36,7 @@ test('no repeat within a cycle, the same grape at least 20 days apart across cyc
 
 test('weekend-only grapes appear only on Saturday and Sunday (Europe/Amsterdam calendar)', () => {
   const only = new Set(grapes.filter((g) => g.weekendOnly).map((g) => g.id));
-  assert.equal(only.size, 9);
+  assert.ok(only.size >= 9 && only.size <= 36, 'weekend-only grapes must fit the weekend slots of a cycle');
   let seen = 0;
   schedule.days.forEach((id, i) => {
     if (!only.has(id)) return;
@@ -44,7 +44,7 @@ test('weekend-only grapes appear only on Saturday and Sunday (Europe/Amsterdam c
     const w = weekday(i);
     assert.ok(w === 0 || w === 6, `${id} on day ${i} (weekday ${w})`);
   });
-  assert.ok(seen >= 9 * (schedule.days.length / N));
+  assert.ok(seen >= only.size * Math.floor(schedule.days.length / N));
   assert.equal(weekday(0), 0, '2026-11-01 is a Sunday');
 });
 
@@ -52,6 +52,7 @@ test('grapes sharing a signature region are at least 7 days apart', () => {
   const lastIn = new Map();
   schedule.days.forEach((id, i) => {
     const r = byId.get(id).regions[0].name; // primary region only
+    if (!r) return; // no named signature region: nothing to keep apart
     if (lastIn.has(r)) {
       const [j, other] = lastIn.get(r);
       if (other !== id) assert.ok(i - j >= 7, `${other} (day ${j}) and ${id} (day ${i}) share ${r}`);

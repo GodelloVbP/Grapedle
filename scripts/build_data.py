@@ -579,7 +579,8 @@ def build_schedule(pool, cycles, start):
     seq = list(cur["days"])
     ids = sorted(g["id"] for g in pool)
     n = len(ids)
-    region = {g["id"]: g["regions"][0]["name"] for g in pool}  # primary region only
+    # primary region only; a grape without a named signature region (country point) shares no region
+    region = {g["id"]: g["regions"][0]["name"] or "~" + g["id"] for g in pool}
     weekend_only = {g["id"] for g in pool if g.get("weekendOnly")}
     if len(seq) % n or any(i not in region for i in seq):
         raise SystemExit("schedule.json does not match the answer pool: it is append-only from launch; "

@@ -15,8 +15,8 @@ const csv = (f) => readFileSync(new URL('../data/source/' + f, import.meta.url),
 const poolIds = csv('answer_pool.csv').map((r) => r[0]);
 const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 'stone-fruit', 'tropical', 'red-fruit', 'black-fruit', 'dried-fruit', 'herbaceous', 'herbal', 'pungent-spice', 'other']);
 
-test('answer pool is exactly the 55 ids in answer_pool.csv; every other grape stays guessable', () => {
-  assert.equal(poolIds.length, 55);
+test('every grape is in the daily answer pool (answer_pool.csv lists all ids)', () => {
+  assert.equal(poolIds.length, grapes.length);
   assert.deepEqual(pool.map((g) => g.id).sort(), [...poolIds].sort());
   assert.ok(grapes.length >= 130 && grapes.length <= 140, String(grapes.length));
   for (const id of ['prosecco-lungo', 'douce-noire', 'cayetana-blanca']) assert.ok(!byId.has(id), id + ' was removed from the guess list');
@@ -41,8 +41,9 @@ test('every grape has colour, country, area; pool grapes also region and a hint'
   }
   for (const g of pool) {
     for (const r of g.regions) {
-      assert.ok(r.name && typeof r.name === 'string', g.id);
-      assert.ok(Number.isFinite(r.lat) && Number.isFinite(r.lon), g.id);
+      // a grape without a hand-placed signature region uses its top country (name and point null)
+      if (r.name) { assert.equal(typeof r.name, 'string', g.id); assert.ok(Number.isFinite(r.lat) && Number.isFinite(r.lon), g.id); }
+      else assert.ok(r.country && r.lat === null && r.lon === null, g.id);
     }
     assert.ok(g.hint && g.hint.nl && g.hint.en, g.id);
     assert.ok(g.sources.region && g.sources.hint, g.id);
@@ -101,7 +102,8 @@ test('flavours: 1-4 known descriptors, book overrides batches, unknown stays nul
   assert.deepEqual(d('cabernet-sauvignon'), ['blackcurrant', 'mint', 'black-cherry', 'green-pepper']);
   assert.deepEqual(byId.get('chardonnay').sources.flavours.map((s) => s.name).sort(), ['Jancis Robinson', 'Wikipedia', 'Wine Folly']);
   // pool grapes that lack aroma data are listed here so a new gap does not slip in unnoticed
-  assert.deepEqual(pool.filter((g) => !g.flavours).map((g) => g.id), [], 'every pool grape has aromas');
+  // aroma gaps are allowed (the tile shows "onbekend"); this guards against the data shrinking
+  assert.ok(grapes.filter((g) => g.flavours).length >= 110, 'most grapes have aromas');
 });
 
 test('display names and small print', () => {
@@ -125,7 +127,7 @@ test('stocked and weekend-only flags match answer_pool.csv', () => {
     assert.equal(!!g.weekendOnly, weekend === 'yes', id);
   }
   assert.ok(grapes.filter((g) => !g.answer).every((g) => !g.stocked && !g.weekendOnly));
-  assert.equal(pool.filter((g) => g.weekendOnly).length, 9);
+  assert.equal(pool.filter((g) => g.weekendOnly).length, csv('answer_pool.csv').filter((r) => r[2] === 'yes').length);
 });
 
 test('shop-grapes: every category maps to a stocked grape in the answer pool', () => {
