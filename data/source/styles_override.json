@@ -167,5 +167,13 @@
    "sweet"
   ],
   "note": "Owner-approved new 'aromatic' style; strongly aromatic, also VT/SGN sweet"
+ },
+ {
+  "id": "negrette",
+  "styles": [
+   "rose",
+   "blend"
+  ],
+  "note": "Wikipedia: Côtes du Frontonnais (red and rosé), 50-70% of the blend must be Négrette (https://en.wikipedia.org/wiki/N%C3%A9grette)"
  }
 ]
