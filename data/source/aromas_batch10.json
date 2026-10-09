@@ -1,5 +1,69 @@
 [
  {
+  "id": "alicante-henri-bouschet",
+  "aromas": [
+   {
+    "d": "black-cherry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "blackberry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "black-plum",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "black-pepper",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/alicante-bouschet/"
+  }
+ },
+ {
+  "id": "falanghina-flegrea",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "orange-blossom",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "honey",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/falanghina/"
+  }
+ },
+ {
   "id": "inzolia",
   "aromas": [
    {
