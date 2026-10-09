@@ -649,10 +649,10 @@
   },
   {
     "id": "sauvignonasse",
-    "hint_nl": "Friuli-Venezia Giulia",
-    "hint_en": "Friuli-Venezia Giulia",
-    "source": "https://en.wikipedia.org/wiki/Sauvignonasse",
-    "notes": "Wikipedia: most noted homes are Friuli-Venezia Giulia and Goriska Brda.",
+    "hint_nl": "Collio",
+    "hint_en": "Collio",
+    "source": "https://en.wikipedia.org/wiki/Collio_Goriziano",
+    "notes": "Wikipedia, Collio Goriziano: predominantly white wines with Friulano, Ribolla Gialla, Malvasia Istriana.",
     "region": ""
   },
   {
@@ -897,10 +897,10 @@
   },
   {
     "id": "ribolla-gialla",
-    "hint_nl": "Friuli Venezia Giulia",
-    "hint_en": "Friuli Venezia Giulia",
-    "source": "https://en.wikipedia.org/wiki/Ribolla_Gialla",
-    "notes": "Wikipedia: grown most famously in Friuli Venezia Giulia.",
+    "hint_nl": "Collio",
+    "hint_en": "Collio",
+    "source": "https://en.wikipedia.org/wiki/Collio_Goriziano",
+    "notes": "Wikipedia, Collio Goriziano: predominantly white wines with Friulano, Ribolla Gialla, Malvasia Istriana.",
     "region": ""
   },
   {
