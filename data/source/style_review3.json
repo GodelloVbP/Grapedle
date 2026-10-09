@@ -1,0 +1,270 @@
+[
+ {
+  "id": "tempranillo",
+  "tags": [
+   {
+    "style": "oaked",
+    "verdict": "supported"
+   },
+   {
+    "style": "blend",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": "Port blending role (Tinta Roriz) is regional; not added."
+ },
+ {
+  "id": "garnacha-tinta",
+  "tags": [
+   {
+    "style": "rose",
+    "verdict": "supported"
+   },
+   {
+    "style": "blend",
+    "verdict": "supported"
+   },
+   {
+    "style": "fortified",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": "Fortified via Banyuls/Rivesaltes/Maury vin doux naturel."
+ },
+ {
+  "id": "pinot-gris",
+  "tags": [
+   {
+    "style": "fresh",
+    "verdict": "supported"
+   },
+   {
+    "style": "sweet",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": "Alsace late-harvest sweet styles common."
+ },
+ {
+  "id": "cabernet-franc",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   },
+   {
+    "style": "oaked",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/cabernet-franc/",
+    "quote": "produce lighter styles thanks to the cool climate"
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "nebbiolo",
+  "tags": [
+   {
+    "style": "oaked",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": "Barolo/Barbaresco oak ageing rules."
+ },
+ {
+  "id": "viognier",
+  "tags": [
+   {
+    "style": "oaked",
+    "verdict": "weak",
+    "url": "https://winefolly.com/grapes/viognier/",
+    "quote": "Some producers age Viognier in oak to build texture"
+   }
+  ],
+  "missing": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/viognier/",
+    "quote": "leaner, unoaked styles"
+   }
+  ],
+  "note": "Oak optional, not classic."
+ },
+ {
+  "id": "tribidrag",
+  "tags": [
+   {
+    "style": "rose",
+    "verdict": "supported"
+   },
+   {
+    "style": "sweet",
+    "verdict": "weak",
+    "url": "https://winefolly.com/grapes/zinfandel/",
+    "quote": "Primitivo di Manduria Dolce Naturale is a true sweet wine"
+   }
+  ],
+  "missing": [],
+  "note": "Sweet is a minor Puglia designation."
+ },
+ {
+  "id": "gamay-noir",
+  "tags": [
+   {
+    "style": "fresh",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": ""
+ },
+ {
+  "id": "mazuelo",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": ""
+ },
+ {
+  "id": "prosecco",
+  "tags": [
+   {
+    "style": "sparkling",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": ""
+ },
+ {
+  "id": "macabeo",
+  "tags": [
+   {
+    "style": "sparkling",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Viura",
+    "quote": "traditionally blended with Xarel·lo and Parellada to make cava"
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "auxerrois",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Auxerrois_(grape)",
+    "quote": "an important component of Crémant d'Alsace"
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "roussanne",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   },
+   {
+    "style": "oaked",
+    "verdict": "weak",
+    "url": "https://winefolly.com/grapes/roussanne/",
+    "quote": "Producers of Roussanne in the US produce richer oak-aged wines"
+   }
+  ],
+  "missing": [],
+  "note": "Oak only cited for US producers."
+ },
+ {
+  "id": "vermentino",
+  "tags": [
+   {
+    "style": "fresh",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": "Medium-high acidity; oaked and unoaked both made."
+ },
+ {
+  "id": "rondinella",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": ""
+ },
+ {
+  "id": "croatina",
+  "tags": [
+   {
+    "style": "blend",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [],
+  "note": ""
+ },
+ {
+  "id": "verdejo",
+  "tags": [
+   {
+    "style": "fresh",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Verdejo",
+    "quote": "the remainder is typically Sauvignon blanc or Macabeo"
+   }
+  ],
+  "note": ""
+ },
+ {
+  "id": "muller-thurgau",
+  "tags": [
+   {
+    "style": "fresh",
+    "verdict": "supported"
+   }
+  ],
+  "missing": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/M%C3%BCller-Thurgau",
+    "quote": "medium sweet German wines, such as Liebfraumilch"
+   }
+  ],
+  "note": ""
+ }
+]

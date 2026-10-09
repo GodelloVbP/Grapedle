@@ -1,0 +1,21 @@
+[
+{"id":"cabernet-sauvignon","tags":[{"style":"oaked","verdict":"supported"},{"style":"blend","verdict":"supported"}],"missing":[],"note":"Oak per Wikipedia; blend per Wine Folly Bordeaux Blend."},
+{"id":"chardonnay","tags":[{"style":"oaked","verdict":"supported"},{"style":"sparkling","verdict":"supported"},{"style":"fresh","verdict":"supported"}],"missing":[],"note":""},
+{"id":"sauvignon-blanc","tags":[{"style":"fresh","verdict":"supported"}],"missing":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Sauvignon_blanc","quote":"mostly used as a blending grape"}],"note":"Blend role in white Bordeaux and Sauternes."},
+{"id":"riesling","tags":[{"style":"fresh","verdict":"supported"},{"style":"sweet","verdict":"supported"}],"missing":[{"style":"sparkling","url":"https://en.wikipedia.org/wiki/Riesling","quote":"Riesling is the preferred grape variety in the production of Deutscher Sekt"}],"note":""},
+{"id":"chenin-blanc","tags":[{"style":"fresh","verdict":"supported"},{"style":"sparkling","verdict":"supported"},{"style":"sweet","verdict":"supported"}],"missing":[],"note":""},
+{"id":"barbera","tags":[{"style":"oaked","verdict":"supported"},{"style":"fresh","verdict":"supported"}],"missing":[],"note":"Barrique-aged Superiore and lighter fresh-fruit versions both common."},
+{"id":"gewurztraminer","tags":[{"style":"sweet","verdict":"supported"}],"missing":[{"style":"fresh","url":"https://winefolly.com/grapes/gewurztraminer/","quote":"the best examples always taste fresh and balanced"}],"note":"Dry Alsace versions are unoaked; fresh is borderline."},
+{"id":"carmenere","tags":[{"style":"oaked","verdict":"supported"},{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"pinot-blanc","tags":[{"style":"sparkling","verdict":"supported"},{"style":"fresh","verdict":"supported"}],"missing":[],"note":"Crémant d'Alsace is the sparkling link."},
+{"id":"cinsaut","tags":[{"style":"blend","verdict":"supported"},{"style":"rose","verdict":"supported"}],"missing":[],"note":""},
+{"id":"monastrell","tags":[{"style":"blend","verdict":"supported"}],"missing":[{"style":"rose","url":"https://en.wikipedia.org/wiki/Mourv%C3%A8dre","quote":"Bandol rosés must contain at least 20% Mourvèdre"}],"note":""},
+{"id":"melon","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":"Muscadet is a light dry white."},
+{"id":"silvaner","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":"High acidity, not usually oaked."},
+{"id":"garnacha-blanca","tags":[{"style":"blend","verdict":"supported"},{"style":"fortified","verdict":"weak","url":"https://en.wikipedia.org/wiki/Grenache_blanc","quote":"blending component in some of the region's vin doux naturel wines"}],"missing":[],"note":"Fortified use is minor (Rivesaltes only)."},
+{"id":"corvina-veronese","tags":[{"style":"blend","verdict":"supported"},{"style":"sweet","verdict":"supported"}],"missing":[],"note":"Recioto della Valpolicella is a classic sweet red."},
+{"id":"garganega","tags":[{"style":"fresh","verdict":"supported"},{"style":"sweet","verdict":"weak","url":"https://en.wikipedia.org/wiki/Garganega","quote":"sweet recioto wines that have the potential to improve with bottle age"}],"missing":[],"note":"Recioto di Soave is a niche style next to dry Soave."},
+{"id":"lambrusco-salamino","tags":[{"style":"sparkling","verdict":"supported"}],"missing":[{"style":"sweet","url":"https://en.wikipedia.org/wiki/Lambrusco","quote":"sweet Lambrusco became hugely popular in the United States"}],"note":"Styles range secco to dolce."},
+{"id":"blaufrankisch","tags":[{"style":"fresh","verdict":"supported"},{"style":"oaked","verdict":"supported"}],"missing":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Blaufr%C3%A4nkisch","quote":"often contributes acidity and structure to the blend"}],"note":"Egri Bikavér; DAC Classic unoaked vs Reserve oaked."},
+{"id":"nero-d-avola","tags":[],"missing":[],"note":"No source shows a common oaked, fresh, blend or other style; plain dry red."}
+]

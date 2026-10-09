@@ -1,0 +1,20 @@
+[
+{"id":"merlot","tags":[{"style":"blend","verdict":"supported"},{"style":"oaked","verdict":"supported"}],"missing":[],"note":""},
+{"id":"syrah","tags":[{"style":"blend","verdict":"supported"}],"missing":[{"style":"oaked","url":"https://en.wikipedia.org/wiki/Syrah","quote":"matured in new American Oak"}],"note":"Grange example; northern Rhône and Australian Shiraz typically oak-aged."},
+{"id":"pinot-noir","tags":[{"style":"sparkling","verdict":"supported"},{"style":"oaked","verdict":"supported"}],"missing":[],"note":""},
+{"id":"cot","tags":[{"style":"oaked","verdict":"supported"},{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"sangiovese","tags":[{"style":"oaked","verdict":"supported"},{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"muscat-blanc-a-petits-grains","tags":[{"style":"sparkling","verdict":"supported"},{"style":"sweet","verdict":"supported"},{"style":"fortified","verdict":"supported"}],"missing":[],"note":""},
+{"id":"semillon","tags":[{"style":"sweet","verdict":"supported"},{"style":"blend","verdict":"supported"},{"style":"oaked","verdict":"weak","url":"https://en.wikipedia.org/wiki/S%C3%A9millon","quote":"vat- or bottle-aged"}],"missing":[],"note":"Page mentions no oak; Hunter dry style is unoaked. Oak only in some Bordeaux."},
+{"id":"pinotage","tags":[{"style":"oaked","verdict":"supported"}],"missing":[{"style":"blend","url":"https://en.wikipedia.org/wiki/Pinotage","quote":"Cape blends"}],"note":"Cape blend requires 30-70% Pinotage."},
+{"id":"gruner-veltliner","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":""},
+{"id":"montepulciano","tags":[],"missing":[],"note":"No style clearly supported; rosé (Cerasuolo) not confirmed by sources."},
+{"id":"alvarinho","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":""},
+{"id":"aglianico","tags":[],"missing":[],"note":"Sources describe full-bodied tannic red; no style tag supported."},
+{"id":"marsanne","tags":[{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"trousseau","tags":[{"style":"fortified","verdict":"weak","url":"https://en.wikipedia.org/wiki/Trousseau_(grape)","quote":"most famously it is used in port wine"}],"missing":[],"note":"Port use is minor; commonly met as Jura or varietal red."},
+{"id":"corvinone","tags":[{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"verdicchio-bianco","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":""},
+{"id":"graciano","tags":[{"style":"blend","verdict":"supported"}],"missing":[],"note":""},
+{"id":"zweigelt","tags":[{"style":"fresh","verdict":"supported"}],"missing":[],"note":""}
+]

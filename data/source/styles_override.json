@@ -5,21 +5,21 @@
    "blend",
    "rose"
   ],
-  "note": "Haiku batch kept 'fresh'; Provence/Languedoc rosé is the better-known style"
+  "note": "Haiku batch kept 'fresh'; Provence/Languedoc rosé is the better-known style (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "vermentino",
   "styles": [
    "fresh"
   ],
-  "note": "oaked not supported as a common style"
+  "note": "oaked not supported as a common style (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "verdicchio-bianco",
   "styles": [
    "fresh"
   ],
-  "note": "sweet (passito) is a minor style"
+  "note": "sweet (passito) is a minor style (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "sangiovese",
@@ -27,7 +27,7 @@
    "oaked",
    "blend"
   ],
-  "note": "sweet came from vin santo, which is mostly Trebbiano; Chianti is a blend"
+  "note": "sweet came from vin santo, which is mostly Trebbiano; Chianti is a blend (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "muscat-blanc-a-petits-grains",
@@ -36,12 +36,12 @@
    "sweet",
    "fortified"
   ],
-  "note": "Asti/Moscato d'Asti, late harvest, Muscat de Beaumes-de-Venise"
+  "note": "Asti/Moscato d'Asti, late harvest, Muscat de Beaumes-de-Venise (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "montepulciano",
   "styles": [],
-  "note": "Cerasuolo rosé is a side style; the classic wine is dry still red"
+  "note": "Cerasuolo rosé is a side style; the classic wine is dry still red (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "corvina-veronese",
@@ -49,14 +49,14 @@
    "blend",
    "sweet"
   ],
-  "note": "Valpolicella blend and Recioto; 'fresh' not supported"
+  "note": "Valpolicella blend and Recioto; 'fresh' not supported (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "silvaner",
   "styles": [
    "fresh"
   ],
-  "note": "blend not supported"
+  "note": "blend not supported (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "tempranillo",
@@ -64,20 +64,100 @@
    "oaked",
    "blend"
   ],
-  "note": "fortified not a common style; Rioja blends"
+  "note": "fortified not a common style; Rioja blends (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "gamay-noir",
   "styles": [
    "fresh"
   ],
-  "note": "Beaujolais is light and fresh"
+  "note": "Beaujolais is light and fresh (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
   "id": "muller-thurgau",
   "styles": [
    "fresh"
   ],
-  "note": "light and fresh German/Alpine whites"
+  "note": "light and fresh German/Alpine whites (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "monastrell",
+  "styles": [
+   "blend",
+   "rose"
+  ],
+  "note": "added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "garnacha-blanca",
+  "styles": [
+   "blend"
+  ],
+  "note": "removed weak: fortified (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "garganega",
+  "styles": [
+   "fresh"
+  ],
+  "note": "removed weak: sweet (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "syrah",
+  "styles": [
+   "blend",
+   "oaked"
+  ],
+  "note": "added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "semillon",
+  "styles": [
+   "sweet",
+   "blend"
+  ],
+  "note": "removed weak: oaked (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "pinotage",
+  "styles": [
+   "oaked",
+   "blend"
+  ],
+  "note": "added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "trousseau",
+  "styles": [],
+  "note": "removed weak: fortified (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "viognier",
+  "styles": [
+   "fresh"
+  ],
+  "note": "removed weak: oaked; added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "tribidrag",
+  "styles": [
+   "rose"
+  ],
+  "note": "removed weak: sweet (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "auxerrois",
+  "styles": [
+   "blend",
+   "sparkling"
+  ],
+  "note": "added from Sonnet review (Sonnet check vs Wine Folly/Wikipedia)"
+ },
+ {
+  "id": "roussanne",
+  "styles": [
+   "blend"
+  ],
+  "note": "removed weak: oaked (Sonnet check vs Wine Folly/Wikipedia)"
  }
 ]
