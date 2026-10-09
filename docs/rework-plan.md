@@ -26,9 +26,9 @@ The 40 classics minus Airén, Muscat of Alexandria, Petit Verdot, Trebbiano Tosc
 | 1 | Kleur | 🟩 same colour, 🟥 otherwise. Pink-skinned counts as white. |
 | 2 | Regio (signature region: where the grape is best known — Rhône for Marsanne, Rioja for Tempranillo, Mendoza for Malbec; up to two) | 🟩 same region set (two different grapes from one region also give 🟩); 🟨 a region in common (no distance) or the same country; 🟥 otherwise. Country-yellow and red tiles show distance in km (rounded to 50) and an 8-way arrow, the initial great-circle bearing from the guess's region point to the answer's. |
 | 3 | Body (Wine Folly label mapped to 1-5: Licht, Medium-licht, Medium, Medium-vol, Vol; en Light … Full; `data/source/body_batch*.json`, override `body_book.json` from Gatinois, Explore Wine Maps; null when unknown) | Tile shows the guess's body. 🟩 equal to the answer's body; otherwise 🟨 (one step off) or 🟥 with ↑ (answer fuller) or ↓ (lighter); ⬜ "onbekend" when either is null. Help: "Body: hoe vol de wijn aanvoelt, van licht tot vol. De pijl wijst naar het antwoord: ↑ voller, ↓ lichter." Also shown on the end-screen answer card. |
-| 4 | Aanplant (world planted area, Adelaide, latest year per country) | Neutral tile with the guess's own world area rounded to 2 significant figures (nl "280.000 ha", en "280,000 ha") and an arrow pointing to the answer: ↑ answer has more, ↓ less, "=" exactly equal areas of different grapes. 🟩 (with its number) only for the same grape. |
-| 5 | Smaakprofiel (3–4 WSET primary aromas) | 🟩 ≥2 identical aromas; 🟨 1 identical aroma, or ≥3 shared aroma families; 🟥 otherwise; ⬜ "onbekend" when either grape has no aroma data. The tile lists the guess's aromas as chips "emoji label" (`emoji` field in `data/descriptors.json`, Emoji 13.0 or older, label always shown). Identical aromas: filled green chip with ✓, bold. Aromas whose family matches one of the answer's families: yellow outline. Families = the `cluster` field. Legend under the board: "✓ groen = zelfde aroma, gele rand = zelfde soort aroma". |
-| 6 | Stijl (common style, max 3 of sparkling, sweet, fortified, rosé, oaked, crisp, blend; none = plain dry still, `data/styles.json`) | 🟩 identical sets; 🟨 at least one in common; 🟥 none; ⬜ unknown. Chips "emoji label", shared styles green with ✓. Wide: after Smaakprofiel; narrow: row 2 next to Regio. Shown on the end-screen answer card. |
+| 4 | Stijl (common style, max 3 of sparkling, sweet, fortified, rosé, oaked, crisp, blend; none = plain dry still, `data/styles.json`) | 🟩 identical sets; 🟨 at least one in common; 🟥 none; ⬜ unknown. Chips "emoji label", shared styles green with ✓. Wide: after Body; narrow: row 2 next to Regio. Shown on the end-screen answer card. |
+| 5 | Aanplant (world planted area, Adelaide, latest year per country) | Neutral tile with the guess's own world area rounded to 2 significant figures (nl "280.000 ha", en "280,000 ha") and an arrow pointing to the answer: ↑ answer has more, ↓ less, "=" exactly equal areas of different grapes. 🟩 (with its number) only for the same grape. |
+| 6 | Smaakprofiel (3–4 WSET primary aromas) | 🟩 ≥2 identical aromas; 🟨 1 identical aroma, or ≥3 shared aroma families; 🟥 otherwise; ⬜ "onbekend" when either grape has no aroma data. The tile lists the guess's aromas as chips "emoji label" (`emoji` field in `data/descriptors.json`, Emoji 13.0 or older, label always shown). Identical aromas: filled green chip with ✓, bold. Aromas whose family matches one of the answer's families: yellow outline. Families = the `cluster` field. Legend under the board: "✓ groen = zelfde aroma, gele rand = zelfde soort aroma". |
 
 The climate column of the earlier plan was dropped; climate is not part of the data or the bundle.
 
@@ -53,13 +53,13 @@ Order: result line (a win adds a one-line cheer by guess count: Onwaarschijnlijk
 ## Share
 ```
 Grapedle #12 4/6 💡
-🟥🟨⬆️⬇️🟨🟥
-🟥🟩🟩⬆️🟨🟨
-🟩🟩⬜↔️🟩⬜
+🟥🟨⬆️🟥⬇️🟨
+🟥🟩🟩🟨⬆️🟨
+🟩🟩⬜⬜↔️🟩
 🟩🟩🟩🟩🟩🟩
 vinobypalazzo.nl/grapedle
 ```
-Order: kleur, regio, body, aanplant, smaak, stijl. ⬆️/⬇️ for the arrow direction (body, aanplant), ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown body or flavour. Clipboard fallback when `navigator.share` is missing.
+Order: kleur, regio, body, stijl, aanplant, smaak. ⬆️/⬇️ for the arrow direction (body, aanplant), ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown body or flavour. Clipboard fallback when `navigator.share` is missing.
 
 ## Data jobs
 1. Signature regions (Sonnet, then owner sign-off for the 56): for the 111 old-pool grapes, one curated wine region each with country, a hand-placed lat/lon and a source note. The other ~150 guessable grapes use their top country and a country point.

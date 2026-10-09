@@ -29,7 +29,7 @@ const R = {
 const st = (guess, answer, key) => compare(guess, answer, { descriptors: desc, countries: ctry }).find((c) => c.key === key);
 
 test('six columns in plan order (no climate column)', () => {
-  assert.deepEqual(COLUMNS, ['colour', 'region', 'body', 'area', 'flavour', 'style']);
+  assert.deepEqual(COLUMNS, ['colour', 'region', 'body', 'style', 'area', 'flavour']);
   assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 6);
 });
 
@@ -159,11 +159,11 @@ test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, r
 
 test('share symbols per cell', () => {
   const cells = compare(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 9, colour: 'white' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬆️', '⬜', '⬜']);
+  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬜', '⬆️', '⬜']);
   const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(down[3]), '⬇️');
+  assert.equal(shareSymbol(down[4]), '⬇️');
   const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(tie[3]), '↔️', 'exactly equal areas');
+  assert.equal(shareSymbol(tie[4]), '↔️', 'exactly equal areas');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
   assert.deepEqual(win.map(shareSymbol), Array(6).fill('🟩'));
 });

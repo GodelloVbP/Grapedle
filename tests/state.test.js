@@ -195,7 +195,7 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
   const lines = shareText({ puzzle: 42, rows: game.rows(), won: true }).split('\n');
   assert.equal(lines[0], 'Grapedle #42 2/6');
   assert.equal(lines.length, 4);
-  assert.match(lines[1], /^(🟩|🟥)(🟩|🟨|🟥)(⬆️|⬇️|🟩|⬜)(⬆️|⬇️|↔️|🟩)(🟩|🟨|🟥|⬜)(🟩|🟨|🟥|⬜)$/u);
+  assert.match(lines[1], /^(🟩|🟥)(🟩|🟨|🟥)(⬆️|⬇️|🟩|⬜)(🟩|🟨|🟥|⬜)(⬆️|⬇️|↔️|🟩)(🟩|🟨|🟥|⬜)$/u);
   assert.equal(lines[2], '🟩'.repeat(6));
   assert.equal(lines[3], 'vinobypalazzo.nl/grapedle');
   assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 1 }).split('\n')[0], 'Grapedle #42 2/6 💡');
@@ -209,15 +209,15 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
   assert.equal(l.length, 8);
   for (const row of l.slice(1, 7)) assert.equal([...row.replace(/⬆️|⬇️|↔️/g, 'A')].length, 6);
   // exact example from the plan: a won game where the last row is all green
-  const fake = (cells) => ({ cells: cells.map((s, i) => ({ key: ['colour', 'region', 'body', 'area', 'flavour', 'style'][i], status: s[0], arrow: s[1] || null })) });
+  const fake = (cells) => ({ cells: cells.map((s, i) => ({ key: ['colour', 'region', 'body', 'style', 'area', 'flavour'][i], status: s[0], arrow: s[1] || null })) });
   const rows = [
-    fake([['red'], ['yellow'], ['neutral', 'up'], ['neutral', 'down'], ['yellow'], ['red']]),
-    fake([['red'], ['green'], ['green'], ['neutral', 'up'], ['yellow'], ['yellow']]),
-    fake([['green'], ['green'], ['grey'], ['neutral'], ['green'], ['grey']]),
+    fake([['red'], ['yellow'], ['neutral', 'up'], ['red'], ['neutral', 'down'], ['yellow']]),
+    fake([['red'], ['green'], ['green'], ['yellow'], ['neutral', 'up'], ['yellow']]),
+    fake([['green'], ['green'], ['grey'], ['grey'], ['neutral'], ['green']]),
     fake([['green'], ['green'], ['green'], ['green'], ['green'], ['green']]),
   ];
   assert.equal(shareText({ puzzle: 12, rows, won: true, hints: 1 }),
-    'Grapedle #12 4/6 💡\n🟥🟨⬆️⬇️🟨🟥\n🟥🟩🟩⬆️🟨🟨\n🟩🟩⬜↔️🟩⬜\n🟩🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
+    'Grapedle #12 4/6 💡\n🟥🟨⬆️🟥⬇️🟨\n🟥🟩🟩🟨⬆️🟨\n🟩🟩⬜⬜↔️🟩\n🟩🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
   const unknown = shareText({ puzzle: 1, rows: [fake([['green'], ['red'], ['neutral', 'up'], ['grey']])], won: false }).split('\n')[1];
   assert.equal(unknown, '🟩🟥⬆️⬜');
 });
@@ -330,7 +330,7 @@ test('i18n: both languages complete, lang selection', () => {
   assert.ok(!('area_up3' in STRINGS.nl) && !('area_up3' in STRINGS.en), 'band strings are gone');
   assert.match(makeT('nl')('help_flavour'), /minstens 2 aroma/);
   assert.match(makeT('en')('help_flavour'), /at least 2 aromas/);
-  for (const lang of ['nl', 'en']) for (const k of ['colour', 'region', 'body', 'area', 'flavour', 'style']) assert.ok(STRINGS[lang]['help_' + k] && STRINGS[lang]['col_' + k], k);
+  for (const lang of ['nl', 'en']) for (const k of ['colour', 'region', 'body', 'style', 'area', 'flavour']) assert.ok(STRINGS[lang]['help_' + k] && STRINGS[lang]['col_' + k], k);
   for (let i = 1; i <= 5; i++) for (const lang of ['nl', 'en']) assert.ok(STRINGS[lang]['v_body_' + i], 'v_body_' + i);
   assert.deepEqual([1, 2, 3, 4, 5].map((i) => STRINGS.nl['v_body_' + i]), ['Licht', 'Medium-licht', 'Medium', 'Medium-vol', 'Vol']);
   assert.deepEqual([1, 2, 3, 4, 5].map((i) => STRINGS.en['v_body_' + i]), ['Light', 'Medium-light', 'Medium', 'Medium-full', 'Full']);

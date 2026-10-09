@@ -1,6 +1,6 @@
 import { descriptors as defDesc, countries as defCountries } from './data.js';
 
-export const COLUMNS = ['colour', 'region', 'body', 'area', 'flavour', 'style'];
+export const COLUMNS = ['colour', 'region', 'body', 'style', 'area', 'flavour'];
 
 /** Eight compass arrows, clockwise from north. */
 export const ARROWS = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
@@ -185,12 +185,12 @@ export function compare(guess, answer, ctx = {}) {
   out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit, parts: r.parts }));
   const b = body(guess.body, answer.body);
   out.push(cell('body', b.status, { arrow: b.arrow, value: b.value }));
+  const sy = style(guess, answer);
+  out.push(cell('style', sy.status, { shared: sy.shared }));
   const a = area(guess.areaHa, answer.areaHa);
   out.push(cell('area', a.status, { arrow: a.arrow, value: a.value }));
   const f = flavour(guess, answer, desc);
   out.push(cell('flavour', f.status, { shared: f.shared, families: f.families, familyHit: f.familyHit }));
-  const sy = style(guess, answer);
-  out.push(cell('style', sy.status, { shared: sy.shared }));
   if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; if (c.parts) c.parts = c.parts.map((x) => ({ ...x, hit: true, km: null, dir: null })); }
   return out;
 }
