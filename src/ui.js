@@ -231,6 +231,16 @@ function mountInner(root, opts) {
     return `${n}, ${t('area_' + (cell.arrow || 'eq') + '_sr')}`;
   }
 
+  const bodyName = (b) => t('v_body_' + b);
+  function bodyText(cell) {
+    if (cell.value === null || cell.value === undefined) return t('unknownValue');
+    return cell.arrow === 'up' ? `${bodyName(cell.value)} ↑` : cell.arrow === 'down' ? `${bodyName(cell.value)} ↓` : bodyName(cell.value);
+  }
+  function bodySr(cell) {
+    if (cell.value === null || cell.value === undefined) return t('unknownValue');
+    return cell.arrow ? `${bodyName(cell.value)}, ${t('body_' + cell.arrow + '_sr')}` : bodyName(cell.value);
+  }
+
   const colLabel = (k) => t('col_' + k);
 
   function buildTile(cell, g, i) {
@@ -247,6 +257,7 @@ function mountInner(root, opts) {
           plain += `, ${t('km', { n: fmtNum(cell.km) })} ${t('toward', { dir: t('dir_' + cell.dir) })}`;
         }
         break;
+      case 'body': main = bodyText(cell); plain = bodySr(cell); break;
       case 'area': main = areaText(cell); plain = areaSr(cell); break;
       default: break;
     }
@@ -475,6 +486,7 @@ function mountInner(root, opts) {
   function facts(g) {
     const rows = [
       [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
+      [colLabel('body'), g.body ? bodyName(g.body) : null],
       [t('aromas'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
@@ -634,6 +646,7 @@ function mountInner(root, opts) {
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
         demoTile('green', colLabel('colour'), t('v_red')),
         demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),
+        demoTile('neutral', colLabel('body'), bodyName(5) + ' ↓'),
         demoTile('neutral', colLabel('area'), formatArea(280000, lang) + ' ↓'),
         demoTile('grey', colLabel('flavour'), '–')),
       h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')),

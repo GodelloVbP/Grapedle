@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import countries from '../data/countries.json' with { type: 'json' };
 import descriptors from '../data/descriptors.json' with { type: 'json' };
@@ -246,4 +247,61 @@ test('descriptors have an emoji (Unicode Emoji 13.0 or older, no 15.x-only picks
     assert.ok(!prev || prev === d.cluster || allowed.has(d.emoji), `${id}: ${d.emoji} also used in family ${prev}`);
     fam.set(d.emoji, d.cluster);
   }
+});
+
+// ---- body (1 light .. 5 full), from Wine Folly labels, optional book override ----
+const pyBody = (labels) => JSON.parse(execFileSync('python3', ['-c',
+  'import sys,json;sys.path.insert(0,"scripts");import build_data as b;print(json.dumps([b.parse_body(x) for x in json.loads(sys.argv[1])]))',
+  JSON.stringify(labels)], { encoding: 'utf8' }));
+
+test('body: every value is an integer 1..5 or null, and a source URL goes with each value', () => {
+  for (const g of grapes) {
+    assert.ok('body' in g, g.id);
+    assert.ok(g.body === null || (Number.isInteger(g.body) && g.body >= 1 && g.body <= 5), `${g.id} body ${g.body}`);
+    if (g.body === null) assert.ok(!g.sources.body, g.id);
+    else assert.ok(typeof g.sources.body === 'string' && g.sources.body.length, `${g.id} sources.body`);
+  }
+  assert.ok(grapes.filter((g) => g.body !== null).length > 50);
+});
+
+test('body: label variants and casing map to 1..5', () => {
+  assert.deepEqual(pyBody(['Light Body', 'Medium-Light Body', 'Medium Body', 'Medium-Full Body', 'Full Body']), [1, 2, 3, 4, 5]);
+  assert.deepEqual(pyBody(['light body', 'Medium-light Body', 'MEDIUM BODY', 'medium-full body', 'FULL BODY', 'Medium-Light', 'medium light body']), [1, 2, 3, 4, 5, 2, 2]);
+  assert.deepEqual(pyBody([null, 'None', '']), [null, null, null]);
+});
+
+test('body: the batch files map to grapes.json, the book file takes precedence', () => {
+  const labels = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
+  const book = existsSync(new URL('../data/source/body_book.json', import.meta.url))
+    ? JSON.parse(readFileSync(new URL('../data/source/body_book.json', import.meta.url), 'utf8')) : [];
+  const bookIds = new Set(book.filter((r) => r.body).map((r) => r.id));
+  const [lo] = [1, 2, 3].map((n) => JSON.parse(readFileSync(new URL(`../data/source/body_batch${n}.json`, import.meta.url), 'utf8')));
+  for (const r of lo) {
+    if (bookIds.has(r.id) || !r.body) continue;
+    const want = pyBody([r.body])[0];
+    assert.ok(labels[want], r.id);
+    assert.equal(byId.get(r.id).body, want, r.id);
+    assert.equal(byId.get(r.id).sources.body, r.url, r.id);
+  }
+  for (const r of book.filter((x) => x.body)) {
+    assert.equal(byId.get(r.id).body, pyBody([r.body])[0], 'book wins ' + r.id);
+    assert.equal(byId.get(r.id).sources.body, r.source || 'Gatinois, Explore Wine Maps');
+  }
+});
+
+test('body: a book entry overrides a batch value (build_data.load_body)', () => {
+  const out = execFileSync('python3', ['-I', '-c', `
+import sys, json, os, tempfile, shutil
+sys.path.insert(0, "scripts")
+import build_data as b
+d = tempfile.mkdtemp()
+for n in (1, 2, 3):
+    json.dump([{"id": "x", "body": "Light Body", "url": "https://u"}] if n == 1 else [], open(os.path.join(d, f"body_batch{n}.json"), "w"))
+json.dump([{"id": "x", "body": "full body", "source": "Gatinois, Explore Wine Maps"}], open(os.path.join(d, "body_book.json"), "w"))
+b.SRC = d
+p = []
+print(json.dumps([b.load_body(p)["x"], p]))
+shutil.rmtree(d)
+`], { encoding: 'utf8', cwd: new URL('..', import.meta.url).pathname });
+  assert.deepEqual(JSON.parse(out), [[5, 'Gatinois, Explore Wine Maps'], []]);
 });

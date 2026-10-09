@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import grapes from '../data/grapes.json' with { type: 'json' };
 import {
-  compare, area, roundArea, formatArea, flavour, region, sharedRegions, COLUMNS, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
+  compare, area, roundArea, formatArea, flavour, region, sharedRegions, COLUMNS, body, ARROWS, distanceKm, bearingDeg, directionIndex, roundKm, shareSymbol,
 } from '../src/feedback.js';
 import { overlap, similarGrapes } from '../src/similar.js';
 
@@ -28,9 +28,9 @@ const R = {
 };
 const st = (guess, answer, key) => compare(guess, answer, { descriptors: desc, countries: ctry }).find((c) => c.key === key);
 
-test('four columns in plan order (no climate column)', () => {
-  assert.deepEqual(COLUMNS, ['colour', 'region', 'area', 'flavour']);
-  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 4);
+test('five columns in plan order (no climate column)', () => {
+  assert.deepEqual(COLUMNS, ['colour', 'region', 'body', 'area', 'flavour']);
+  assert.equal(compare(g({}), g({ id: 'y' }), { descriptors: desc, countries: ctry }).length, 5);
 });
 
 test('self compare is all green with no arrows or distances', () => {
@@ -159,13 +159,30 @@ test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, r
 
 test('share symbols per cell', () => {
   const cells = compare(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 9, colour: 'white' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬆️', '⬜']);
+  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬆️', '⬜']);
   const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(down[2]), '⬇️');
+  assert.equal(shareSymbol(down[3]), '⬇️');
   const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(tie[2]), '↔️', 'exactly equal areas');
+  assert.equal(shareSymbol(tie[3]), '↔️', 'exactly equal areas');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(win.map(shareSymbol), Array(4).fill('🟩'));
+  assert.deepEqual(win.map(shareSymbol), Array(5).fill('🟩'));
+});
+
+test('body: equal green, fuller/lighter arrow towards the answer, unknown either side grey', () => {
+  const b = (gb, ab) => st(g({ id: 'a', body: gb }), g({ id: 'b', body: ab }), 'body');
+  const eq = b(3, 3);
+  assert.equal(eq.status, 'green'); assert.equal(eq.arrow, null); assert.equal(eq.value, 3);
+  const fuller = b(2, 5);
+  assert.equal(fuller.status, 'neutral'); assert.equal(fuller.arrow, 'up'); assert.equal(fuller.value, 2, 'shows the guess body');
+  const lighter = b(5, 1);
+  assert.equal(lighter.status, 'neutral'); assert.equal(lighter.arrow, 'down'); assert.equal(lighter.value, 5);
+  assert.equal(b(null, 3).status, 'grey'); assert.equal(b(null, 3).value, null);
+  assert.equal(b(3, null).status, 'grey'); assert.equal(b(3, null).value, 3);
+  assert.equal(b(undefined, undefined).status, 'grey');
+  assert.equal(body(3, 4).arrow, 'up');
+  assert.deepEqual([b(3, 3), b(2, 5), b(5, 1), b(null, 1)].map(shareSymbol), ['🟩', '⬆️', '⬇️', '⬜']);
+  // same grape is green even when its body is unknown
+  assert.equal(st(g({ id: 'q', body: null }), g({ id: 'q', body: null }), 'body').status, 'green');
 });
 
 test('similar grapes: same colour, stocked, most identical aromas, tie-break shared families', () => {

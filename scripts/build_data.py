@@ -240,6 +240,51 @@ def load_aromas():
     return recs
 
 
+BODY_LEVELS = {"light": 1, "medium-light": 2, "medium": 3, "medium-full": 4, "full": 5}
+BODY_BOOK_LABEL = "Gatinois, Explore Wine Maps"
+
+
+def parse_body(label):
+    """Wine Folly body label (any casing, with or without 'Body') -> 1..5; None/empty -> None."""
+    if label is None:
+        return None
+    k = re.sub(r"\s+body$", "", str(label).strip().lower())
+    k = re.sub(r"[\s_]+", "-", k)
+    if k in ("", "none", "null", "unknown"):
+        return None
+    if k not in BODY_LEVELS:
+        raise ValueError(f"unknown body label: {label!r}")
+    return BODY_LEVELS[k]
+
+
+def load_body(problems):
+    """id -> (level 1..5 or None, source). data/source/body_book.json overrides the Wine Folly batches."""
+    out = {}
+    for n in (1, 2, 3):
+        for r in read_json(f"body_batch{n}.json"):
+            try:
+                lvl = parse_body(r.get("body"))
+            except ValueError as e:
+                problems.append(f"{r.get('id')}: {e}")
+                continue
+            if lvl is None:
+                continue
+            if not r.get("url"):
+                problems.append(f"body for {r['id']} has no url")
+                continue
+            out[r["id"]] = (lvl, r["url"])
+    book = os.path.join(SRC, "body_book.json")
+    for r in (read_json("body_book.json") if os.path.exists(book) else []):
+        try:
+            lvl = parse_body(r.get("body"))
+        except ValueError as e:
+            problems.append(f"{r.get('id')}: {e}")
+            continue
+        if lvl is not None:
+            out[r["id"]] = (lvl, r.get("source") or BODY_BOOK_LABEL)
+    return out
+
+
 def flavours_for(rec):
     """(descriptor ids, source list) for one aroma record; ([], []) when there are none."""
     if not rec:
@@ -271,6 +316,7 @@ def build_grapes(report):
     # optional "Wist je dat" facts: [{id, fact_nl, fact_en, source}]; only sourced facts are used, never invented ones
     facts = {f["id"]: f for f in (read_json("facts.json") if os.path.exists(os.path.join(SRC, "facts.json")) else [])}
     aromas = load_aromas()
+    bodies = load_body(report["problems"])
     by_prime = {r["prime"]: r for r in adel}
     problems = report["problems"]
 
@@ -318,6 +364,10 @@ def build_grapes(report):
         rec["flavours"] = ids
         if fsrc:
             src["flavours"] = fsrc
+        lvl, bsrc = bodies.get(gid, (None, None))
+        rec["body"] = lvl
+        if bsrc:
+            src["body"] = bsrc
         h = hints.get(gid)
         if h:
             rec["hint"] = {"nl": h["hint_nl"], "en": h["hint_en"]}
@@ -627,6 +677,7 @@ def main():
     if left < WARN_DAYS_LEFT:
         print(f"WARNING: only {left} days of schedule left (minimum {WARN_DAYS_LEFT}); append cycles with --days before they run out")
     print("no area:", [g["id"] for g in grapes if not g["areaHa"]])
+    print("pool grapes without body:", [g["id"] for g in pool if g["body"] is None])
     print("pool grapes without aromas:", [g["id"] for g in pool if not g["flavours"]])
     print(f"synonym collisions dropped: {len(report['collisions'])}")
     for c in report["collisions"]:

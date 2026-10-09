@@ -109,7 +109,7 @@
 
 /* wide: row of four tiles under fixed column headers */
 #grapedle-root[data-gd-layout="wide"] .gd-cols, #grapedle-root[data-gd-layout="wide"] .gd-row { display: grid; grid-template-columns: 112px 1fr; gap: 8px; align-items: stretch; }
-#grapedle-root[data-gd-layout="wide"] .gd-colgrid, #grapedle-root[data-gd-layout="wide"] .gd-tiles { display: grid; gap: 4px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+#grapedle-root[data-gd-layout="wide"] .gd-colgrid, #grapedle-root[data-gd-layout="wide"] .gd-tiles { display: grid; gap: 4px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
 #grapedle-root[data-gd-layout="wide"] .gd-cols { margin-bottom: 6px; font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: var(--gd-ink-soft); font-weight: 600; }
 #grapedle-root[data-gd-layout="wide"] .gd-col { text-align: center; align-self: end; overflow-wrap: anywhere; }
 #grapedle-root[data-gd-layout="wide"] .gd-tile { min-height: 64px; height: auto; }
@@ -120,7 +120,7 @@
 #grapedle-root[data-gd-layout="narrow"] .gd-cols { display: none; }
 #grapedle-root[data-gd-layout="narrow"] .gd-cols.gd-cols-empty { display: block; }
 #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-colname { display: none; }
-#grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-colgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; font-size: .72rem; color: var(--gd-ink-soft); font-weight: 600; }
+#grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-colgrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; font-size: .72rem; color: var(--gd-ink-soft); font-weight: 600; }
 #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col { text-align: center; padding: 6px 2px; border: 1px dashed var(--gd-field-border); border-radius: 8px; overflow-wrap: normal; }
 #grapedle-root .gd-cols-empty .gd-col { opacity: .9; }
 #grapedle-root[data-gd-layout="narrow"] .gd-btn { padding: 10px 14px !important; }
@@ -128,8 +128,16 @@
 #grapedle-root[data-gd-layout="narrow"] .gd-row { background: var(--gd-panel-soft); border: 1px solid var(--gd-line); border-radius: 12px; padding: 10px; }
 #grapedle-root[data-gd-layout="narrow"] .gd-name { margin-bottom: 8px; font-size: 1.05rem; }
 #grapedle-root[data-gd-layout="narrow"] .gd-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-#grapedle-root[data-gd-layout="narrow"] .gd-k-colour, #grapedle-root[data-gd-layout="narrow"] .gd-k-area { grid-column: span 2; }
-#grapedle-root[data-gd-layout="narrow"] .gd-k-region, #grapedle-root[data-gd-layout="narrow"] .gd-k-flavour { grid-column: span 4; }
+/* row 1: kleur | body | aanplant, row 2: regio, row 3: smaakprofiel (same for the empty column headers) */
+#grapedle-root[data-gd-layout="narrow"] .gd-k-colour, #grapedle-root[data-gd-layout="narrow"] .gd-k-body, #grapedle-root[data-gd-layout="narrow"] .gd-k-area { grid-column: span 2; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-region, #grapedle-root[data-gd-layout="narrow"] .gd-k-flavour { grid-column: span 6; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-colour, #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(1) { order: 1; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-body, #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(3) { order: 2; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-area, #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(4) { order: 3; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-region, #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(2) { order: 4; }
+#grapedle-root[data-gd-layout="narrow"] .gd-k-flavour, #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(5) { order: 5; }
+#grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(1), #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(3), #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(4) { grid-column: span 2; }
+#grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(2), #grapedle-root[data-gd-layout="narrow"] .gd-cols-empty .gd-col:nth-child(5) { grid-column: span 6; }
 #grapedle-root[data-gd-layout="narrow"] .gd-tile { min-height: 74px; padding: 6px 4px; }
 #grapedle-root[data-gd-layout="narrow"] .gd-lbl { display: block; }
 #grapedle-root[data-gd-layout="narrow"] .gd-sym { position: absolute; top: 4px; right: 6px; font-size: .8rem; }
@@ -168,8 +176,16 @@
 #grapedle-root .gd-dialog-title { font-size: 1.25rem; font-weight: 600; color: var(--gd-brand); }
 #grapedle-root .gd-dialog-body { display: flex; flex-direction: column; gap: 12px; font-size: .92rem; }
 #grapedle-root .gd-help-list { display: flex; flex-direction: column; gap: 6px; }
-#grapedle-root .gd-help-demo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+#grapedle-root .gd-help-demo { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
 #grapedle-root .gd-demo { min-height: 76px; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo { grid-column: span 2; min-height: 64px; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(2), #grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(5) { grid-column: span 6; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(1) { order: 1; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(3) { order: 2; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(4) { order: 3; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(2) { order: 4; }
+#grapedle-root[data-gd-layout="narrow"] .gd-help-demo .gd-demo:nth-child(5) { order: 5; }
 #grapedle-root .gd-lbl-on { display: block; font-size: .52rem; letter-spacing: 0; overflow-wrap: normal; hyphens: manual; }
 #grapedle-root .gd-details { border-top: 1px solid var(--gd-line); padding-top: 8px; }
 #grapedle-root .gd-details summary { cursor: pointer; font-weight: 600; color: var(--gd-brand); padding: 6px 0; }

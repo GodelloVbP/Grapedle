@@ -1,6 +1,6 @@
 import { descriptors as defDesc, countries as defCountries } from './data.js';
 
-export const COLUMNS = ['colour', 'region', 'area', 'flavour'];
+export const COLUMNS = ['colour', 'region', 'body', 'area', 'flavour'];
 
 /** Eight compass arrows, clockwise from north. */
 export const ARROWS = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
@@ -99,6 +99,17 @@ export function area(guessHa, answerHa) {
 }
 
 /**
+ * Body (1 light .. 5 full): the tile shows the GUESS's body. Green when equal, otherwise neutral with an
+ * arrow towards the answer ('up' = the answer is fuller, 'down' = lighter). Grey when either is unknown.
+ */
+export function body(guessBody, answerBody) {
+  const ok = (b) => Number.isInteger(b) && b >= 1 && b <= 5;
+  if (!ok(guessBody) || !ok(answerBody)) return { status: 'grey', arrow: null, value: ok(guessBody) ? guessBody : null };
+  if (guessBody === answerBody) return { status: 'green', arrow: null, value: guessBody };
+  return { status: 'neutral', arrow: answerBody > guessBody ? 'up' : 'down', value: guessBody };
+}
+
+/**
  * Flavour: green >= 2 identical aromas; yellow 1 identical aroma or >= 3 shared aroma families;
  * red otherwise; grey when either grape has no aroma data.
  */
@@ -118,7 +129,7 @@ export function flavour(guess, answer, desc = defDesc) {
 }
 
 /**
- * Compare a guess with the answer. Returns four cells in COLUMNS order:
+ * Compare a guess with the answer. Returns five cells in COLUMNS order:
  * { key, status: green|yellow|red|grey|neutral, arrow: up|down|null, value (area), ... }.
  * ctx = { descriptors, countries } can be injected for tests.
  */
@@ -129,6 +140,8 @@ export function compare(guess, answer, ctx = {}) {
   out.push(cell('colour', guess.colour === answer.colour ? 'green' : 'red'));
   const r = region(guess, answer, ctry);
   out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit }));
+  const b = body(guess.body, answer.body);
+  out.push(cell('body', b.status, { arrow: b.arrow, value: b.value }));
   const a = area(guess.areaHa, answer.areaHa);
   out.push(cell('area', a.status, { arrow: a.arrow, value: a.value }));
   const f = flavour(guess, answer, desc);
@@ -142,6 +155,7 @@ export const STATUS_SYMBOL = { green: '✓', yellow: '~', red: '✗', grey: '?',
 
 /** One share-line symbol per cell. Area: ⬆️ the answer has more, ⬇️ less, ↔️ exactly equal, 🟩 correct. */
 export function shareSymbol(c) {
+  if (c.key === 'body') return c.status === 'green' ? '🟩' : c.status === 'grey' ? '⬜' : c.arrow === 'up' ? '⬆️' : '⬇️';
   if (c.key === 'area') {
     if (c.status === 'green') return '🟩';
     if (c.arrow === 'up') return '⬆️';

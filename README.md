@@ -1,6 +1,6 @@
 # Grapedle
 
-A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on four attributes: colour (kleur), signature region (regio, with distance and direction), world planted area (aanplant, the guess's own hectares with an arrow towards the answer) and flavour profile (smaakprofiel, as emoji chips). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
+A daily grape-guessing game for [Vino by Palazzo](https://www.vinobypalazzo.nl/grapedle). One grape per day, the same for everyone, six guesses. Each guess is scored on five attributes: colour (kleur), signature region (regio, with distance and direction), body (body, light to full with an arrow towards the answer), world planted area (aanplant, the guess's own hectares with an arrow towards the answer) and flavour profile (smaakprofiel, as emoji chips). Two hints unlock after 3 and 5 guesses. The daily answer comes from a pool of 55 grapes; about 200 more grapes can be guessed but never are the answer.
 
 The game is a static bundle served from this repo through jsDelivr and embedded on a Squarespace page with a single code block. There is no backend.
 
@@ -44,6 +44,7 @@ The schedule needs at least 90 days ahead: the build prints a warning and a test
 - Anderson, K., S. Nelgen and G. Puga, *Database of Regional, National and Global Winegrape Bearing Areas by Variety, 2000 to 2023*, Wine Economics Research Centre, University of Adelaide, December 2025 (revised March 2026). [doi:10.25909/32870405.v1](https://doi.org/10.25909/32870405.v1). Used for variety names and synonyms, berry colour, country of origin, 2023 planted area and top countries.
 - Anderson, K. and S. Nelgen, *Which Winegrape Varieties are Grown Where?* (revised edition), University of Adelaide Press, 2020. Used for the signature regions (Table 75 region names). The climate class that was derived from it is no longer a game column; the climate extracts stay in `data/source/` for reference only.
 - Gatinois, *Explore Wine Maps*. Aromas where the owner's copy has an entry; otherwise Wine Folly, Jancis Robinson and Wikipedia (the URL per grape is in the `sources` object of `data/grapes.json`).
+- Body: Wine Folly grape pages (URL per grape in `sources.body`), overridden by the owner's copy of Gatinois, *Explore Wine Maps* where `body_book.json` has an entry.
 - Hints: one source URL per grape in `data/source/hints.json`.
 
 ## Game rules in short
@@ -52,8 +53,11 @@ The schedule needs at least 90 days ahead: the build prints a warning and a test
 |---|---|---|---|
 | Kleur | same colour (pink counts as white) | | other colour |
 | Regio | same signature region | same country, with km (rounded to 50) and an 8-way arrow | other country, km and arrow |
+| Body | same body | | neutral tile with the guess's body and an arrow (↑ answer fuller, ↓ lighter); grey when unknown |
 | Aanplant | only the same grape | | neutral tile with the guess's hectares and an arrow, see below |
 | Smaakprofiel | at least 2 identical aromas | 1 identical aroma, or 3 shared aroma families | no overlap; grey when unknown |
+
+Body shows the guess's own body label (Licht, Medium-licht, Medium, Medium-vol, Vol; en Light, Medium-light, Medium, Medium-full, Full): green when equal to the answer's, otherwise a neutral tile with ↑ (the answer is fuller) or ↓ (lighter); grey "onbekend" when either grape has no body. Source: Wine Folly body labels mapped to 1-5 (`data/source/body_batch*.json`, source URL in `sources.body`); the optional `data/source/body_book.json` (`[{id, body, source}]`, source "Gatinois, Explore Wine Maps") takes precedence. Grapes without a value have `body: null`.
 
 Aanplant shows the guess's own world area rounded to 2 significant figures ("280.000 ha" in nl, "280,000 ha" in en) and an arrow pointing to the answer: ↑ the answer has more, ↓ it has less, "=" when the areas are exactly equal (different grapes). The same grape is green with its number. Help line: "Aanplant: hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder." Share emoji: ⬆️/⬇️, ↔️ equal, 🟩 correct.
 
