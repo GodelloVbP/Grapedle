@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "trousseau",
+    "body": "Medium-Full Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "rondinella",
+    "body": "Medium Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "lambrusco-salamino",
+    "body": "Full Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "graciano",
+    "body": "Medium-Full Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "croatina",
+    "body": "Medium Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "corvinone",
+    "body": "Medium Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  },
+  {
+    "id": "auxerrois",
+    "body": "Medium Body",
+    "source": "Gatinois, Explore Wine Maps (owner's copy)"
+  }
+]
