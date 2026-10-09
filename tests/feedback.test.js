@@ -111,16 +111,16 @@ test('bearing on real data: Mosel to Rhône points south, Rioja to Rhône east/n
 });
 
 test('area: arrow points to the answer, value is the guess area rounded to 2 significant figures', () => {
-  assert.deepEqual(area(280000, 19000), { status: 'neutral', arrow: 'down', value: 280000 }, 'answer has less: down');
-  assert.deepEqual(area(19000, 280000), { status: 'neutral', arrow: 'up', value: 19000 }, 'answer has more: up');
-  assert.deepEqual(area(1000, 1000), { status: 'neutral', arrow: null, value: 1000 }, 'exactly equal: no arrow');
+  assert.deepEqual(area(280000, 19000), { status: 'red', arrow: 'down', value: 280000 }, 'answer has less: down');
+  assert.deepEqual(area(19000, 280000), { status: 'red', arrow: 'up', value: 19000 }, 'answer has more: up');
+  assert.deepEqual(area(1000, 1000), { status: 'yellow', arrow: null, value: 1000 }, 'exactly equal: no arrow');
   assert.equal(area(1000, 1001).arrow, 'up'); assert.equal(area(1001, 1000).arrow, 'down');
   assert.equal(area(null, 1000).status, 'grey'); assert.equal(area(1000, 0).status, 'grey');
   assert.equal(area(null, 1000).value, null);
   const same = st(g({ id: 'q', areaHa: 5 }), g({ id: 'q', areaHa: 5 }), 'area');
   assert.equal(same.status, 'green'); assert.equal(same.arrow, null); assert.equal(same.value, 5);
   const other = st(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 5 }), 'area');
-  assert.equal(other.status, 'neutral', 'green only for the same grape'); assert.equal(other.arrow, null);
+  assert.equal(other.status, 'yellow', 'green only for the same grape'); assert.equal(other.arrow, null);
   const cs = st(g({ id: 'cab', areaHa: 276543 }), g({ id: 'gv', areaHa: 19012 }), 'area');
   assert.equal(cs.arrow, 'down'); assert.equal(cs.value, 280000);
 });
@@ -173,9 +173,11 @@ test('body: equal green, fuller/lighter arrow towards the answer, unknown either
   const eq = b(3, 3);
   assert.equal(eq.status, 'green'); assert.equal(eq.arrow, null); assert.equal(eq.value, 3);
   const fuller = b(2, 5);
-  assert.equal(fuller.status, 'neutral'); assert.equal(fuller.arrow, 'up'); assert.equal(fuller.value, 2, 'shows the guess body');
+  assert.equal(fuller.status, 'red'); assert.equal(fuller.arrow, 'up'); assert.equal(fuller.value, 2, 'shows the guess body');
   const lighter = b(5, 1);
-  assert.equal(lighter.status, 'neutral'); assert.equal(lighter.arrow, 'down'); assert.equal(lighter.value, 5);
+  assert.equal(lighter.status, 'red');
+  assert.equal(b(3, 4).status, 'yellow'); assert.equal(b(4, 3).status, 'yellow');
+  assert.equal(area(1000, 2000).status, 'yellow'); assert.equal(area(1000, 2001).status, 'red'); assert.equal(lighter.arrow, 'down'); assert.equal(lighter.value, 5);
   assert.equal(b(null, 3).status, 'grey'); assert.equal(b(null, 3).value, null);
   assert.equal(b(3, null).status, 'grey'); assert.equal(b(3, null).value, 3);
   assert.equal(b(undefined, undefined).status, 'grey');

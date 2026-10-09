@@ -118,23 +118,24 @@ export function formatArea(ha, lang) {
 /**
  * Planted area: the cell shows the GUESS's own world area (rounded to 2 significant figures, `value`) and
  * an arrow pointing to the answer: 'up' when the answer has more, 'down' when it has less, null when the
- * two areas are exactly equal ('='). The tile is neutral; green only for the same grape (set in compare).
+ * two areas are exactly equal ('='). Yellow when the answer's area is within a factor 2 of the guess's, red otherwise; green only for the same grape (set in compare).
  */
 export function area(guessHa, answerHa) {
   if (!(guessHa > 0) || !(answerHa > 0)) return { status: 'grey', arrow: null, value: null };
   const arrow = answerHa > guessHa ? 'up' : answerHa < guessHa ? 'down' : null;
-  return { status: 'neutral', arrow, value: roundArea(guessHa) };
+  const ratio = Math.max(guessHa, answerHa) / Math.min(guessHa, answerHa);
+  return { status: ratio <= 2 ? 'yellow' : 'red', arrow, value: roundArea(guessHa) };
 }
 
 /**
- * Body (1 light .. 5 full): the tile shows the GUESS's body. Green when equal, otherwise neutral with an
+ * Body (1 light .. 5 full): the tile shows the GUESS's body. Green when equal, yellow when one step off, red otherwise, with an
  * arrow towards the answer ('up' = the answer is fuller, 'down' = lighter). Grey when either is unknown.
  */
 export function body(guessBody, answerBody) {
   const ok = (b) => Number.isInteger(b) && b >= 1 && b <= 5;
   if (!ok(guessBody) || !ok(answerBody)) return { status: 'grey', arrow: null, value: ok(guessBody) ? guessBody : null };
   if (guessBody === answerBody) return { status: 'green', arrow: null, value: guessBody };
-  return { status: 'neutral', arrow: answerBody > guessBody ? 'up' : 'down', value: guessBody };
+  return { status: Math.abs(answerBody - guessBody) === 1 ? 'yellow' : 'red', arrow: answerBody > guessBody ? 'up' : 'down', value: guessBody };
 }
 
 /**

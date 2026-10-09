@@ -55,13 +55,13 @@ Regio tile: one line per region of the guess ("Rhône 550 km →", "Barossa 15.7
 |---|---|---|---|
 | Kleur | same colour (pink counts as white) | | other colour |
 | Regio | same signature region | same country, with km (rounded to 50) and an 8-way arrow | other country, km and arrow |
-| Body | same body | | neutral tile with the guess's body and an arrow (↑ answer fuller, ↓ lighter); grey when unknown |
-| Aanplant | only the same grape | | neutral tile with the guess's hectares and an arrow, see below |
+| Body | same body | | yellow when one step off, red otherwise, with the guess's body and an arrow (↑ answer fuller, ↓ lighter); grey when unknown |
+| Aanplant | only the same grape | | yellow when the answer is within a factor 2, red otherwise, with the guess's hectares and an arrow, see below |
 | Smaakprofiel | at least 2 identical aromas | 1 identical aroma, or 3 shared aroma families | no overlap; grey when unknown |
 
-Body shows the guess's own body label (Licht, Medium-licht, Medium, Medium-vol, Vol; en Light, Medium-light, Medium, Medium-full, Full): green when equal to the answer's, otherwise a neutral tile with ↑ (the answer is fuller) or ↓ (lighter); grey "onbekend" when either grape has no body. Source: Wine Folly body labels mapped to 1-5 (`data/source/body_batch*.json`, source URL in `sources.body`); the optional `data/source/body_book.json` (`[{id, body, source}]`, source "Gatinois, Explore Wine Maps") takes precedence. Grapes without a value have `body: null`.
+Body shows the guess's own body label (Licht, Medium-licht, Medium, Medium-vol, Vol; en Light, Medium-light, Medium, Medium-full, Full): green when equal to the answer's, otherwise yellow (one step off) or red with ↑ (the answer is fuller) or ↓ (lighter); grey "onbekend" when either grape has no body. Source: Wine Folly body labels mapped to 1-5 (`data/source/body_batch*.json`, source URL in `sources.body`); the optional `data/source/body_book.json` (`[{id, body, source}]`, source "Gatinois, Explore Wine Maps") takes precedence. Grapes without a value have `body: null`.
 
-Aanplant shows the guess's own world area rounded to 2 significant figures ("280.000 ha" in nl, "280,000 ha" in en) and an arrow pointing to the answer: ↑ the answer has more, ↓ it has less, "=" when the areas are exactly equal (different grapes). The same grape is green with its number. Help line: "Aanplant: hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder." Share emoji: ⬆️/⬇️, ↔️ equal, 🟩 correct.
+Aanplant shows the guess's own world area rounded to 2 significant figures ("280.000 ha" in nl, "280,000 ha" in en) and an arrow pointing to the answer: ↑ the answer has more, ↓ it has less, "=" when the areas are exactly equal (different grapes). The same grape is green with its number. Help line: "Aanplant: hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder. Geel: het antwoord zit binnen een factor 2, rood: verder weg." Share emoji: ⬆️/⬇️, ↔️ equal, 🟩 correct.
 
 Smaakprofiel shows the guess's aromas as chips "emoji label" (`emoji` per descriptor in `data/descriptors.json`, Unicode Emoji 13.0 or older; the label is always shown). An aroma identical to one of the answer's is a filled green chip with ✓ and bold; an aroma whose family (`cluster`) matches one of the answer's families gets a yellow outline; others are plain. A legend line sits under the board and in the help. The end screen's answer card lists the answer's aromas as chips too.
 
