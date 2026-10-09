@@ -4,7 +4,7 @@ Updated 2026-10-09 after the owner review (five columns incl. body, number-and-a
 
 ## Game constants
 - One daily puzzle. 6 guesses. Puzzle #1 = launch date (set in `data/schedule.json` `start`). Day changes at 00:00 Europe/Amsterdam.
-- All ~260 grapes are guessable every day; the guess list never reveals the answer pool.
+- All 136 grapes (the 111 shortlist plus 26 owner-chosen extras, `GUESS_EXTRAS`) are guessable every day; the guess list never reveals the answer pool.
 - Loss: the answer is revealed; share line reads `X/6`.
 - Before the launch date there is no puzzle 1: a teaser with a countdown and practice puzzles only.
 - Hint buttons unlock after 3 and 5 submitted guesses and lock when the game ends. Each hint used adds one 💡 to the share line.
@@ -62,7 +62,7 @@ vinobypalazzo.nl/grapedle
 Order: kleur, regio, body, stijl, aanplant, smaak. ⬆️/⬇️ for the arrow direction (body, aanplant), ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown body or flavour. Clipboard fallback when `navigator.share` is missing.
 
 ## Data jobs
-1. Signature regions (Sonnet, then owner sign-off for the 56): for the 111 old-pool grapes, one curated wine region each with country, a hand-placed lat/lon and a source note. The other ~150 guessable grapes use their top country and a country point.
+1. Signature regions (Sonnet, then owner sign-off for the 56): for the 111 old-pool grapes, one curated wine region each with country, a hand-placed lat/lon and a source note. The other guessable grapes use their top country and a country point.
 2. Aromas (Haiku, three parallel batches) for the 111 old-pool grapes: 3–4 ids from `descriptors.json`, each backed by two independent NON-Wikipedia sources (appellation/producer bodies, wine schools such as WSET/Guild/Wine Folly, published references, aroma studies); Wikipedia only as a third. URL plus ≤12-word quote per source. Opus checks all 26 stocked grapes and 20% of the rest; the owner checks stocked grapes against Explore Wine Maps.
 3. "Bekend van" (Haiku) for the 56 pool grapes, one source each, then the validator script.
 

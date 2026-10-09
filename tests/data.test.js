@@ -18,7 +18,9 @@ const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 
 test('answer pool is exactly the 55 ids in answer_pool.csv; every other grape stays guessable', () => {
   assert.equal(poolIds.length, 55);
   assert.deepEqual(pool.map((g) => g.id).sort(), [...poolIds].sort());
-  assert.ok(grapes.length >= 240 && grapes.length <= 280, String(grapes.length));
+  assert.ok(grapes.length >= 130 && grapes.length <= 140, String(grapes.length));
+  for (const id of ['prosecco-lungo', 'douce-noire', 'cayetana-blanca']) assert.ok(!byId.has(id), id + ' was removed from the guess list');
+  assert.ok(byId.has('dona-branca'), 'Dona Branca stays by owner choice');
   assert.equal(byId.size, grapes.length, 'unique ids');
   for (const g of grapes) assert.match(g.id, /^[a-z0-9-]+$/);
   assert.ok(!byId.has('silvaner-r'), 'silvaner-r is dropped');

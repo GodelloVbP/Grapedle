@@ -7,7 +7,7 @@ const top = (q) => search(q)[0] && search(q)[0].grape.id;
 
 test('exact name or synonym beats everything else', () => {
   assert.equal(top('Prosecco'), 'prosecco', 'the pool grape, not Prosecco Lungo');
-  assert.ok(search('prosecco').some((r) => r.grape.id === 'prosecco-lungo'));
+  assert.ok(!search('prosecco').some((r) => r.grape.id === 'prosecco-lungo'), 'Prosecco Lungo is no longer offered');
   assert.equal(top('Moscato'), 'muscat-blanc-a-petits-grains');
   assert.equal(top("moscato d'asti"), 'muscat-blanc-a-petits-grains');
   assert.equal(top('Cava'), 'macabeo');

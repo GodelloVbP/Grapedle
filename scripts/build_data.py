@@ -70,6 +70,15 @@ GUESS_SKIP = {n.lower() for n in [
     "Siroka Melniska", "Tinto De La Pámpana Blanca", "Moldova", "Cereza", "Kangun",
 ]}
 
+# Guessable grapes beyond the 111-grape shortlist (data/source/answer_pool_draft.csv), chosen by the owner
+# (2026-10-09): well-known grapes plus a hand-picked set. Everything else in the Adelaide list is not offered.
+GUESS_EXTRAS = {
+    "alicante-henri-bouschet", "blauer-portugieser", "catarratto-bianco", "ciliegiolo", "dona-branca", "dornfelder",
+    "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "marselan", "muscadelle", "negroamaro",
+    "nero-di-troia", "palomino-fino", "parellada", "pedro-gimenez", "pedro-ximenez", "piedirosso", "refosco",
+    "rkatsiteli", "sagrantino", "scheurebe", "verdelho", "vernaccia-di-san-gimignano",
+}
+
 EXTRA_SYNONYMS = {
     "garnacha-tinta": ["Grenache", "Garnacha", "Grenache Noir"],
     "mazuelo": ["Carignan", "Cariñena", "Carignano"],
@@ -435,14 +444,12 @@ def build_grapes(report):
         grapes.append(rec)
         seen.add(rec["id"])
     for a in sorted(adel, key=lambda r: -float(r["area_ha"] or 0)):
-        if len(grapes) >= TARGET_TOTAL:
-            break
         pr = a["prime"]
         if not pr or pr in draft_primes:
             continue
         if pr.lower().startswith("other") or pr.endswith(")") or a["colour"] not in ("R", "W", "G"):
             continue
-        if pr.lower() in GUESS_SKIP or slug(pr) in seen or not slug(pr) or slug(pr) in DROP_IDS:
+        if slug(pr) not in GUESS_EXTRAS or slug(pr) in seen or slug(pr) in DROP_IDS:
             continue
         if not a["origin"] or a["origin"] == "USSR":
             continue
