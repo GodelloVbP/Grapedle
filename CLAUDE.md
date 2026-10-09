@@ -34,3 +34,4 @@ Full spec: https://claude.ai/code/artifact/ec2d449d-3aee-4533-979f-24cad0284fc3 
 - Flavour descriptors: ids from `data/descriptors.json` only. Sources in order of precedence: the owner's copy of Gatinois, *Explore Wine Maps* (`aromas_book.json`), then Wine Folly, Jancis Robinson and Wikipedia (`aromas_batch*.json`); aromas confirmed by two of those sites rank first.
 - Optional `data/source/facts.json` ([{id, fact_nl, fact_en, source}]) gives the end screen a sourced "Wist je dat" line; never invent facts.
 - Every non-trivial field records its source in the record's `sources` object.
+- Regio tile: one line per region of the guess with its own km and arrow (`regionParts` in `src/feedback.js`); a region shared with the answer is bold without distance.

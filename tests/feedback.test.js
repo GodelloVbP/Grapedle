@@ -279,3 +279,13 @@ test('flavour: familyHit lists non-identical guess aromas whose family the answe
   const cell = st(g({ id: 'x', flavours: ['a', 'g'] }), g({ id: 'y', flavours: ['b'] }), 'flavour');
   assert.deepEqual(cell.familyHit, ['a']);
 });
+
+test('region parts: one entry per guess region, shared ones without distance, others with their own km and arrow', () => {
+  const c = reg([R.Rhone, R.Veneto], [R.Rhone, R.Alsace]);
+  assert.equal(c.parts.length, 2);
+  assert.equal(c.parts[0].name, R.Rhone.name); assert.equal(c.parts[0].hit, true); assert.equal(c.parts[0].km, null);
+  assert.equal(c.parts[1].name, R.Veneto.name); assert.equal(c.parts[1].hit, false);
+  assert.ok(c.parts[1].km > 0 && c.parts[1].dir >= 0 && c.parts[1].dir < 8);
+  const far = reg([R.Rhone], [R.Veneto]);
+  assert.equal(far.parts.length, 1); assert.ok(far.parts[0].km > 0);
+});

@@ -102,6 +102,8 @@
 #grapedle-root .gd-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 #grapedle-root .gd-legend { margin: 10px 0 0; font-size: .75rem; color: var(--gd-ink-soft); }
 #grapedle-root .gd-hit { font-weight: 800; }
+#grapedle-root .gd-reg { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 5px; }
+#grapedle-root .gd-reg + .gd-reg { margin-top: 3px; }
 
 #grapedle-root .gd-rows { display: flex; flex-direction: column; gap: 10px; }
 #grapedle-root .gd-name { font-weight: 600; color: var(--gd-brand); }

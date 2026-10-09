@@ -57,6 +57,34 @@ export function sharedRegions(guess, answer) {
  * pair of points (guess to answer).
  */
 export function region(guess, answer, ctry = defCountries) {
+  const r = regionBase(guess, answer, ctry);
+  return { ...r, parts: regionParts(guess, answer, ctry) };
+}
+
+/**
+ * One entry per region of the guess, in guess order: { name, hit: true } when the answer has that region,
+ * otherwise { name, hit: false, km, dir } towards the nearest answer region. Drives the UI so each region
+ * reads as its own line ("Rhône 550 km →", "Barossa 15.700 km ↘").
+ */
+export function regionParts(guess, answer, ctry = defCountries) {
+  const G = regionsOf(guess), A = regionsOf(answer);
+  const ak = new Set(A.map(regionKey).filter(Boolean));
+  return G.map((x) => {
+    const name = x.name || null;
+    if (x.name && ak.has(regionKey(x))) return { name, country: x.country, hit: true, km: null, dir: null };
+    let best = null;
+    const p = pointOf(x, ctry);
+    if (p) for (const y of A) {
+      const q = pointOf(y, ctry);
+      if (!q) continue;
+      const d = distanceKm(p, q);
+      if (!best || d < best.d) best = { d, q };
+    }
+    return { name, country: x.country, hit: false, km: best ? roundKm(best.d) : null, dir: best ? directionIndex(bearingDeg(p, best.q)) : null };
+  });
+}
+
+function regionBase(guess, answer, ctry) {
   const G = regionsOf(guess), A = regionsOf(answer);
   const gk = new Set(G.map(regionKey).filter(Boolean)), ak = new Set(A.map(regionKey).filter(Boolean));
   if (gk.size && gk.size === ak.size && [...gk].every((k) => ak.has(k))) return { status: 'green', km: null, dir: null, hit: [] };
@@ -139,14 +167,14 @@ export function compare(guess, answer, ctx = {}) {
   const out = [];
   out.push(cell('colour', guess.colour === answer.colour ? 'green' : 'red'));
   const r = region(guess, answer, ctry);
-  out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit }));
+  out.push(cell('region', r.status, { km: r.km, dir: r.dir, hit: r.hit, parts: r.parts }));
   const b = body(guess.body, answer.body);
   out.push(cell('body', b.status, { arrow: b.arrow, value: b.value }));
   const a = area(guess.areaHa, answer.areaHa);
   out.push(cell('area', a.status, { arrow: a.arrow, value: a.value }));
   const f = flavour(guess, answer, desc);
   out.push(cell('flavour', f.status, { shared: f.shared, families: f.families, familyHit: f.familyHit }));
-  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; }
+  if (guess.id === answer.id) for (const c of out) { c.status = 'green'; c.arrow = null; c.km = null; c.dir = null; if (c.hit) c.hit = []; if (c.parts) c.parts = c.parts.map((x) => ({ ...x, hit: true, km: null, dir: null })); }
   return out;
 }
 

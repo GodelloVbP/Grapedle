@@ -247,16 +247,19 @@ function mountInner(root, opts) {
     let main = null, sub = null, plain = '', nodes = null;
     switch (cell.key) {
       case 'colour': main = t('v_' + g.colour); plain = main; break;
-      case 'region':
-        main = regionNames(g).join(' / '); plain = main;
-        nodes = cell.status === 'yellow' && cell.hit && cell.hit.length && regionNames(g).length > 1 ? joined(regionNames(g), cell.hit)
-          : cell.status === 'yellow' && cell.hit && cell.hit.length ? [h('strong', { class: 'gd-hit' }, main)] : null;
-        if (cell.hit && cell.hit.length) plain += `, ${t('overlap')}: ${cell.hit.join(', ')}`;
-        if (cell.km) {
-          sub = `${t('km', { n: fmtNum(cell.km) })} ${ARROWS[cell.dir]}`;
-          plain += `, ${t('km', { n: fmtNum(cell.km) })} ${t('toward', { dir: t('dir_' + cell.dir) })}`;
-        }
+      case 'region': {
+        const parts = cell.parts || [];
+        plain = parts.map((x) => {
+          const nm = x.name || countryName(x.country);
+          return x.hit ? `${nm} (${t('overlap')})` : x.km ? `${nm}, ${t('km', { n: fmtNum(x.km) })} ${t('toward', { dir: t('dir_' + x.dir) })}` : nm;
+        }).join('; ') || regionNames(g).join(' / ');
+        // one line per region: name, then km + arrow; a region the answer shares is bold and has no distance
+        nodes = parts.length ? parts.map((x) => h('span', { class: 'gd-reg' },
+          h('span', { class: x.hit && cell.status !== 'green' ? 'gd-reg-n gd-hit' : 'gd-reg-n' }, x.name || countryName(x.country)),
+          x.km ? h('span', { class: 'gd-sub' }, `${t('km', { n: fmtNum(x.km) })} ${ARROWS[x.dir]}`) : null)) : null;
+        main = regionNames(g).join(' / ');
         break;
+      }
       case 'body': main = bodyText(cell); plain = bodySr(cell); break;
       case 'area': main = areaText(cell); plain = areaSr(cell); break;
       default: break;

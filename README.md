@@ -49,6 +49,8 @@ The schedule needs at least 90 days ahead: the build prints a warning and a test
 
 ## Game rules in short
 
+Regio tile: one line per region of the guess ("Rhône 550 km →", "Barossa 15.700 km ↘"). A region the answer also has is bold and has no distance; every other region shows its own km (rounded to 50) and an 8-way arrow towards the nearest answer region. The tile colour stays as in the table.
+
 | Column | Green | Yellow | Red |
 |---|---|---|---|
 | Kleur | same colour (pink counts as white) | | other colour |
