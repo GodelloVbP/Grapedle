@@ -1,0 +1,170 @@
+[
+ {
+  "id": "douce-noire",
+  "aromas": [
+   {
+    "d": "blackcurrant",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "black-plum",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "fig",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "fennel",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Douce_Noire"
+  }
+ },
+ {
+  "id": "castelao",
+  "aromas": [
+   {
+    "d": "redcurrant",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "red-plum",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "strawberry",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/castelao/"
+  }
+ },
+ {
+  "id": "loureiro",
+  "aromas": [
+   {
+    "d": "grapefruit",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lime",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/loureiro/"
+  }
+ },
+ {
+  "id": "gaglioppo",
+  "aromas": [
+   {
+    "d": "raspberry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "redcurrant",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/gaglioppo/"
+  }
+ },
+ {
+  "id": "moschofilero",
+  "aromas": [
+   {
+    "d": "grapefruit",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "almond",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "melon",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/moschofilero/"
+  }
+ },
+ {
+  "id": "verdelho",
+  "aromas": [
+   {
+    "d": "gooseberry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "pineapple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "melon",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/verdelho/"
+  }
+ }
+]

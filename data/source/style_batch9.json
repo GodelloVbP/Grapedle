@@ -1,0 +1,432 @@
+[
+ {
+  "id": "cayetana-blanca",
+  "styles": null
+ },
+ {
+  "id": "pinot-meunier",
+  "styles": [
+   "sparkling",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://winefolly.com/grapes/pinot-meunier/",
+    "quote": "chief blending partner in the world's most popular sparkling wine"
+   },
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/pinot-meunier/",
+    "quote": "chief blending partner in the world's most popular sparkling wine"
+   }
+  ]
+ },
+ {
+  "id": "muscat-ottonel",
+  "styles": [
+   "sweet",
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Muscat_Ottonel",
+    "quote": "most notable for its use in dessert wines from Austria"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Muscat_Ottonel",
+    "quote": "believed to be a cross of Chasselas with Muscat de Saumur"
+   }
+  ]
+ },
+ {
+  "id": "mencia",
+  "styles": [
+   "fresh",
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/mencia/",
+    "quote": "presents bright, fresh red fruit flavors"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/mencia/",
+    "quote": "loved for its heady aromatics, lively acidity, and potential to age"
+   }
+  ]
+ },
+ {
+  "id": "petit-verdot",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/petit-verdot/",
+    "quote": "Considered a minor blending grape in Bordeaux"
+   }
+  ]
+ },
+ {
+  "id": "parellada",
+  "styles": [
+   "sparkling",
+   "blend",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Parellada",
+    "quote": "the three traditional varieties used to make the sparkling wine"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Parellada",
+    "quote": "it is used mostly for blending in young white wines"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Parellada",
+    "quote": "good acidity and freshness make these wines"
+   }
+  ]
+ },
+ {
+  "id": "dornfelder",
+  "styles": [
+   "blend",
+   "oaked"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Dornfelder",
+    "quote": "originally created as a blending variety to add color"
+   },
+   {
+    "style": "oaked",
+    "url": "https://en.wikipedia.org/wiki/Dornfelder",
+    "quote": "Higher-quality wines are typically oaked"
+   }
+  ]
+ },
+ {
+  "id": "trincadeira",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Trincadeira",
+    "quote": "commonly used in Port wine production"
+   }
+  ]
+ },
+ {
+  "id": "lambrusco-maestri",
+  "styles": null
+ },
+ {
+  "id": "aspiran-bouschet",
+  "styles": null
+ },
+ {
+  "id": "ruby-cabernet",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Ruby_Cabernet",
+    "quote": "mostly blended into bulk wines"
+   }
+  ]
+ },
+ {
+  "id": "marufo",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Marufo",
+    "quote": "It is a recommended grape in Port wine production."
+   }
+  ]
+ },
+ {
+  "id": "agiorgitiko",
+  "styles": []
+ },
+ {
+  "id": "listan-negro",
+  "styles": []
+ },
+ {
+  "id": "sankt-laurent",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Sankt_Laurent",
+    "quote": "a highly aromatic dark-skinned"
+   }
+  ]
+ },
+ {
+  "id": "trajadura",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Trajadura",
+    "quote": "The grape is primarily a blending variety"
+   }
+  ]
+ },
+ {
+  "id": "clairette",
+  "styles": [
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Clairette",
+    "quote": "a French sparkling wine appellation"
+   }
+  ]
+ },
+ {
+  "id": "grechetto-di-orvieto",
+  "styles": [
+   "blend",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Grechetto",
+    "quote": "primarily a blending grape"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Grechetto",
+    "quote": "This works well in the production of dessert wines."
+   }
+  ]
+ },
+ {
+  "id": "passerina",
+  "styles": null
+ },
+ {
+  "id": "merseguera",
+  "styles": null
+ },
+ {
+  "id": "rabigato",
+  "styles": null
+ },
+ {
+  "id": "okuzgozu",
+  "styles": [
+   "blend",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Öküzgözü",
+    "quote": "vinified both as a varietal wine and as a blending component"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Öküzgözü",
+    "quote": "relatively high natural acidity and moderate tannin levels"
+   }
+  ]
+ },
+ {
+  "id": "lambrusco-di-sorbara",
+  "styles": [
+   "sparkling",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Lambrusco_di_Sorbara",
+    "quote": "frizzante (slightly sparkling) red wines"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Lambrusco_di_Sorbara",
+    "quote": "noted for high acidity"
+   }
+  ]
+ },
+ {
+  "id": "bogazkere",
+  "styles": [
+   "oaked",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "oaked",
+    "url": "https://en.wikipedia.org/wiki/Boğazkere",
+    "quote": "frequently aged in oak barrels"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Boğazkere",
+    "quote": "widely used in blends"
+   }
+  ]
+ },
+ {
+  "id": "nuragus",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Nuragus_(grape)",
+    "quote": "notable acid notes"
+   }
+  ]
+ },
+ {
+  "id": "kotsifali",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Kotsifali",
+    "quote": "It is often blended with Mandilaria"
+   }
+  ]
+ },
+ {
+  "id": "viosinho",
+  "styles": [
+   "fortified",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Viosinho",
+    "quote": "adds structures and flavor to both still and fortified Port wines"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Viosinho",
+    "quote": "It is used primarily as a blending grape"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-nera-di-brindisi",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Malvasia_nera",
+    "quote": "it is blended with Negroamaro"
+   }
+  ]
+ },
+ {
+  "id": "pardillo",
+  "styles": null
+ },
+ {
+  "id": "fokiano",
+  "styles": null
+ },
+ {
+  "id": "bombino-bianco",
+  "styles": [
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Bombino_Bianco",
+    "quote": "semi-sparkling frizzante and fully sparkling spumante styles"
+   }
+  ]
+ },
+ {
+  "id": "molinara",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Molinara_(grape)",
+    "quote": "made with blends of Corvina, Corvinone, Molinara and Rondinella"
+   }
+  ]
+ },
+ {
+  "id": "pineau-d-aunis",
+  "styles": [
+   "rose",
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Pineau_d%27Aunis",
+    "quote": "used to make rosé and white wines"
+   },
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Pineau_d%27Aunis",
+    "quote": "In the sparkling rosés of Anjou Mousseux"
+   }
+  ]
+ },
+ {
+  "id": "braquet-noir",
+  "styles": [
+   "rose",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Braquet",
+    "quote": "lend itself well to rosé production"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Braquet",
+    "quote": "In Bellet AOC it is blended with Fuella Nera"
+   }
+  ]
+ }
+]

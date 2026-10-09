@@ -1,0 +1,368 @@
+[
+ {
+  "id": "bobal",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Bobal",
+    "quote": "suitable both for aging and for coupage with other varieties"
+   }
+  ]
+ },
+ {
+  "id": "grasevina",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/grasevina/",
+    "quote": "High Acidity"
+   }
+  ]
+ },
+ {
+  "id": "touriga-franca",
+  "styles": [
+   "blend",
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/touriga-franca/",
+    "quote": "blended table wines of the Dão"
+   },
+   {
+    "style": "fortified",
+    "url": "https://winefolly.com/grapes/touriga-franca/",
+    "quote": "used mainly in Port wine production"
+   }
+  ]
+ },
+ {
+  "id": "criolla-grande",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "negroamaro",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Negroamaro",
+    "quote": "more commonly used as the dominant component of a blend"
+   }
+  ]
+ },
+ {
+  "id": "pedro-gimenez",
+  "styles": [
+   "sweet",
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Pedro_Ximénez",
+    "quote": "an intensely sweet, dark, dessert sherry"
+   },
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Pedro_Ximénez",
+    "quote": "fortified style wines labelled as PX"
+   }
+  ]
+ },
+ {
+  "id": "pamid",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "baga",
+  "styles": [
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://winefolly.com/grapes/baga/",
+    "quote": "complex sparkling rosé"
+   }
+  ]
+ },
+ {
+  "id": "caladoc",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Caladoc",
+    "quote": "experimented with the variety in red vin de pays blends"
+   }
+  ]
+ },
+ {
+  "id": "blauer-portugieser",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Blauer_Portugieser",
+    "quote": "characterized by a fresh, tart and light body"
+   }
+  ]
+ },
+ {
+  "id": "furmint",
+  "styles": [
+   "sweet",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://winefolly.com/grapes/furmint/",
+    "quote": "famously used in Tokaji Aszú dessert wines"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Furmint",
+    "quote": "naturally high levels of acidity"
+   }
+  ]
+ },
+ {
+  "id": "sauvignonasse",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "alarije",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Alarije",
+    "quote": "It is most often used in blends."
+   }
+  ]
+ },
+ {
+  "id": "bacchus",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Bacchus_(grape)",
+    "quote": "often used for blending into Müller-Thurgau"
+   }
+  ]
+ },
+ {
+  "id": "fiano",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "trebbiano-d-abruzzo",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "greco",
+  "styles": [
+   "aromatic",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Greco_(grape)",
+    "quote": "Greco bianco wines are noted for their aromatic qualities"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Greco_(grape)",
+    "quote": "a dessert-style wine made from partially dried grapes"
+   }
+  ]
+ },
+ {
+  "id": "schiava-grossa",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "greco-bianco",
+  "styles": [
+   "sweet",
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Greco_(grape)",
+    "quote": "the sweet dessert wine Greco di Bianco"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Greco_(grape)",
+    "quote": "Greco bianco wines are noted for their aromatic qualities"
+   }
+  ]
+ },
+ {
+  "id": "savagnin-blanc",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Savagnin",
+    "quote": "Savagnin is blended with Chardonnay to make a conventional dry white wine"
+   }
+  ]
+ },
+ {
+  "id": "antao-vaz",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "mavrouda",
+  "styles": null,
+  "evidence": []
+ },
+ {
+  "id": "mammolo",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Mammolo",
+    "quote": "was historically included in the blended Sangiovese-based wines of Chianti"
+   }
+  ]
+ },
+ {
+  "id": "torrontes-sanjuanino",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/torrontes/",
+    "quote": "an aromatic white wine that originates from Argentina"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-di-candia-aromatica",
+  "styles": null,
+  "evidence": []
+ },
+ {
+  "id": "refosco",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "mavrud",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "brachetto-del-piemonte",
+  "styles": [
+   "sparkling",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://winefolly.com/grapes/brachetto/",
+    "quote": "frizzante (semi-sparkling) sweet red wine"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Brachetto",
+    "quote": "a slightly sweet sparkling wine"
+   }
+  ]
+ },
+ {
+  "id": "romeiko",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Romeiko",
+    "quote": "mixed with other varieties to give red, rosé and white wines"
+   }
+  ]
+ },
+ {
+  "id": "mtsvane-kakhuri",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Mtsvane_Kakhuri",
+    "quote": "often blended with Rkatsiteli to create a fruity, aromatic wine"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-de-lanzarote",
+  "styles": null,
+  "evidence": []
+ },
+ {
+  "id": "albillo-mayor",
+  "styles": null,
+  "evidence": []
+ },
+ {
+  "id": "petit-manseng",
+  "styles": [
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Petit_Manseng",
+    "quote": "late harvest dessert wine"
+   }
+  ]
+ },
+ {
+  "id": "timorasso",
+  "styles": [],
+  "evidence": []
+ }
+]

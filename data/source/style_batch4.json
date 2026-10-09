@@ -1,0 +1,388 @@
+[
+ {
+  "id": "airen",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/airen/",
+    "quote": "Airén is often blended with other grapes"
+   }
+  ]
+ },
+ {
+  "id": "catarratto-bianco",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Catarratto",
+    "quote": "the grape is often blended with Minella bianca and Carricante"
+   }
+  ]
+ },
+ {
+  "id": "saperavi",
+  "styles": [
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Saperavi",
+    "quote": "a natural semi-sweet wine"
+   }
+  ]
+ },
+ {
+  "id": "touriga-nacional",
+  "styles": [
+   "fortified",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Touriga_Nacional",
+    "quote": "Traditionally a lot of US wine made from Touriga Nacional was fortified"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Touriga_Nacional",
+    "quote": "providing structure"
+   }
+  ]
+ },
+ {
+  "id": "xarello",
+  "styles": [
+   "sparkling",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Xarel-lo",
+    "quote": "used to make the sparkling wine cava"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Xarel-lo",
+    "quote": "grown mainly as part of a regional blend"
+   }
+  ]
+ },
+ {
+  "id": "savatiano",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "roditis",
+  "styles": [
+   "blend",
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Roditis",
+    "quote": "Today it is most commonly blended with Savatiano"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Roditis",
+    "quote": "delicately perfumed wines named after the city"
+   }
+  ]
+ },
+ {
+  "id": "ancellotta",
+  "styles": [
+   "sweet",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Ancellotta",
+    "quote": "produces a dessert wine from its own plantings of Ancellotta"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Ancellotta",
+    "quote": "used mainly as a secondary grape"
+   }
+  ]
+ },
+ {
+  "id": "arinto-de-bucelas",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Arinto",
+    "quote": "high acid wines with lemon notes"
+   }
+  ]
+ },
+ {
+  "id": "falanghina-flegrea",
+  "styles": null
+ },
+ {
+  "id": "chelva",
+  "styles": null
+ },
+ {
+  "id": "feteasca-neagra",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "cortese",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Cortese",
+    "quote": "light, crisp flavors"
+   }
+  ]
+ },
+ {
+  "id": "godello",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "prieto-picudo",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "shesh-i-zi",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "babeasca-neagra",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Babeasca_Neagra",
+    "quote": "This variety is used as a main blend component"
+   }
+  ]
+ },
+ {
+  "id": "lambrusco-grasparossa",
+  "styles": [
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Lambrusco",
+    "quote": "frizzante (slightly sparkling) red wines"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-bianca-lunga",
+  "styles": null
+ },
+ {
+  "id": "piquepoul-blanc",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Piquepoul_blanc",
+    "quote": "more popular as a blending ingredient"
+   }
+  ]
+ },
+ {
+  "id": "negramoll",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Negramoll",
+    "quote": "commonly used in the production of Madeira"
+   }
+  ]
+ },
+ {
+  "id": "scheurebe",
+  "styles": [
+   "aromatic",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Scheurebe",
+    "quote": "Scheurebe wines are highly aromatic"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Scheurebe",
+    "quote": "used for some highly rated sweet wines"
+   }
+  ]
+ },
+ {
+  "id": "muscadelle",
+  "styles": [
+   "sweet",
+   "fortified",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Muscadelle",
+    "quote": "Some sweet wines from Monbazillac"
+   },
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Muscadelle",
+    "quote": "the grape is used to make a fortified wine"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Muscadelle",
+    "quote": "It rarely makes up more than 10% of the blend"
+   }
+  ]
+ },
+ {
+  "id": "cococciola",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "trepat",
+  "styles": [
+   "rose",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Trepat",
+    "quote": "used mostly for light rosé"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Trepat",
+    "quote": "often blended with other varieties"
+   }
+  ]
+ },
+ {
+  "id": "shesh-i-bardhe",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "arizul",
+  "styles": null
+ },
+ {
+  "id": "bical",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "aramon-noir",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Aramon_noir",
+    "quote": "Such Aramon wine is often blended"
+   }
+  ]
+ },
+ {
+  "id": "piedirosso",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "refosco-dal-peduncolo-rosso",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "elbling",
+  "styles": [
+   "sparkling",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Elbling",
+    "quote": "primarily used for sparkling wine"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Elbling",
+    "quote": "high in acid"
+   }
+  ]
+ },
+ {
+  "id": "jacquere",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Jacquère",
+    "quote": "lightly scented, refreshing and gently aromatic dry white wine"
+   }
+  ]
+ },
+ {
+  "id": "erbaluce",
+  "styles": [
+   "fresh",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Erbaluce",
+    "quote": "tend to be dry with noticeable acidity"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Erbaluce",
+    "quote": "used to make sweet wines with deep golden coloring"
+   }
+  ]
+ }
+]

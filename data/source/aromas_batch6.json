@@ -1,0 +1,186 @@
+[
+ {
+  "id": "vranac",
+  "aromas": [
+   {
+    "d": "blackberry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "blueberry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Vranac"
+  }
+ },
+ {
+  "id": "durif",
+  "aromas": [
+   {
+    "d": "black-pepper",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "blueberry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "black-plum",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Durif"
+  }
+ },
+ {
+  "id": "cserszegi-fuszeres",
+  "aromas": [
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "elderflower",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lychee",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "rose",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/cserszegi-fuszeres/"
+  }
+ },
+ {
+  "id": "ribolla-gialla",
+  "aromas": [
+   {
+    "d": "green-apple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/ribolla-gialla/"
+  }
+ },
+ {
+  "id": "azal",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "green-apple",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Azal_Branco"
+  }
+ },
+ {
+  "id": "marzemino",
+  "aromas": [
+   {
+    "d": "red-plum",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "grass",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Marzemino"
+  }
+ },
+ {
+  "id": "harslevelu",
+  "aromas": [
+   {
+    "d": "elderflower",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Hárslevelű"
+  }
+ },
+ {
+  "id": "sagrantino",
+  "aromas": [
+   {
+    "d": "black-plum",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "liquorice",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "black-pepper",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/sagrantino/"
+  }
+ }
+]

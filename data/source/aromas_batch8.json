@@ -1,0 +1,244 @@
+[
+ {
+  "id": "rkatsiteli",
+  "aromas": [
+   {
+    "d": "lime",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "pineapple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "green-apple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "fennel",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "honey",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/rkatsiteli/"
+  }
+ },
+ {
+  "id": "aligote",
+  "aromas": [
+   {
+    "d": "green-apple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/aligote/"
+  }
+ },
+ {
+  "id": "palomino-fino",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "almond",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "mushroom",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/palomino-fino/"
+  }
+ },
+ {
+  "id": "fernao-pires",
+  "aromas": [
+   {
+    "d": "orange-blossom",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "honeysuckle",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lime",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/fernao-pires/"
+  }
+ },
+ {
+  "id": "grillo",
+  "aromas": [
+   {
+    "d": "grapefruit",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "orange-blossom",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "dried-herbs",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/grillo/"
+  }
+ },
+ {
+  "id": "pedro-ximenez",
+  "aromas": [
+   {
+    "d": "fig",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/pedro-ximenez/"
+  }
+ },
+ {
+  "id": "malvasia-fina",
+  "aromas": [
+   {
+    "d": "peach",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "almond",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/malvasia-fina/"
+  }
+ },
+ {
+  "id": "vernaccia-di-san-gimignano",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "pear",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "almond",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/vernaccia-di-san-gimignano/"
+  }
+ },
+ {
+  "id": "irsai-oliver",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Irsai_Oliver"
+  }
+ },
+ {
+  "id": "regent",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "blackcurrant",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Regent_(grape)"
+  }
+ }
+]

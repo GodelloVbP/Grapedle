@@ -1,0 +1,130 @@
+[
+ {
+  "id": "catarratto-bianco",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Catarratto"
+  }
+ },
+ {
+  "id": "savatiano",
+  "aromas": [
+   {
+    "d": "green-apple",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "melon",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lime",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "lemon",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/savatiano/"
+  }
+ },
+ {
+  "id": "arinto-de-bucelas",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Arinto"
+  }
+ },
+ {
+  "id": "feteasca-neagra",
+  "aromas": [
+   {
+    "d": "blackcurrant",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Fetească_Neagră"
+  }
+ },
+ {
+  "id": "babeasca-neagra",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Babeasca_Neagra"
+  }
+ },
+ {
+  "id": "scheurebe",
+  "aromas": [
+   {
+    "d": "blackcurrant",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "grapefruit",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "honey",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Scheurebe"
+  }
+ },
+ {
+  "id": "muscadelle",
+  "aromas": [
+   {
+    "d": "raisin",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Muscadelle"
+  }
+ }
+]

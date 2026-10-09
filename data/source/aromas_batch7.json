@@ -1,0 +1,136 @@
+[
+ {
+  "id": "negroamaro",
+  "aromas": [
+   {
+    "d": "black-cherry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "black-plum",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "blackberry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "prune",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "dried-herbs",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/negroamaro/"
+  }
+ },
+ {
+  "id": "pedro-gimenez",
+  "aromas": [
+   {
+    "d": "raisin",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "fig",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Pedro_Ximénez"
+  }
+ },
+ {
+  "id": "trebbiano-d-abruzzo",
+  "aromas": [
+   {
+    "d": "pear",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Trebbiano_d'Abruzzo"
+  }
+ },
+ {
+  "id": "greco",
+  "aromas": [
+   {
+    "d": "peach",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Greco_(grape)"
+  }
+ },
+ {
+  "id": "greco-bianco",
+  "aromas": [
+   {
+    "d": "peach",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Greco_(grape)"
+  }
+ },
+ {
+  "id": "mammolo",
+  "aromas": [
+   {
+    "d": "violet",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Mammolo"
+  }
+ },
+ {
+  "id": "refosco",
+  "aromas": [
+   {
+    "d": "dried-herbs",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "red-cherry",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/refosco/"
+  }
+ }
+]

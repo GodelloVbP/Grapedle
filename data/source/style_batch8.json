@@ -1,0 +1,354 @@
+[
+ {
+  "id": "rkatsiteli",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/rkatsiteli/",
+    "quote": "Crisp styles complement light dishes."
+   }
+  ]
+ },
+ {
+  "id": "aligote",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/aligote/",
+    "quote": "zesty, high-acid"
+   }
+  ]
+ },
+ {
+  "id": "palomino-fino",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://winefolly.com/grapes/palomino-fino/",
+    "quote": "is used in making Sherry"
+   }
+  ]
+ },
+ {
+  "id": "fernao-pires",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/fernao-pires/",
+    "quote": "high intensity floral aromas"
+   }
+  ]
+ },
+ {
+  "id": "dimyat",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Dimyat_(wine)",
+    "quote": "very aromatic"
+   }
+  ]
+ },
+ {
+  "id": "grillo",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://winefolly.com/grapes/grillo/",
+    "quote": "one of the principal grapes used to make Marsala"
+   }
+  ]
+ },
+ {
+  "id": "torrontes-riojano",
+  "styles": [
+   "aromatic",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Torront%C3%A9s",
+    "quote": "the most aromatic of the three"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Torront%C3%A9s",
+    "quote": "producing fresh, aromatic wines"
+   }
+  ]
+ },
+ {
+  "id": "pedro-ximenez",
+  "styles": [
+   "fortified",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://winefolly.com/grapes/pedro-ximenez/",
+    "quote": "responsible for some of the world's sweetest fortified wines"
+   },
+   {
+    "style": "sweet",
+    "url": "https://winefolly.com/grapes/pedro-ximenez/",
+    "quote": "Very-sweet"
+   }
+  ]
+ },
+ {
+  "id": "inzolia",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Inzolia",
+    "quote": "can be used to produce Marsala wine"
+   }
+  ]
+ },
+ {
+  "id": "vinhao",
+  "styles": null
+ },
+ {
+  "id": "misket-cherven",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Misket_Cherven",
+    "quote": "often blended with Welschriesling and Dimyat"
+   }
+  ]
+ },
+ {
+  "id": "tinta-barroca",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Tinta_Barroca",
+    "quote": "a common blending grape in Port wine"
+   }
+  ]
+ },
+ {
+  "id": "rufete",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://en.wikipedia.org/wiki/Rufete_(grape)",
+    "quote": "fortified wine production of the Douro"
+   }
+  ]
+ },
+ {
+  "id": "irsai-oliver",
+  "styles": [
+   "aromatic",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Irsai_Oliver",
+    "quote": "a distinctive Muscat character"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Irsai_Oliver",
+    "quote": "best drunk young"
+   }
+  ]
+ },
+ {
+  "id": "magliocco-canino",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Magliocco_Canino",
+    "quote": "often used as a blending grape"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-fina",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/malvasia-fina/",
+    "quote": "full aromatics and alcohol are of note"
+   }
+  ]
+ },
+ {
+  "id": "pignoletto",
+  "styles": null
+ },
+ {
+  "id": "odessky-cherny",
+  "styles": null
+ },
+ {
+  "id": "aletta",
+  "styles": null
+ },
+ {
+  "id": "regent",
+  "styles": []
+ },
+ {
+  "id": "monica-nera",
+  "styles": null
+ },
+ {
+  "id": "kadarka",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Kadarka",
+    "quote": "often used for cuvees including some of the Egri Bikavérs"
+   }
+  ]
+ },
+ {
+  "id": "moscato-giallo",
+  "styles": [
+   "sweet",
+   "aromatic",
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Moscato_Giallo",
+    "quote": "most often used to produce passito style dessert wines"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Moscato_Giallo",
+    "quote": "but are highly aromatic"
+   },
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Moscato_Giallo",
+    "quote": "used to make both sparkling and passito-style dessert wines"
+   }
+  ]
+ },
+ {
+  "id": "prosecco-lungo",
+  "styles": null
+ },
+ {
+  "id": "verdoncho",
+  "styles": null
+ },
+ {
+  "id": "vernaccia-di-san-gimignano",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/vernaccia-di-san-gimignano/",
+    "quote": "bright, citrusy and crisp"
+   }
+  ]
+ },
+ {
+  "id": "terrano",
+  "styles": null
+ },
+ {
+  "id": "shiroka-melnishka",
+  "styles": [
+   "oaked"
+  ],
+  "evidence": [
+   {
+    "style": "oaked",
+    "url": "https://en.wikipedia.org/wiki/Melnik_(grape)",
+    "quote": "has an affinity for oak which can produce pronounced tobacco notes"
+   }
+  ]
+ },
+ {
+  "id": "damaschino",
+  "styles": null
+ },
+ {
+  "id": "citronny-magaracha",
+  "styles": null
+ },
+ {
+  "id": "malvasia-del-lazio",
+  "styles": null
+ },
+ {
+  "id": "razaki",
+  "styles": null
+ },
+ {
+  "id": "negrette",
+  "styles": []
+ },
+ {
+  "id": "poulsard",
+  "styles": [
+   "rose",
+   "sparkling"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Poulsard",
+    "quote": "lightly colored rosé wines"
+   },
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Poulsard",
+    "quote": "sparkling cremants"
+   }
+  ]
+ }
+]

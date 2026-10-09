@@ -1,0 +1,329 @@
+[
+ {
+  "id": "trebbiano-toscano",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Trebbiano_Toscano",
+    "quote": "blending with other grapes in table wine"
+   }
+  ]
+ },
+ {
+  "id": "muscat-of-alexandria",
+  "styles": [
+   "sweet",
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://winefolly.com/grapes/muscat-of-alexandria/",
+    "quote": "used primarily for dessert wines"
+   },
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/muscat-of-alexandria/",
+    "quote": "delivers slightly more mandarin orange, orange zest and sweet rose notes"
+   }
+  ]
+ },
+ {
+  "id": "douce-noire",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Douce_Noire",
+    "quote": "often used as blending grape"
+   }
+  ]
+ },
+ {
+  "id": "feteasca-alba",
+  "styles": null
+ },
+ {
+  "id": "listan-prieto",
+  "styles": []
+ },
+ {
+  "id": "marselan",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Marselan",
+    "quote": "It is mainly used in blends"
+   }
+  ]
+ },
+ {
+  "id": "castelao",
+  "styles": []
+ },
+ {
+  "id": "loureiro",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/loureiro/",
+    "quote": "The wines are bright"
+   }
+  ]
+ },
+ {
+  "id": "chasselas",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/chasselas/",
+    "quote": "leaving your palate fresh"
+   }
+  ]
+ },
+ {
+  "id": "siria",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://www.jancisrobinson.com/learn/grape-varieties/siria",
+    "quote": "The wine is aromatic but can oxidise easily."
+   }
+  ]
+ },
+ {
+  "id": "bonarda-piemontese",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Bonarda_Piemontese",
+    "quote": "by blending in Bonarda"
+   }
+  ]
+ },
+ {
+  "id": "gaglioppo",
+  "styles": []
+ },
+ {
+  "id": "gros-manseng",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Gros_Manseng",
+    "quote": "intensely flavored wines with high acidity"
+   }
+  ]
+ },
+ {
+  "id": "mavro",
+  "styles": [
+   "sweet",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Mavro",
+    "quote": "Commandaria, a well-known Cypriot dessert wine"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Mavro",
+    "quote": "blended with the Xynisteri grape"
+   }
+  ]
+ },
+ {
+  "id": "liatiko",
+  "styles": [
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Liatiko",
+    "quote": "a very alcoholic, sweet red wine"
+   }
+  ]
+ },
+ {
+  "id": "kerner",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Kerner_(grape)",
+    "quote": "Pronounced varietal bouquet, often with a Muscat tone"
+   }
+  ]
+ },
+ {
+  "id": "xinomavro",
+  "styles": []
+ },
+ {
+  "id": "pervenets-magaracha",
+  "styles": null
+ },
+ {
+  "id": "dona-branca",
+  "styles": null
+ },
+ {
+  "id": "moschofilero",
+  "styles": [
+   "aromatic",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/moschofilero/",
+    "quote": "a richly aromatic white wine"
+   },
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/moschofilero/",
+    "quote": "crisp, floral Greek white wine"
+   }
+  ]
+ },
+ {
+  "id": "verdelho",
+  "styles": [
+   "fortified"
+  ],
+  "evidence": [
+   {
+    "style": "fortified",
+    "url": "https://winefolly.com/grapes/verdelho/",
+    "quote": "one of the four key grapes used in the production of Madeira"
+   }
+  ]
+ },
+ {
+  "id": "nero-di-troia",
+  "styles": []
+ },
+ {
+  "id": "listan-de-huelva",
+  "styles": null
+ },
+ {
+  "id": "juan-garcia",
+  "styles": null
+ },
+ {
+  "id": "fer",
+  "styles": null
+ },
+ {
+  "id": "arneis",
+  "styles": [
+   "aromatic",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/arneis/",
+    "quote": "an aromatic wine"
+   },
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/arneis/",
+    "quote": "bright and fresh notes of citrus"
+   }
+  ]
+ },
+ {
+  "id": "muscat",
+  "styles": [
+   "aromatic",
+   "sparkling",
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Muscat_(grape)",
+    "quote": "pronounced floral aroma"
+   },
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Muscat_(grape)",
+    "quote": "light, sweet sparkling and semi-sparkling Asti"
+   },
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Muscat_(grape)",
+    "quote": "famous dessert wine of Constantia"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-preta",
+  "styles": null
+ },
+ {
+  "id": "tinto-velasco",
+  "styles": null
+ },
+ {
+  "id": "albana",
+  "styles": []
+ },
+ {
+  "id": "garnacha-peluda",
+  "styles": null
+ },
+ {
+  "id": "grignolino",
+  "styles": [
+   "rose",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Grignolino",
+    "quote": "makes light colored wines and rosés"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Grignolino",
+    "quote": "are made to be consumed young"
+   }
+  ]
+ },
+ {
+  "id": "altesse",
+  "styles": null
+ }
+]

@@ -232,7 +232,9 @@ def read_json(name):
 def load_aromas():
     """id -> (kind, record). The owner's book overrides the batches."""
     recs = {}
-    for n in (1, 2, 3):
+    for n in range(1, 13):
+        if not os.path.exists(os.path.join(SRC, f"aromas_batch{n}.json")):
+            continue
         for r in read_json(f"aromas_batch{n}.json"):
             recs[r["id"]] = ("batch", r)
     for r in read_json("aromas_book.json"):
@@ -260,7 +262,9 @@ def parse_body(label):
 def load_body(problems):
     """id -> (level 1..5 or None, source). data/source/body_book.json overrides the Wine Folly batches."""
     out = {}
-    for n in (1, 2, 3):
+    for n in range(1, 13):
+        if not os.path.exists(os.path.join(SRC, f"body_batch{n}.json")):
+            continue
         for r in read_json(f"body_batch{n}.json"):
             try:
                 lvl = parse_body(r.get("body"))
@@ -292,13 +296,15 @@ def load_styles(problems):
     """id -> (list of style ids, source). Haiku batches (Wine Folly/Wikipedia evidence) first, then
     data/source/styles_override.json (reviewed corrections). An empty list means a plain dry still wine."""
     out = {}
-    for n in (1, 2, 3):
+    for n in range(1, 13):
         path = os.path.join(SRC, f"style_batch{n}.json")
         if not os.path.exists(path):
             continue
         for r in read_json(f"style_batch{n}.json"):
             if r.get("styles") is None:
                 continue
+            if n >= 4 and not r["styles"]:
+                continue  # guess-only batches: an empty list meant "no style stated", which is unknown, not "plain"
             bad = [x for x in r["styles"] if x not in STYLE_IDS]
             if bad or len(r["styles"]) > 3:
                 problems.append(f"styles for {r['id']}: {r['styles']}")

@@ -1,0 +1,190 @@
+[
+ {
+  "id": "dornfelder",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "blackberry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "red-plum",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Dornfelder"
+  }
+ },
+ {
+  "id": "trincadeira",
+  "aromas": [
+   {
+    "d": "blackberry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "dried-herbs",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Trincadeira"
+  }
+ },
+ {
+  "id": "ruby-cabernet",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Ruby_Cabernet"
+  }
+ },
+ {
+  "id": "listan-negro",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "strawberry",
+    "by": [
+     "wf"
+    ]
+   },
+   {
+    "d": "banana",
+    "by": [
+     "wf"
+    ]
+   }
+  ],
+  "urls": {
+   "wf": "https://winefolly.com/grapes/listan-negro/"
+  }
+ },
+ {
+  "id": "trajadura",
+  "aromas": [
+   {
+    "d": "lemon",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Trajadura"
+  }
+ },
+ {
+  "id": "okuzgozu",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "blackberry",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "raspberry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Öküzgözü"
+  }
+ },
+ {
+  "id": "lambrusco-di-sorbara",
+  "aromas": [
+   {
+    "d": "strawberry",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Lambrusco_di_Sorbara"
+  }
+ },
+ {
+  "id": "bogazkere",
+  "aromas": [
+   {
+    "d": "fig",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Boğazkere"
+  }
+ },
+ {
+  "id": "nuragus",
+  "aromas": [
+   {
+    "d": "almond",
+    "by": [
+     "wp"
+    ]
+   },
+   {
+    "d": "green-apple",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Nuragus_(grape)"
+  }
+ },
+ {
+  "id": "bombino-bianco",
+  "aromas": [
+   {
+    "d": "green-apple",
+    "by": [
+     "wp"
+    ]
+   }
+  ],
+  "urls": {
+   "wp": "https://en.wikipedia.org/wiki/Bombino_Bianco"
+  }
+ }
+]

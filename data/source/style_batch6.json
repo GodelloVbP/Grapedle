@@ -1,0 +1,357 @@
+[
+ {
+  "id": "alicante-henri-bouschet",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Alicante_Bouschet",
+    "quote": "historically a blending partner with Aramon"
+   }
+  ]
+ },
+ {
+  "id": "colombard",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/colombard/",
+    "quote": "Generally blended with other grapes, easy-drinking table wines result."
+   }
+  ]
+ },
+ {
+  "id": "trebbiano-romagnolo",
+  "styles": [
+   "fresh",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Trebbiano_Romagnolo",
+    "quote": "It can be fresh and fruity, but does not keep long."
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Trebbiano_Romagnolo",
+    "quote": "mostly used for brandy and for blending with other grapes"
+   }
+  ]
+ },
+ {
+  "id": "feteasca-regala",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Feteasca_Regala",
+    "quote": "The wines are dry and fresh"
+   }
+  ]
+ },
+ {
+  "id": "vranac",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Vranac",
+    "quote": "it is also suitable for blending with wines of other varieties"
+   }
+  ]
+ },
+ {
+  "id": "malvasia-bianca-di-candia",
+  "styles": null
+ },
+ {
+  "id": "bianca",
+  "styles": [
+   "sweet"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Bianca_(grape)",
+    "quote": "from dry varietals to sweet dessert wines"
+   }
+  ]
+ },
+ {
+  "id": "beba",
+  "styles": null
+ },
+ {
+  "id": "durif",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Durif",
+    "quote": "the grape is sometimes blended with Zinfandel"
+   }
+  ]
+ },
+ {
+  "id": "tannat",
+  "styles": [
+   "oaked",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "oaked",
+    "url": "https://winefolly.com/grapes/tannat/",
+    "quote": "Winemakers often age it in oak"
+   },
+   {
+    "style": "blend",
+    "url": "https://winefolly.com/grapes/tannat/",
+    "quote": "Often blended with Syrah, Cabernet Sauvignon, and sometimes even Pinot Noir"
+   }
+  ]
+ },
+ {
+  "id": "dolcetto",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "cserszegi-fuszeres",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://winefolly.com/grapes/cserszegi-fuszeres/",
+    "quote": "aromatic style"
+   }
+  ]
+ },
+ {
+  "id": "zalema",
+  "styles": null
+ },
+ {
+  "id": "nerello-mascalese",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "malvazija-istarska",
+  "styles": null
+ },
+ {
+  "id": "grolleau-noir",
+  "styles": null
+ },
+ {
+  "id": "assyrtiko",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/assyrtiko/",
+    "quote": "High Acidity"
+   }
+  ]
+ },
+ {
+  "id": "ribolla-gialla",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/ribolla-gialla/",
+    "quote": "as well as bright acidity"
+   }
+  ]
+ },
+ {
+  "id": "xynisteri",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Xynisteri",
+    "quote": "Xynisteri is blended with Mavro grapes"
+   }
+  ]
+ },
+ {
+  "id": "plavac-mali",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "azal",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Azal_Branco",
+    "quote": "It produces young, fresh yet acidic wines."
+   }
+  ]
+ },
+ {
+  "id": "mauzac-blanc",
+  "styles": [
+   "sparkling",
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "sparkling",
+    "url": "https://en.wikipedia.org/wiki/Mauzac_blanc",
+    "quote": "creating a sparkling wine"
+   },
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Mauzac_blanc",
+    "quote": "giving a more crisp wine with higher acidity"
+   }
+  ]
+ },
+ {
+  "id": "ciliegiolo",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Ciliegiolo",
+    "quote": "It is a minor component of traditional blends such as Chianti"
+   }
+  ]
+ },
+ {
+  "id": "marzemino",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Marzemino",
+    "quote": "In Lombardy it is often used as a blending grape"
+   }
+  ]
+ },
+ {
+  "id": "harslevelu",
+  "styles": [
+   "sweet",
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "sweet",
+    "url": "https://en.wikipedia.org/wiki/Hárslevelű",
+    "quote": "to produce Tokaji Aszú and other dessert wines"
+   },
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Hárslevelű",
+    "quote": "where it is blended with Furmint"
+   }
+  ]
+ },
+ {
+  "id": "alfrocheiro",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Alfrocheiro",
+    "quote": "a blend of several Portuguese grape varieties"
+   }
+  ]
+ },
+ {
+  "id": "teroldego",
+  "styles": null
+ },
+ {
+  "id": "kodryanka",
+  "styles": null
+ },
+ {
+  "id": "sagrantino",
+  "styles": [],
+  "evidence": []
+ },
+ {
+  "id": "codega-do-larinho",
+  "styles": null
+ },
+ {
+  "id": "folle-blanche",
+  "styles": [
+   "fresh"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://en.wikipedia.org/wiki/Folle_blanche",
+    "quote": "a very dry and often tartly acidic wine"
+   }
+  ]
+ },
+ {
+  "id": "lagrein",
+  "styles": [
+   "rose",
+   "oaked"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://en.wikipedia.org/wiki/Lagrein",
+    "quote": "the fragrant rosé wines Lagrein Rosato"
+   },
+   {
+    "style": "oaked",
+    "url": "https://en.wikipedia.org/wiki/Lagrein",
+    "quote": "used oak to achieve less aggressive flavours"
+   }
+  ]
+ },
+ {
+  "id": "mondeuse-noire",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Mondeuse_Noire",
+    "quote": "Mondeuse noire is used in blending with Gamay"
+   }
+  ]
+ }
+]
