@@ -21,7 +21,7 @@ test('every grape is in the daily answer pool (answer_pool.csv lists all ids)', 
   assert.ok(grapes.length >= 120 && grapes.length <= 130, String(grapes.length));
   for (const id of ['prosecco-lungo', 'douce-noire', 'cayetana-blanca']) assert.ok(!byId.has(id), id + ' was removed from the guess list');
   // dropped 2026-10-17 (owner): not in Gatinois and no source for the missing body/aroma data
-  for (const id of ['dona-branca', 'saperavi', 'teroldego', 'poulsard', 'savagnin-blanc']) assert.ok(!byId.has(id), id + ' was dropped');
+  for (const id of ['altesse', 'nerello-mascalese', 'saperavi', 'teroldego', 'poulsard', 'savagnin-blanc']) assert.ok(!byId.has(id), id + ' was dropped');
   assert.equal(byId.size, grapes.length, 'unique ids');
   for (const g of grapes) assert.match(g.id, /^[a-z0-9-]+$/);
   assert.ok(!byId.has('silvaner-r'), 'silvaner-r is dropped');
@@ -55,7 +55,7 @@ test('signature regions: file coordinates land in the records; others use a coun
   // quote-aware split: notes may contain commas
   const sig = readFileSync(new URL('../data/source/signature_regions.csv', import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1)
     .map((l) => [...l.matchAll(/("([^"]|"")*"|[^,]*)(,|$)/g)].slice(0, -1).map((m) => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
-  assert.equal(sig.length, 100);
+  assert.equal(sig.length, 99);
   for (const r of sig) {
     const g = byId.get(r[0]);
     assert.ok(g, r[0]);
@@ -96,6 +96,7 @@ test('flavours: 1-4 known descriptors, book overrides batches, unknown stays nul
   }
   const book = JSON.parse(readFileSync(new URL('../data/source/aromas_book.json', import.meta.url), 'utf8'));
   for (const b of book) {
+    if (!byId.has(b.id)) continue; // dropped grape (DROP_IDS); its book record is kept
     assert.deepEqual(d(b.id), b.aromas.map((a) => a.d).slice(0, 4), b.id);
     assert.equal(byId.get(b.id).sources.flavours[0].name, 'Gatinois, Explore Wine Maps');
   }
@@ -288,7 +289,7 @@ test('body: the batch files map to grapes.json, the book file takes precedence',
     assert.equal(byId.get(r.id).body, want, r.id);
     assert.equal(byId.get(r.id).sources.body, r.url, r.id);
   }
-  for (const r of book.filter((x) => x.body)) {
+  for (const r of book.filter((x) => x.body && byId.has(x.id))) {
     assert.equal(byId.get(r.id).body, pyBody([r.body])[0], 'book wins ' + r.id);
     assert.equal(byId.get(r.id).sources.body, r.source || 'Gatinois, Explore Wine Maps');
   }

@@ -175,5 +175,60 @@
    "blend"
   ],
   "note": "Wikipedia: Côtes du Frontonnais (red and rosé), 50-70% of the blend must be Négrette (https://en.wikipedia.org/wiki/N%C3%A9grette)"
+ },
+ {
+  "id": "dolcetto",
+  "styles": [],
+  "note": "plain dry still: Wikipedia 'the wines are normally dry', 'a light easy drinking red wine'"
+ },
+ {
+  "id": "schiava-grossa",
+  "styles": [
+   "blend"
+  ],
+  "note": "Wikipedia (Trollinger): in Germany 'often blended with Lemberger'; Santa Maddalena allows Lagrein"
+ },
+ {
+  "id": "refosco-dal-peduncolo-rosso",
+  "styles": [
+   "oaked"
+  ],
+  "note": "Wikipedia (Refosco): recent versions 'have taken well to new oak'"
+ },
+ {
+  "id": "refosco",
+  "styles": [
+   "oaked"
+  ],
+  "note": "same as refosco-dal-peduncolo-rosso (Wikipedia, Refosco)"
+ },
+ {
+  "id": "falanghina-flegrea",
+  "styles": [
+   "fresh"
+  ],
+  "note": "Wine Folly: dry, 'zesty'"
+ },
+ {
+  "id": "nero-di-troia",
+  "styles": [
+   "blend"
+  ],
+  "note": "Wikipedia: 'can be blended with such grapes as Bombino nero, Montepulciano and Sangiovese'"
+ },
+ {
+  "id": "piedirosso",
+  "styles": [
+   "blend"
+  ],
+  "note": "Wikipedia (Lacryma Christi): red is 'made from Piedirosso and Sciascinoso grapes'"
+ },
+ {
+  "id": "dona-branca",
+  "styles": [
+   "blend",
+   "fresh"
+  ],
+  "note": "vinetowinecircle.com: 'also used in blends', acidity 'medium-high to high', 'light'"
  }
 ]

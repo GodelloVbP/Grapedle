@@ -17,9 +17,9 @@ TARGET_TOTAL = 259  # 260 in v0, minus the dropped silvaner-r record
 SCHEDULE_SEED = 20261101
 
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
-# Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no other source gave the missing body/aroma data.
+# Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no source for the missing data (altesse, nerello-mascalese: owner choice).
 DROP_IDS |= {
-    "blauer-portugieser", "dona-branca", "marselan", "mauzac-blanc", "negrette", "petit-manseng", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
+    "altesse", "mauzac-blanc", "negrette", "nerello-mascalese", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
 }
 
 # Name shown in the game. The official (Adelaide prime) name goes in small print on the answer card.
@@ -43,7 +43,8 @@ COUNTRY_POINTS = {
     "AR": (-33.0, -68.8), "CL": (-34.5, -71.0), "PE": (-14.0, -75.7), "BR": (-29.0, -51.5),
     "US": (37.5, -120.5), "ZA": (-33.9, 18.9), "AU": (-34.5, 139.0), "NZ": (-41.5, 174.0),
 }
-AROMA_SITES = {"wf": "Wine Folly", "jr": "Jancis Robinson", "wp": "Wikipedia"}
+AROMA_SITES = {"wf": "Wine Folly", "jr": "Jancis Robinson", "wp": "Wikipedia", "wt": "Wine Traveler",
+               "we": "Wine Enthusiast", "dwi": "Deutsches Weininstitut", "wg": "The Wines of Galicia"}
 BOOK_LABEL = "Gatinois, Explore Wine Maps"
 MAX_AROMAS = 4
 
@@ -77,8 +78,8 @@ GUESS_SKIP = {n.lower() for n in [
 # Guessable grapes beyond the 111-grape shortlist (data/source/answer_pool_draft.csv), chosen by the owner
 # (2026-10-09): well-known grapes plus a hand-picked set. Everything else in the Adelaide list is not offered.
 GUESS_EXTRAS = {
-    "alicante-henri-bouschet", "catarratto-bianco", "ciliegiolo", "dornfelder",
-    "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "muscadelle", "negroamaro",
+    "alicante-henri-bouschet", "blauer-portugieser", "catarratto-bianco", "ciliegiolo", "dona-branca", "dornfelder",
+    "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "marselan", "muscadelle", "negroamaro",
     "nero-di-troia", "palomino-fino", "parellada", "pedro-gimenez", "pedro-ximenez", "piedirosso", "refosco",
     "rkatsiteli", "sagrantino", "scheurebe", "verdelho", "vernaccia-di-san-gimignano",
 }

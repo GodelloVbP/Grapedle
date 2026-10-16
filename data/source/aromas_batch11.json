@@ -1,0 +1,107 @@
+[
+ {
+  "id": "petit-manseng",
+  "aromas": [
+   {
+    "d": "apricot",
+    "by": [
+     "wt"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wt"
+    ]
+   },
+   {
+    "d": "honey",
+    "by": [
+     "wt"
+    ]
+   }
+  ],
+  "urls": {
+   "wt": "https://www.winetraveler.com/grape/petit-manseng/"
+  }
+ },
+ {
+  "id": "marselan",
+  "aromas": [
+   {
+    "d": "red-cherry",
+    "by": [
+     "we"
+    ]
+   },
+   {
+    "d": "violet",
+    "by": [
+     "we"
+    ]
+   },
+   {
+    "d": "blackberry",
+    "by": [
+     "we"
+    ]
+   }
+  ],
+  "urls": {
+   "we": "https://www.wineenthusiast.com/basics/grapes-101/marselan-red-grape-hot-summer/"
+  },
+  "notes": "red fruit, violet and candied cherry, dark berry from the article's producer notes"
+ },
+ {
+  "id": "blauer-portugieser",
+  "aromas": [
+   {
+    "d": "redcurrant",
+    "by": [
+     "dwi"
+    ]
+   },
+   {
+    "d": "raspberry",
+    "by": [
+     "dwi"
+    ]
+   },
+   {
+    "d": "strawberry",
+    "by": [
+     "dwi"
+    ]
+   }
+  ],
+  "urls": {
+   "dwi": "https://www.winesofgermany.com/our-wine/grape-varieties/grape-variety/91/portugieser"
+  }
+ },
+ {
+  "id": "dona-branca",
+  "aromas": [
+   {
+    "d": "orange-blossom",
+    "by": [
+     "wg"
+    ]
+   },
+   {
+    "d": "peach",
+    "by": [
+     "wg"
+    ]
+   },
+   {
+    "d": "green-apple",
+    "by": [
+     "wg"
+    ]
+   }
+  ],
+  "urls": {
+   "wg": "https://winesofgalicia.com/dona-branca-the-grape-named-for-a-queen"
+  }
+ }
+]
