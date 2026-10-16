@@ -148,8 +148,8 @@ function mountInner(root, opts) {
   root.classList.add('gd-root');
   const uid = 'gd' + Math.random().toString(36).slice(2, 7);
 
-  // touch devices get the on-screen keyboard: the native one covers the board (dev: ?kb=1 forces it)
-  const kbMode = (DEV && q.get('kb') === '1') || !!(globalThis.matchMedia && globalThis.matchMedia('(hover: none) and (pointer: coarse)').matches);
+  // touch devices get the on-screen keyboard: the native one covers the board (dev: ?kb=1 or data-kb="1" forces it)
+  const kbMode = (DEV && (q.get('kb') === '1' || root.getAttribute('data-kb') === '1')) || !!(globalThis.matchMedia && globalThis.matchMedia('(hover: none) and (pointer: coarse)').matches);
   if (kbMode) root.setAttribute('data-gd-kb', 'on'); else root.removeAttribute('data-gd-kb');
 
   // ---- skeleton ----
