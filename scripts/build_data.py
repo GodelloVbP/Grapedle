@@ -19,11 +19,13 @@ SCHEDULE_SEED = 20261101
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
 # Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no source for the missing data (altesse, nerello-mascalese: owner choice).
 DROP_IDS |= {
+    "refosco",  # merged into refosco-dal-peduncolo-rosso, shown as "Refosco"
     "altesse", "mauzac-blanc", "negrette", "nerello-mascalese", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
 }
 
 # Name shown in the game. The official (Adelaide prime) name goes in small print on the answer card.
 DISPLAY = {
+    "refosco-dal-peduncolo-rosso": "Refosco",
     "garnacha-tinta": "Grenache", "mazuelo": "Carignan", "melon": "Muscadet", "prosecco": "Glera",
     "cot": "Malbec", "tribidrag": "Zinfandel / Primitivo", "alvarinho": "Albariño",
     "grasevina": "Welschriesling", "sauvignonasse": "Friulano", "monastrell": "Monastrell / Mourvèdre",
@@ -80,11 +82,12 @@ GUESS_SKIP = {n.lower() for n in [
 GUESS_EXTRAS = {
     "alicante-henri-bouschet", "blauer-portugieser", "catarratto-bianco", "ciliegiolo", "dona-branca", "dornfelder",
     "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "marselan", "muscadelle", "negroamaro",
-    "nero-di-troia", "palomino-fino", "parellada", "pedro-gimenez", "pedro-ximenez", "piedirosso", "refosco",
+    "nero-di-troia", "palomino-fino", "parellada", "pedro-gimenez", "pedro-ximenez", "piedirosso",
     "rkatsiteli", "sagrantino", "scheurebe", "verdelho", "vernaccia-di-san-gimignano",
 }
 
 EXTRA_SYNONYMS = {
+    "refosco-dal-peduncolo-rosso": ["Refosco dal Peduncolo Rosso", "Refošk"],
     "garnacha-tinta": ["Grenache", "Garnacha", "Grenache Noir"],
     "mazuelo": ["Carignan", "Cariñena", "Carignano"],
     "tempranillo": ["Tinta de Toro", "Tinto Fino", "Tinta del País"],
