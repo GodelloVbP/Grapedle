@@ -380,5 +380,438 @@
       "spices"
     ],
     "notes": "'plum' mapped to black-plum; 'spices' too vague to map"
+  },
+  {
+    "id": "altesse",
+    "aromas": [
+      {
+        "d": "acacia",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "almond",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "honey",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "",
+    "page_wording": "acacia, almond, honey"
+  },
+  {
+    "id": "braquet-noir",
+    "aromas": [
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "rose",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'cherry' mapped to red-cherry",
+    "page_wording": "violet, rose, cherry"
+  },
+  {
+    "id": "ciliegiolo",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blueberry",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "tobacco"
+    ],
+    "notes": "'cherry' mapped to red-cherry; 'tobacco' not in the descriptor list",
+    "page_wording": "cherry, blueberry, tobacco"
+  },
+  {
+    "id": "clairette",
+    "aromas": [
+      {
+        "d": "acacia",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "green-apple",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "fennel",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'apple' mapped to green-apple",
+    "page_wording": "acacia, apple, fennel"
+  },
+  {
+    "id": "dornfelder",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "blackberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'cherry' mapped to red-cherry",
+    "page_wording": "cherry, blackberry, violet"
+  },
+  {
+    "id": "greco",
+    "aromas": [
+      {
+        "d": "peach",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "honey",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "smoke"
+    ],
+    "notes": "'smoke' not in the descriptor list",
+    "page_wording": "peach, smoke, honey"
+  },
+  {
+    "id": "gros-manseng",
+    "aromas": [
+      {
+        "d": "apricot",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "grapefruit",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "pineapple",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "",
+    "page_wording": "apricot, grapefruit, pineapple"
+  },
+  {
+    "id": "inzolia",
+    "aromas": [
+      {
+        "d": "lemon",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "grapefruit",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "walnut"
+    ],
+    "notes": "'walnut' not in the descriptor list",
+    "page_wording": "lemon, grapefruit, walnut"
+  },
+  {
+    "id": "jacquere",
+    "aromas": [
+      {
+        "d": "pear",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "elderflower",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "flint",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "",
+    "page_wording": "pear, elderflower, flint"
+  },
+  {
+    "id": "molinara",
+    "aromas": [
+      {
+        "d": "redcurrant",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "cranberry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'cherry' mapped to red-cherry",
+    "page_wording": "redcurrant, cranberry, cherry"
+  },
+  {
+    "id": "mondeuse-noire",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "black-pepper",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'sour cherry' mapped to red-cherry",
+    "page_wording": "sour cherry, violet, black pepper"
+  },
+  {
+    "id": "muscadelle",
+    "aromas": [
+      {
+        "d": "green-grape",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "rose",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "acacia",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'fresh grape' mapped to green-grape",
+    "page_wording": "fresh grape, rose, acacia"
+  },
+  {
+    "id": "muscat-ottonel",
+    "aromas": [
+      {
+        "d": "green-grape",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "honey",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "resin"
+    ],
+    "notes": "'fresh grape' mapped to green-grape; 'resin' not in the descriptor list",
+    "page_wording": "fresh grape, resin, honey"
+  },
+  {
+    "id": "nero-di-troia",
+    "aromas": [
+      {
+        "d": "red-cherry",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "liquorice",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [
+      "olive"
+    ],
+    "notes": "'sour cherry' mapped to red-cherry; 'olive' not in the descriptor list",
+    "page_wording": "sour cherry, liquorice, olive"
+  },
+  {
+    "id": "parellada",
+    "aromas": [
+      {
+        "d": "lemon",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "green-apple",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "acacia",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'apple' mapped to green-apple",
+    "page_wording": "lemon, apple, acacia"
+  },
+  {
+    "id": "pedro-gimenez",
+    "aromas": [
+      {
+        "d": "lemon",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "green-apple",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'apple' mapped to green-apple",
+    "page_wording": "lemon, apple"
+  },
+  {
+    "id": "piedirosso",
+    "aromas": [
+      {
+        "d": "black-plum",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "violet",
+        "by": [
+          "book"
+        ]
+      },
+      {
+        "d": "forest-floor",
+        "by": [
+          "book"
+        ]
+      }
+    ],
+    "source": "Gatinois, Explore Wine Maps (owner's copy)",
+    "unmapped": [],
+    "notes": "'plum' mapped to black-plum",
+    "page_wording": "plum, violet, forest floor"
   }
 ]

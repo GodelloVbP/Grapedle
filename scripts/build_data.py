@@ -17,6 +17,10 @@ TARGET_TOTAL = 259  # 260 in v0, minus the dropped silvaner-r record
 SCHEDULE_SEED = 20261101
 
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
+# Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no other source gave the missing body/aroma data.
+DROP_IDS |= {
+    "blauer-portugieser", "dona-branca", "marselan", "mauzac-blanc", "negrette", "petit-manseng", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
+}
 
 # Name shown in the game. The official (Adelaide prime) name goes in small print on the answer card.
 DISPLAY = {
@@ -73,8 +77,8 @@ GUESS_SKIP = {n.lower() for n in [
 # Guessable grapes beyond the 111-grape shortlist (data/source/answer_pool_draft.csv), chosen by the owner
 # (2026-10-09): well-known grapes plus a hand-picked set. Everything else in the Adelaide list is not offered.
 GUESS_EXTRAS = {
-    "alicante-henri-bouschet", "blauer-portugieser", "catarratto-bianco", "ciliegiolo", "dona-branca", "dornfelder",
-    "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "marselan", "muscadelle", "negroamaro",
+    "alicante-henri-bouschet", "catarratto-bianco", "ciliegiolo", "dornfelder",
+    "falanghina-flegrea", "greco", "grillo", "harslevelu", "inzolia", "muscadelle", "negroamaro",
     "nero-di-troia", "palomino-fino", "parellada", "pedro-gimenez", "pedro-ximenez", "piedirosso", "refosco",
     "rkatsiteli", "sagrantino", "scheurebe", "verdelho", "vernaccia-di-san-gimignano",
 }

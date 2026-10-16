@@ -18,9 +18,10 @@ const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 
 test('every grape is in the daily answer pool (answer_pool.csv lists all ids)', () => {
   assert.equal(poolIds.length, grapes.length);
   assert.deepEqual(pool.map((g) => g.id).sort(), [...poolIds].sort());
-  assert.ok(grapes.length >= 130 && grapes.length <= 140, String(grapes.length));
+  assert.ok(grapes.length >= 120 && grapes.length <= 130, String(grapes.length));
   for (const id of ['prosecco-lungo', 'douce-noire', 'cayetana-blanca']) assert.ok(!byId.has(id), id + ' was removed from the guess list');
-  assert.ok(byId.has('dona-branca'), 'Dona Branca stays by owner choice');
+  // dropped 2026-10-17 (owner): not in Gatinois and no source for the missing body/aroma data
+  for (const id of ['dona-branca', 'saperavi', 'teroldego', 'poulsard', 'savagnin-blanc']) assert.ok(!byId.has(id), id + ' was dropped');
   assert.equal(byId.size, grapes.length, 'unique ids');
   for (const g of grapes) assert.match(g.id, /^[a-z0-9-]+$/);
   assert.ok(!byId.has('silvaner-r'), 'silvaner-r is dropped');
@@ -54,7 +55,7 @@ test('signature regions: file coordinates land in the records; others use a coun
   // quote-aware split: notes may contain commas
   const sig = readFileSync(new URL('../data/source/signature_regions.csv', import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1)
     .map((l) => [...l.matchAll(/("([^"]|"")*"|[^,]*)(,|$)/g)].slice(0, -1).map((m) => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
-  assert.equal(sig.length, 110);
+  assert.equal(sig.length, 100);
   for (const r of sig) {
     const g = byId.get(r[0]);
     assert.ok(g, r[0]);
