@@ -33,3 +33,15 @@ test('every key the keyboard allows still finds a grape', () => {
 test('the letter keys cover a-z exactly once', () => {
   assert.equal(KEY_ROWS.flat().sort().join(''), 'abcdefghijklmnopqrstuvwxyz');
 });
+
+test('touch suggestions after one letter list every grape starting with it, A-Z, uncapped', async () => {
+  const { default: grapes } = await import('../data/grapes.json', { with: { type: 'json' } });
+  const { norm } = await import('../src/text.js');
+  const got = search('m', 60, { browse: true }).map((r) => r.grape.id);
+  const want = grapes.filter((g) => norm(g.name).startsWith('m')).map((g) => g.id);
+  for (const id of want) assert.ok(got.includes(id), id);
+  assert.ok(got.length > 8, String(got.length));
+  const names = search('m', 60, { browse: true }).map((r) => r.grape.name);
+  assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'nl')));
+  assert.equal(search('m').length, 8, 'desktop dropdown keeps its cap');
+});

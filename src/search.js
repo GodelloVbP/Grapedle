@@ -18,9 +18,11 @@ function kindOf(e, q) {
  * the top slot while a pool grape also matches. `via` is the matching synonym (null if the display
  * name matched).
  */
-export function search(query, limit = 8) {
+export function search(query, limit = 8, opts = {}) {
   const q = norm(query);
   if (!q) return [];
+  // touch keyboard, 1-2 letters typed: every grape with a name, word or synonym starting with them, A-Z
+  if (opts.browse && q.length <= 2) { const b = browse(q); if (b.length) return b; }
   const hits = [];
   for (const e of index) {
     const kind = kindOf(e, q);
@@ -49,4 +51,15 @@ export function exact(query) {
   const hits = index.filter((e) => e.name === q || e.syn.some((s) => s.key === q));
   if (!hits.length) return null;
   return (hits.find((e) => e.name === q && e.g.answer) || hits.find((e) => e.g.answer) || hits.find((e) => e.name === q) || hits[0]).g;
+}
+
+/**
+ * All grapes whose display name or a word in it starts with q, A-Z. Synonyms are left out at this length:
+ * the Adelaide synonym lists hold many obscure names (Furmint as "Malvasia Verde") that only confuse a
+ * one-letter list. An empty result falls back to the normal search, so "sh" still finds Syrah via Shiraz.
+ */
+export function browse(q) {
+  return index.filter((e) => e.name.startsWith(q) || e.name.split(' ').some((w) => w.startsWith(q)))
+    .map((e) => ({ grape: e.g, via: null, exact: e.name === q }))
+    .sort((a, b) => a.grape.name.localeCompare(b.grape.name, 'nl'));
 }

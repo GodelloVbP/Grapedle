@@ -381,7 +381,7 @@ function mountInner(root, opts) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         if (!results.length) {
           if (!input.value.trim()) return;
-          results = search(input.value); renderList();
+          results = suggest(input.value); renderList();
           if (!results.length) return;
         }
         e.preventDefault();
@@ -396,8 +396,11 @@ function mountInner(root, opts) {
     });
   }
 
+  /** Suggestions: the desktop dropdown keeps 8; the touch keyboard shows every match (A-Z after 1-2 letters). */
+  function suggest(v) { return kbMode ? search(v, 60, { browse: true }) : search(v); }
+
   function onInput() {
-    msgEl.textContent = ''; results = search(input.value); active = -1; explicit = false; renderList(); paintKeys();
+    msgEl.textContent = ''; results = suggest(input.value); active = -1; explicit = false; renderList(); paintKeys();
   }
 
   // ---- on-screen keyboard (touch devices) ----
