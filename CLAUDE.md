@@ -18,6 +18,7 @@ Full spec: https://claude.ai/code/artifact/ec2d449d-3aee-4533-979f-24cad0284fc3 
 - Before `schedule.start` the game shows a teaser and practice puzzles only (never puzzle 1). Practice never touches stats, streak or storage. `?day=` and `?now=` exist in the dev build only (`__GD_DEV__`).
 - localStorage state is normalised on load (`normaliseState`); mount() recovers from a failed start by resetting state and re-mounting once. Timers and observers are torn down through `root._gdTeardown`.
 - Never open a modal while the host's `#age-gate` is visible.
+- Touch devices use the on-screen keyboard (`data-gd-kb="on"` on the root, `src/keyboard.js`); never let the native keyboard open there (`inputmode="none"`). Dimmed keys must match what `search()` can still find; `tests/keyboard.test.js` checks this.
 - Shop feed URLs: only https: and relative URLs reach href/src.
 - Releases: `npm run release:check` must pass; version in `package.json` equals the git tag and the README embed URL.
 - Never commit raw source datasets (the Adelaide Excel files, book scans). Only derived figures with a citation.

@@ -1,0 +1,125 @@
+[
+ {
+  "id": "trousseau",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Trousseau_noir",
+    "quote": "It is often used to stiffen blends with the pale Poulsard"
+   }
+  ]
+ },
+ {
+  "id": "sauvignonasse",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Friulano_(grape)",
+    "quote": "the dry and aromatic Italian Tocai Friulano"
+   }
+  ]
+ },
+ {
+  "id": "timorasso",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Timorasso",
+    "quote": "aromatic wine with some aging potential"
+   }
+  ]
+ },
+ {
+  "id": "godello",
+  "styles": [
+   "fresh",
+   "oaked"
+  ],
+  "evidence": [
+   {
+    "style": "fresh",
+    "url": "https://winefolly.com/grapes/godello/",
+    "quote": "crisp and mineral-driven"
+   },
+   {
+    "style": "oaked",
+    "url": "https://winefolly.com/grapes/godello/",
+    "quote": "particularly when oak-aged"
+   }
+  ]
+ },
+ {
+  "id": "xinomavro",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Xinomavro",
+    "quote": "often blended with Negoska"
+   }
+  ]
+ },
+ {
+  "id": "agiorgitiko",
+  "styles": [
+   "rose"
+  ],
+  "evidence": [
+   {
+    "style": "rose",
+    "url": "https://winefolly.com/grapes/agiorgitiko/",
+    "quote": "offers a wide range of styles, from rosé to red"
+   }
+  ]
+ },
+ {
+  "id": "nero-d-avola",
+  "styles": [
+   "blend"
+  ],
+  "evidence": [
+   {
+    "style": "blend",
+    "url": "https://en.wikipedia.org/wiki/Nero_d%27Avola",
+    "quote": "It also contributes to Marsala Rubino blends."
+   }
+  ]
+ },
+ {
+  "id": "fiano",
+  "styles": [
+   "aromatic"
+  ],
+  "evidence": [
+   {
+    "style": "aromatic",
+    "url": "https://en.wikipedia.org/wiki/Fiano_(grape)",
+    "quote": "intensely flavored and aromatic with honey notes"
+   }
+  ]
+ },
+ {
+  "id": "sagrantino",
+  "styles": [
+   "oaked"
+  ],
+  "evidence": [
+   {
+    "style": "oaked",
+    "url": "https://en.wikipedia.org/wiki/Sagrantino",
+    "quote": "12 of which must be in oak barrels"
+   }
+  ]
+ }
+]

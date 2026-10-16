@@ -69,6 +69,8 @@ Hints: after 3 guesses "Bekend van" (appellation or wine), after 5 guesses the f
 
 Before the launch date the game shows a teaser with a countdown and offers practice puzzles only. Practice ("Oefenen", also on the end screen) plays any past puzzle or a random one, never counts for stats or streak, is kept in memory and never offers a future puzzle. Dev only: `?now=YYYY-MM-DD` fakes the date, `?day=N` shows puzzle N.
 
+On touch devices (`(hover: none) and (pointer: coarse)`) the native keyboard is replaced by an on-screen keyboard, because the native one covers the board. The input gets `inputmode="none"`, the board moves above the input in chronological order (newest guess right above the keys), suggestions become a chip row above the keys, and letters that cannot continue any grape name or synonym are dimmed and inert (`src/keyboard.js`, `nextKeys`). Backspace repeats when held. A physical keyboard still types into the input. Dev only: `?kb=1` forces the on-screen keyboard on desktop.
+
 Search ranks an exact name or synonym first, then answer-pool grapes, then name prefix, synonym prefix, substring. Enter submits only an exact match, a single suggestion, or one picked with the arrow keys or pointer; otherwise it asks to pick from the list. The end screen's "Lijkt op" needs at least 2 identical aromas (or 1 plus the same colour and primary-region country), else only the tastings link shows. Shop links and images must be https: or relative.
 
 ## Build

@@ -8,6 +8,7 @@ import { createStore, computeStats } from './storage.js';
 import { puzzleNumber, msUntilNextPuzzle, msUntilStart, puzzleDate, formatYmd } from './date.js';
 import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS_URL, SHOP_PAGE } from './shop.js';
 import { norm } from './text.js';
+import { KEY_ROWS, nextKeys } from './keyboard.js';
 
 const ICON_HELP = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2"/><path d="M12 17.6v.1"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>';
@@ -146,6 +147,10 @@ function mountInner(root, opts) {
   root.style.removeProperty('min-height'); // the Code Block placeholder reserves height until the game is here
   root.classList.add('gd-root');
   const uid = 'gd' + Math.random().toString(36).slice(2, 7);
+
+  // touch devices get the on-screen keyboard: the native one covers the board (dev: ?kb=1 forces it)
+  const kbMode = (DEV && q.get('kb') === '1') || !!(globalThis.matchMedia && globalThis.matchMedia('(hover: none) and (pointer: coarse)').matches);
+  if (kbMode) root.setAttribute('data-gd-kb', 'on'); else root.removeAttribute('data-gd-kb');
 
   // ---- skeleton ----
   const headerEl = h('header', { class: 'gd-header' });
@@ -327,9 +332,11 @@ function mountInner(root, opts) {
     const cols = h('div', { class: 'gd-cols' + (rows.length ? '' : ' gd-cols-empty'), 'aria-hidden': 'true' }, h('span', { class: 'gd-colname' }, t('grapeCol')),
       h('div', { class: 'gd-colgrid' }, COLUMNS.map((k) => h('span', { class: 'gd-col' }, colLabel(k)))));
     if (!rows.length) { boardEl.append(cols); return; }
-    const list = h('ol', { class: 'gd-rows', reversed: true });
-    rows.slice().reverse().forEach((r, idx) => {
-      const isNew = justAdded && idx === 0;
+    // keyboard mode: board above the input, oldest first, so the newest guess sits right above the keys
+    const list = h('ol', { class: 'gd-rows', reversed: kbMode ? null : true });
+    const ordered = kbMode ? rows : rows.slice().reverse();
+    ordered.forEach((r, idx) => {
+      const isNew = justAdded && idx === (kbMode ? ordered.length - 1 : 0);
       const isWin = isNew && justWon;
       list.appendChild(h('li', { class: 'gd-row' + (isNew ? ' gd-new' : '') + (isWin ? ' gd-win' : '') },
         h('div', { class: 'gd-name' }, r.grape.name),
@@ -340,7 +347,7 @@ function mountInner(root, opts) {
   }
 
   // ---- input / autocomplete ----
-  let results = [], active = -1, explicit = false, input, listEl, msgEl, counterEl;
+  let results = [], active = -1, explicit = false, input, listEl, msgEl, counterEl, kbEl;
   function renderPlay() {
     playEl.textContent = '';
     playEl.hidden = !game || game.status !== 'playing';
@@ -350,16 +357,25 @@ function mountInner(root, opts) {
       type: 'text', class: 'gd-input', role: 'combobox', 'aria-expanded': 'false', 'aria-controls': listId,
       'aria-autocomplete': 'list', 'aria-label': t('placeholder'), placeholder: t('placeholder'),
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off', spellcheck: 'false', enterkeyhint: 'go',
+      inputmode: kbMode ? 'none' : null,
     });
     listEl = h('ul', { class: 'gd-list', id: listId, role: 'listbox', hidden: true, 'aria-label': t('placeholder') });
     msgEl = h('p', { class: 'gd-msg', role: 'status' });
     counterEl = h('p', { class: 'gd-counter' }, t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES }));
-    const btn = h('button', { type: 'submit', class: 'gd-btn' }, t('guessBtn'));
+    const btn = kbMode ? null : h('button', { type: 'submit', class: 'gd-btn' }, t('guessBtn'));
     const form = h('form', { class: 'gd-form', autocomplete: 'off', novalidate: true, onsubmit: (e) => { e.preventDefault(); submitTyped(); } },
-      h('div', { class: 'gd-field' }, input, listEl), btn);
-    playEl.append(form, msgEl, counterEl);
+      h('div', { class: 'gd-field' }, input, kbMode ? null : listEl), btn);
+    if (kbMode) {
+      // suggestions become a chip row between the input and the keys; the row keeps its height when empty
+      kbEl = buildKeyboard();
+      playEl.append(form, msgEl, counterEl, h('div', { class: 'gd-sugg' }, listEl), kbEl);
+      paintKeys();
+    } else {
+      kbEl = null;
+      playEl.append(form, msgEl, counterEl);
+    }
 
-    input.addEventListener('input', () => { msgEl.textContent = ''; results = search(input.value); active = -1; explicit = false; renderList(); });
+    input.addEventListener('input', onInput);
     input.addEventListener('blur', () => setTimeout(closeList, 120));
     input.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -378,6 +394,79 @@ function mountInner(root, opts) {
         paintActive(true);
       } else if (e.key === 'Escape') { closeList(); }
     });
+  }
+
+  function onInput() {
+    msgEl.textContent = ''; results = search(input.value); active = -1; explicit = false; renderList(); paintKeys();
+  }
+
+  // ---- on-screen keyboard (touch devices) ----
+  function buildKeyboard() {
+    const key = (ch, label, cls, aria) => h('button', {
+      type: 'button', class: 'gd-key' + (cls ? ' ' + cls : ''), 'data-gd-key': ch, 'aria-label': aria || null,
+    }, label);
+    const rows = KEY_ROWS.map((r, i) => h('div', { class: 'gd-kb-row' },
+      i === 1 ? h('span', { class: 'gd-kb-half', 'aria-hidden': 'true' }) : null,
+      r.map((c) => key(c, c)),
+      i === 1 ? h('span', { class: 'gd-kb-half', 'aria-hidden': 'true' }) : null,
+      i === 2 ? key('back', '\u232B', 'gd-key-wide gd-key-fn', t('kbBack')) : null));
+    rows.push(h('div', { class: 'gd-kb-row' },
+      key(' ', t('kbSpace'), 'gd-key-space gd-key-fn'),
+      key('enter', t('guessBtn'), 'gd-key-wide gd-key-enter')));
+    const el = h('div', { class: 'gd-kb', role: 'group', 'aria-label': t('kbLabel') }, rows);
+
+    let repeat = null, repeated = false;
+    const stopRepeat = () => { clearTimeout(repeat); clearInterval(repeat); repeat = null; };
+    // keep focus where it is and stop double-tap zoom; the action itself runs on click (works for assistive tech too)
+    el.addEventListener('pointerdown', (e) => {
+      const b = e.target.closest && e.target.closest('.gd-key');
+      e.preventDefault();
+      if (!b || b.getAttribute('data-gd-key') !== 'back') return;
+      repeated = false; stopRepeat();
+      repeat = setTimeout(() => { repeat = setInterval(() => { repeated = true; pressKey('back'); }, 70); }, 400);
+    });
+    el.addEventListener('mousedown', (e) => e.preventDefault());
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => el.addEventListener(ev, stopRepeat));
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest && e.target.closest('.gd-key');
+      if (!b) return;
+      const k = b.getAttribute('data-gd-key');
+      if (k === 'back' && repeated) { repeated = false; return; }
+      if (b.getAttribute('aria-disabled') === 'true') return;
+      pressKey(k);
+    });
+    cleanups.push(stopRepeat);
+    return el;
+  }
+
+  function pressKey(k) {
+    if (!input || !input.isConnected) return;
+    if (k === 'enter') { submitTyped(); return; }
+    if (k === 'back') input.value = input.value.slice(0, -1);
+    else if (k === ' ') { if (!input.value || / $/.test(input.value)) return; input.value += ' '; }
+    else input.value += k;
+    onInput();
+  }
+
+  /** Dim the keys that cannot continue any grape name or synonym from what is typed. */
+  function paintKeys() {
+    if (!kbEl) return;
+    const ok = nextKeys(input.value);
+    kbEl.querySelectorAll('.gd-key').forEach((b) => {
+      const k = b.getAttribute('data-gd-key');
+      const off = ok !== null && k.length === 1 && !ok.has(k);
+      b.classList.toggle('gd-key-off', off);
+      if (off) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+    });
+  }
+
+  /** Keyboard mode: keep the keys and the newest guess on screen. */
+  function keepPlayInView() {
+    try {
+      const r = playEl.getBoundingClientRect();
+      const vh = globalThis.innerHeight || 0;
+      if (vh && (r.bottom > vh || r.bottom < 0)) playEl.scrollIntoView({ block: 'end' });
+    } catch (e) { /* ignore */ }
   }
 
   function paintActive(scroll) {
@@ -451,9 +540,9 @@ function mountInner(root, opts) {
     renderBoard();
     renderHints();
     if (game.status === 'playing') {
-      input.value = ''; closeList(); msgEl.textContent = '';
+      input.value = ''; closeList(); msgEl.textContent = ''; paintKeys();
       counterEl.textContent = t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES });
-      input.focus();
+      if (kbMode) keepPlayInView(); else input.focus();
     } else {
       renderPlay(); renderEnd();
       if (mode === 'daily') track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
