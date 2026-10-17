@@ -28,12 +28,17 @@ export function distanceKm(a, b) {
   return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
-/** Initial great-circle bearing from a to b in degrees, 0 = north, clockwise, [0, 360). */
+/**
+ * Rhumb-line bearing from a to b in degrees, 0 = north, clockwise, [0, 360): the constant heading a player
+ * reads off a flat (Mercator) map. The great-circle start bearing contradicts that on long distances
+ * (Mosel to Marlborough reads south-east on a map, north-east by great circle).
+ */
 export function bearingDeg(a, b) {
-  const p1 = rad(a[0]), p2 = rad(b[0]), dl = rad(b[1] - a[1]);
-  const y = Math.sin(dl) * Math.cos(p2);
-  const x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl);
-  return (((Math.atan2(y, x) * 180) / Math.PI) + 360) % 360;
+  const p1 = rad(a[0]), p2 = rad(b[0]);
+  let dl = rad(b[1] - a[1]);
+  if (Math.abs(dl) > Math.PI) dl = dl > 0 ? dl - 2 * Math.PI : dl + 2 * Math.PI;
+  const dPsi = Math.log(Math.tan(Math.PI / 4 + p2 / 2) / Math.tan(Math.PI / 4 + p1 / 2));
+  return (((Math.atan2(dl, dPsi) * 180) / Math.PI) + 360) % 360;
 }
 
 /** Index 0..7 into ARROWS (0 = N, 1 = NE, ...). */
@@ -41,8 +46,10 @@ export function directionIndex(deg) {
   return Math.round((((deg % 360) + 360) % 360) / 45) % 8;
 }
 
-/** Distance shown to the player: rounded to 50 km, never below 50. */
-export const roundKm = (km) => Math.max(50, Math.round(km / 50) * 50);
+/** Distance shown to the player: rounded to 50 km, never below 50; under 25 km (the same point) it is 0. */
+export const roundKm = (km) => (km < 25 ? 0 : Math.max(50, Math.round(km / 50) * 50));
+/** Arrow index for a pair of points, or null when they are (nearly) the same place. */
+const dirOf = (d, p, q) => (d < 25 ? null : directionIndex(bearingDeg(p, q)));
 
 /** Names of the guess's regions that are also an answer region (guess order). */
 export function sharedRegions(guess, answer) {
@@ -80,7 +87,7 @@ export function regionParts(guess, answer, ctry = defCountries) {
       const d = distanceKm(p, q);
       if (!best || d < best.d) best = { d, q };
     }
-    return { name, country: x.country, hit: false, km: best ? roundKm(best.d) : null, dir: best ? directionIndex(bearingDeg(p, best.q)) : null };
+    return { name, country: x.country, hit: false, km: best ? roundKm(best.d) : null, dir: best ? dirOf(best.d, p, best.q) : null };
   });
 }
 
@@ -101,7 +108,7 @@ function regionBase(guess, answer, ctry) {
     if (!best || d < best.d) best = { d, p, q };
   }
   if (!best) return { status, km: null, dir: null, hit: [] };
-  return { status, km: roundKm(best.d), dir: directionIndex(bearingDeg(best.p, best.q)), hit: [] };
+  return { status, km: roundKm(best.d), dir: dirOf(best.d, best.p, best.q), hit: [] };
 }
 
 /** World area as shown to the player: rounded to 2 significant figures (280000 for 276543). */
@@ -139,8 +146,9 @@ export function body(guessBody, answerBody) {
 }
 
 /**
- * Flavour: green >= 2 identical aromas; yellow 1 identical aroma or >= 3 shared aroma families;
- * red otherwise; grey when either grape has no aroma data.
+ * Flavour: green >= 3 identical aromas, or identical aroma sets; yellow 1-2 identical aromas or >= 3 shared
+ * aroma families; red otherwise; grey when either grape has no aroma data. (Two shared aromas used to be
+ * green, but strawberry/raspberry sit on half the reds, so green said "close" when it wasn't.)
  */
 export function flavour(guess, answer, desc = defDesc) {
   const gf = guess.flavours, af = answer.flavours;
@@ -152,18 +160,21 @@ export function flavour(guess, answer, desc = defDesc) {
   // guess aromas that are not identical but belong to a family the answer also has (yellow outline in the UI)
   const familyHit = gf.filter((d) => !af.includes(d) && desc[d] && ac.has(desc[d].cluster));
   let status = 'red';
-  if (shared.length >= 2) status = 'green';
-  else if (shared.length === 1 || families >= 3) status = 'yellow';
+  const same = shared.length === gf.length && gf.length === af.length;
+  if (shared.length >= 3 || same) status = 'green';
+  else if (shared.length >= 1 || families >= 3) status = 'yellow';
   return { status, shared, families, familyHit };
 }
 
 /**
- * Common style (sparkling, sweet, fortified, rosé, oak-aged, crisp, blend; max 3 per grape). An empty list
- * means a plain dry still wine and counts as the single style 'plain'. Green: identical sets. Yellow: at
- * least one style in common. Red: none. Grey when either grape has no style data (null).
+ * Common style (sparkling, sweet, fortified, rosé, oak-aged, crisp, blend; max 3 per grape). 'blend' is
+ * shown but does not count: nearly every red is blended, so it made most red guesses yellow. After
+ * dropping it, an empty list means a plain dry still wine and counts as the single style 'plain'.
+ * Green: identical sets. Yellow: at least one style in common. Red: none. Grey when either is unknown (null).
  */
+export const STYLE_IGNORED = 'blend';
 export function style(guess, answer) {
-  const set = (l) => (Array.isArray(l) ? (l.length ? l : ['plain']) : null);
+  const set = (l) => { if (!Array.isArray(l)) return null; const x = l.filter((s) => s !== STYLE_IGNORED); return x.length ? x : ['plain']; };
   const gs = set(guess.styles), as = set(answer.styles);
   if (!gs || !as) return { status: 'grey', shared: [] };
   const shared = gs.filter((x) => as.includes(x));
@@ -195,17 +206,10 @@ export function compare(guess, answer, ctx = {}) {
   return out;
 }
 
-export const STATUS_EMOJI = { green: '🟩', yellow: '🟨', red: '🟥', grey: '⬜', neutral: '⬜' };
-export const STATUS_SYMBOL = { green: '✓', yellow: '~', red: '✗', grey: '?', neutral: '' };
+export const STATUS_EMOJI = { green: '🟩', yellow: '🟨', red: '🟥', grey: '⬜' };
+export const STATUS_SYMBOL = { green: '✓', yellow: '≈', red: '✗', grey: '?' };
 
-/** One share-line symbol per cell. Area: ⬆️ the answer has more, ⬇️ less, ↔️ exactly equal, 🟩 correct. */
+/** One share-line symbol per cell: the colour square only, so a friend can tell close from far on every column. */
 export function shareSymbol(c) {
-  if (c.key === 'body') return c.status === 'green' ? '🟩' : c.status === 'grey' ? '⬜' : c.arrow === 'up' ? '⬆️' : '⬇️';
-  if (c.key === 'area') {
-    if (c.status === 'green') return '🟩';
-    if (c.arrow === 'up') return '⬆️';
-    if (c.arrow === 'down') return '⬇️';
-    return c.status === 'grey' ? '⬜' : '↔️';
-  }
-  return STATUS_EMOJI[c.status];
+  return STATUS_EMOJI[c.status] || '⬜';
 }

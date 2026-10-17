@@ -195,7 +195,7 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
   const lines = shareText({ puzzle: 42, rows: game.rows(), won: true }).split('\n');
   assert.equal(lines[0], 'Grapedle #42 2/6');
   assert.equal(lines.length, 4);
-  assert.match(lines[1], /^(🟩|🟥)(🟩|🟨|🟥)(⬆️|⬇️|🟩|⬜)(🟩|🟨|🟥|⬜)(⬆️|⬇️|↔️|🟩)(🟩|🟨|🟥|⬜)$/u);
+  assert.match(lines[1], /^(🟩|🟥)(🟩|🟨|🟥|⬜){5}$/u);
   assert.equal(lines[2], '🟩'.repeat(6));
   assert.equal(lines[3], 'vinobypalazzo.nl/grapedle');
   assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 1 }).split('\n')[0], 'Grapedle #42 2/6 💡');
@@ -207,19 +207,19 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
   const l = shareText({ puzzle: 43, rows: lost.rows(), won: false, hints: 2 }).split('\n');
   assert.equal(l[0], 'Grapedle #43 X/6 💡💡');
   assert.equal(l.length, 8);
-  for (const row of l.slice(1, 7)) assert.equal([...row.replace(/⬆️|⬇️|↔️/g, 'A')].length, 6);
+  for (const row of l.slice(1, 7)) assert.equal([...row].length, 6);
   // exact example from the plan: a won game where the last row is all green
   const fake = (cells) => ({ cells: cells.map((s, i) => ({ key: ['colour', 'region', 'body', 'style', 'area', 'flavour'][i], status: s[0], arrow: s[1] || null })) });
   const rows = [
-    fake([['red'], ['yellow'], ['neutral', 'up'], ['red'], ['neutral', 'down'], ['yellow']]),
-    fake([['red'], ['green'], ['green'], ['yellow'], ['neutral', 'up'], ['yellow']]),
-    fake([['green'], ['green'], ['grey'], ['grey'], ['neutral'], ['green']]),
+    fake([['red'], ['yellow'], ['red', 'up'], ['red'], ['yellow', 'down'], ['yellow']]),
+    fake([['red'], ['green'], ['green'], ['yellow'], ['red', 'up'], ['yellow']]),
+    fake([['green'], ['green'], ['grey'], ['grey'], ['yellow'], ['green']]),
     fake([['green'], ['green'], ['green'], ['green'], ['green'], ['green']]),
   ];
   assert.equal(shareText({ puzzle: 12, rows, won: true, hints: 1 }),
-    'Grapedle #12 4/6 💡\n🟥🟨⬆️🟥⬇️🟨\n🟥🟩🟩🟨⬆️🟨\n🟩🟩⬜⬜↔️🟩\n🟩🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
-  const unknown = shareText({ puzzle: 1, rows: [fake([['green'], ['red'], ['neutral', 'up'], ['grey']])], won: false }).split('\n')[1];
-  assert.equal(unknown, '🟩🟥⬆️⬜');
+    'Grapedle #12 4/6 💡\n🟥🟨🟥🟥🟨🟨\n🟥🟩🟩🟨🟥🟨\n🟩🟩⬜⬜🟨🟩\n🟩🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
+  const unknown = shareText({ puzzle: 1, rows: [fake([['green'], ['red'], ['red', 'up'], ['grey']])], won: false }).split('\n')[1];
+  assert.equal(unknown, '🟩🟥🟥⬜');
 });
 
 test('UTM parameters are appended correctly', () => {

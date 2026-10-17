@@ -63,9 +63,10 @@ test('region: same region is green even for different grapes; same country yello
   assert.equal(r({ country: 'DE' }, {}).status, 'red');
 });
 
-test('distance is rounded to 50 km, never below 50', () => {
-  assert.equal(roundKm(11), 50);
-  assert.equal(roundKm(24), 50);
+test('distance is rounded to 50 km, never below 50; the same point is 0', () => {
+  assert.equal(roundKm(11), 0);
+  assert.equal(roundKm(24), 0);
+  assert.equal(roundKm(26), 50);
   assert.equal(roundKm(74), 50);
   assert.equal(roundKm(76), 100);
   assert.equal(roundKm(111.2), 100);
@@ -92,8 +93,12 @@ test('bearing and 8-way arrows', () => {
   assert.equal(directionIndex(22.4), 0); assert.equal(directionIndex(22.6), 1);
   assert.equal(directionIndex(337.4), 7); assert.equal(directionIndex(337.6), 0);
   assert.equal(directionIndex(359.9), 0); assert.equal(directionIndex(-10), 0);
-  // great circle: over the pole the initial bearing is not the rhumb line
-  assert.ok(bearingDeg([60, 0], [60, 90]) < 90, 'initial bearing bends toward the pole');
+  // rhumb line: along a parallel the heading is due east, as on a flat map
+  assert.equal(directionIndex(bearingDeg([60, 0], [60, 90])), 2);
+  // Mosel to Marlborough reads south-east on a map (great circle said north-east)
+  assert.equal(ARROWS[directionIndex(bearingDeg([49.9, 7.0], [-41.5, 173.9]))], '↘');
+  // across the date line the short way round is taken
+  assert.equal(directionIndex(bearingDeg([0, 179], [0, -179])), 2);
 });
 
 test('bearing on real data: Mosel to Rhône points south, Rioja to Rhône east/north-east', () => {
@@ -139,10 +144,12 @@ test('area locale formatting: nl dot, en comma', () => {
   assert.equal(formatArea(850, 'nl'), '850 ha'); assert.equal(formatArea(12, 'en'), '12 ha');
 });
 
-test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, red otherwise, grey unknown', () => {
+test('flavour: green >=3 identical or identical sets, yellow 1-2 identical or >=3 shared families, red otherwise, grey unknown', () => {
   const f = (a, b) => flavour({ flavours: a }, { flavours: b }, desc);
-  assert.equal(f(['a', 'c'], ['a', 'c', 'e']).status, 'green');
+  assert.equal(f(['a', 'c'], ['a', 'c', 'e']).status, 'yellow', 'two identical is no longer green');
   assert.deepEqual(f(['a', 'c'], ['a', 'c', 'e']).shared, ['a', 'c']);
+  assert.equal(f(['a', 'c', 'e'], ['a', 'c', 'e', 'g']).status, 'green', 'three identical');
+  assert.equal(f(['a', 'c'], ['c', 'a']).status, 'green', 'identical sets');
   assert.equal(f(['a', 'e'], ['a', 'c']).status, 'yellow', 'one identical');
   assert.equal(f(['a', 'c', 'e'], ['b', 'd', 'f']).status, 'yellow', 'no identical, three shared families');
   assert.equal(f(['a', 'c', 'e', 'g'], ['b', 'd', 'f', 'h']).families, 4);
@@ -157,13 +164,11 @@ test('flavour: green >=2 identical, yellow 1 identical or >=3 shared families, r
   assert.deepEqual(cell.shared, ['a']);
 });
 
-test('share symbols per cell', () => {
+test('share symbols per cell: the colour square only', () => {
   const cells = compare(g({ id: 'a', areaHa: 5 }), g({ id: 'b', areaHa: 9, colour: 'white' }), { descriptors: desc, countries: ctry });
-  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬜', '⬆️', '⬜']);
-  const down = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 5 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(down[4]), '⬇️');
-  const tie = compare(g({ id: 'a', areaHa: 9 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
-  assert.equal(shareSymbol(tie[4]), '↔️', 'exactly equal areas');
+  assert.deepEqual(cells.map(shareSymbol), ['🟥', '🟩', '⬜', '⬜', '🟨', '⬜']);
+  const far = compare(g({ id: 'a', areaHa: 1 }), g({ id: 'b', areaHa: 9 }), { descriptors: desc, countries: ctry });
+  assert.equal(shareSymbol(far[4]), '🟥');
   const win = compare(g({ id: 'a' }), g({ id: 'a' }), { descriptors: desc, countries: ctry });
   assert.deepEqual(win.map(shareSymbol), Array(6).fill('🟩'));
 });
@@ -182,7 +187,7 @@ test('body: equal green, fuller/lighter arrow towards the answer, unknown either
   assert.equal(b(3, null).status, 'grey'); assert.equal(b(3, null).value, 3);
   assert.equal(b(undefined, undefined).status, 'grey');
   assert.equal(body(3, 4).arrow, 'up');
-  assert.deepEqual([b(3, 3), b(2, 5), b(5, 1), b(null, 1)].map(shareSymbol), ['🟩', '⬆️', '⬇️', '⬜']);
+  assert.deepEqual([b(3, 3), b(3, 4), b(2, 5), b(null, 1)].map(shareSymbol), ['🟩', '🟨', '🟥', '⬜']);
   // same grape is green even when its body is unknown
   assert.equal(st(g({ id: 'q', body: null }), g({ id: 'q', body: null }), 'body').status, 'green');
 });
@@ -295,8 +300,12 @@ test('region parts: one entry per guess region, shared ones without distance, ot
 test('style: identical sets green, any common style yellow, none red, empty list = plain, null grey', () => {
   const sty = (a, b) => st(g({ id: 'a', styles: a }), g({ id: 'b', styles: b }), 'style');
   assert.equal(sty(['oaked', 'blend'], ['blend', 'oaked']).status, 'green');
-  const y = sty(['oaked', 'blend'], ['blend']);
-  assert.equal(y.status, 'yellow'); assert.deepEqual(y.shared, ['blend']);
+  const y = sty(['oaked', 'sweet'], ['sweet']);
+  assert.equal(y.status, 'yellow'); assert.deepEqual(y.shared, ['sweet']);
+  // blend is shown but never counts: blend-only is a plain dry still wine
+  assert.equal(sty(['blend'], ['fresh']).status, 'red');
+  assert.equal(sty(['blend'], []).status, 'green');
+  assert.equal(sty(['oaked', 'blend'], ['blend', 'rose']).status, 'red');
   assert.equal(sty(['sparkling'], ['oaked']).status, 'red');
   assert.equal(sty([], []).status, 'green', 'two plain dry still wines');
   assert.equal(sty([], ['oaked']).status, 'red', 'plain against a styled grape');
