@@ -299,12 +299,16 @@ function mountInner(root, opts) {
       case 'colour': main = t('v_' + g.colour); plain = main; break;
       case 'region': {
         const parts = cell.parts || [];
+        const badges = parts.length > 1 && cell.status !== 'green';
         plain = parts.map((x) => {
           const nm = x.name ? `${regionLabel(x.name, lang)}, ${countryName(x.country)}` : countryName(x.country);
-          return x.hit ? `${nm} (${t('overlap')})` : x.km ? `${nm}, ${t('km', { n: fmtNum(x.km) })} ${t('toward', { dir: t('dir_' + x.dir) })}` : nm;
+          const st = badges && x.status ? ` (${t('st_' + x.status)})` : '';
+          return (x.hit ? `${nm} (${t('overlap')})` : x.km ? `${nm}, ${t('km', { n: fmtNum(x.km) })} ${t('toward', { dir: t('dir_' + x.dir) })}` : nm) + (x.hit ? '' : st);
         }).join('; ') || regionNames(g).join(' / ');
-        // one line per region: name, then km + arrow; a region the answer shares is bold and has no distance
+        // one line per region: name, then km + arrow; a region the answer shares is bold and has no distance.
+        // With two or more regions on a non-green tile each line gets its own status badge (✓ shared, ≈ same country, ✗ other).
         nodes = parts.length ? parts.map((x) => h('span', { class: 'gd-reg' },
+          badges && x.status ? h('span', { class: 'gd-rb gd-rb-' + x.status, 'aria-hidden': 'true' }, STATUS_SYMBOL[x.status]) : null,
           h('span', { class: x.hit && cell.status !== 'green' ? 'gd-reg-n gd-hit' : 'gd-reg-n' }, regName(x)),
           x.name ? h('span', { class: 'gd-reg-c' }, countryName(x.country)) : null,
           x.km !== null && x.km !== undefined && !x.hit ? h('span', { class: 'gd-sub' }, x.km ? `${t('km', { n: fmtNum(x.km) })} ${x.dir !== null ? ARROWS[x.dir] : ''}`.trim() : t('kmZero')) : null)) : null;

@@ -311,3 +311,12 @@ test('style: identical sets green, any common style yellow, none red, empty list
   assert.equal(sty([], ['oaked']).status, 'red', 'plain against a styled grape');
   assert.equal(sty(null, ['oaked']).status, 'grey'); assert.equal(sty(['oaked'], undefined).status, 'grey');
 });
+
+test('region parts carry their own verdict: shared region green, same country yellow, other country red', async () => {
+  const { byId } = await import('../src/data.js');
+  const find = (n) => [...byId.values()].find((g) => g.name === n);
+  const c = compare(find('Auxerrois'), find('Pinot Blanc'));
+  const reg = c.find((x) => x.key === 'region');
+  assert.equal(reg.status, 'yellow', 'Alsace + Luxembourg vs Alsace is not an identical set');
+  assert.deepEqual(reg.parts.map((p) => [p.name, p.status]), [['Alsace', 'green'], ['Luxembourg', 'red']]);
+});

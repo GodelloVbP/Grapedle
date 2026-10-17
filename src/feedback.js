@@ -70,15 +70,19 @@ export function region(guess, answer, ctry = defCountries) {
 
 /**
  * One entry per region of the guess, in guess order: { name, hit: true } when the answer has that region,
- * otherwise { name, hit: false, km, dir } towards the nearest answer region. Drives the UI so each region
+ * otherwise { name, hit: false, km, dir } towards the nearest answer region; `status` is the verdict for that one region. Drives the UI so each region
  * reads as its own line ("Rhône 550 km →", "Barossa 15.700 km ↘").
  */
 export function regionParts(guess, answer, ctry = defCountries) {
   const G = regionsOf(guess), A = regionsOf(answer);
   const ak = new Set(A.map(regionKey).filter(Boolean));
+  const ac = new Set(A.map((r) => r.country).filter(Boolean));
   return G.map((x) => {
     const name = x.name || null;
-    if (x.name && ak.has(regionKey(x))) return { name, country: x.country, hit: true, km: null, dir: null };
+    // per-region verdict, so a guess with two regions shows which one is right: green shared region,
+    // yellow same country, red otherwise (the tile colour stays the verdict for the whole set)
+    if (x.name && ak.has(regionKey(x))) return { name, country: x.country, hit: true, km: null, dir: null, status: 'green' };
+    const status = x.country && ac.has(x.country) ? 'yellow' : 'red';
     let best = null;
     const p = pointOf(x, ctry);
     if (p) for (const y of A) {
@@ -87,7 +91,7 @@ export function regionParts(guess, answer, ctry = defCountries) {
       const d = distanceKm(p, q);
       if (!best || d < best.d) best = { d, q };
     }
-    return { name, country: x.country, hit: false, km: best ? roundKm(best.d) : null, dir: best ? dirOf(best.d, p, best.q) : null };
+    return { name, country: x.country, hit: false, km: best ? roundKm(best.d) : null, dir: best ? dirOf(best.d, p, best.q) : null, status };
   });
 }
 

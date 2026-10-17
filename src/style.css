@@ -109,6 +109,11 @@
 #grapedle-root .gd-hit { font-weight: 800; }
 #grapedle-root .gd-reg { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 5px; }
 #grapedle-root .gd-reg + .gd-reg { margin-top: 3px; }
+/* per-region badge on a multi-region tile: which region matched (green), same country (yellow), other (red) */
+#grapedle-root .gd-rb { display: inline-flex; align-items: center; justify-content: center; width: 1.25em; height: 1.25em; border-radius: 50%; font-size: .72rem; font-weight: 800; line-height: 1; flex: none; align-self: center; box-shadow: 0 0 0 1.5px rgba(255,255,255,.9); }
+#grapedle-root .gd-rb-green { background: var(--gd-green); color: var(--gd-green-ink); }
+#grapedle-root .gd-rb-yellow { background: var(--gd-yellow); color: var(--gd-yellow-ink); box-shadow: 0 0 0 1.5px var(--gd-yellow-ink); }
+#grapedle-root .gd-rb-red { background: var(--gd-red); color: var(--gd-red-ink); }
 
 #grapedle-root .gd-rows { display: flex; flex-direction: column; gap: 10px; }
 #grapedle-root .gd-name { font-weight: 600; color: var(--gd-brand); }
