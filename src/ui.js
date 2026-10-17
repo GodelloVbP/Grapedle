@@ -625,10 +625,11 @@ function mountInner(root, opts) {
       if (kbMode) keepPlayInView(); else input.focus();
     } else {
       renderPlay(); renderEnd();
-      if (game.status === 'won') { stopCelebrate(); stopCelebrate = celebrate(root, game.guesses.length); }
       if (mode === 'daily') track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
       const hd = endEl.querySelector('.gd-end-title');
       if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: false }); }
+      // after the scroll, so the burst is measured against what is actually on screen
+      if (game.status === 'won') { stopCelebrate(); stopCelebrate = celebrate(root, game.guesses.length); }
       announce(endMessage());
     }
   }

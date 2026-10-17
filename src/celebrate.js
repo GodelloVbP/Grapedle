@@ -46,8 +46,10 @@ export function celebrate(root, tries, rnd = Math.random) {
   const y0 = r ? r.top - rootRect.top + r.height / 2 : 120;
   const width = rootRect.width || 320;
   const reach = Math.min(cfg.reach, width * 0.7);
-  // the title sits near the top of the game, so the rise is capped to the room above it and the rest falls as a shower
-  const rise = Math.max(30, Math.min(cfg.rise, y0 * 0.85));
+  // the rise is capped to the room above the title, inside the game and on screen (phones scroll the title to the top),
+  // so the burst stays visible and the rest falls as a shower over the answer card
+  const onScreen = r ? Math.max(0, r.top + r.height / 2) : y0;
+  const rise = Math.max(12, Math.min(cfg.rise, y0 * 0.85, onScreen * 0.8));
 
   for (let i = 0; i < cfg.count; i++) {
     const o = cfg.origins[i % cfg.origins.length];
