@@ -10,7 +10,8 @@ test('every pool hint passes the validator (no name, official name, synonym or o
   assert.deepEqual(checkHints(grapes), []);
   for (const g of pool) {
     assert.ok(g.hint.nl.length > 1 && g.hint.en.length > 1, g.id);
-    assert.ok(/^https?:\/\//.test(g.sources.hint), `${g.id} hint source`);
+    // a URL, or the 2026-10-17 review label (reviewer wine knowledge, not web-verified)
+    assert.ok(/^https?:\/\//.test(g.sources.hint) || g.sources.hint.startsWith('Review 2026-10-17'), `${g.id} hint source`);
   }
 });
 

@@ -1,0 +1,181 @@
+[
+ {
+  "id": "riesling",
+  "aromas": [
+   "lime",
+   "green-apple",
+   "peach",
+   "petrol"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "nebbiolo",
+  "aromas": [
+   "rose",
+   "red-cherry",
+   "tar",
+   "liquorice"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "tempranillo",
+  "aromas": [
+   "red-cherry",
+   "black-plum",
+   "leather",
+   "tobacco"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "syrah",
+  "aromas": [
+   "blackberry",
+   "black-plum",
+   "black-pepper",
+   "olive"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "garnacha-tinta",
+  "aromas": [
+   "strawberry",
+   "raspberry",
+   "white-pepper",
+   "dried-herbs"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "merlot",
+  "aromas": [
+   "black-plum",
+   "black-cherry",
+   "blackberry"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "grasevina",
+  "aromas": [
+   "green-apple",
+   "lemon",
+   "almond"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "xinomavro",
+  "aromas": [
+   "red-cherry",
+   "tomato-leaf",
+   "olive"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "grignolino",
+  "aromas": [
+   "raspberry",
+   "strawberry",
+   "white-pepper"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "catarratto-bianco",
+  "aromas": [
+   "lemon",
+   "green-apple",
+   "dried-herbs"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "harslevelu",
+  "aromas": [
+   "elderflower",
+   "honey",
+   "apricot"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "refosco-dal-peduncolo-rosso",
+  "aromas": [
+   "blackberry",
+   "black-plum",
+   "dried-herbs"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "furmint",
+  "aromas": [
+   "lemon",
+   "green-apple",
+   "pear",
+   "quince"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "chasselas",
+  "aromas": [
+   "red-apple",
+   "melon",
+   "flint"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "petit-verdot",
+  "aromas": [
+   "violet",
+   "black-cherry",
+   "blueberry"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "prosecco",
+  "aromas": [
+   "green-apple",
+   "pear",
+   "melon",
+   "acacia"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "pinot-gris",
+  "aromas": [
+   "pear",
+   "peach",
+   "honey",
+   "almond"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "aligote",
+  "aromas": [
+   "green-apple",
+   "peach",
+   "lemon"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ },
+ {
+  "id": "sankt-laurent",
+  "aromas": [
+   "red-cherry",
+   "blackberry",
+   "raspberry"
+  ],
+  "note": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)"
+ }
+]

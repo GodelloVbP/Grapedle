@@ -26,5 +26,11 @@ export function checkHints(grapes) {
       for (const [label, text] of hintConflicts(g.hint[lang], terms)) fails.push(`${g.id}: hint_${lang} '${g.hint[lang]}' contains ${label} '${text}'`);
     }
   }
+  const seen = new Map();
+  for (const g of pool) {
+    const key = g.hint ? norm(g.hint.nl) : '';
+    if (key && seen.has(key)) fails.push(`${g.id}: hint '${g.hint.nl}' is also the hint of ${seen.get(key)}`);
+    else if (key) seen.set(key, g.id);
+  }
   return fails;
 }

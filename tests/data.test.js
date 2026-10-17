@@ -13,7 +13,7 @@ const byId = new Map(grapes.map((g) => [g.id, g]));
 const pool = grapes.filter((g) => g.answer);
 const csv = (f) => readFileSync(new URL('../data/source/' + f, import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1).map((l) => l.split(','));
 const poolIds = csv('answer_pool.csv').map((r) => r[0]);
-const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 'stone-fruit', 'tropical', 'red-fruit', 'black-fruit', 'dried-fruit', 'herbaceous', 'herbal', 'pungent-spice', 'other']);
+const CLUSTERS = new Set(['nutty', 'earthy', 'floral', 'green-fruit', 'citrus', 'stone-fruit', 'tropical', 'red-fruit', 'black-fruit', 'dried-fruit', 'herbaceous', 'herbal', 'pungent-spice', 'mineral', 'honeyed']);
 
 test('every grape is in the daily answer pool (answer_pool.csv lists all ids)', () => {
   assert.equal(poolIds.length, grapes.length);
@@ -55,7 +55,8 @@ test('signature regions: file coordinates land in the records; others use a coun
   // quote-aware split: notes may contain commas
   const sig = readFileSync(new URL('../data/source/signature_regions.csv', import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1)
     .map((l) => [...l.matchAll(/("([^"]|"")*"|[^,]*)(,|$)/g)].slice(0, -1).map((m) => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
-  assert.equal(sig.length, 98);
+  assert.equal(sig.length, 121);
+  assert.ok(grapes.every((g) => g.regions.every((r) => r.name)), 'every grape has a named region');
   for (const r of sig) {
     const g = byId.get(r[0]);
     assert.ok(g, r[0]);
@@ -85,6 +86,9 @@ test('signature regions: file coordinates land in the records; others use a coun
   for (const c of Object.keys(countries)) assert.ok(used.has(c), 'unused country ' + c);
 });
 
+const aromaOverride = new Map(JSON.parse(readFileSync(new URL('../data/source/aromas_override.json', import.meta.url), 'utf8')).map((r) => [r.id, r.aromas]));
+const bodyOverride = new Set(JSON.parse(readFileSync(new URL('../data/source/body_override.json', import.meta.url), 'utf8')).map((r) => r.id));
+
 test('flavours: 1-4 known descriptors, book overrides batches, unknown stays null', () => {
   const d = (id) => byId.get(id).flavours;
   for (const g of grapes) {
@@ -96,12 +100,13 @@ test('flavours: 1-4 known descriptors, book overrides batches, unknown stays nul
   }
   const book = JSON.parse(readFileSync(new URL('../data/source/aromas_book.json', import.meta.url), 'utf8'));
   for (const b of book) {
-    if (!byId.has(b.id)) continue; // dropped grape (DROP_IDS); its book record is kept
+    if (!byId.has(b.id) || aromaOverride.has(b.id)) continue; // dropped grape (DROP_IDS) or a reviewed override
     assert.deepEqual(d(b.id), b.aromas.map((a) => a.d).slice(0, 4), b.id);
     assert.equal(byId.get(b.id).sources.flavours[0].name, 'Gatinois, Explore Wine Maps');
   }
   // batch ordering: aromas backed by 2+ sites first, then file order, max 4
   assert.deepEqual(d('cabernet-sauvignon'), ['blackcurrant', 'mint', 'black-cherry', 'green-pepper']);
+  for (const [id, want] of aromaOverride) if (byId.has(id)) assert.deepEqual(d(id), want.slice(0, 4), 'review override ' + id);
   assert.deepEqual(byId.get('chardonnay').sources.flavours.map((s) => s.name).sort(), ['Jancis Robinson', 'Wikipedia', 'Wine Folly']);
   // pool grapes that lack aroma data are listed here so a new gap does not slip in unnoticed
   // aroma gaps are allowed (the tile shows "onbekend"); this guards against the data shrinking
@@ -222,13 +227,13 @@ test('descriptors use WSET clusters, including nutty and earthy', () => {
   assert.ok(Object.values(descriptors).some((d) => d.cluster === 'earthy'));
 });
 
-test('the ten dual-region grapes, and a region name always has one point', () => {
+test('the twelve dual-region grapes, and a region name always has one point', () => {
   const dual = Object.fromEntries(grapes.filter((g) => g.regions.length === 2).map((g) => [g.id, g.regions.map((r) => r.name).join(' / ')]));
   assert.deepEqual(dual, {
     'pinot-gris': 'Alsace / Veneto', 'garnacha-tinta': 'Rhône / Aragón', 'sauvignon-blanc': 'Loire / Marlborough',
     'chenin-blanc': 'Loire / Stellenbosch', syrah: 'Rhône / Barossa', cot: 'Cahors / Mendoza',
     chardonnay: 'Bourgogne / California', 'cabernet-franc': 'Loire / Bordeaux', auxerrois: 'Alsace / Luxembourg',
-    tannat: 'Sud-Ouest / Canelones',
+    tannat: 'Sud-Ouest / Canelones', silvaner: 'Franken / Alsace', tribidrag: 'Puglia / California',
   });
   const seen = new Map();
   for (const g of grapes) for (const r of g.regions) {
@@ -284,7 +289,7 @@ test('body: the batch files map to grapes.json, the book file takes precedence',
   const bookIds = new Set(book.filter((r) => r.body).map((r) => r.id));
   const [lo] = [1, 2, 3].map((n) => JSON.parse(readFileSync(new URL(`../data/source/body_batch${n}.json`, import.meta.url), 'utf8')));
   for (const r of lo) {
-    if (bookIds.has(r.id) || !r.body) continue;
+    if (!byId.has(r.id) || bookIds.has(r.id) || bodyOverride.has(r.id) || !r.body) continue;
     const want = pyBody([r.body])[0];
     assert.ok(labels[want], r.id);
     assert.equal(byId.get(r.id).body, want, r.id);

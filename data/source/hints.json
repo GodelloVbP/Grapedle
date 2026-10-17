@@ -121,18 +121,18 @@
   },
   {
     "id": "barbera",
-    "hint_nl": "Asti",
-    "hint_en": "Asti",
-    "source": "https://wineinsiders.com/blogs/wine-101-types-of-wines-grapes/barbera-dasti-vs-barbera-dalba",
-    "notes": "Barbera d'Asti; avoids Asti Spumante association with Muscat.",
+    "hint_nl": "Nizza",
+    "hint_en": "Nizza",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Piemonte"
   },
   {
     "id": "muscat-blanc-a-petits-grains",
-    "hint_nl": "Canelli",
-    "hint_en": "Canelli",
-    "source": "https://en.wikipedia.org/wiki/Moscato_d%27Asti",
-    "notes": "Revised 2026-10-08: earlier hint contradicted the region tile or duplicated another grape.",
+    "hint_nl": "Asti",
+    "hint_en": "Asti",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Piemonte"
   },
   {
@@ -145,10 +145,10 @@
   },
   {
     "id": "gewurztraminer",
-    "hint_nl": "Elzas Grand Cru",
-    "hint_en": "Alsace Grand Cru",
-    "source": "https://tastefrance.com/essentials/wine-and-spirits/alsace-gewurztraminer-aoc",
-    "notes": "Source is the Alsace Gewurztraminer AOC page; Grand Cru wording comes from the brief and is not confirmed by this page.",
+    "hint_nl": "Vendanges Tardives",
+    "hint_en": "Vendanges Tardives",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Alsace"
   },
   {
@@ -169,10 +169,10 @@
   },
   {
     "id": "carmenere",
-    "hint_nl": "Chili",
-    "hint_en": "Chile",
-    "source": "https://www.thedrinksbusiness.com/2023/01/top-10-carmeneres-from-chile/",
-    "notes": "",
+    "hint_nl": "Peumo",
+    "hint_en": "Peumo",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "CL"
   },
   {
@@ -217,10 +217,10 @@
   },
   {
     "id": "cinsaut",
-    "hint_nl": "Côtes de Provence",
-    "hint_en": "Côtes de Provence",
-    "source": "https://en.wikipedia.org/wiki/C%C3%B4tes_de_Provence_AOC",
-    "notes": "Revised 2026-10-08: earlier hint contradicted the region tile or duplicated another grape.",
+    "hint_nl": "Château Musar (Libanon)",
+    "hint_en": "Château Musar (Lebanon)",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Provence"
   },
   {
@@ -250,17 +250,17 @@
   {
     "id": "alvarinho",
     "hint_nl": "Monção e Melgaço",
-    "hint_en": "Monção e Melgaço (Portugal)",
-    "source": "https://en.wikipedia.org/wiki/Albari%C3%B1o",
-    "notes": "Wikipedia: In Portugal Alvarinho is only authorised to be grown in Monção and Melgaço (Vinho Verde sub-region). (replaced a hint that only named the region)",
+    "hint_en": "Monção e Melgaço",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "PT"
   },
   {
     "id": "macabeo",
-    "hint_nl": "Sant Sadurní d'Anoia",
-    "hint_en": "Sant Sadurní d'Anoia",
-    "source": "https://en.wikipedia.org/wiki/Sant_Sadurn%C3%AD_d%27Anoia",
-    "notes": "Capital of Cava production (Penedès); Cava is a synonym since 2026-10-08, so the wine name is not used in the hint.",
+    "hint_nl": "Rioja Blanco",
+    "hint_en": "Rioja Blanco",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Penedès"
   },
   {
@@ -289,10 +289,10 @@
   },
   {
     "id": "vermentino",
-    "hint_nl": "Sardinië",
-    "hint_en": "Sardinia",
-    "source": "https://www.gamberorossointernational.com/news/the-5-best-vermentinos-from-sardinia-selected-by-gambero-rosso-with-a-winery-awarded-for-the-first-time/",
-    "notes": "Gallura is the top appellation but is not famous to Dutch buyers.",
+    "hint_nl": "Gallura",
+    "hint_en": "Gallura",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Sardegna"
   },
   {
@@ -305,10 +305,10 @@
   },
   {
     "id": "nero-d-avola",
-    "hint_nl": "Sicilië",
-    "hint_en": "Sicily",
-    "source": "https://en.wikipedia.org/wiki/Nero_d%27Avola",
-    "notes": "Region-level hint.",
+    "hint_nl": "Cerasuolo di Vittoria",
+    "hint_en": "Cerasuolo di Vittoria",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Sicilia"
   },
   {
@@ -361,10 +361,10 @@
   },
   {
     "id": "croatina",
-    "hint_nl": "Buttafuoco",
-    "hint_en": "Buttafuoco",
-    "source": "https://en.wikipedia.org/wiki/Oltrep%C3%B2_Pavese",
-    "notes": "Revised 2026-10-08: earlier hint contradicted the region tile or duplicated another grape.",
+    "hint_nl": "Gutturnio",
+    "hint_en": "Gutturnio",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Oltrepò Pavese"
   },
   {
@@ -393,26 +393,26 @@
   },
   {
     "id": "marsanne",
-    "hint_nl": "Saint-Péray",
-    "hint_en": "Saint-Péray",
-    "source": "https://en.wikipedia.org/wiki/Marsanne",
-    "notes": "",
+    "hint_nl": "Hermitage blanc",
+    "hint_en": "Hermitage blanc",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Rhône"
   },
   {
     "id": "rondinella",
-    "hint_nl": "Bardolino",
-    "hint_en": "Bardolino",
-    "source": "https://en.wikipedia.org/wiki/Rondinella",
-    "notes": "Bardolino blends use Rondinella alongside Corvina; not confirmed in snippet.",
+    "hint_nl": "Ripasso",
+    "hint_en": "Ripasso",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Veneto"
   },
   {
     "id": "roussanne",
-    "hint_nl": "Châteauneuf-du-Pape blanc",
-    "hint_en": "Châteauneuf-du-Pape blanc",
-    "source": "https://en.wikipedia.org/wiki/Roussanne",
-    "notes": "Revised 2026-10-08: earlier hint contradicted the region tile or duplicated another grape.",
+    "hint_nl": "Chignin-Bergeron",
+    "hint_en": "Chignin-Bergeron",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": "Rhône"
   },
   {
@@ -505,10 +505,10 @@
   },
   {
     "id": "blauer-portugieser",
-    "hint_nl": "Rheinhessen",
-    "hint_en": "Rheinhessen",
-    "source": "https://en.wikipedia.org/wiki/Blauer_Portugieser",
-    "notes": "Wikipedia: found primarily in Rheinhessen, Pfalz and Lower Austria.",
+    "hint_nl": "Villány",
+    "hint_en": "Villány",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -537,10 +537,10 @@
   },
   {
     "id": "catarratto-bianco",
-    "hint_nl": "Sicilië",
-    "hint_en": "Sicily",
-    "source": "https://en.wikipedia.org/wiki/Catarratto",
-    "notes": "Wikipedia: planted primarily in Sicily, where it is the most widely planted grape.",
+    "hint_nl": "Alcamo",
+    "hint_en": "Alcamo",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -553,26 +553,26 @@
   },
   {
     "id": "ciliegiolo",
-    "hint_nl": "Chianti",
-    "hint_en": "Chianti",
-    "source": "https://en.wikipedia.org/wiki/Ciliegiolo",
-    "notes": "Wikipedia: a minor component of traditional blends such as Chianti.",
+    "hint_nl": "Maremma Toscana",
+    "hint_en": "Maremma Toscana",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "clairette",
-    "hint_nl": "Languedoc",
-    "hint_en": "Languedoc",
-    "source": "https://en.wikipedia.org/wiki/Clairette_blanche",
-    "notes": "Wikipedia: Clairette du Languedoc is made entirely from the grape; appellation name shortened because 'Clairette' is a synonym.",
+    "hint_nl": "Crémant de Die",
+    "hint_en": "Crémant de Die",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "colombard",
-    "hint_nl": "Cognac",
-    "hint_en": "Cognac",
-    "source": "https://en.wikipedia.org/wiki/Colombard",
-    "notes": "Wikipedia: traditionally grown in the Charentes and Gascony for distilling into Cognac and Armagnac.",
+    "hint_nl": "Côtes de Gascogne",
+    "hint_en": "Côtes de Gascogne",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -593,10 +593,10 @@
   },
   {
     "id": "dona-branca",
-    "hint_nl": "Galicië",
-    "hint_en": "Galicia",
-    "source": "https://en.wikipedia.org/wiki/Do%C3%B1a_Blanca",
-    "notes": "Wikipedia: grown primarily in the northwest Galicia region of Spain.",
+    "hint_nl": "Monterrei",
+    "hint_en": "Monterrei",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -641,10 +641,10 @@
   },
   {
     "id": "grignolino",
-    "hint_nl": "Asti",
-    "hint_en": "Asti",
-    "source": "https://en.wikipedia.org/wiki/Grignolino",
-    "notes": "Wikipedia: primarily planted in the Asti province of Piedmont.",
+    "hint_nl": "Monferrato Casalese",
+    "hint_en": "Monferrato Casalese",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -665,42 +665,42 @@
   },
   {
     "id": "harslevelu",
-    "hint_nl": "Tokaji Aszú",
-    "hint_en": "Tokaji Aszú",
-    "source": "https://en.wikipedia.org/wiki/H%C3%A1rslevel%C5%B1",
-    "notes": "Wikipedia: in Tokaj-Hegyalja, blended with Furmint to produce Tokaji Aszú.",
+    "hint_nl": "Debrő",
+    "hint_en": "Debrő",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "inzolia",
-    "hint_nl": "Marsala",
-    "hint_en": "Marsala",
-    "source": "https://en.wikipedia.org/wiki/Inzolia",
-    "notes": "Wikipedia: planted primarily in western Sicily where it can be used to produce Marsala wine.",
+    "hint_nl": "Menfi",
+    "hint_en": "Menfi",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "jacquere",
-    "hint_nl": "Vin de Savoie",
-    "hint_en": "Vin de Savoie",
-    "source": "https://en.wikipedia.org/wiki/Jacqu%C3%A8re",
-    "notes": "Wikipedia: makes dry white wine such as Vin de Savoie.",
+    "hint_nl": "Apremont",
+    "hint_en": "Apremont",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "lagrein",
-    "hint_nl": "Zuid-Tirol",
-    "hint_en": "South Tyrol",
-    "source": "https://en.wikipedia.org/wiki/Lagrein",
-    "notes": "Wikipedia: native to the valleys of South Tyrol.",
+    "hint_nl": "Bozen-Gries",
+    "hint_en": "Bozen-Gries",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "marselan",
-    "hint_nl": "Languedoc",
-    "hint_en": "Languedoc",
-    "source": "https://en.wikipedia.org/wiki/Marselan",
-    "notes": "Wikipedia: grown mostly in the Languedoc wine region.",
+    "hint_nl": "Ningxia (China)",
+    "hint_en": "Ningxia (China)",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -721,10 +721,10 @@
   },
   {
     "id": "molinara",
-    "hint_nl": "Valpolicella",
-    "hint_en": "Valpolicella",
-    "source": "https://en.wikipedia.org/wiki/Molinara_(grape)",
-    "notes": "Wikipedia: adds acidity to the wines of Valpolicella and Bardolino.",
+    "hint_nl": "Bardolino Chiaretto",
+    "hint_en": "Bardolino Chiaretto",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -737,18 +737,18 @@
   },
   {
     "id": "muscadelle",
-    "hint_nl": "Sauternes",
-    "hint_en": "Sauternes",
-    "source": "https://en.wikipedia.org/wiki/Muscadelle",
-    "notes": "Wikipedia: a minor constituent in the dry and sweet wines of Bordeaux, such as Sauternes.",
+    "hint_nl": "Rutherglen",
+    "hint_en": "Rutherglen",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "muscat-ottonel",
-    "hint_nl": "Alsace",
-    "hint_en": "Alsace",
-    "source": "https://en.wikipedia.org/wiki/Muscat_Ottonel",
-    "notes": "Wikipedia: in Alsace the designation Muscat d'Alsace is allowed for Muscat Ottonel.",
+    "hint_nl": "Burgenland Beerenauslese",
+    "hint_en": "Burgenland Beerenauslese",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -761,10 +761,10 @@
   },
   {
     "id": "nero-di-troia",
-    "hint_nl": "Andria en Barletta",
-    "hint_en": "Andria and Barletta",
-    "source": "https://en.wikipedia.org/wiki/Nero_di_Troia",
-    "notes": "Wikipedia: grown in Apulia, particularly around Andria and Barletta.",
+    "hint_nl": "Castel del Monte",
+    "hint_en": "Castel del Monte",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -793,18 +793,18 @@
   },
   {
     "id": "parellada",
-    "hint_nl": "Cava",
-    "hint_en": "Cava",
-    "source": "https://en.wikipedia.org/wiki/Parellada",
-    "notes": "Wikipedia: one of the three traditional varieties used to make Cava.",
+    "hint_nl": "Viña Sol (Torres)",
+    "hint_en": "Viña Sol (Torres)",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "pedro-gimenez",
-    "hint_nl": "Mendoza",
-    "hint_en": "Mendoza",
-    "source": "https://en.wikipedia.org/wiki/Pedro_Gim%C3%A9nez",
-    "notes": "Wikipedia: grown predominantly in the Mendoza wine region.",
+    "hint_nl": "San Juan",
+    "hint_en": "San Juan",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -825,18 +825,18 @@
   },
   {
     "id": "petit-verdot",
-    "hint_nl": "Médoc",
-    "hint_en": "Médoc",
-    "source": "https://en.wikipedia.org/wiki/Petit_Verdot",
-    "notes": "Wikipedia: almost all Petit Verdot in France is planted in Bordeaux, mostly in the Médoc.",
+    "hint_nl": "Margaux",
+    "hint_en": "Margaux",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "piedirosso",
-    "hint_nl": "Campania",
-    "hint_en": "Campania",
-    "source": "https://en.wikipedia.org/wiki/Piedirosso",
-    "notes": "Wikipedia: planted primarily in the Campania region.",
+    "hint_nl": "Lacryma Christi del Vesuvio",
+    "hint_en": "Lacryma Christi del Vesuvio",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -849,10 +849,10 @@
   },
   {
     "id": "pinot-meunier",
-    "hint_nl": "Champagne",
-    "hint_en": "Champagne",
-    "source": "https://en.wikipedia.org/wiki/Pinot_Meunier",
-    "notes": "Wikipedia: most noted for being one of the three main varieties in Champagne.",
+    "hint_nl": "Vallée de la Marne",
+    "hint_en": "Vallée de la Marne",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -889,18 +889,18 @@
   },
   {
     "id": "refosco-dal-peduncolo-rosso",
-    "hint_nl": "Friuli Venezia Giulia",
-    "hint_en": "Friuli Venezia Giulia",
-    "source": "https://en.wikipedia.org/wiki/Refosco_dal_Peduncolo_Rosso",
-    "notes": "Wikipedia: grown predominantly in the Friuli Venezia Giulia region.",
+    "hint_nl": "Karst",
+    "hint_en": "Karst",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
     "id": "ribolla-gialla",
-    "hint_nl": "Collio",
-    "hint_en": "Collio",
-    "source": "https://en.wikipedia.org/wiki/Collio_Goriziano",
-    "notes": "Wikipedia, Collio Goriziano: predominantly white wines with Friulano, Ribolla Gialla, Malvasia Istriana.",
+    "hint_nl": "Oslavia",
+    "hint_en": "Oslavia",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -921,10 +921,10 @@
   },
   {
     "id": "sankt-laurent",
-    "hint_nl": "Neder-Oostenrijk",
-    "hint_en": "Lower Austria",
-    "source": "https://en.wikipedia.org/wiki/Saint_Laurent_(grape)",
-    "notes": "Wikipedia: primarily grown in Lower Austria and Burgenland.",
+    "hint_nl": "Thermenregion",
+    "hint_en": "Thermenregion",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -985,10 +985,10 @@
   },
   {
     "id": "torrontes-riojano",
-    "hint_nl": "Salta",
-    "hint_en": "Salta",
-    "source": "https://en.wikipedia.org/wiki/Torront%C3%A9s",
-    "notes": "Wikipedia: the Salta region is particularly noted for its Torrontés.",
+    "hint_nl": "Cafayate",
+    "hint_en": "Cafayate",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {
@@ -1073,10 +1073,10 @@
   },
   {
     "id": "xarello",
-    "hint_nl": "Cava",
-    "hint_en": "Cava",
-    "source": "https://en.wikipedia.org/wiki/Xarel%C2%B7lo",
-    "notes": "Wikipedia: one of the three traditional varieties used to make Cava.",
+    "hint_nl": "Corpinnat",
+    "hint_en": "Corpinnat",
+    "source": "Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified)",
+    "notes": "changed in the 2026-10-17 review",
     "region": ""
   },
   {

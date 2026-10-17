@@ -19,6 +19,7 @@ SCHEDULE_SEED = 20261101
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
 # Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no source for the missing data (altesse, nerello-mascalese: owner choice).
 DROP_IDS |= {
+    "mondeuse-noire", "erbaluce",  # under 1,000 ha (owner 2026-10-17)
     "braquet-noir",  # 12 ha planted
     "refosco",  # merged into refosco-dal-peduncolo-rosso, shown as "Refosco"
     "altesse", "mauzac-blanc", "negrette", "nerello-mascalese", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
@@ -88,11 +89,15 @@ GUESS_EXTRAS = {
 }
 
 EXTRA_SYNONYMS = {
+    "chasselas": ["Fendant"],
+    "chenin-blanc": ["Steen"],
+    "muscat-of-alexandria": ["Zibibbo"],
+    "croatina": ["Bonarda"],
     "refosco-dal-peduncolo-rosso": ["Refosco dal Peduncolo Rosso", "Refošk"],
     "garnacha-tinta": ["Grenache", "Garnacha", "Grenache Noir"],
     "mazuelo": ["Carignan", "Cariñena", "Carignano"],
     "tempranillo": ["Tinta de Toro", "Tinto Fino", "Tinta del País"],
-    "verdicchio-bianco": ["Trebbiano di Soave", "Verdicchio"],
+    "verdicchio-bianco": ["Trebbiano di Soave", "Verdicchio", "Verdicchio Bianco"],
     "prosecco": ["Glera", "Prosecco"],
     "muscat-blanc-a-petits-grains": ["Moscato", "Moscato d'Asti"],
     "macabeo": ["Cava"],
@@ -119,7 +124,6 @@ EXTRA_SYNONYMS = {
     "silvaner": ["Roter Sylvaner", "Roter Silvaner", "Sylvaner"],
     "lambrusco-salamino": ["Lambrusco Salamino"],
     "corvina-veronese": ["Corvina Veronese"],
-    "verdicchio-bianco": ["Verdicchio Bianco"],
 }
 
 SHOP = {
@@ -257,11 +261,16 @@ def load_aromas():
             recs[r["id"]] = ("batch", r)
     for r in read_json("aromas_book.json"):
         recs[r["id"]] = ("book", r)
+    # reviewed corrections (2026-10-17 review); these win over the book and the batches
+    ov = os.path.join(SRC, "aromas_override.json")
+    for r in (read_json("aromas_override.json") if os.path.exists(ov) else []):
+        recs[r["id"]] = ("review", r)
     return recs
 
 
 BODY_LEVELS = {"light": 1, "medium-light": 2, "medium": 3, "medium-full": 4, "full": 5}
 BODY_BOOK_LABEL = "Gatinois, Explore Wine Maps"
+REVIEW_LABEL = "Review 2026-10-17"
 
 
 def parse_body(label):
@@ -295,6 +304,11 @@ def load_body(problems):
                 problems.append(f"body for {r['id']} has no url")
                 continue
             out[r["id"]] = (lvl, r["url"])
+    ovp = os.path.join(SRC, "body_override.json")
+    for r in (read_json("body_override.json") if os.path.exists(ovp) else []):
+        lvl = parse_body(r.get("body"))
+        if lvl is not None:
+            out[r["id"]] = (lvl, REVIEW_LABEL + ": " + r.get("note", ""))
     book = os.path.join(SRC, "body_book.json")
     for r in (read_json("body_book.json") if os.path.exists(book) else []):
         try:
@@ -349,6 +363,9 @@ def flavours_for(rec):
     if kind == "book":
         ids = [a["d"] for a in items][:MAX_AROMAS]
         return (ids or None), ([{"name": BOOK_LABEL}] if ids else None)
+    if kind == "review":
+        ids = list(items)[:MAX_AROMAS]
+        return (ids or None), ([{"name": REVIEW_LABEL, "note": r.get("note", "")}] if ids else None)
     ranked = [a for a in items if len(a.get("by", [])) >= 2] + [a for a in items if len(a.get("by", [])) < 2]
     keep = ranked[:MAX_AROMAS]
     if not keep:
@@ -556,9 +573,18 @@ def check_hints(grapes):
             continue
         terms = [("name", g["name"]), ("official", g["official"])] + [("synonym", s) for s in g["synonyms"]]
         terms += [("other grape", o["name"]) for o in pool if o["id"] != g["id"]]
+        # curated aliases of other grapes (Cava, Moscato, Prosecco ...): a hint naming one points at that grape
+        terms += [("other grape's synonym", syn) for oid, syns in EXTRA_SYNONYMS.items() if oid != g["id"] for syn in syns]
         for lang in ("nl", "en"):
             for label, text in hint_conflicts(g["hint"][lang], terms):
                 failures.append(f"{g['id']}: hint_{lang} '{g['hint'][lang]}' contains {label} '{text}'")
+    # a hint shared by two grapes tells a regular player "it's the other one"
+    seen = {}
+    for g in pool:
+        key = norm(g.get("hint", {}).get("nl", ""))
+        if key and key in seen:
+            failures.append(f"{g['id']}: hint '{g['hint']['nl']}' is also the hint of {seen[key]}")
+        seen.setdefault(key, g["id"])
     return failures
 
 

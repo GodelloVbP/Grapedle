@@ -44,14 +44,6 @@
   "note": "Cerasuolo rosé is a side style; the classic wine is dry still red (Sonnet check vs Wine Folly/Wikipedia)"
  },
  {
-  "id": "corvina-veronese",
-  "styles": [
-   "blend",
-   "sweet"
-  ],
-  "note": "Valpolicella blend and Recioto; 'fresh' not supported (Sonnet check vs Wine Folly/Wikipedia)"
- },
- {
   "id": "silvaner",
   "styles": [
    "fresh"
@@ -139,13 +131,6 @@
   "note": "Owner: Viognier is aromatic as a style; 'oaked' was wrong"
  },
  {
-  "id": "tribidrag",
-  "styles": [
-   "rose"
-  ],
-  "note": "removed weak: sweet (Sonnet check vs Wine Folly/Wikipedia)"
- },
- {
   "id": "auxerrois",
   "styles": [
    "blend",
@@ -230,5 +215,67 @@
    "fresh"
   ],
   "note": "vinetowinecircle.com: 'also used in blends', acidity 'medium-high to high', 'light'"
+ },
+ {
+  "id": "tribidrag",
+  "styles": [
+   "oaked",
+   "rose"
+  ],
+  "note": "Zinfandel reds are commonly oak-aged; rosé (White Zinfandel) secondary (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "piquepoul-blanc",
+  "styles": [
+   "fresh"
+  ],
+  "note": "Picpoul de Pinet: crisp varietal white (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "grillo",
+  "styles": [
+   "fresh",
+   "fortified"
+  ],
+  "note": "mostly dry still today, also Marsala (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "inzolia",
+  "styles": [
+   "fresh"
+  ],
+  "note": "mainly dry white (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "pedro-gimenez",
+  "styles": [],
+  "note": "Argentine bulk dry white (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "corvina-veronese",
+  "styles": [
+   "blend",
+   "oaked"
+  ],
+  "note": "Amarone/Valpolicella are dry; oak-aged (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "mencia",
+  "styles": [
+   "fresh"
+  ],
+  "note": "aromatic is a white-wine term (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "sankt-laurent",
+  "styles": [],
+  "note": "aromatic is a white-wine term (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
+ },
+ {
+  "id": "sauvignonasse",
+  "styles": [
+   "fresh"
+  ],
+  "note": "Friulano is almond-bitter, not aromatic (Review 2026-10-17 (two reviewers + owner; reviewer wine knowledge, not web-verified))"
  }
 ]
