@@ -1,0 +1,607 @@
+[
+ {
+  "id": "agiorgitiko",
+  "title": "Agiorgitiko",
+  "url": "https://en.wikipedia.org/wiki/Agiorgitiko"
+ },
+ {
+  "id": "aglianico",
+  "title": "Aglianico",
+  "url": "https://en.wikipedia.org/wiki/Aglianico"
+ },
+ {
+  "id": "airen",
+  "title": "Airén",
+  "url": "https://en.wikipedia.org/wiki/Air%C3%A9n"
+ },
+ {
+  "id": "alicante-henri-bouschet",
+  "title": "Alicante_Bouschet",
+  "url": "https://en.wikipedia.org/wiki/Alicante_Bouschet"
+ },
+ {
+  "id": "aligote",
+  "title": "Aligoté",
+  "url": "https://en.wikipedia.org/wiki/Aligot%C3%A9"
+ },
+ {
+  "id": "alvarinho",
+  "title": "Albariño",
+  "url": "https://en.wikipedia.org/wiki/Albari%C3%B1o"
+ },
+ {
+  "id": "arneis",
+  "title": "Arneis",
+  "url": "https://en.wikipedia.org/wiki/Arneis"
+ },
+ {
+  "id": "assyrtiko",
+  "title": "Assyrtiko",
+  "url": "https://en.wikipedia.org/wiki/Assyrtiko"
+ },
+ {
+  "id": "auxerrois",
+  "title": "Auxerrois_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Auxerrois_(grape)"
+ },
+ {
+  "id": "baga",
+  "title": "Baga_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Baga_(grape)"
+ },
+ {
+  "id": "barbera",
+  "title": "Barbera",
+  "url": "https://en.wikipedia.org/wiki/Barbera"
+ },
+ {
+  "id": "blauer-portugieser",
+  "title": "Blauer_Portugieser",
+  "url": "https://en.wikipedia.org/wiki/Blauer_Portugieser"
+ },
+ {
+  "id": "blaufrankisch",
+  "title": "Blaufränkisch",
+  "url": "https://en.wikipedia.org/wiki/Blaufr%C3%A4nkisch"
+ },
+ {
+  "id": "bobal",
+  "title": "Bobal",
+  "url": "https://en.wikipedia.org/wiki/Bobal"
+ },
+ {
+  "id": "brachetto-del-piemonte",
+  "title": "Brachetto",
+  "url": "https://en.wikipedia.org/wiki/Brachetto"
+ },
+ {
+  "id": "cabernet-franc",
+  "title": "Cabernet_Franc",
+  "url": "https://en.wikipedia.org/wiki/Cabernet_Franc"
+ },
+ {
+  "id": "cabernet-sauvignon",
+  "title": "Cabernet_Sauvignon",
+  "url": "https://en.wikipedia.org/wiki/Cabernet_Sauvignon"
+ },
+ {
+  "id": "carmenere",
+  "title": "Carménère",
+  "url": "https://en.wikipedia.org/wiki/Carm%C3%A9n%C3%A8re"
+ },
+ {
+  "id": "catarratto-bianco",
+  "title": "Catarratto",
+  "url": "https://en.wikipedia.org/wiki/Catarratto"
+ },
+ {
+  "id": "chardonnay",
+  "title": "Chardonnay",
+  "url": "https://en.wikipedia.org/wiki/Chardonnay"
+ },
+ {
+  "id": "chasselas",
+  "title": "Chasselas",
+  "url": "https://en.wikipedia.org/wiki/Chasselas"
+ },
+ {
+  "id": "chenin-blanc",
+  "title": "Chenin_blanc",
+  "url": "https://en.wikipedia.org/wiki/Chenin_blanc"
+ },
+ {
+  "id": "ciliegiolo",
+  "title": "Ciliegiolo",
+  "url": "https://en.wikipedia.org/wiki/Ciliegiolo"
+ },
+ {
+  "id": "cinsaut",
+  "title": "Cinsaut",
+  "url": "https://en.wikipedia.org/wiki/Cinsaut"
+ },
+ {
+  "id": "clairette",
+  "title": "Clairette",
+  "url": "https://en.wikipedia.org/wiki/Clairette"
+ },
+ {
+  "id": "colombard",
+  "title": "Colombard",
+  "url": "https://en.wikipedia.org/wiki/Colombard"
+ },
+ {
+  "id": "cortese",
+  "title": "Cortese",
+  "url": "https://en.wikipedia.org/wiki/Cortese"
+ },
+ {
+  "id": "corvina-veronese",
+  "title": "Corvina_Veronese",
+  "url": "https://en.wikipedia.org/wiki/Corvina_Veronese"
+ },
+ {
+  "id": "corvinone",
+  "title": "Corvinone",
+  "url": "https://en.wikipedia.org/wiki/Corvinone"
+ },
+ {
+  "id": "cot",
+  "title": "Malbec",
+  "url": "https://en.wikipedia.org/wiki/Malbec"
+ },
+ {
+  "id": "croatina",
+  "title": "Croatina",
+  "url": "https://en.wikipedia.org/wiki/Croatina"
+ },
+ {
+  "id": "dolcetto",
+  "title": "Dolcetto",
+  "url": "https://en.wikipedia.org/wiki/Dolcetto"
+ },
+ {
+  "id": "dona-branca",
+  "title": "Doña_Blanca",
+  "url": "https://en.wikipedia.org/wiki/Do%C3%B1a_Blanca"
+ },
+ {
+  "id": "dornfelder",
+  "title": "Dornfelder",
+  "url": "https://en.wikipedia.org/wiki/Dornfelder"
+ },
+ {
+  "id": "falanghina-flegrea",
+  "title": "Falanghina",
+  "url": "https://en.wikipedia.org/wiki/Falanghina"
+ },
+ {
+  "id": "fiano",
+  "title": "Fiano_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Fiano_(grape)"
+ },
+ {
+  "id": "furmint",
+  "title": "Furmint",
+  "url": "https://en.wikipedia.org/wiki/Furmint"
+ },
+ {
+  "id": "gamay-noir",
+  "title": "Gamay",
+  "url": "https://en.wikipedia.org/wiki/Gamay"
+ },
+ {
+  "id": "garganega",
+  "title": "Garganega",
+  "url": "https://en.wikipedia.org/wiki/Garganega"
+ },
+ {
+  "id": "garnacha-blanca",
+  "title": "Garnacha_blanca",
+  "url": "https://en.wikipedia.org/wiki/Garnacha_blanca"
+ },
+ {
+  "id": "garnacha-tinta",
+  "title": "Grenache",
+  "url": "https://en.wikipedia.org/wiki/Grenache"
+ },
+ {
+  "id": "gewurztraminer",
+  "title": "Gewürztraminer",
+  "url": "https://en.wikipedia.org/wiki/Gew%C3%BCrztraminer"
+ },
+ {
+  "id": "godello",
+  "title": "Godello",
+  "url": "https://en.wikipedia.org/wiki/Godello"
+ },
+ {
+  "id": "graciano",
+  "title": "Graciano",
+  "url": "https://en.wikipedia.org/wiki/Graciano"
+ },
+ {
+  "id": "grasevina",
+  "title": "Welschriesling",
+  "url": "https://en.wikipedia.org/wiki/Welschriesling"
+ },
+ {
+  "id": "greco",
+  "title": "Greco_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Greco_(grape)"
+ },
+ {
+  "id": "grignolino",
+  "title": "Grignolino",
+  "url": "https://en.wikipedia.org/wiki/Grignolino"
+ },
+ {
+  "id": "grillo",
+  "title": "Grillo",
+  "url": "https://en.wikipedia.org/wiki/Grillo"
+ },
+ {
+  "id": "gros-manseng",
+  "title": "Gros_Manseng",
+  "url": "https://en.wikipedia.org/wiki/Gros_Manseng"
+ },
+ {
+  "id": "gruner-veltliner",
+  "title": "Grüner_Veltliner",
+  "url": "https://en.wikipedia.org/wiki/Gr%C3%BCner_Veltliner"
+ },
+ {
+  "id": "harslevelu",
+  "title": "Hárslevelű",
+  "url": "https://en.wikipedia.org/wiki/H%C3%A1rslevel%C5%B1"
+ },
+ {
+  "id": "inzolia",
+  "title": "Inzolia",
+  "url": "https://en.wikipedia.org/wiki/Inzolia"
+ },
+ {
+  "id": "jacquere",
+  "title": "Jacquère",
+  "url": "https://en.wikipedia.org/wiki/Jacqu%C3%A8re"
+ },
+ {
+  "id": "lagrein",
+  "title": "Lagrein",
+  "url": "https://en.wikipedia.org/wiki/Lagrein"
+ },
+ {
+  "id": "lambrusco-salamino",
+  "title": "Lambrusco",
+  "url": "https://en.wikipedia.org/wiki/Lambrusco"
+ },
+ {
+  "id": "macabeo",
+  "title": "Viura",
+  "url": "https://en.wikipedia.org/wiki/Viura"
+ },
+ {
+  "id": "marsanne",
+  "title": "Marsanne",
+  "url": "https://en.wikipedia.org/wiki/Marsanne"
+ },
+ {
+  "id": "marselan",
+  "title": "Marselan",
+  "url": "https://en.wikipedia.org/wiki/Marselan"
+ },
+ {
+  "id": "mazuelo",
+  "title": "Carignan",
+  "url": "https://en.wikipedia.org/wiki/Carignan"
+ },
+ {
+  "id": "melon",
+  "title": "Melon_de_Bourgogne",
+  "url": "https://en.wikipedia.org/wiki/Melon_de_Bourgogne"
+ },
+ {
+  "id": "mencia",
+  "title": "Mencía_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Menc%C3%ADa_(grape)"
+ },
+ {
+  "id": "merlot",
+  "title": "Merlot",
+  "url": "https://en.wikipedia.org/wiki/Merlot"
+ },
+ {
+  "id": "molinara",
+  "title": "Molinara_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Molinara_(grape)"
+ },
+ {
+  "id": "monastrell",
+  "title": "Mourvèdre",
+  "url": "https://en.wikipedia.org/wiki/Mourv%C3%A8dre"
+ },
+ {
+  "id": "montepulciano",
+  "title": "Montepulciano_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Montepulciano_(grape)"
+ },
+ {
+  "id": "muller-thurgau",
+  "title": "Müller-Thurgau",
+  "url": "https://en.wikipedia.org/wiki/M%C3%BCller-Thurgau"
+ },
+ {
+  "id": "muscadelle",
+  "title": "Muscadelle",
+  "url": "https://en.wikipedia.org/wiki/Muscadelle"
+ },
+ {
+  "id": "muscat-blanc-a-petits-grains",
+  "title": "Muscat_Blanc_à_Petits_Grains",
+  "url": "https://en.wikipedia.org/wiki/Muscat_Blanc_%C3%A0_Petits_Grains"
+ },
+ {
+  "id": "muscat-of-alexandria",
+  "title": "Muscat_of_Alexandria",
+  "url": "https://en.wikipedia.org/wiki/Muscat_of_Alexandria"
+ },
+ {
+  "id": "muscat-ottonel",
+  "title": "Muscat_Ottonel",
+  "url": "https://en.wikipedia.org/wiki/Muscat_Ottonel"
+ },
+ {
+  "id": "nebbiolo",
+  "title": "Nebbiolo",
+  "url": "https://en.wikipedia.org/wiki/Nebbiolo"
+ },
+ {
+  "id": "negroamaro",
+  "title": "Negroamaro",
+  "url": "https://en.wikipedia.org/wiki/Negroamaro"
+ },
+ {
+  "id": "nero-d-avola",
+  "title": "Nero_d'Avola",
+  "url": "https://en.wikipedia.org/wiki/Nero_d'Avola"
+ },
+ {
+  "id": "nero-di-troia",
+  "title": "Nero_di_Troia",
+  "url": "https://en.wikipedia.org/wiki/Nero_di_Troia"
+ },
+ {
+  "id": "palomino-fino",
+  "title": "Palomino_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Palomino_(grape)"
+ },
+ {
+  "id": "parellada",
+  "title": "Parellada",
+  "url": "https://en.wikipedia.org/wiki/Parellada"
+ },
+ {
+  "id": "pedro-gimenez",
+  "title": "Pedro_Giménez",
+  "url": "https://en.wikipedia.org/wiki/Pedro_Gim%C3%A9nez"
+ },
+ {
+  "id": "pedro-ximenez",
+  "title": "Pedro_Ximénez",
+  "url": "https://en.wikipedia.org/wiki/Pedro_Xim%C3%A9nez"
+ },
+ {
+  "id": "petit-manseng",
+  "title": "Petit_Manseng",
+  "url": "https://en.wikipedia.org/wiki/Petit_Manseng"
+ },
+ {
+  "id": "petit-verdot",
+  "title": "Petit_Verdot",
+  "url": "https://en.wikipedia.org/wiki/Petit_Verdot"
+ },
+ {
+  "id": "piedirosso",
+  "title": "Piedirosso",
+  "url": "https://en.wikipedia.org/wiki/Piedirosso"
+ },
+ {
+  "id": "pinot-blanc",
+  "title": "Pinot_blanc",
+  "url": "https://en.wikipedia.org/wiki/Pinot_blanc"
+ },
+ {
+  "id": "pinot-gris",
+  "title": "Pinot_gris",
+  "url": "https://en.wikipedia.org/wiki/Pinot_gris"
+ },
+ {
+  "id": "pinot-meunier",
+  "title": "Pinot_Meunier",
+  "url": "https://en.wikipedia.org/wiki/Pinot_Meunier"
+ },
+ {
+  "id": "pinot-noir",
+  "title": "Pinot_noir",
+  "url": "https://en.wikipedia.org/wiki/Pinot_noir"
+ },
+ {
+  "id": "pinotage",
+  "title": "Pinotage",
+  "url": "https://en.wikipedia.org/wiki/Pinotage"
+ },
+ {
+  "id": "piquepoul-blanc",
+  "title": "Piquepoul",
+  "url": "https://en.wikipedia.org/wiki/Piquepoul"
+ },
+ {
+  "id": "prosecco",
+  "title": "Glera_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Glera_(grape)"
+ },
+ {
+  "id": "refosco-dal-peduncolo-rosso",
+  "title": "Refosco_dal_Peduncolo_Rosso",
+  "url": "https://en.wikipedia.org/wiki/Refosco_dal_Peduncolo_Rosso"
+ },
+ {
+  "id": "ribolla-gialla",
+  "title": "Ribolla_Gialla",
+  "url": "https://en.wikipedia.org/wiki/Ribolla_Gialla"
+ },
+ {
+  "id": "riesling",
+  "title": "Riesling",
+  "url": "https://en.wikipedia.org/wiki/Riesling"
+ },
+ {
+  "id": "rkatsiteli",
+  "title": "Rkatsiteli",
+  "url": "https://en.wikipedia.org/wiki/Rkatsiteli"
+ },
+ {
+  "id": "rondinella",
+  "title": "Rondinella",
+  "url": "https://en.wikipedia.org/wiki/Rondinella"
+ },
+ {
+  "id": "roussanne",
+  "title": "Roussanne",
+  "url": "https://en.wikipedia.org/wiki/Roussanne"
+ },
+ {
+  "id": "sagrantino",
+  "title": "Sagrantino",
+  "url": "https://en.wikipedia.org/wiki/Sagrantino"
+ },
+ {
+  "id": "sangiovese",
+  "title": "Sangiovese",
+  "url": "https://en.wikipedia.org/wiki/Sangiovese"
+ },
+ {
+  "id": "sankt-laurent",
+  "title": "Saint_Laurent_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Saint_Laurent_(grape)"
+ },
+ {
+  "id": "sauvignon-blanc",
+  "title": "Sauvignon_blanc",
+  "url": "https://en.wikipedia.org/wiki/Sauvignon_blanc"
+ },
+ {
+  "id": "sauvignonasse",
+  "title": "Friulano_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Friulano_(grape)"
+ },
+ {
+  "id": "scheurebe",
+  "title": "Scheurebe",
+  "url": "https://en.wikipedia.org/wiki/Scheurebe"
+ },
+ {
+  "id": "schiava-grossa",
+  "title": "Schiava",
+  "url": "https://en.wikipedia.org/wiki/Schiava"
+ },
+ {
+  "id": "semillon",
+  "title": "Sémillon",
+  "url": "https://en.wikipedia.org/wiki/S%C3%A9millon"
+ },
+ {
+  "id": "silvaner",
+  "title": "Silvaner",
+  "url": "https://en.wikipedia.org/wiki/Silvaner"
+ },
+ {
+  "id": "syrah",
+  "title": "Syrah",
+  "url": "https://en.wikipedia.org/wiki/Syrah"
+ },
+ {
+  "id": "tannat",
+  "title": "Tannat",
+  "url": "https://en.wikipedia.org/wiki/Tannat"
+ },
+ {
+  "id": "tempranillo",
+  "title": "Tempranillo",
+  "url": "https://en.wikipedia.org/wiki/Tempranillo"
+ },
+ {
+  "id": "torrontes-riojano",
+  "title": "Torrontés",
+  "url": "https://en.wikipedia.org/wiki/Torront%C3%A9s"
+ },
+ {
+  "id": "touriga-franca",
+  "title": "Touriga_Franca",
+  "url": "https://en.wikipedia.org/wiki/Touriga_Franca"
+ },
+ {
+  "id": "touriga-nacional",
+  "title": "Touriga_Nacional",
+  "url": "https://en.wikipedia.org/wiki/Touriga_Nacional"
+ },
+ {
+  "id": "trebbiano-toscano",
+  "title": "Trebbiano",
+  "url": "https://en.wikipedia.org/wiki/Trebbiano"
+ },
+ {
+  "id": "tribidrag",
+  "title": "Zinfandel",
+  "url": "https://en.wikipedia.org/wiki/Zinfandel"
+ },
+ {
+  "id": "trousseau",
+  "title": "Trousseau_(grape)",
+  "url": "https://en.wikipedia.org/wiki/Trousseau_(grape)"
+ },
+ {
+  "id": "verdejo",
+  "title": "Verdejo",
+  "url": "https://en.wikipedia.org/wiki/Verdejo"
+ },
+ {
+  "id": "verdelho",
+  "title": "Verdelho",
+  "url": "https://en.wikipedia.org/wiki/Verdelho"
+ },
+ {
+  "id": "verdicchio-bianco",
+  "title": "Verdicchio",
+  "url": "https://en.wikipedia.org/wiki/Verdicchio"
+ },
+ {
+  "id": "vermentino",
+  "title": "Vermentino",
+  "url": "https://en.wikipedia.org/wiki/Vermentino"
+ },
+ {
+  "id": "vernaccia-di-san-gimignano",
+  "title": "Vernaccia_di_San_Gimignano",
+  "url": "https://en.wikipedia.org/wiki/Vernaccia_di_San_Gimignano"
+ },
+ {
+  "id": "viognier",
+  "title": "Viognier",
+  "url": "https://en.wikipedia.org/wiki/Viognier"
+ },
+ {
+  "id": "xarello",
+  "title": "Xarel·lo",
+  "url": "https://en.wikipedia.org/wiki/Xarel%C2%B7lo"
+ },
+ {
+  "id": "xinomavro",
+  "title": "Xinomavro",
+  "url": "https://en.wikipedia.org/wiki/Xinomavro"
+ },
+ {
+  "id": "zweigelt",
+  "title": "Zweigelt",
+  "url": "https://en.wikipedia.org/wiki/Zweigelt"
+ }
+]

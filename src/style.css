@@ -290,3 +290,5 @@
 #grapedle-root[data-gd-kb="on"] .gd-counter { display: none; }
 #grapedle-root[data-gd-kb="on"] .gd-hintbtn { min-height: 32px; }
 #grapedle-root[data-gd-kb="on"] .gd-play { margin-top: 8px; }
+#grapedle-root .gd-wiki { margin-top: 10px; font-size: .88rem; }
+#grapedle-root .gd-wiki a { color: var(--gd-brand); text-decoration: underline; text-underline-offset: 2px; }

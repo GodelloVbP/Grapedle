@@ -338,8 +338,6 @@ test('i18n: both languages complete, lang selection', () => {
   for (const lang of ['nl', 'en']) for (let n = 1; n <= 6; n++) assert.ok(STRINGS[lang]['cheer' + n], 'cheer' + n);
   assert.equal(makeT('nl')('cheer1'), 'Onwaarschijnlijk!');
   assert.equal(makeT('nl')('cheer6'), 'Op het nippertje');
-  assert.equal(makeT('nl')('pickFromList'), 'Kies een druif uit de lijst');
-  assert.equal(makeT('en')('pickFromList'), 'Pick a grape from the list');
   assert.equal(makeT('nl')('practiceLabel', { n: 12 }), 'Oefenpuzzel #12 — telt niet mee');
   assert.equal(makeT('nl')('teaserTitle', { date: '1 november 2026' }), 'Grapedle start op 1 november 2026');
   assert.ok(!('col_climate' in STRINGS.nl), 'no climate strings');

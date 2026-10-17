@@ -26,6 +26,7 @@ DROP_IDS |= {
 
 # Name shown in the game. The official (Adelaide prime) name goes in small print on the answer card.
 DISPLAY = {
+    "cinsaut": "Cinsault",
     "refosco-dal-peduncolo-rosso": "Refosco",
     "garnacha-tinta": "Grenache", "mazuelo": "Carignan", "melon": "Muscadet", "prosecco": "Glera",
     "cot": "Malbec", "tribidrag": "Zinfandel / Primitivo", "alvarinho": "Albariño",
@@ -375,6 +376,7 @@ def build_grapes(report):
     pool = {r["id"]: r for r in rows("answer_pool.csv")}
     sig = {r["id"]: r for r in rows("signature_regions.csv")}
     hints = {h["id"]: h for h in read_json("hints.json")}
+    wiki = {w["id"]: w["url"] for w in read_json("wikipedia.json")}
     # optional "Wist je dat" facts: [{id, fact_nl, fact_en, source}]; only sourced facts are used, never invented ones
     facts = {f["id"]: f for f in (read_json("facts.json") if os.path.exists(os.path.join(SRC, "facts.json")) else [])}
     aromas = load_aromas()
@@ -423,6 +425,8 @@ def build_grapes(report):
             rec["stocked"] = True
         if gid in pool and pool[gid]["weekend_only"]:
             rec["weekendOnly"] = True
+        if gid in wiki:
+            rec["wiki"] = wiki[gid]
         ids, fsrc = flavours_for(aromas.get(gid))
         rec["flavours"] = ids
         if fsrc:

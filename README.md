@@ -46,6 +46,7 @@ The schedule needs at least 90 days ahead: the build prints a warning and a test
 - Gatinois, *Explore Wine Maps*. Aromas where the owner's copy has an entry; otherwise Wine Folly, Jancis Robinson and Wikipedia (the URL per grape is in the `sources` object of `data/grapes.json`).
 - Body: Wine Folly grape pages (URL per grape in `sources.body`), overridden by the owner's copy of Gatinois, *Explore Wine Maps* where `body_book.json` has an entry.
 - Hints: one source URL per grape in `data/source/hints.json`.
+- Wikipedia: one English article per grape in `data/source/wikipedia.json` (`wiki` in `grapes.json`), linked from the end card.
 
 ## Game rules in short
 
@@ -76,7 +77,7 @@ Before the launch date the game shows a teaser with a countdown and offers pract
 
 On touch devices (`(hover: none) and (pointer: coarse)`) the native keyboard is replaced by an on-screen keyboard, because the native one covers the board. The input gets `inputmode="none"`, the board moves above the input in chronological order (newest guess right above the keys), suggestions float as wrapping chips over the board just above the input (every grape starting with the first 1-2 letters, A-Z, no cap), and letters that cannot continue any grape name or synonym are dimmed and inert (`src/keyboard.js`, `nextKeys`). Backspace repeats when held. A physical keyboard still types into the input. Dev only: `?kb=1` forces the on-screen keyboard on desktop.
 
-Search ranks an exact name or synonym first, then answer-pool grapes, then name prefix, synonym prefix, substring. Enter submits only an exact match, a single suggestion, or one picked with the arrow keys or pointer; otherwise it asks to pick from the list. The end screen's "Lijkt op" needs at least 2 identical aromas (or 1 plus the same colour and primary-region country), else only the tastings link shows. Shop links and images must be https: or relative.
+Search ranks an exact name or synonym first, then answer-pool grapes, then name prefix, synonym prefix, substring. Enter submits an exact match, the suggestion picked with the arrow keys or pointer, or otherwise the top suggestion not guessed yet. The end screen's "Lijkt op" needs at least 2 identical aromas (or 1 plus the same colour and primary-region country), else only the tastings link shows. Shop links and images must be https: or relative.
 
 ## Build
 

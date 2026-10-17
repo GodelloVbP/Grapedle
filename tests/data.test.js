@@ -317,3 +317,10 @@ shutil.rmtree(d)
 `], { encoding: 'utf8', cwd: new URL('..', import.meta.url).pathname });
   assert.deepEqual(JSON.parse(out), [[5, 'Gatinois, Explore Wine Maps'], []]);
 });
+
+test('every grape links its English Wikipedia article; Cinsault shown with its usual spelling', () => {
+  for (const g of grapes) assert.match(g.wiki || '', /^https:\/\/en\.wikipedia\.org\/wiki\/[^\s]+$/, g.id);
+  assert.equal(byId.get('pedro-gimenez').wiki, 'https://en.wikipedia.org/wiki/Pedro_Gim%C3%A9nez', 'not Pedro Ximénez');
+  assert.equal(byId.get('cinsaut').name, 'Cinsault');
+  assert.ok(byId.get('cinsaut').synonyms.includes('Cinsaut'));
+});

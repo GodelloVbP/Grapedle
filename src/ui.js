@@ -526,15 +526,12 @@ function mountInner(root, opts) {
       if (game.has(g.id)) return note(t('alreadyGuessed'));
       return submit(g.id);
     }
-    const found = search(v);
+    // Enter takes the top suggestion (the first one not guessed yet), in the order the list shows it
+    const found = suggest(v);
     if (!found.length) return note(t('unknownGrape'));
     const open = found.filter((r) => !game.has(r.grape.id));
-    if (found.length === 1) {
-      if (!open.length) return note(t('alreadyGuessed'));
-      return submit(open[0].grape.id);
-    }
-    results = found; active = -1; explicit = false; renderList();
-    note(t('pickFromList'));
+    if (!open.length) return note(t('alreadyGuessed'));
+    return submit(open[0].grape.id);
   }
 
   function submit(id) {
@@ -607,13 +604,16 @@ function mountInner(root, opts) {
     return t('lose', { grape: game.answer.name });
   }
 
+  /** The answer on the six Grapedle columns, in board order, then what it is known for. */
   function facts(g) {
     const rows = [
-      [t('region'), regionsOf(g).map((r) => (r.name ? `${regionLabel(r.name, lang)}, ${countryName(r.country)}` : countryName(r.country))).join(' / ')],
+      [colLabel('colour'), t('v_' + g.colour)],
+      [colLabel('region'), regionsOf(g).map((r) => (r.name ? `${regionLabel(r.name, lang)}, ${countryName(r.country)}` : countryName(r.country))).join(' / ')],
+      [colLabel('body'), g.body ? bodyName(g.body) : t('unknownValue')],
+      [colLabel('style'), styleIds(g) ? h('span', { class: 'gd-chips' }, styleIds(g).map((x) => styleChip(x, {}, true))) : t('unknownValue')],
+      [colLabel('area'), g.areaHa ? formatArea(g.areaHa, lang) : t('unknownValue')],
+      [colLabel('flavour'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : t('unknownValue')],
       [t('knownFor'), g.hint ? g.hint[lang] : null],
-      [colLabel('body'), g.body ? bodyName(g.body) : null],
-      [t('styleRow'), styleIds(g) ? h('span', { class: 'gd-chips' }, styleIds(g).map((x) => styleChip(x, {}, true))) : null],
-      [t('aromas'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : null],
     ].filter((r) => r[1]);
     return h('dl', { class: 'gd-facts' }, rows.map((r) => h('div', { class: 'gd-fact' }, h('dt', null, r[0]), h('dd', null, r[1]))));
   }
@@ -692,7 +692,9 @@ function mountInner(root, opts) {
         small ? h('p', { class: 'gd-answer-small' }, small) : null,
         facts(game.answer),
         fact ? h('p', { class: 'gd-did' }, h('strong', null, t('didYouKnow') + ': '), fact) : null,
-        lookalikeOf(game.answer.id) ? h('p', { class: 'gd-did' }, lookalikeOf(game.answer.id)[lang]) : null),
+        lookalikeOf(game.answer.id) ? h('p', { class: 'gd-did' }, lookalikeOf(game.answer.id)[lang]) : null,
+        /^https:\/\/en\.wikipedia\.org\//.test(game.answer.wiki || '') ? h('p', { class: 'gd-wiki' },
+          h('a', { href: game.answer.wiki, target: '_blank', rel: 'noopener', 'data-gd-link': 'wikipedia' }, t('wikiLink', { grape: game.answer.name }))) : null),
       daily ? h('div', { class: 'gd-share' }, shareBtn) : null,
       daily ? h('p', { class: 'gd-countdown' }, t('next') + ' ', h('strong', { class: 'gd-clock' }, clockText())) : null,
       daily ? h('div', { class: 'gd-practice-cta' }, h('button', { type: 'button', class: 'gd-btn gd-btn-ghost', onclick: (e) => openPractice(e.currentTarget) }, t('practice')))
