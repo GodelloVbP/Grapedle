@@ -217,12 +217,34 @@
 #grapedle-root .gd-dist-bar { min-width: 8%; background: var(--gd-gold); color: var(--gd-ink); padding: 1px 8px; border-radius: 4px; text-align: right; font-weight: 600; }
 #grapedle-root .gd-dist-today { background: var(--gd-green); color: var(--gd-green-ink); }
 
+#grapedle-root { position: relative; --gd-pop: 1.1; --gd-pops: 2; }
+#grapedle-root[data-gd-tier="1"] { --gd-pop: 1.2; --gd-pops: 4; }
+#grapedle-root[data-gd-tier="2"] { --gd-pop: 1.16; --gd-pops: 3; }
+#grapedle-root[data-gd-tier="3"] { --gd-pop: 1.12; --gd-pops: 3; }
+#grapedle-root[data-gd-tier="4"] { --gd-pop: 1.1; --gd-pops: 2; }
+#grapedle-root[data-gd-tier="5"] { --gd-pop: 1.07; --gd-pops: 2; }
+#grapedle-root[data-gd-tier="6"] { --gd-pop: 1.05; --gd-pops: 1; }
+
 @media (prefers-reduced-motion: no-preference) {
   #grapedle-root .gd-new .gd-tile { animation: gd-flip .45s ease both; animation-delay: calc(var(--i, 0) * 70ms); }
-  #grapedle-root .gd-win .gd-tile { animation: gd-flip .45s ease both, gd-pulse .6s ease 0.45s 2; animation-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms + 450ms); }
+  #grapedle-root .gd-win .gd-tile { animation: gd-flip .45s ease both, gd-pulse .6s ease 0.45s var(--gd-pops); animation-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms + 450ms); }
   @keyframes gd-flip { from { opacity: 0; transform: rotateX(80deg); } to { opacity: 1; transform: none; } }
-  @keyframes gd-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  @keyframes gd-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(var(--gd-pop)); } }
+  @keyframes gd-cf {
+    0% { transform: translate(0, 0) rotate(0); opacity: 1; animation-timing-function: cubic-bezier(.2, .8, .4, 1); }
+    38% { transform: translate(calc(var(--dx) * .75), var(--up)) rotate(calc(var(--r) * .5)); opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .9, .6); }
+    100% { transform: translate(var(--dx), var(--fall)) rotate(var(--r)); opacity: 0; }
+  }
 }
+/* win confetti: clipped to the game, never catches clicks */
+#grapedle-root .gd-confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; }
+#grapedle-root .gd-cf { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: calc(var(--w) * 1.5); border-radius: 2px; opacity: 0; animation: gd-cf var(--t) linear forwards; will-change: transform, opacity; }
+#grapedle-root .gd-cf-round { height: var(--w); border-radius: 50%; }
+#grapedle-root .gd-cf-0 { background: var(--gd-green); }
+#grapedle-root .gd-cf-1 { background: var(--gd-yellow); }
+#grapedle-root .gd-cf-2 { background: var(--gd-gold); }
+#grapedle-root .gd-cf-3 { background: var(--gd-accent); }
+#grapedle-root .gd-cf-4 { background: var(--gd-brand); }
 
 /* on-screen keyboard (touch devices, data-gd-kb="on"): board above, input, suggestion chips, keys */
 #grapedle-root[data-gd-kb="on"] .gd-app { display: flex; flex-direction: column; }

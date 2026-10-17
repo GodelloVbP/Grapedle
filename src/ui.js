@@ -10,6 +10,7 @@ import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS
 import { norm } from './text.js';
 import { KEY_ROWS, nextKeys } from './keyboard.js';
 import { LOGO_SVG, LOGO_VIEWBOX } from './logo.js';
+import { celebrate } from './celebrate.js';
 
 const ICON_HELP = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2"/><path d="M12 17.6v.1"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>';
@@ -137,7 +138,7 @@ function mountInner(root, opts) {
   const now = () => (fakeBase ? new Date(fakeBase.at + (Date.now() - fakeBase.real)) : new Date());
 
   const numFmt = () => new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'nl-NL');
-  let game, shopItems, shopPhase = 'loading', toastTimer = null, justAdded = false, justWon = false;
+  let game, shopItems, shopPhase = 'loading', toastTimer = null, justAdded = false, justWon = false, stopCelebrate = () => {};
   let expanded = new Set(), expandedFor = null; // phone board: guess indexes shown in full
   let mode = 'daily'; // 'daily' | 'teaser' | 'practice'
   let practiceN = null; // puzzle number of a practice game, null for a random pre-launch grape or random pick
@@ -624,6 +625,7 @@ function mountInner(root, opts) {
       if (kbMode) keepPlayInView(); else input.focus();
     } else {
       renderPlay(); renderEnd();
+      if (game.status === 'won') { stopCelebrate(); stopCelebrate = celebrate(root, game.guesses.length); }
       if (mode === 'daily') track(game.status === 'won' ? 'win' : 'loss', { tries: game.guesses.length, hints: game.hints.length });
       const hd = endEl.querySelector('.gd-end-title');
       if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: false }); }
@@ -974,6 +976,7 @@ function mountInner(root, opts) {
   }
 
   function start() {
+    stopCelebrate();
     cur = currentPuzzle();
     mode = cur.mode;
     practiceN = null;
@@ -1000,6 +1003,7 @@ function mountInner(root, opts) {
     alive = false;
     clearTimeout(toastTimer);
     clearInterval(tickTimer);
+    stopCelebrate();
     while (cleanups.length) { try { cleanups.pop()(); } catch (e) { /* ignore */ } }
   }
   root._gdTeardown = teardown;
