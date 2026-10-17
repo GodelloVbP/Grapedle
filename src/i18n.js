@@ -54,7 +54,6 @@ export const STRINGS = {
     v_white: 'Wit', v_red: 'Rood',
     v_body_1: 'Licht', v_body_2: 'Medium-licht', v_body_3: 'Medium', v_body_4: 'Medium-vol', v_body_5: 'Vol',
     body_up_sr: 'het antwoord is voller', body_down_sr: 'het antwoord is lichter',
-    area_eq: '=',
     area_same_sr: 'dezelfde druif',
     area_up_sr: 'het antwoord heeft meer hectare', area_down_sr: 'het antwoord heeft minder hectare', area_eq_sr: 'evenveel hectare als het antwoord',
     km: '{n} km', kmZero: 'zelfde plek', toward: 'richting {dir}', overlap: 'gedeeltelijk gelijk',
@@ -86,7 +85,7 @@ export const STRINGS = {
     teaserTitle: 'Grapedle start op {date}',
     teaserText: 'Elke dag een nieuwe druif om te raden. Het eerste raadsel verschijnt over:',
     teaserPractice: 'Speel een oefenpuzzel',
-    days: 'd', hours: 'u', minutes: 'min', seconds: 's',
+    days: 'd',
   },
   en: {
     puzzle: 'Grapedle #{n}',
@@ -143,7 +142,6 @@ export const STRINGS = {
     v_white: 'White', v_red: 'Red',
     v_body_1: 'Light', v_body_2: 'Medium-light', v_body_3: 'Medium', v_body_4: 'Medium-full', v_body_5: 'Full',
     body_up_sr: 'the answer is fuller', body_down_sr: 'the answer is lighter',
-    area_eq: '=',
     area_same_sr: 'same grape',
     area_up_sr: 'the answer has more hectares', area_down_sr: 'the answer has fewer hectares', area_eq_sr: 'the same hectares as the answer',
     km: '{n} km', kmZero: 'same place', toward: 'toward {dir}', overlap: 'partly matching',
@@ -175,7 +173,7 @@ export const STRINGS = {
     teaserTitle: 'Grapedle starts on {date}',
     teaserText: 'A new grape to guess every day. The first puzzle appears in:',
     teaserPractice: 'Play a practice puzzle',
-    days: 'd', hours: 'h', minutes: 'min', seconds: 's',
+    days: 'd',
   },
 };
 

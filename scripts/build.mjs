@@ -16,7 +16,8 @@ const stripSources = {
 // GD_OUT: build the production files somewhere else (release:check compares them with dist/).
 const OUT = process.env.GD_OUT || 'dist';
 const PROD = OUT === 'dist';
-const common = { bundle: true, minify: true, legalComments: 'none', logLevel: 'warning' };
+// charset ascii: every non-ASCII character is escaped, so the bundle works even if served or cached without a UTF-8 charset
+const common = { bundle: true, minify: true, legalComments: 'none', logLevel: 'warning', charset: 'ascii' };
 const js = { ...common, entryPoints: ['src/index.js'], format: 'iife', target: ['es2019'], loader: { '.json': 'json' }, plugins: [stripSources] };
 // Production: __GD_DEV__ is false, so the shop fixture (?mockShop=) is dropped from the bundle.
 await build({ ...js, outfile: `${OUT}/grapedle.min.js`, define: { __GD_DEV__: 'false' } });
@@ -30,3 +31,6 @@ console.log(`raw: js ${size(`${OUT}/grapedle.min.js`)} B, css ${size(`${OUT}/gra
 console.log(`gzip: js ${(j / 1024).toFixed(1)} KB, css ${(c / 1024).toFixed(1)} KB, total ${((j + c) / 1024).toFixed(1)} KB (limit 80)`);
 if (readFileSync(`${OUT}/grapedle.min.js`, 'utf8').includes('Mock Rood')) { console.error('Shop fixture leaked into the production bundle'); process.exit(1); }
 if (j + c > 80 * 1024) { console.error('Bundle too large'); process.exit(1); }
+for (const f of [`${OUT}/grapedle.min.js`, `${OUT}/grapedle.min.css`]) {
+  if (readFileSync(f).some((b) => b > 0x7f)) { console.error(`${f} contains non-ASCII bytes`); process.exit(1); }
+}

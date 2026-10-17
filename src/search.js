@@ -32,10 +32,9 @@ export function search(query, limit = 8, opts = {}) {
     if (kind === 0) via = e.name === q ? null : syn((x) => x.key === q);
     else if (kind === 2) via = syn((x) => x.key.startsWith(q));
     else if (kind === 4 && !e.name.includes(q)) via = syn((x) => x.key.includes(q));
-    hits.push({ grape: e.g, via, kind, exact: kind === 0, pool: !!e.g.answer, thin: !e.g.answer && !(e.g.flavours && e.g.flavours.length) });
+    hits.push({ grape: e.g, via, kind, exact: kind === 0, pool: !!e.g.answer });
   }
-  const anyPool = hits.some((h) => h.pool);
-  const rank = (h) => [anyPool && h.thin ? 1 : 0, h.exact ? 0 : 1, h.pool ? 0 : 1, h.kind];
+  const rank = (h) => [h.exact ? 0 : 1, h.pool ? 0 : 1, h.kind];
   hits.sort((a, b) => {
     const ra = rank(a), rb = rank(b);
     for (let i = 0; i < ra.length; i++) if (ra[i] !== rb[i]) return ra[i] - rb[i];

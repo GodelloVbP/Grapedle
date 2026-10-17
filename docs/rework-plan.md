@@ -1,5 +1,7 @@
 # Grapedle rework plan — v3 (final, executing)
 
+**2026-10-17 review applied** (see the Grapedle verbeterplan doc): 121 grapes, every grape a named region, stricter Smaakprofiel green, Blend ignored in Stijl, rhumb-line arrows, colour-only share text, compact phone rows, inline first-visit intro, look-alike notes, `@1` embed. Where this file and the code differ, the code and README are current.
+
 Updated 2026-10-09 after the owner review (five columns incl. body, number-and-arrow Aanplant, emoji Smaakprofiel, first-letter hint 2, practice mode, teaser, release process). Reviewed twice by two reviewers each round (one with full project context, one cold). v2 → v3 resolves every round-2 finding. v0 was never live; schedule, data and storage change freely until launch day, which becomes the start of the append-only rule.
 
 ## Game constants

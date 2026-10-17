@@ -13,7 +13,6 @@ from collections import defaultdict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "data", "source")
 OUT = os.path.join(ROOT, "data")
-TARGET_TOTAL = 259  # 260 in v0, minus the dropped silvaner-r record
 SCHEDULE_SEED = 20261101
 
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
@@ -151,15 +150,6 @@ def norm(s):
     s = unicodedata.normalize("NFD", s)
     s = "".join(c for c in s if not unicodedata.combining(c)).lower()
     return re.sub(r"[^a-z0-9]+", " ", s).strip()
-
-
-def sig2(n):
-    n = float(n)
-    if n < 100:
-        return int(round(n))
-    import math
-    d = 2 - int(math.floor(math.log10(n))) - 1
-    return int(round(n, d))
 
 
 def rows(name):

@@ -4,7 +4,7 @@ import { createGame, shareText, firstLetter, MAX_GUESSES, HINT_AT } from './game
 import { answerIdFor } from './schedule.js';
 import { makeT, pickLang, regionLabel } from './i18n.js';
 import { search, exact } from './search.js';
-import { createStore, computeStats } from './storage.js';
+import { createStore, computeStats, backupAndClear } from './storage.js';
 import { puzzleNumber, msUntilNextPuzzle, msUntilStart, puzzleDate, formatYmd } from './date.js';
 import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS_URL, SHOP_PAGE } from './shop.js';
 import { norm } from './text.js';
@@ -50,7 +50,7 @@ export function mount(root, opts) {
     return mountInner(root, opts || {});
   } catch (e) {
     if (typeof root._gdTeardown === 'function') { try { root._gdTeardown(); } catch (e2) { /* ignore */ } root._gdTeardown = null; }
-    try { globalThis.localStorage.removeItem('gd:v2'); } catch (e2) { /* no storage */ }
+    try { backupAndClear(); } catch (e2) { /* no storage */ }
     if (opts && opts.retried) {
       root.textContent = '';
       const p = document.createElement('p');
@@ -130,7 +130,7 @@ function mountInner(root, opts) {
     cleanups.push(() => globalThis.removeEventListener && globalThis.removeEventListener('resize', setLayout));
   }
 
-  const announce = (msg) => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 30); };
+  const announce = (msg) => { live.textContent = ''; setTimeout(() => { if (alive) live.textContent = msg; }, 30); };
 
   // ---- helpers ----
   const countryName = (c) => (c && countries[c] ? countries[c][lang] : '?');
@@ -703,8 +703,10 @@ function mountInner(root, opts) {
       tastingsBlock()].filter(Boolean));
   }
 
+  let rollAt = 0; // wall-clock ms of the next midnight in Amsterdam; recomputed only when passed
   function clockText() {
-    const s = Math.max(0, Math.floor(msUntilNextPuzzle(now()) / 1000));
+    if (!rollAt || Date.now() >= rollAt) rollAt = Date.now() + msUntilNextPuzzle(now());
+    const s = Math.max(0, Math.floor((rollAt - Date.now()) / 1000));
     const p = (n) => String(n).padStart(2, '0');
     return `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`;
   }

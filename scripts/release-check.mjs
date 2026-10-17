@@ -40,8 +40,10 @@ const g = spawnSync('git', ['tag', '--points-at', 'HEAD'], { encoding: 'utf8' })
 const tags = g.status === 0 ? g.stdout.split('\n').filter((x) => /^v\d/.test(x)) : [];
 if (tags.length && !tags.includes('v' + pkg.version)) problems.push(`HEAD is tagged ${tags.join(', ')} but package.json version is ${pkg.version}`);
 const readme = readFileSync('README.md', 'utf8');
-const urls = [...readme.matchAll(/Grapedle@v([0-9][^/]*)\//g)].map((m) => m[1]);
-if (!urls.length || urls.some((v) => v !== pkg.version)) problems.push(`README embed URL version(s) [${urls.join(', ')}] differ from package.json ${pkg.version}`);
+// the embed uses a major-version range (@1), so Squarespace never needs editing for a 1.x release
+const urls = [...readme.matchAll(/Grapedle@v?([0-9][^/]*)\//g)].map((m) => m[1]);
+const major = pkg.version.split('.')[0];
+if (!urls.length || urls.some((v) => v !== major)) problems.push(`README embed URL range(s) [${urls.join(', ')}] should be @${major} for package.json ${pkg.version}`);
 
 if (problems.length) { console.error('release:check FAILED\n- ' + problems.join('\n- ')); process.exit(1); }
 console.log(`release:check ok (version ${pkg.version}${tags.length ? ', HEAD tagged ' + tags.join(', ') : ', HEAD not tagged'})`);

@@ -15,7 +15,7 @@ export const KEY_ROWS = [
 export function keyQuery(raw) {
   const base = norm(raw);
   if (!base) return '';
-  return /[^a-z0-9]$/i.test(String(raw).normalize('NFD').replace(/[̀-ͯ]/g, '')) ? base + ' ' : base;
+  return /[^a-z0-9]$/i.test(String(raw).normalize('NFD').replace(/[\u0300-\u036f]/g, '')) ? base + ' ' : base;
 }
 
 /**

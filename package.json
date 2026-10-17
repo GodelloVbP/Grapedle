@@ -13,6 +13,7 @@
     "check:hints": "node -e \"import('./scripts/hints.mjs').then(async m=>{const g=(await import('./data/grapes.json',{with:{type:'json'}})).default;const f=m.checkHints(g);console.log(f.length?f.join('\\\\n'):'hints ok');process.exit(f.length?1:0)})\""
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "jsdom": "^24.1.3"
   }
 }

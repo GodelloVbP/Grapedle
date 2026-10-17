@@ -1,6 +1,8 @@
 import { byId } from './data.js';
 
 export const KEY = 'gd:v2';
+/** One-slot backup written before any reset, so a crash never wipes stats and streak for good. */
+export const BACKUP_KEY = 'gd:v2:bak';
 const OLD_KEYS = ['gd:v1'];
 const MAX = 6;
 
@@ -57,6 +59,15 @@ export function createStore() {
     if (raw) {
       const p = JSON.parse(raw);
       if (p && p.v === 2 && typeof p === 'object') state = normaliseState(p);
+    } else {
+      // after a crash-reset: bring back stats, streak and settings, not the board that may have caused it
+      const bak = globalThis.localStorage.getItem(BACKUP_KEY);
+      if (bak) {
+        const p = JSON.parse(bak);
+        if (p && p.v === 2 && typeof p === 'object') state = normaliseState({ ...p, guesses: {}, hints: {} });
+        globalThis.localStorage.setItem(KEY, JSON.stringify(state));
+        globalThis.localStorage.removeItem(BACKUP_KEY);
+      }
     }
   } catch (e) { ok = false; }
   try { for (const k of OLD_KEYS) globalThis.localStorage.removeItem(k); } catch (e) { ok = false; }
@@ -69,7 +80,7 @@ export function createStore() {
   }
   function reset() {
     state = fresh();
-    try { globalThis.localStorage.removeItem(KEY); } catch (e) { ok = false; }
+    try { backupAndClear(); } catch (e) { ok = false; }
   }
   return {
     get state() { return state; },
@@ -98,4 +109,11 @@ export function computeStats(history, today) {
   let n = history[today] !== undefined ? today : today - 1;
   while (history[n] > 0) { current++; n--; }
   return { played: nums.length, wins, winPct: nums.length ? Math.round((wins / nums.length) * 100) : 0, current, best, dist };
+}
+
+/** Copies the saved state to the backup slot, then removes it. Used by every reset path. */
+export function backupAndClear() {
+  const raw = globalThis.localStorage.getItem(KEY);
+  if (raw) globalThis.localStorage.setItem(BACKUP_KEY, raw);
+  globalThis.localStorage.removeItem(KEY);
 }
