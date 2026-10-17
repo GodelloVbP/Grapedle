@@ -5,7 +5,7 @@ Reads data/source/* and writes data/grapes.json, data/countries.json, data/shop-
 data/schedule.json (append-only from the launch date in schedule.json.start). Fails when a hint
 gives its grape away (see check_hints).
 
-    python3 scripts/build_data.py [--days 770] [--start 2026-11-01]
+    python3 scripts/build_data.py [--days 770] [--start 2026-10-17]
 """
 import csv, json, os, re, sys, unicodedata, argparse, datetime, math
 from collections import defaultdict
@@ -709,7 +709,7 @@ def days_left(sched, today):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=770, help="rounded up to whole cycles of the pool size")
-    ap.add_argument("--start", default="2026-11-01")
+    ap.add_argument("--start", default="2026-10-17")
     ap.add_argument("--today", default=None, help="YYYY-MM-DD, for tests of the days-left warning")
     args = ap.parse_args()
     report = {"problems": []}

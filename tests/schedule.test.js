@@ -16,7 +16,7 @@ const N = answers.length;
 const weekday = (i) => new Date(Date.UTC(...schedule.start.split('-').map((x, k) => (k === 1 ? Number(x) - 1 : Number(x))))  + i * 86400000).getUTCDay();
 
 test('schedule covers >= 2 years of answer-pool grapes, in whole cycles', () => {
-  assert.equal(schedule.start, '2026-11-01');
+  assert.equal(schedule.start, '2026-10-17');
   assert.ok(schedule.days.length >= 730);
   assert.equal(schedule.days.length % N, 0);
   const pool = new Set(answers);
@@ -45,7 +45,7 @@ test('weekend-only grapes appear only on Saturday and Sunday (Europe/Amsterdam c
     assert.ok(w === 0 || w === 6, `${id} on day ${i} (weekday ${w})`);
   });
   assert.ok(seen >= only.size * Math.floor(schedule.days.length / N));
-  assert.equal(weekday(0), 0, '2026-11-01 is a Sunday');
+  assert.equal(weekday(0), 6, '2026-10-17 (launch) is a Saturday');
 });
 
 test('grapes sharing a signature region are at least 7 days apart', () => {
@@ -106,7 +106,7 @@ test('the builder warns when fewer than 90 days are left', () => {
       assert.equal(r.status, 0, r.stderr + r.stdout);
       return r.stdout;
     };
-    const endDay = new Date(Date.UTC(2026, 10, 1) + schedule.days.length * 86400000);
+    const endDay = new Date(Date.parse(schedule.start + 'T00:00:00Z') + schedule.days.length * 86400000);
     const iso = (d) => d.toISOString().slice(0, 10);
     assert.match(run(iso(new Date(endDay.getTime() - 89 * 86400000))), /WARNING: only 89 days of schedule left/);
     assert.doesNotMatch(run(iso(new Date(endDay.getTime() - 90 * 86400000))), /WARNING/);
