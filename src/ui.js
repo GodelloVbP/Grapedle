@@ -837,7 +837,13 @@ function mountInner(root, opts) {
   function openHelp(opener, full) {
     // first visit shows the whole explanation, with "Begrepen" at the end of it
     const gotIt = () => h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt'));
+    // language switch inside the explanation: flags, so a visitor who can't read Dutch finds it straight away
+    const flag = (code, emoji, label) => h('button', {
+      type: 'button', class: 'gd-flag' + (code === lang ? ' gd-flag-on' : ''), lang: code, 'aria-pressed': code === lang ? 'true' : 'false', 'aria-label': label,
+      onclick: (e) => { if (code === lang) return; const open = !!(e.currentTarget.closest('dialog').querySelector('details[open]')); setLang(code); openHelp(opener, open); },
+    }, h('span', { class: 'gd-flag-e', 'aria-hidden': 'true' }, emoji), h('span', { class: 'gd-flag-t' }, label));
     const body = h('div', { class: 'gd-dialog-body' },
+      h('div', { class: 'gd-flags', role: 'group', 'aria-label': t('lang') }, flag('nl', '\u{1F1F3}\u{1F1F1}', 'Nederlands'), flag('en', '\u{1F1EC}\u{1F1E7}', 'English')),
       h('p', null, t('helpIntro')),
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
         demoTile('green', colLabel('colour'), t('v_red')),

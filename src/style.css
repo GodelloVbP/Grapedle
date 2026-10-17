@@ -292,3 +292,8 @@
 #grapedle-root .gd-sugg-track { position: absolute; right: -2px; bottom: 8px; width: 4px; z-index: 21; border-radius: 4px; background: var(--gd-line); pointer-events: none; }
 #grapedle-root .gd-sugg-thumb { position: absolute; left: 0; right: 0; border-radius: 4px; background: var(--gd-brand); }
 #grapedle-root[data-gd-kb="on"] .gd-list { padding-right: 12px; }
+/* help: language flags */
+#grapedle-root .gd-flags { display: flex; gap: 8px; flex-wrap: wrap; }
+#grapedle-root .gd-flag { display: inline-flex !important; align-items: center; gap: 6px; min-height: 40px; padding: 6px 12px !important; border: 1.5px solid var(--gd-line) !important; border-radius: 999px !important; background: var(--gd-panel-soft) !important; color: var(--gd-ink) !important; font-size: .9rem !important; font-weight: 500 !important; cursor: pointer; }
+#grapedle-root .gd-flag-on { border-color: var(--gd-brand) !important; background: #fff !important; font-weight: 700 !important; }
+#grapedle-root .gd-flag-e { font-size: 1.25rem; line-height: 1; }
