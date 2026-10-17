@@ -813,7 +813,7 @@ function mountInner(root, opts) {
   function openModal(title, body, opener) {
     const dlg = h('dialog', { class: 'gd-dialog', 'aria-labelledby': uid + '-dt' },
       h('div', { class: 'gd-dialog-head' },
-        h('h2', { class: 'gd-dialog-title', id: uid + '-dt' }, title),
+        h('h2', { class: 'gd-dialog-title', id: uid + '-dt', tabindex: '-1' }, title),
         h('button', { type: 'button', class: 'gd-icon', 'aria-label': t('close'), onclick: () => dlg.close(), html: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' })),
       body);
     // a click on the backdrop reports the dialog as target; only close when it is really outside the box
@@ -827,6 +827,8 @@ function mountInner(root, opts) {
     modalHost.textContent = '';
     modalHost.appendChild(dlg);
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    // start on the title, not the close button: no focus ring on open, screen readers hear the title first
+    try { dlg.querySelector('.gd-dialog-title').focus({ preventScroll: true }); } catch (e) { /* ignore */ }
     return dlg;
   }
 
@@ -847,7 +849,11 @@ function mountInner(root, opts) {
     }, h('span', { class: 'gd-flag-e', 'aria-hidden': 'true' }, emoji), h('span', { class: 'gd-flag-t' }, label));
     const body = h('div', { class: 'gd-dialog-body' },
       h('div', { class: 'gd-flags', role: 'group', 'aria-label': t('lang') }, flag('nl', '\u{1F1F3}\u{1F1F1}', 'Nederlands'), flag('en', '\u{1F1EC}\u{1F1E7}', 'English')),
-      h('p', null, t('helpIntro')),
+      h('p', { class: 'gd-help-goal' }, t('helpGoal')),
+      h('ul', { class: 'gd-help-key' }, [['green', 'helpKeyGreen'], ['yellow', 'helpKeyYellow'], ['red', 'helpKeyRed'], ['grey', 'helpKeyGrey']].map(([st, k]) =>
+        h('li', null, h('span', { class: `gd-key-sw gd-s-${st}`, 'aria-hidden': 'true' }, STATUS_SYMBOL[st]), t(k)))),
+      h('p', { class: 'gd-help-arrows' }, t('helpArrows')),
+      h('p', { class: 'gd-kicker' }, t('helpExampleTitle')),
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
         demoTile('green', colLabel('colour'), t('v_red')),
         demoTile('yellow', colLabel('region'), 'Bordeaux', `${t('km', { n: 400 })} ${ARROWS[2]}`),

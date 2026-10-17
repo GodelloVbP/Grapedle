@@ -301,3 +301,9 @@
 #grapedle-root .gd-flag { display: inline-flex !important; align-items: center; gap: 6px; min-height: 40px; padding: 6px 12px !important; border: 1.5px solid var(--gd-line) !important; border-radius: 999px !important; background: var(--gd-panel-soft) !important; color: var(--gd-ink) !important; font-size: .9rem !important; font-weight: 500 !important; cursor: pointer; }
 #grapedle-root .gd-flag-on { border-color: var(--gd-brand) !important; background: #fff !important; font-weight: 700 !important; }
 #grapedle-root .gd-flag-e { font-size: 1.25rem; line-height: 1; }
+/* help: goal, colour key, arrows */
+#grapedle-root .gd-help-goal { font-size: 1.05rem; font-weight: 600; color: var(--gd-ink); }
+#grapedle-root .gd-help-key { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+#grapedle-root .gd-help-key li { display: flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 500; }
+#grapedle-root .gd-key-sw { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 6px; font-weight: 800; font-size: .85rem; }
+#grapedle-root .gd-help-arrows { font-size: .9rem; color: var(--gd-ink-soft); }
