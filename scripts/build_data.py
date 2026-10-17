@@ -19,6 +19,7 @@ SCHEDULE_SEED = 20261101
 DROP_IDS = {"silvaner-r"}  # Roter Sylvaner is a synonym of silvaner
 # Dropped 2026-10-17 (owner decision): not in the owner's copy of Gatinois and no source for the missing data (altesse, nerello-mascalese: owner choice).
 DROP_IDS |= {
+    "braquet-noir",  # 12 ha planted
     "refosco",  # merged into refosco-dal-peduncolo-rosso, shown as "Refosco"
     "altesse", "mauzac-blanc", "negrette", "nerello-mascalese", "pineau-d-aunis", "plavac-mali", "poulsard", "saperavi", "savagnin-blanc", "teroldego", "timorasso",
 }
@@ -42,7 +43,7 @@ COUNTRY_POINTS = {
     "DE": (49.8, 8.5), "LU": (49.6, 6.35), "AT": (47.8, 15.5), "CH": (46.8, 7.5), "HU": (47.3, 20.0), "BG": (42.7, 25.5),
     "RO": (45.5, 25.0), "MK": (41.6, 21.7), "RU": (45.0, 40.0), "GE": (42.0, 45.0), "CY": (35.0, 33.0),
     "AL": (41.0, 20.0), "TR": (39.0, 30.0), "HR": (45.0, 16.0), "SI": (46.1, 15.0), "MD": (47.0, 28.5),
-    "AR": (-33.0, -68.8), "CL": (-34.5, -71.0), "PE": (-14.0, -75.7), "BR": (-29.0, -51.5),
+    "AR": (-33.0, -68.8), "UY": (-34.6, -56.2), "CL": (-34.5, -71.0), "PE": (-14.0, -75.7), "BR": (-29.0, -51.5),
     "US": (37.5, -120.5), "ZA": (-33.9, 18.9), "AU": (-34.5, 139.0), "NZ": (-41.5, 174.0),
 }
 AROMA_SITES = {"wf": "Wine Folly", "jr": "Jancis Robinson", "wp": "Wikipedia", "wt": "Wine Traveler",

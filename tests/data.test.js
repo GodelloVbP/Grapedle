@@ -55,7 +55,7 @@ test('signature regions: file coordinates land in the records; others use a coun
   // quote-aware split: notes may contain commas
   const sig = readFileSync(new URL('../data/source/signature_regions.csv', import.meta.url), 'utf8').trim().split(/\r?\n/).slice(1)
     .map((l) => [...l.matchAll(/("([^"]|"")*"|[^,]*)(,|$)/g)].slice(0, -1).map((m) => m[1].replace(/^"|"$/g, '').replace(/""/g, '"')));
-  assert.equal(sig.length, 99);
+  assert.equal(sig.length, 98);
   for (const r of sig) {
     const g = byId.get(r[0]);
     assert.ok(g, r[0]);
@@ -222,12 +222,13 @@ test('descriptors use WSET clusters, including nutty and earthy', () => {
   assert.ok(Object.values(descriptors).some((d) => d.cluster === 'earthy'));
 });
 
-test('the nine dual-region grapes, and a region name always has one point', () => {
+test('the ten dual-region grapes, and a region name always has one point', () => {
   const dual = Object.fromEntries(grapes.filter((g) => g.regions.length === 2).map((g) => [g.id, g.regions.map((r) => r.name).join(' / ')]));
   assert.deepEqual(dual, {
     'pinot-gris': 'Alsace / Veneto', 'garnacha-tinta': 'Rhône / Aragón', 'sauvignon-blanc': 'Loire / Marlborough',
     'chenin-blanc': 'Loire / Stellenbosch', syrah: 'Rhône / Barossa', cot: 'Cahors / Mendoza',
     chardonnay: 'Bourgogne / California', 'cabernet-franc': 'Loire / Bordeaux', auxerrois: 'Alsace / Luxembourg',
+    tannat: 'Sud-Ouest / Canelones',
   });
   const seen = new Map();
   for (const g of grapes) for (const r of g.regions) {
