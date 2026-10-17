@@ -325,11 +325,11 @@ test('i18n: both languages complete, lang selection', () => {
   assert.equal(makeT('en')('lose', { grape: 'Syrah' }), 'Unlucky! It was Syrah');
   assert.equal(makeT('nl')('hint1', { v: 'Barolo' }), 'Bekend van: Barolo');
   assert.equal(makeT('en')('hint1', { v: 'Barolo' }), 'Known for: Barolo');
-  assert.equal(makeT('nl')('help_area'), 'hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder. Geel: het antwoord zit binnen een factor 2, rood: verder weg.');
-  assert.equal(makeT('nl')('legend'), '✓ groen = zelfde aroma, gele rand = zelfde soort aroma');
+  assert.equal(makeT('nl')('help_area'), 'Hoeveel hectare jouw druif wereldwijd heeft. De pijl wijst naar het antwoord: ↑ meer, ↓ minder. Geel: het antwoord zit binnen een factor 2, rood: verder weg.');
+  assert.equal(makeT('nl')('legend'), 'Aroma\'s: ✓ = zelfde aroma als het antwoord, ≈ = zelfde soort aroma.');
   assert.ok(!('area_up3' in STRINGS.nl) && !('area_up3' in STRINGS.en), 'band strings are gone');
-  assert.match(makeT('nl')('help_flavour'), /minstens 2 aroma/);
-  assert.match(makeT('en')('help_flavour'), /at least 2 aromas/);
+  assert.match(makeT('nl')('help_flavour'), /minstens 3 aroma/);
+  assert.match(makeT('en')('help_flavour'), /at least 3 aromas/);
   for (const lang of ['nl', 'en']) for (const k of ['colour', 'region', 'body', 'style', 'area', 'flavour']) assert.ok(STRINGS[lang]['help_' + k] && STRINGS[lang]['col_' + k], k);
   for (let i = 1; i <= 5; i++) for (const lang of ['nl', 'en']) assert.ok(STRINGS[lang]['v_body_' + i], 'v_body_' + i);
   assert.deepEqual([1, 2, 3, 4, 5].map((i) => STRINGS.nl['v_body_' + i]), ['Licht', 'Medium-licht', 'Medium', 'Medium-vol', 'Vol']);

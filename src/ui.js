@@ -1,8 +1,8 @@
-import { countries, descriptors, styles as styleDefs, schedule, grapes } from './data.js';
+import { countries, descriptors, styles as styleDefs, schedule, grapes, lookalikeOf } from './data.js';
 import { COLUMNS, ARROWS, STATUS_SYMBOL, regionsOf, formatArea } from './feedback.js';
 import { createGame, shareText, firstLetter, MAX_GUESSES, HINT_AT } from './game.js';
 import { answerIdFor } from './schedule.js';
-import { makeT, pickLang } from './i18n.js';
+import { makeT, pickLang, regionLabel } from './i18n.js';
 import { search, exact } from './search.js';
 import { createStore, computeStats } from './storage.js';
 import { puzzleNumber, msUntilNextPuzzle, msUntilStart, puzzleDate, formatYmd } from './date.js';
@@ -39,62 +39,10 @@ function readQuery() {
 
 
 const DEV = typeof __GD_DEV__ !== 'undefined' && __GD_DEV__;
-const AGE_VERIFIED_KEY = 'vinoByPalazzoAgeVerified';
 const PRACTICE_MAX_LIST = 60;
 /** Puzzle numbers whose 'start' event already fired in this page view. */
 const startedPuzzles = new Set();
 
-/**
- * True while the host page's age gate (#age-gate) is on screen. When the gate is not in the DOM yet
- * and the visitor is not verified, treat it as blocking for a short grace period (it may still be injected).
- */
-function ageGateBlocking(graceUntil) {
-  const gate = document.getElementById('age-gate');
-  if (gate) {
-    if (gate.classList.contains('hidden') || gate.hidden) return false;
-    try {
-      const cs = globalThis.getComputedStyle(gate);
-      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
-    } catch (e) { /* treat as visible */ }
-    return true;
-  }
-  let verified = false;
-  try { verified = globalThis.localStorage.getItem(AGE_VERIFIED_KEY) === 'true'; } catch (e) { /* unknown */ }
-  return !verified && Date.now() < graceUntil;
-}
-
-/** Runs `cb` once the age gate is gone (immediately when it is not showing). Returns a cancel function. */
-function whenAgeGateClear(isAlive, cb) {
-  const grace = Date.now() + 1500;
-  const cleanups = [];
-  let stopped = false;
-  const stop = () => { stopped = true; while (cleanups.length) { try { cleanups.pop()(); } catch (e) { /* ignore */ } } };
-  const check = () => {
-    if (stopped) return;
-    if (!isAlive()) { stop(); return; }
-    if (!ageGateBlocking(grace)) { stop(); cb(); }
-  };
-  if (!ageGateBlocking(grace)) { cb(); return stop; }
-  try {
-    const mo = new MutationObserver(check);
-    const gate = document.getElementById('age-gate');
-    if (gate) {
-      mo.observe(gate, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
-      if (gate.parentNode) mo.observe(gate.parentNode, { childList: true });
-    }
-    // the gate may still be injected during the first seconds
-    mo.observe(document.documentElement, { childList: true, subtree: true });
-    cleanups.push(() => mo.disconnect());
-    const t0 = setTimeout(() => { if (!stopped && !gate) check(); }, 1550);
-    cleanups.push(() => clearTimeout(t0));
-  } catch (e) { /* the poll below still works */ }
-  const poll = setInterval(check, 500);
-  cleanups.push(() => clearInterval(poll));
-  for (const [target, ev] of [[globalThis, 'storage'], [document, 'visibilitychange']]) {
-    if (target && target.addEventListener) { target.addEventListener(ev, check); cleanups.push(() => target.removeEventListener(ev, check)); }
-  }
-  return stop;
-}
 
 export function mount(root, opts) {
   if (typeof root._gdTeardown === 'function') { try { root._gdTeardown(); } catch (e) { /* ignore */ } root._gdTeardown = null; }
@@ -136,6 +84,7 @@ function mountInner(root, opts) {
 
   const numFmt = () => new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'nl-NL');
   let game, shopItems, shopPhase = 'loading', toastTimer = null, justAdded = false, justWon = false;
+  let expanded = new Set(), expandedFor = null; // phone board: guess indexes shown in full
   let mode = 'daily'; // 'daily' | 'teaser' | 'practice'
   let practiceN = null; // puzzle number of a practice game, null for a random pre-launch grape or random pick
   let cur;
@@ -162,7 +111,8 @@ function mountInner(root, opts) {
   const boardEl = h('div', { class: 'gd-board' });
   const live = h('div', { class: 'gd-sr', 'aria-live': 'polite', 'aria-atomic': 'true', role: 'status' });
   const modalHost = h('div', { class: 'gd-modals' });
-  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, teaserEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
+  const introEl = h('section', { class: 'gd-intro', hidden: true, 'aria-label': t('helpTitle') });
+  const app = h('div', { class: 'gd-app' }, headerEl, introEl, noteEl, teaserEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
   root.appendChild(app);
 
   // layout follows the width of the host column, not the viewport
@@ -185,7 +135,8 @@ function mountInner(root, opts) {
   // ---- helpers ----
   const countryName = (c) => (c && countries[c] ? countries[c][lang] : '?');
   const fmtNum = (n) => numFmt().format(n);
-  const regionNames = (g) => regionsOf(g).map((r) => r.name || countryName(r.country));
+  const regName = (r) => (r.name ? regionLabel(r.name, lang) : countryName(r.country));
+  const regionNames = (g) => regionsOf(g).map(regName);
   /** "A / B" as nodes, names in `hit` bold. */
   const joined = (names, hit) => {
     const bold = new Set(hit || []);
@@ -198,7 +149,7 @@ function mountInner(root, opts) {
   };
   const aromaName = (d) => (descriptors[d] ? descriptors[d][lang] : d);
   /** Official name in small print, only when it adds something to the display name. */
-  const smallName = (g) => (g.small ? g.small[lang] : norm(g.name).includes(norm(g.official)) ? null : g.official);
+  const smallName = (g) => (g.small ? g.small[lang] : norm(g.name).includes(norm(g.official)) ? null : t('officialName', { s: g.official }));
 
   /** Analytics: only when the host page runs GTM (window.dataLayer is an array). */
   function track(action, extra) {
@@ -214,7 +165,7 @@ function mountInner(root, opts) {
     const info = descriptors[d];
     return h('span', { class: 'gd-chip' + (big ? ' gd-chip-lg' : '') + (hit ? ' gd-chip-hit' : fam ? ' gd-chip-fam' : '') },
       info && info.emoji ? h('span', { class: 'gd-chip-e', 'aria-hidden': 'true' }, info.emoji) : null,
-      hit ? h('span', { class: 'gd-chip-ok', 'aria-hidden': 'true' }, '✓') : null,
+      hit ? h('span', { class: 'gd-chip-ok', 'aria-hidden': 'true' }, '✓') : fam ? h('span', { class: 'gd-chip-ok', 'aria-hidden': 'true' }, '≈') : null,
       h('span', { class: 'gd-chip-t' }, aromaName(d)));
   }
   function flavourNodes(g, cell) {
@@ -259,6 +210,35 @@ function mountInner(root, opts) {
 
   const colLabel = (k) => t('col_' + k);
 
+  /** Short value for the one-line phone row: a few characters per column. */
+  const BODY_SHORT = { nl: ['L', 'ML', 'M', 'MV', 'V'], en: ['L', 'ML', 'M', 'MF', 'F'] };
+  const shortHa = (ha) => (ha >= 1000 ? (Math.round(ha / 100) / 10).toLocaleString(lang === 'en' ? 'en-GB' : 'nl-NL') + 'k' : String(ha));
+  function miniText(c, g) {
+    const arr = c.arrow === 'up' ? '↑' : c.arrow === 'down' ? '↓' : '';
+    switch (c.key) {
+      case 'colour': return t('v_' + g.colour);
+      case 'region': {
+        if (c.status === 'green') return '✓';
+        const p = (c.parts || []).find((x) => !x.hit) || (c.parts || [])[0];
+        if (!p) return '?';
+        if (p.hit) return '≈';
+        return `${p.country}${p.dir !== null && p.dir !== undefined ? ' ' + ARROWS[p.dir] : ''}`;
+      }
+      case 'body': return c.value ? `${BODY_SHORT[lang === 'en' ? 'en' : 'nl'][c.value - 1]}${arr}` : '?';
+      case 'area': return c.value ? `${shortHa(c.value)}${c.status === 'green' ? '' : arr || '='}` : '?';
+      case 'flavour': return g.flavours && g.flavours.length ? `${(c.shared || []).length}/${g.flavours.length}` : '?';
+      default: return STATUS_SYMBOL[c.status] || '';
+    }
+  }
+  function miniRow(r, onOpen) {
+    const sr = r.cells.map((c) => `${colLabel(c.key)} ${t('st_' + c.status)}`).join(', ');
+    return h('button', { type: 'button', class: 'gd-mini-row', 'aria-expanded': 'false', onclick: onOpen },
+      h('span', { class: 'gd-mini-name' }, r.grape.name),
+      h('span', { class: 'gd-minis', 'aria-hidden': 'true' }, r.cells.map((c) => h('span', { class: `gd-mini gd-s-${c.status}` },
+        h('span', { class: 'gd-mini-l' }, t('colS_' + c.key)), h('span', { class: 'gd-mini-v' }, miniText(c, r.grape))))),
+      h('span', { class: 'gd-sr' }, `${r.grape.name}: ${sr}. ${t('expandRow')}`));
+  }
+
   function buildTile(cell, g, i) {
     let main = null, sub = null, plain = '', nodes = null;
     switch (cell.key) {
@@ -266,13 +246,14 @@ function mountInner(root, opts) {
       case 'region': {
         const parts = cell.parts || [];
         plain = parts.map((x) => {
-          const nm = x.name || countryName(x.country);
+          const nm = x.name ? `${regionLabel(x.name, lang)}, ${countryName(x.country)}` : countryName(x.country);
           return x.hit ? `${nm} (${t('overlap')})` : x.km ? `${nm}, ${t('km', { n: fmtNum(x.km) })} ${t('toward', { dir: t('dir_' + x.dir) })}` : nm;
         }).join('; ') || regionNames(g).join(' / ');
         // one line per region: name, then km + arrow; a region the answer shares is bold and has no distance
         nodes = parts.length ? parts.map((x) => h('span', { class: 'gd-reg' },
-          h('span', { class: x.hit && cell.status !== 'green' ? 'gd-reg-n gd-hit' : 'gd-reg-n' }, x.name || countryName(x.country)),
-          x.km ? h('span', { class: 'gd-sub' }, `${t('km', { n: fmtNum(x.km) })} ${ARROWS[x.dir]}`) : null)) : null;
+          h('span', { class: x.hit && cell.status !== 'green' ? 'gd-reg-n gd-hit' : 'gd-reg-n' }, regName(x)),
+          x.name ? h('span', { class: 'gd-reg-c' }, countryName(x.country)) : null,
+          x.km !== null && x.km !== undefined && !x.hit ? h('span', { class: 'gd-sub' }, x.km ? `${t('km', { n: fmtNum(x.km) })} ${x.dir !== null ? ARROWS[x.dir] : ''}`.trim() : t('kmZero')) : null)) : null;
         main = regionNames(g).join(' / ');
         break;
       }
@@ -332,17 +313,33 @@ function mountInner(root, opts) {
     const cols = h('div', { class: 'gd-cols' + (rows.length ? '' : ' gd-cols-empty'), 'aria-hidden': 'true' }, h('span', { class: 'gd-colname' }, t('grapeCol')),
       h('div', { class: 'gd-colgrid' }, COLUMNS.map((k) => h('span', { class: 'gd-col' }, colLabel(k)))));
     if (!rows.length) { boardEl.append(cols); return; }
+    // phone: only the newest guess (and any row the player taps) shows in full; the rest is one line each
+    const last = rows.length - 1;
+    if (justAdded || expandedFor !== game.puzzle + ':' + game.answer.id || [...expanded].some((i) => i > last)) {
+      expanded = new Set([last]); expandedFor = game.puzzle + ':' + game.answer.id;
+    }
     // keyboard mode: board above the input, oldest first, so the newest guess sits right above the keys
     const list = h('ol', { class: 'gd-rows', reversed: kbMode ? null : true });
-    const ordered = kbMode ? rows : rows.slice().reverse();
-    ordered.forEach((r, idx) => {
-      const isNew = justAdded && idx === (kbMode ? ordered.length - 1 : 0);
+    const order = rows.map((r, i) => i);
+    if (!kbMode) order.reverse();
+    order.forEach((i) => {
+      const r = rows[i];
+      const isNew = justAdded && i === last;
       const isWin = isNew && justWon;
-      list.appendChild(h('li', { class: 'gd-row' + (isNew ? ' gd-new' : '') + (isWin ? ' gd-win' : '') },
-        h('div', { class: 'gd-name' }, r.grape.name),
-        h('div', { class: 'gd-tiles' }, r.cells.map((c, i) => buildTile(c, r.grape, i)))));
+      const open = expanded.has(i);
+      const toggle = () => { if (open) expanded.delete(i); else expanded.add(i); renderBoard(); };
+      list.appendChild(h('li', { class: 'gd-row' + (open ? '' : ' gd-collapsed') + (isNew ? ' gd-new' : '') + (isWin ? ' gd-win' : '') },
+        miniRow(r, toggle),
+        h('div', { class: 'gd-name' }, i === last ? r.grape.name
+          : h('button', { type: 'button', class: 'gd-name-btn', 'aria-expanded': 'true', onclick: toggle }, r.grape.name, h('span', { class: 'gd-name-fold', 'aria-hidden': 'true' }, ' ▴'))),
+        h('div', { class: 'gd-tiles' }, r.cells.map((c, j) => buildTile(c, r.grape, j)))));
     });
-    boardEl.append(cols, list, h('p', { class: 'gd-legend' }, t('legend')));
+    boardEl.append(cols, list);
+    // look-alikes: once the player has guessed a grape from the answer's group, say how close they are
+    const grp = lookalikeOf(game.answer.id);
+    if (grp && rows.some((r) => r.grape.id !== game.answer.id && grp.ids.includes(r.grape.id))) {
+      boardEl.append(h('p', { class: 'gd-alike', role: 'note' }, grp[lang]));
+    }
     justAdded = false; justWon = false;
   }
 
@@ -355,12 +352,13 @@ function mountInner(root, opts) {
     const listId = uid + '-list';
     input = h('input', {
       type: 'text', class: 'gd-input', role: 'combobox', 'aria-expanded': 'false', 'aria-controls': listId,
-      'aria-autocomplete': 'list', 'aria-label': t('placeholder'), placeholder: t('placeholder'),
+      'aria-autocomplete': 'list', 'aria-label': t('placeholder'),
+      placeholder: kbMode ? t('placeholderTry', { n: game.guesses.length + 1, max: MAX_GUESSES }) : t('placeholder'),
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off', spellcheck: 'false', enterkeyhint: 'go',
       inputmode: kbMode ? 'none' : null,
     });
     listEl = h('ul', { class: 'gd-list', id: listId, role: 'listbox', hidden: true, 'aria-label': t('placeholder') });
-    msgEl = h('p', { class: 'gd-msg', role: 'status' });
+    msgEl = h('p', { class: 'gd-msg' });
     counterEl = h('p', { class: 'gd-counter' }, t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES }));
     const btn = kbMode ? null : h('button', { type: 'submit', class: 'gd-btn' }, t('guessBtn'));
     const form = h('form', { class: 'gd-form', autocomplete: 'off', novalidate: true, onsubmit: (e) => { e.preventDefault(); submitTyped(); } },
@@ -368,7 +366,9 @@ function mountInner(root, opts) {
     if (kbMode) {
       // suggestions become a chip row between the input and the keys; the row keeps its height when empty
       kbEl = buildKeyboard();
-      playEl.append(form, msgEl, counterEl, h('div', { class: 'gd-sugg' }, listEl), kbEl);
+      // suggestions float over the board just above the input, so the keys never move and no space is reserved
+      listEl.addEventListener('scroll', fadeList);
+      playEl.append(h('div', { class: 'gd-sugg' }, listEl), form, msgEl, counterEl, kbEl);
       paintKeys();
     } else {
       kbEl = null;
@@ -493,14 +493,21 @@ function mountInner(root, opts) {
       const li = h('li', {
         id: uid + '-o' + i, role: 'option', class: 'gd-opt' + (done ? ' gd-opt-done' : ''),
         'aria-selected': 'false', 'aria-disabled': done ? 'true' : null,
-        onmousedown: (e) => { e.preventDefault(); if (!done) submit(r.grape.id); },
+        onmousedown: (e) => e.preventDefault(), // keep focus in the input; the pick itself runs on click (works for assistive tech too)
+        onclick: () => { if (!done) submit(r.grape.id); },
         onmousemove: () => { if (!done && active !== i) { active = i; explicit = true; paintActive(false); } },
-      }, ...(r.via ? [h('span', { class: 'gd-opt-via' }, r.via), h('span', { class: 'gd-opt-arrow', 'aria-hidden': 'true' }, '→'), h('span', { class: 'gd-opt-name' }, r.grape.name)]
-        : [h('span', { class: 'gd-opt-name' }, r.grape.name)]),
+      }, h('span', { class: 'gd-opt-name' }, r.grape.name),
+      r.via ? h('span', { class: 'gd-opt-via' }, t('via', { s: r.via })) : null,
       done ? h('span', { class: 'gd-opt-note' }, t('alreadyGuessed')) : null);
       listEl.appendChild(li);
     });
     paintActive(false);
+    fadeList();
+  }
+  /** Touch list: fade the bottom edge while more chips sit below the fold. */
+  function fadeList() {
+    if (!kbEl || !listEl) return;
+    listEl.classList.toggle('gd-more', listEl.scrollTop + listEl.clientHeight < listEl.scrollHeight - 4);
   }
   function closeList() { if (!listEl) return; results = []; active = -1; explicit = false; renderList(); }
 
@@ -538,13 +545,17 @@ function mountInner(root, opts) {
     if (mode === 'daily') track('guess', { guess: row.grape.id, n: game.guesses.length });
     const parts = row.cells.map((c) => `${colLabel(c.key)} ${t('st_' + c.status)}`).join(', ');
     const left = MAX_GUESSES - game.guesses.length;
-    announce(`${row.grape.name}. ${parts}.` + (game.status === 'playing' ? ' ' + t('guessesLeft', { n: left }) : ''));
+    const grp = lookalikeOf(game.answer.id);
+    const twin = grp && row.grape.id !== game.answer.id && grp.ids.includes(row.grape.id) ? ' ' + grp[lang] : '';
+    announce(`${row.grape.name}. ${parts}.` + twin + (game.status === 'playing' ? ' ' + t('guessesLeft', { n: left }) : ''));
     results = []; active = -1; explicit = false;
+    if (mode === 'daily' && !store.state.seenHelp) { store.state.seenHelp = true; store.save(); renderIntro(); }
     renderBoard();
     renderHints();
     if (game.status === 'playing') {
       input.value = ''; closeList(); msgEl.textContent = ''; paintKeys();
       counterEl.textContent = t('attempt', { n: game.guesses.length + 1, max: MAX_GUESSES });
+      if (kbMode) input.setAttribute('placeholder', t('placeholderTry', { n: game.guesses.length + 1, max: MAX_GUESSES }));
       if (kbMode) keepPlayInView(); else input.focus();
     } else {
       renderPlay(); renderEnd();
@@ -565,6 +576,8 @@ function mountInner(root, opts) {
     hintsEl.textContent = '';
     if (!game) { hintsEl.hidden = true; return; }
     const over = game.status !== 'playing';
+    // at the end the hint value sits in the answer card ("Bekend van"), so the hint row goes away
+    if (over) { hintsEl.hidden = true; return; }
     const used = game.hints;
     const nodes = [];
     for (const n of [1, 2]) {
@@ -581,7 +594,7 @@ function mountInner(root, opts) {
             renderHints();
             if (input && input.isConnected) input.focus();
           },
-        }, t('hint' + n + 'Btn'), ready ? null : h('span', { class: 'gd-hint-lock' }, ' · ' + t('hintLocked', { n: HINT_AT[n - 1] }))));
+        }, t('hint' + n + 'Btn'), ready ? null : h('span', { class: 'gd-hint-lock' }, ' · ' + t(kbMode ? 'hintLockedShort' : 'hintLocked', { n: HINT_AT[n - 1] }))));
       }
     }
     hintsEl.hidden = !nodes.length;
@@ -596,7 +609,8 @@ function mountInner(root, opts) {
 
   function facts(g) {
     const rows = [
-      [t('region'), regionsOf(g).length === 1 && regionsOf(g)[0].name ? `${regionsOf(g)[0].name}, ${countryName(regionsOf(g)[0].country)}` : regionNames(g).join(' / ')],
+      [t('region'), regionsOf(g).map((r) => (r.name ? `${regionLabel(r.name, lang)}, ${countryName(r.country)}` : countryName(r.country))).join(' / ')],
+      [t('knownFor'), g.hint ? g.hint[lang] : null],
       [colLabel('body'), g.body ? bodyName(g.body) : null],
       [t('styleRow'), styleIds(g) ? h('span', { class: 'gd-chips' }, styleIds(g).map((x) => styleChip(x, {}, true))) : null],
       [t('aromas'), g.flavours && g.flavours.length ? h('span', { class: 'gd-chips' }, g.flavours.map((d) => aromaChip(d, {}, true))) : null],
@@ -677,7 +691,8 @@ function mountInner(root, opts) {
         h('p', { class: 'gd-answer-name' }, game.answer.name),
         small ? h('p', { class: 'gd-answer-small' }, small) : null,
         facts(game.answer),
-        fact ? h('p', { class: 'gd-did' }, h('strong', null, t('didYouKnow') + ': '), fact) : null),
+        fact ? h('p', { class: 'gd-did' }, h('strong', null, t('didYouKnow') + ': '), fact) : null,
+        lookalikeOf(game.answer.id) ? h('p', { class: 'gd-did' }, lookalikeOf(game.answer.id)[lang]) : null),
       daily ? h('div', { class: 'gd-share' }, shareBtn) : null,
       daily ? h('p', { class: 'gd-countdown' }, t('next') + ' ', h('strong', { class: 'gd-clock' }, clockText())) : null,
       daily ? h('div', { class: 'gd-practice-cta' }, h('button', { type: 'button', class: 'gd-btn gd-btn-ghost', onclick: (e) => openPractice(e.currentTarget) }, t('practice')))
@@ -768,6 +783,7 @@ function mountInner(root, opts) {
         h('div', { class: 'gd-details-body' },
           h('ul', { class: 'gd-help-list' }, COLUMNS.map((k) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
           h('p', null, t('helpHints')),
+          h('p', null, t('legend')),
           h('p', { class: 'gd-muted' }, t('helpExample')),
           h('p', { class: 'gd-muted' }, t('helpFooter')))));
     openModal(t('helpTitle'), body, opener);
@@ -782,7 +798,7 @@ function mountInner(root, opts) {
     const body = h('div', { class: 'gd-dialog-body' },
       h('div', { class: 'gd-statgrid' }, num(st.played, t('played')), num(st.winPct, t('winPct')), num(st.current, t('streak')), num(st.best, t('best'))),
       h('h3', { class: 'gd-h3' }, t('dist')),
-      h('ol', { class: 'gd-dist' }, st.dist.map((n, i) => h('li', { class: 'gd-dist-row' },
+      st.played === 0 ? h('p', { class: 'gd-muted' }, t('statsEmpty')) : h('ol', { class: 'gd-dist' }, st.dist.map((n, i) => h('li', { class: 'gd-dist-row' },
         h('span', { class: 'gd-dist-k' }, String(i + 1)),
         h('span', { class: 'gd-dist-bar' + (todayTries === i + 1 ? ' gd-dist-today' : ''), style: `width:${Math.max(8, Math.round((n / max) * 100))}%` }, String(n))))),
       store.persistent ? null : h('p', { class: 'gd-muted' }, t('noStorage')));
@@ -808,7 +824,7 @@ function mountInner(root, opts) {
     const dlg = { el: null };
     const pick = (n) => { dlg.el.close(); startPractice(n); };
     const body = h('div', { class: 'gd-dialog-body' },
-      h('p', null, t('practiceIntro')),
+      h('p', null, t(past.length ? 'practiceIntro' : 'practiceIntroRandom')),
       h('button', { type: 'button', class: 'gd-btn', onclick: () => pick(null) }, t('practiceRandom')),
       past.length ? h('h3', { class: 'gd-h3' }, t('practiceListLabel')) : null,
       past.length ? h('ul', { class: 'gd-practice-list' }, past.map((n) => h('li', null,
@@ -865,8 +881,25 @@ function mountInner(root, opts) {
       h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: () => leavePractice() }, returnTo === 'teaser' ? t('back') : t('practiceDaily')));
   }
 
+  /**
+   * First visit: an inline intro instead of a pop-up, so the board takes taps straight away and nothing
+   * can sit on top of the host's age gate. It goes away on "Begrepen" or with the first guess.
+   */
+  function renderIntro() {
+    introEl.textContent = '';
+    const show = mode === 'daily' && !!game && !store.state.seenHelp && game.guesses.length === 0;
+    introEl.hidden = !show;
+    if (!show) return;
+    const done = () => { store.state.seenHelp = true; store.save(); renderIntro(); };
+    introEl.append(
+      h('p', { class: 'gd-intro-text' }, t('helpIntro')),
+      h('div', { class: 'gd-intro-btns' },
+        h('button', { type: 'button', class: 'gd-btn gd-btn-small', onclick: done }, t('gotIt')),
+        h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: (e) => { done(); openHelp(e.currentTarget); } }, t('helpMore'))));
+  }
+
   function renderAll() {
-    renderHeader(); renderNote(); renderTeaser(); renderPlay(); renderHints(); renderBoard(); renderEnd();
+    renderHeader(); renderIntro(); renderNote(); renderTeaser(); renderPlay(); renderHints(); renderBoard(); renderEnd();
     root.setAttribute('lang', lang);
   }
 
@@ -881,15 +914,6 @@ function mountInner(root, opts) {
     if (mode === 'daily' && game.status === 'playing' && game.guesses.length === 0 && !startedPuzzles.has(game.puzzle)) {
       startedPuzzles.add(game.puzzle);
       track('start');
-    }
-    if (mode === 'daily' && !store.state.seenHelp && game.guesses.length === 0) {
-      // never open a modal over the host page's age gate: wait until it is gone
-      const cancel = whenAgeGateClear(() => alive && root.isConnected, () => {
-        if (!alive || mode !== 'daily' || store.state.seenHelp || game.guesses.length) return;
-        store.state.seenHelp = true; store.save();
-        openHelp(null);
-      });
-      cleanups.push(cancel);
     }
   }
 
