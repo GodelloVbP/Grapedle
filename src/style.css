@@ -40,8 +40,8 @@
 #grapedle-root[data-gd-layout="narrow"] .gd-logo { height: 42px; }
 #grapedle-root .gd-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 #grapedle-root .gd-langs { display: inline-flex; border: 1px solid var(--gd-field-border); border-radius: 999px; overflow: hidden; }
-#grapedle-root .gd-seg { background: transparent !important; border: 0 !important; padding: 6px 12px !important; min-height: 36px; font-size: .8rem !important; font-weight: 600 !important; letter-spacing: .04em !important; text-transform: uppercase !important; cursor: pointer; color: var(--gd-ink-soft) !important; border-radius: 0 !important; }
-#grapedle-root .gd-seg-on { background: var(--gd-brand) !important; color: var(--gd-cream) !important; }
+#grapedle-root .gd-seg { background: transparent !important; border: 0 !important; padding: 6px 12px !important; min-height: 36px; font-size: 1.15rem !important; line-height: 1 !important; cursor: pointer; border-radius: 0 !important; opacity: .45; filter: grayscale(.4); }
+#grapedle-root .gd-seg-on { background: var(--gd-panel-soft) !important; opacity: 1; filter: none; }
 #grapedle-root .gd-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px !important; height: 40px; border-radius: 50% !important; border: 1px solid var(--gd-line) !important; background: var(--gd-panel-soft) !important; color: var(--gd-brand) !important; cursor: pointer; padding: 0 !important; }
 #grapedle-root .gd-icon:hover { background: var(--gd-panel) !important; }
 #grapedle-root .gd-note { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; background: var(--gd-panel); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: .9rem; font-weight: 500; }

@@ -334,10 +334,12 @@ function mountInner(root, opts) {
 
   // ---- header ----
   function renderHeader() {
+    // Flag emoji; on Windows these render as the letters NL / GB, which still reads fine.
+    const FLAGS = { nl: ['\u{1F1F3}\u{1F1F1}', 'Nederlands'], en: ['\u{1F1EC}\u{1F1E7}', 'English'] };
     const langBtn = (code) => h('button', {
       type: 'button', class: 'gd-seg' + (code === lang ? ' gd-seg-on' : ''), 'aria-pressed': code === lang ? 'true' : 'false',
-      lang: code, onclick: () => setLang(code),
-    }, code.toUpperCase());
+      lang: code, 'aria-label': FLAGS[code][1], title: FLAGS[code][1], onclick: () => setLang(code),
+    }, h('span', { 'aria-hidden': 'true' }, FLAGS[code][0]));
     headerEl.textContent = '';
     headerEl.append(
       h('h2', { class: 'gd-title' },
