@@ -40,8 +40,61 @@ function readQuery() {
 
 const DEV = typeof __GD_DEV__ !== 'undefined' && __GD_DEV__;
 const PRACTICE_MAX_LIST = 60;
+const AGE_VERIFIED_KEY = 'vinoByPalazzoAgeVerified';
 /** Puzzle numbers whose 'start' event already fired in this page view. */
 const startedPuzzles = new Set();
+
+/**
+ * True while the host page's age gate (#age-gate) is on screen. When the gate is not in the DOM yet
+ * and the visitor is not verified, treat it as blocking for a short grace period (it may still be injected).
+ */
+function ageGateBlocking(graceUntil) {
+  const gate = document.getElementById('age-gate');
+  if (gate) {
+    if (gate.classList.contains('hidden') || gate.hidden) return false;
+    try {
+      const cs = globalThis.getComputedStyle(gate);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+    } catch (e) { /* treat as visible */ }
+    return true;
+  }
+  let verified = false;
+  try { verified = globalThis.localStorage.getItem(AGE_VERIFIED_KEY) === 'true'; } catch (e) { /* unknown */ }
+  return !verified && Date.now() < graceUntil;
+}
+
+/** Runs `cb` once the age gate is gone (immediately when it is not showing). Returns a cancel function. */
+function whenAgeGateClear(isAlive, cb) {
+  const grace = Date.now() + 1500;
+  const cleanups = [];
+  let stopped = false;
+  const stop = () => { stopped = true; while (cleanups.length) { try { cleanups.pop()(); } catch (e) { /* ignore */ } } };
+  const check = () => {
+    if (stopped) return;
+    if (!isAlive()) { stop(); return; }
+    if (!ageGateBlocking(grace)) { stop(); cb(); }
+  };
+  if (!ageGateBlocking(grace)) { cb(); return stop; }
+  try {
+    const mo = new MutationObserver(check);
+    const gate = document.getElementById('age-gate');
+    if (gate) {
+      mo.observe(gate, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
+      if (gate.parentNode) mo.observe(gate.parentNode, { childList: true });
+    }
+    // the gate may still be injected during the first seconds
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+    cleanups.push(() => mo.disconnect());
+    const t0 = setTimeout(() => { if (!stopped && !gate) check(); }, 1550);
+    cleanups.push(() => clearTimeout(t0));
+  } catch (e) { /* the poll below still works */ }
+  const poll = setInterval(check, 500);
+  cleanups.push(() => clearInterval(poll));
+  for (const [target, ev] of [[globalThis, 'storage'], [document, 'visibilitychange']]) {
+    if (target && target.addEventListener) { target.addEventListener(ev, check); cleanups.push(() => target.removeEventListener(ev, check)); }
+  }
+  return stop;
+}
 
 
 export function mount(root, opts) {
@@ -111,8 +164,7 @@ function mountInner(root, opts) {
   const boardEl = h('div', { class: 'gd-board' });
   const live = h('div', { class: 'gd-sr', 'aria-live': 'polite', 'aria-atomic': 'true', role: 'status' });
   const modalHost = h('div', { class: 'gd-modals' });
-  const introEl = h('section', { class: 'gd-intro', hidden: true, 'aria-label': t('helpTitle') });
-  const app = h('div', { class: 'gd-app' }, headerEl, introEl, noteEl, teaserEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
+  const app = h('div', { class: 'gd-app' }, headerEl, noteEl, teaserEl, playEl, hintsEl, endEl, boardEl, live, modalHost);
   root.appendChild(app);
 
   // layout follows the width of the host column, not the viewport
@@ -344,7 +396,7 @@ function mountInner(root, opts) {
   }
 
   // ---- input / autocomplete ----
-  let results = [], active = -1, explicit = false, input, listEl, msgEl, counterEl, kbEl;
+  let results = [], active = -1, explicit = false, input, listEl, msgEl, counterEl, kbEl, trackEl = null;
   function renderPlay() {
     playEl.textContent = '';
     playEl.hidden = !game || game.status !== 'playing';
@@ -368,7 +420,8 @@ function mountInner(root, opts) {
       kbEl = buildKeyboard();
       // suggestions float over the board just above the input, so the keys never move and no space is reserved
       listEl.addEventListener('scroll', fadeList);
-      playEl.append(h('div', { class: 'gd-sugg' }, listEl), form, msgEl, counterEl, kbEl);
+      trackEl = h('span', { class: 'gd-sugg-track', 'aria-hidden': 'true', hidden: true }, h('span', { class: 'gd-sugg-thumb' }));
+      playEl.append(h('div', { class: 'gd-sugg' }, listEl, trackEl), form, msgEl, counterEl, kbEl);
       paintKeys();
     } else {
       kbEl = null;
@@ -507,7 +560,18 @@ function mountInner(root, opts) {
   /** Touch list: fade the bottom edge while more chips sit below the fold. */
   function fadeList() {
     if (!kbEl || !listEl) return;
+    const more = listEl.scrollHeight > listEl.clientHeight + 4;
     listEl.classList.toggle('gd-more', listEl.scrollTop + listEl.clientHeight < listEl.scrollHeight - 4);
+    if (!trackEl) return;
+    trackEl.hidden = listEl.hidden || !more;
+    if (trackEl.hidden) return;
+    // track runs along the list's right edge; the thumb shows the visible part and where it is
+    const H = listEl.clientHeight, S = listEl.scrollHeight;
+    trackEl.style.height = (H - 8) + 'px';
+    const th = Math.max(18, (H - 8) * H / S);
+    const top = ((H - 8) - th) * (listEl.scrollTop / Math.max(1, S - H));
+    const thumb = trackEl.firstChild;
+    thumb.style.height = th + 'px'; thumb.style.top = top + 'px';
   }
   function closeList() { if (!listEl) return; results = []; active = -1; explicit = false; renderList(); }
 
@@ -546,7 +610,6 @@ function mountInner(root, opts) {
     const twin = grp && row.grape.id !== game.answer.id && grp.ids.includes(row.grape.id) ? ' ' + grp[lang] : '';
     announce(`${row.grape.name}. ${parts}.` + twin + (game.status === 'playing' ? ' ' + t('guessesLeft', { n: left }) : ''));
     results = []; active = -1; explicit = false;
-    if (mode === 'daily' && !store.state.seenHelp) { store.state.seenHelp = true; store.save(); renderIntro(); }
     renderBoard();
     renderHints();
     if (game.status === 'playing') {
@@ -771,7 +834,9 @@ function mountInner(root, opts) {
       h('span', { class: 'gd-body' }, h('span', { class: 'gd-val' }, main, sub ? h('span', { class: 'gd-sub' }, sub) : null)));
   }
 
-  function openHelp(opener) {
+  function openHelp(opener, full) {
+    // first visit shows the whole explanation, with "Begrepen" at the end of it
+    const gotIt = () => h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt'));
     const body = h('div', { class: 'gd-dialog-body' },
       h('p', null, t('helpIntro')),
       h('div', { class: 'gd-help-demo', 'aria-hidden': 'true' },
@@ -781,15 +846,16 @@ function mountInner(root, opts) {
         demoTile('yellow', colLabel('style'), '🥂 ' + styleName('sparkling')),
         demoTile('red', colLabel('area'), formatArea(280000, lang) + ' ↓'),
         demoTile('grey', colLabel('flavour'), '–')),
-      h('button', { type: 'button', class: 'gd-btn', onclick: (e) => e.currentTarget.closest('dialog').close() }, t('gotIt')),
-      h('details', { class: 'gd-details' },
+      full ? null : gotIt(),
+      h('details', { class: 'gd-details', open: full ? true : null },
         h('summary', null, t('helpMore')),
         h('div', { class: 'gd-details-body' },
           h('ul', { class: 'gd-help-list' }, COLUMNS.map((k) => h('li', null, h('strong', null, colLabel(k) + ': '), t('help_' + k)))),
           h('p', null, t('helpHints')),
           h('p', null, t('legend')),
           h('p', { class: 'gd-muted' }, t('helpExample')),
-          h('p', { class: 'gd-muted' }, t('helpFooter')))));
+          h('p', { class: 'gd-muted' }, t('helpFooter')))),
+      full ? gotIt() : null);
     openModal(t('helpTitle'), body, opener);
   }
 
@@ -885,25 +951,8 @@ function mountInner(root, opts) {
       h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: () => leavePractice() }, returnTo === 'teaser' ? t('back') : t('practiceDaily')));
   }
 
-  /**
-   * First visit: an inline intro instead of a pop-up, so the board takes taps straight away and nothing
-   * can sit on top of the host's age gate. It goes away on "Begrepen" or with the first guess.
-   */
-  function renderIntro() {
-    introEl.textContent = '';
-    const show = mode === 'daily' && !!game && !store.state.seenHelp && game.guesses.length === 0;
-    introEl.hidden = !show;
-    if (!show) return;
-    const done = () => { store.state.seenHelp = true; store.save(); renderIntro(); };
-    introEl.append(
-      h('p', { class: 'gd-intro-text' }, t('helpIntro')),
-      h('div', { class: 'gd-intro-btns' },
-        h('button', { type: 'button', class: 'gd-btn gd-btn-small', onclick: done }, t('gotIt')),
-        h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: (e) => { done(); openHelp(e.currentTarget); } }, t('helpMore'))));
-  }
-
   function renderAll() {
-    renderHeader(); renderIntro(); renderNote(); renderTeaser(); renderPlay(); renderHints(); renderBoard(); renderEnd();
+    renderHeader(); renderNote(); renderTeaser(); renderPlay(); renderHints(); renderBoard(); renderEnd();
     root.setAttribute('lang', lang);
   }
 
@@ -918,6 +967,15 @@ function mountInner(root, opts) {
     if (mode === 'daily' && game.status === 'playing' && game.guesses.length === 0 && !startedPuzzles.has(game.puzzle)) {
       startedPuzzles.add(game.puzzle);
       track('start');
+    }
+    // first visit: the full explanation as a pop-up, but never over the host's age gate
+    if (mode === 'daily' && !store.state.seenHelp && game.guesses.length === 0) {
+      const cancel = whenAgeGateClear(() => alive && root.isConnected, () => {
+        if (!alive || mode !== 'daily' || store.state.seenHelp || game.guesses.length) return;
+        store.state.seenHelp = true; store.save();
+        openHelp(null, true);
+      });
+      cleanups.push(cancel);
     }
   }
 

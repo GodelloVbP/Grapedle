@@ -26,7 +26,7 @@ Squarespace Code Block. The placeholder inside the root is shown until the scrip
 <script src="https://cdn.jsdelivr.net/gh/GodelloVbP/Grapedle@1/dist/grapedle.min.js" defer></script>
 ```
 
-The URLs use the major-version range `@1`: jsDelivr serves the newest `v1.x.y` tag, so a data or hint fix ships with a new tag and the Code Block never changes. Never point at a branch. All CSS is scoped under `#grapedle-root` with a `gd-` prefix and resets bare elements and form controls (with `!important` on button/input visuals, because Squarespace form styles are very specific). The bundle is pure ASCII (esbuild `charset: 'ascii'`, checked by the build), so it works even when served without a UTF-8 charset. The game opens no pop-up by itself: first visitors get an inline intro, so nothing can cover the host's age gate.
+The URLs use the major-version range `@1`: jsDelivr serves the newest `v1.x.y` tag, so a data or hint fix ships with a new tag and the Code Block never changes. Never point at a branch. All CSS is scoped under `#grapedle-root` with a `gd-` prefix and resets bare elements and form controls (with `!important` on button/input visuals, because Squarespace form styles are very specific). The bundle is pure ASCII (esbuild `charset: 'ascii'`, checked by the build), so it works even when served without a UTF-8 charset. On a first visit the full explanation opens as a pop-up, but only once the host's `#age-gate` is gone.
 
 ## Release process
 
@@ -71,7 +71,7 @@ Hints: after 3 guesses "Bekend van" (appellation or wine), after 5 guesses the f
 
 Look-alikes (`data/lookalikes.json`: Corvina/Corvinone/Rondinella, Marsanne/Roussanne): when the player guesses a grape from the answer's group, a note under the board says they are extremely similar and usually blended; the end card says it too.
 
-On a narrow column every guess except the newest collapses to one line (name plus six mini tiles); tapping a line opens it. First visitors get an inline intro (no pop-up).
+On a narrow column every guess except the newest collapses to one line (name plus six mini tiles); tapping a line opens it.
 
 Before the launch date the game shows a teaser with a countdown and offers practice puzzles only. Practice ("Oefenen", also on the end screen) plays any past puzzle or a random one, never counts for stats or streak, is kept in memory and never offers a future puzzle. Dev only: `?now=YYYY-MM-DD` fakes the date, `?day=N` shows puzzle N.
 

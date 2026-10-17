@@ -251,11 +251,6 @@
 /* region tile: country under the region name */
 #grapedle-root .gd-reg-c { flex-basis: 100%; font-size: .66rem; font-weight: 500; opacity: .9; }
 
-/* first-visit intro (inline, never a pop-up) */
-#grapedle-root .gd-intro { display: flex; flex-direction: column; gap: 8px; background: var(--gd-panel-soft); border: 1px solid var(--gd-line); border-left: 4px solid var(--gd-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
-#grapedle-root .gd-intro-text { font-size: .9rem; }
-#grapedle-root .gd-intro-btns { display: flex; flex-wrap: wrap; gap: 8px; }
-
 /* look-alike note */
 #grapedle-root .gd-alike { margin-top: 10px; padding: 8px 12px; border-radius: 8px; background: var(--gd-yellow); color: var(--gd-yellow-ink); font-size: .85rem; font-weight: 500; }
 
@@ -290,5 +285,10 @@
 #grapedle-root[data-gd-kb="on"] .gd-counter { display: none; }
 #grapedle-root[data-gd-kb="on"] .gd-hintbtn { min-height: 32px; }
 #grapedle-root[data-gd-kb="on"] .gd-play { margin-top: 8px; }
+#grapedle-root[data-gd-kb="on"] .gd-form { margin-bottom: 14px; }
 #grapedle-root .gd-wiki { margin-top: 10px; font-size: .88rem; }
 #grapedle-root .gd-wiki a { color: var(--gd-brand); text-decoration: underline; text-underline-offset: 2px; }
+/* touch suggestions: a visible scroll track (iOS hides native scrollbars on touch) */
+#grapedle-root .gd-sugg-track { position: absolute; right: -2px; bottom: 8px; width: 4px; z-index: 21; border-radius: 4px; background: var(--gd-line); pointer-events: none; }
+#grapedle-root .gd-sugg-thumb { position: absolute; left: 0; right: 0; border-radius: 4px; background: var(--gd-brand); }
+#grapedle-root[data-gd-kb="on"] .gd-list { padding-right: 12px; }

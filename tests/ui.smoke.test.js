@@ -27,17 +27,20 @@ function setup(url) {
   } };
 }
 
-test('mount, six wrong guesses, end screen, practice, clean teardown', async () => {
+test('first-visit help pop-up, six wrong guesses, end screen, practice, clean teardown', async () => {
   const env = setup('https://example.test/grapedle?day=3');
   try {
     const { mount } = await import('../src/ui.js');
     const { schedule } = await import('../src/data.js');
     const root = document.getElementById('grapedle-root');
+    localStorage.setItem('vinoByPalazzoAgeVerified', 'true'); // host age gate already passed
     const api = mount(root);
     assert.ok(api && api.game, 'game mounted');
     assert.equal(api.game.puzzle, 3);
-    assert.ok(root.querySelector('.gd-intro:not([hidden])'), 'first visit shows the inline intro, not a pop-up');
-    assert.equal(root.querySelector('dialog'), null);
+    const dlg = root.querySelector('dialog[open]');
+    assert.ok(dlg, 'first visit opens the explanation as a pop-up');
+    assert.ok(dlg.querySelector('details[open]'), 'with the full explanation open');
+    dlg.close();
 
     const wrong = [...new Set(schedule.days)].filter((id) => id !== api.game.answer.id).slice(0, 6);
     const { byId } = await import('../src/data.js');
@@ -49,7 +52,6 @@ test('mount, six wrong guesses, end screen, practice, clean teardown', async () 
     assert.equal(api.game.status, 'lost');
     assert.ok(!root.querySelector('.gd-end').hidden, 'end panel visible');
     assert.equal(root.querySelectorAll('.gd-row').length, 6);
-    assert.ok(root.querySelector('.gd-intro').hidden, 'intro gone after the first guess');
     assert.match(root.querySelector('.gd-answer-name').textContent, new RegExp(api.game.answer.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 
     // practice from the end screen starts a fresh board that does not touch stats
@@ -63,5 +65,19 @@ test('mount, six wrong guesses, end screen, practice, clean teardown', async () 
 
     root._gdTeardown();
     assert.equal(env.intervals.size, 0, 'no intervals left after teardown');
+  } finally { env.restore(); }
+});
+
+test('the help pop-up waits while the host age gate is showing', async () => {
+  const env = setup('https://example.test/grapedle?day=4');
+  try {
+    const gate = document.createElement('div'); gate.id = 'age-gate'; document.body.appendChild(gate);
+    const { mount } = await import('../src/ui.js');
+    const root = document.getElementById('grapedle-root');
+    mount(root);
+    assert.equal(root.querySelector('dialog[open]'), null, 'no pop-up over the age gate');
+    gate.hidden = true;
+    await new Promise((r) => setTimeout(r, 600));
+    assert.ok(root.querySelector('dialog[open]'), 'pop-up once the gate is gone');
   } finally { env.restore(); }
 });
