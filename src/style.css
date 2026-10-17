@@ -33,7 +33,11 @@
 
 #grapedle-root .gd-app { background: var(--gd-cream); border: 1px solid var(--gd-line); border-radius: 14px; padding: 18px; }
 #grapedle-root .gd-header { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; margin-bottom: 14px; }
-#grapedle-root .gd-title { font-size: 1.5rem; font-weight: 600; color: var(--gd-brand); line-height: 1.2; }
+#grapedle-root .gd-title { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 600; color: var(--gd-brand); line-height: 1.2; }
+#grapedle-root .gd-logo { display: block; height: 52px; }
+#grapedle-root .gd-logo svg { display: block; height: 100%; width: auto; }
+#grapedle-root .gd-title-n { align-self: flex-end; padding-bottom: 6px; font-size: 1.1rem; font-weight: 600; color: var(--gd-ink-soft); font-variant-numeric: tabular-nums; }
+#grapedle-root[data-gd-layout="narrow"] .gd-logo { height: 42px; }
 #grapedle-root .gd-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 #grapedle-root .gd-langs { display: inline-flex; border: 1px solid var(--gd-field-border); border-radius: 999px; overflow: hidden; }
 #grapedle-root .gd-seg { background: transparent !important; border: 0 !important; padding: 6px 12px !important; min-height: 36px; font-size: .8rem !important; font-weight: 600 !important; letter-spacing: .04em !important; text-transform: uppercase !important; cursor: pointer; color: var(--gd-ink-soft) !important; border-radius: 0 !important; }

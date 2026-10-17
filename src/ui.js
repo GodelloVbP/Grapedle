@@ -9,6 +9,7 @@ import { puzzleNumber, msUntilNextPuzzle, msUntilStart, puzzleDate, formatYmd } 
 import { loadItems, productsFor, similarProducts, formatPrice, withUtm, TASTINGS_URL, SHOP_PAGE } from './shop.js';
 import { norm } from './text.js';
 import { KEY_ROWS, nextKeys } from './keyboard.js';
+import { LOGO_SVG, LOGO_VIEWBOX } from './logo.js';
 
 const ICON_HELP = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2"/><path d="M12 17.6v.1"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>';
@@ -339,7 +340,9 @@ function mountInner(root, opts) {
     }, code.toUpperCase());
     headerEl.textContent = '';
     headerEl.append(
-      h('h2', { class: 'gd-title' }, mode === 'daily' && game ? t('puzzle', { n: game.puzzle }) : 'Grapedle'),
+      h('h2', { class: 'gd-title' },
+        h('span', { class: 'gd-logo', role: 'img', 'aria-label': 'Grapedle', html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${LOGO_VIEWBOX}" aria-hidden="true" focusable="false">${LOGO_SVG}</svg>` }),
+        mode === 'daily' && game ? h('span', { class: 'gd-title-n' }, '#' + game.puzzle) : null),
       h('div', { class: 'gd-tools' },
         mode === 'practice' ? null : h('button', { type: 'button', class: 'gd-btn gd-btn-ghost gd-btn-small', onclick: (e) => openPractice(e.currentTarget) }, t('practice')),
         h('div', { class: 'gd-langs', role: 'group', 'aria-label': t('lang') }, langBtn('nl'), langBtn('en')),
