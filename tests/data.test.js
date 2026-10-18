@@ -235,9 +235,12 @@ test('the twelve dual-region grapes, and a region name always has one point', ()
     chardonnay: 'Bourgogne / California', 'cabernet-franc': 'Loire / Bordeaux', auxerrois: 'Alsace / Luxembourg',
     tannat: 'Sud-Ouest / Canelones', silvaner: 'Franken / Alsace', tribidrag: 'Puglia / California',
   });
+  // Exceptions: a grape whose home is a distinct corner of a big region keeps the region name (so it still
+  // matches) but gets its own point for distance and arrow. Glera: Conegliano-Valdobbiadene/Treviso, east Veneto.
+  const OWN_POINT = new Set(['prosecco']);
   const seen = new Map();
   for (const g of grapes) for (const r of g.regions) {
-    if (!r.name) continue;
+    if (!r.name || OWN_POINT.has(g.id)) continue;
     const key = `${r.country}|${r.name}`, val = JSON.stringify([r.lat, r.lon]);
     if (seen.has(key)) assert.equal(val, seen.get(key), `${g.id} ${key}`); else seen.set(key, val);
   }
