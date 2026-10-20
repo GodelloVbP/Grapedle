@@ -5,6 +5,7 @@ Full spec: https://claude.ai/code/artifact/ec2d449d-3aee-4533-979f-24cad0284fc3 
 ## Hard rules
 
 - No backend, no build-time network calls from the game. Everything ships in `dist/`.
+- One exception: anonymous play statistics (`src/stats.js`) post `play`/`win`/`loss` with puzzle, tries, hints, language and time zone to the owner's Apps Script web app (`tools/stats-apps-script.gs`, Google Sheet). No cookies, ids or storage for it; dev build and practice never report; it must never throw or block. `STATS_URL` empty = off; `data-gd-stats="off"` on the root switches it off per page.
 - All CSS is scoped under `#grapedle-root` with a `gd-` class prefix. The host site is Squarespace 7.1 with heavy custom CSS; nothing may leak either way.
 - Do not depend on the host site's `window.VBP` utilities. The bundle is self-contained.
 - localStorage access is always wrapped in try/catch; the game must play without it.

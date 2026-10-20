@@ -11,6 +11,7 @@ import { norm } from './text.js';
 import { KEY_ROWS, nextKeys } from './keyboard.js';
 import { LOGO_SVG, LOGO_VIEWBOX } from './logo.js';
 import { celebrate } from './celebrate.js';
+import { report } from './stats.js';
 
 const ICON_HELP = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6 1c0 1.9-2.8 2.4-2.8 4.2"/><path d="M12 17.6v.1"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>';
@@ -614,6 +615,11 @@ function mountInner(root, opts) {
     justAdded = true;
     justWon = game.status === 'won';
     if (mode === 'daily') track('guess', { guess: row.grape.id, n: game.guesses.length });
+    // anonymous daily statistics: the first guess counts as a player, the end as a win or loss (dev build and practice never report)
+    if (mode === 'daily' && !DEV) {
+      if (game.guesses.length === 1) report(root, 'play', { puzzle: game.puzzle, lang });
+      if (game.status !== 'playing') report(root, game.status === 'won' ? 'win' : 'loss', { puzzle: game.puzzle, tries: game.guesses.length, hints: game.hints.length, lang });
+    }
     const parts = row.cells.map((c) => `${colLabel(c.key)} ${t('st_' + c.status)}`).join(', ');
     const left = MAX_GUESSES - game.guesses.length;
     const grp = lookalikeOf(game.answer.id);

@@ -28,6 +28,10 @@ Squarespace Code Block. The placeholder inside the root is shown until the scrip
 
 The URLs use the major-version range `@1`: jsDelivr serves the newest `v1.x.y` tag, so a data or hint fix ships with a new tag and the Code Block never changes. Never point at a branch. All CSS is scoped under `#grapedle-root` with a `gd-` prefix and resets bare elements and form controls (with `!important` on button/input visuals, because Squarespace form styles are very specific). The bundle is pure ASCII (esbuild `charset: 'ascii'`, checked by the build), so it works even when served without a UTF-8 charset. On a first visit the full explanation opens as a pop-up, but only once the host's `#age-gate` is gone.
 
+## Play statistics
+
+Anonymous counts per day (players, won, lost, average tries, hints, country by time zone) go to a Google Sheet through a Google Apps Script web app. Setup: new Google Sheet → Extensions → Apps Script → paste `tools/stats-apps-script.gs` → run `setup()` → Deploy → New deployment → Web app, execute as Me, access Anyone → put the `/exec` URL in `STATS_URL` in `src/stats.js` and release. The game sends no cookies or ids; the IP address never reaches the script. Switch it off on a page with `data-gd-stats="off"` on the `#grapedle-root` div.
+
 ## Release process
 
 1. Bump `version` in `package.json` (stay on 1.x so the `@1` embed picks it up).
