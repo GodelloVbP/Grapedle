@@ -4,7 +4,7 @@
 // Never throws, never waits: if the endpoint is down or blocked the game does not notice.
 
 /** Apps Script web app URL (ends in /exec). Empty = statistics off. */
-export const STATS_URL = '';
+export const STATS_URL = 'https://script.google.com/macros/s/AKfycbz4a8CoAAMtY0qPrhLluaUTUwLD7XT2KRNsF4I-Tf1jGdvmm3iwtuIFw6JxMn-0xFc/exec';
 
 const ACTIONS = new Set(['play', 'win', 'loss']);
 
