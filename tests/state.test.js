@@ -197,7 +197,7 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
   assert.equal(lines.length, 4);
   assert.match(lines[1], /^(🟩|🟥)(🟩|🟨|🟥|⬜){5}$/u);
   assert.equal(lines[2], '🟩'.repeat(6));
-  assert.equal(lines[3], 'vinobypalazzo.nl/grapedle');
+  assert.equal(lines[3], 'https://www.vinobypalazzo.nl/grapedle');
   assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 1 }).split('\n')[0], 'Grapedle #42 2/6 💡');
   assert.equal(shareText({ puzzle: 42, rows: game.rows(), won: true, hints: 2 }).split('\n')[0], 'Grapedle #42 2/6 💡💡');
   // loss: X/6 and six lines
@@ -217,7 +217,7 @@ test('share text: head line with hints, X/6 on loss, one emoji line per guess', 
     fake([['green'], ['green'], ['green'], ['green'], ['green'], ['green']]),
   ];
   assert.equal(shareText({ puzzle: 12, rows, won: true, hints: 1 }),
-    'Grapedle #12 4/6 💡\n🟥🟨🟥🟥🟨🟨\n🟥🟩🟩🟨🟥🟨\n🟩🟩⬜⬜🟨🟩\n🟩🟩🟩🟩🟩🟩\nvinobypalazzo.nl/grapedle');
+    'Grapedle #12 4/6 💡\n🟥🟨🟥🟥🟨🟨\n🟥🟩🟩🟨🟥🟨\n🟩🟩⬜⬜🟨🟩\n🟩🟩🟩🟩🟩🟩\nhttps://www.vinobypalazzo.nl/grapedle');
   const unknown = shareText({ puzzle: 1, rows: [fake([['green'], ['red'], ['red', 'up'], ['grey']])], won: false }).split('\n')[1];
   assert.equal(unknown, '🟩🟥🟥⬜');
 });

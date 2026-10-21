@@ -805,15 +805,12 @@ function mountInner(root, opts) {
     const btn = e.currentTarget;
     const text = shareText({ puzzle: game.puzzle, rows: game.rows(), won: game.status === 'won', hints: game.hints.length });
     track('share');
-    const coarse = globalThis.matchMedia && globalThis.matchMedia('(pointer: coarse)').matches;
-    if (coarse && navigator.share) {
-      try { await navigator.share({ text }); return; } catch (err) { if (err && err.name === 'AbortError') return; }
-    }
+    // always copy to the clipboard (no system share sheet, also on phones): the player pastes it where they like
     let ok = false;
     try { await navigator.clipboard.writeText(text); ok = true; } catch (err) {
       try {
         const ta = h('textarea', { class: 'gd-sr', readonly: true }); ta.value = text;
-        btn.parentNode.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove();
+        btn.parentNode.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length); ok = document.execCommand('copy'); ta.remove();
       } catch (e2) { ok = false; }
     }
     if (ok) {

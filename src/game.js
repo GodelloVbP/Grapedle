@@ -71,7 +71,7 @@ export function createGame({ puzzle, store, persist = true, sched = schedule, an
 }
 
 /** Share text: head line (with one 💡 per hint used), one emoji line per guess, link. */
-export function shareText({ puzzle, rows, won, hints = 0, url = 'vinobypalazzo.nl/grapedle' }) {
+export function shareText({ puzzle, rows, won, hints = 0, url = 'https://www.vinobypalazzo.nl/grapedle' }) {
   const head = `Grapedle #${puzzle} ${won ? rows.length : 'X'}/${MAX_GUESSES}` + (hints > 0 ? ' ' + '💡'.repeat(hints) : '');
   const lines = rows.map((r) => r.cells.map(shareSymbol).join(''));
   return [head, ...lines, url].join('\n');

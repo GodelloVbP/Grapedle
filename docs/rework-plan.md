@@ -61,9 +61,9 @@ Grapedle #12 4/6 💡
 🟥🟩🟩🟨⬆️🟨
 🟩🟩⬜⬜↔️🟩
 🟩🟩🟩🟩🟩🟩
-vinobypalazzo.nl/grapedle
+https://www.vinobypalazzo.nl/grapedle
 ```
-Order: kleur, regio, body, stijl, aanplant, smaak. ⬆️/⬇️ for the arrow direction (body, aanplant), ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown body or flavour. Clipboard fallback when `navigator.share` is missing.
+Order: kleur, regio, body, stijl, aanplant, smaak. ⬆️/⬇️ for the arrow direction (body, aanplant), ↔️ for exactly equal areas, 🟩 correct; ⬜ for unknown body or flavour. The button always copies to the clipboard (never the system share sheet, also on phones); the link is the full https URL so chat apps show a preview.
 
 ## Data jobs
 1. Signature regions (Sonnet, then owner sign-off for the 56): for the 111 old-pool grapes, one curated wine region each with country, a hand-placed lat/lon and a source note. The other guessable grapes use their top country and a country point.
