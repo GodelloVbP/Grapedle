@@ -336,9 +336,9 @@ test('i18n: both languages complete, lang selection', () => {
   assert.deepEqual([1, 2, 3, 4, 5].map((i) => STRINGS.en['v_body_' + i]), ['Light', 'Medium-light', 'Medium', 'Medium-full', 'Full']);
   assert.equal(STRINGS.nl.col_body, 'Body'); assert.equal(STRINGS.en.col_body, 'Body');
   for (const lang of ['nl', 'en']) for (let n = 1; n <= 6; n++) assert.ok(STRINGS[lang]['cheer' + n], 'cheer' + n);
-  assert.equal(makeT('nl')('cheer1'), 'Onwaarschijnlijk!');
+  assert.equal(makeT('nl')('cheer1'), 'Ongelooflijk!');
   assert.equal(makeT('nl')('cheer6'), 'Op het nippertje');
-  assert.equal(makeT('nl')('practiceLabel', { n: 12 }), 'Oefenpuzzel #12 — telt niet mee');
+  assert.equal(makeT('nl')('practiceLabel', { n: 12 }), 'Oefenpuzzel #12 (telt niet mee)');
   assert.equal(makeT('nl')('teaserTitle', { date: '1 november 2026' }), 'Grapedle start op 1 november 2026');
   assert.ok(!('col_climate' in STRINGS.nl), 'no climate strings');
   assert.equal(norm('Spätburgunder'), 'spatburgunder');
