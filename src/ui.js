@@ -460,8 +460,8 @@ function mountInner(root, opts) {
     });
   }
 
-  /** Suggestions: the desktop dropdown keeps 8; the touch keyboard shows every match (A-Z after 1-2 letters). */
-  function suggest(v) { return kbMode ? search(v, 60, { browse: true }) : search(v); }
+  /** Suggestions: after 1-2 letters every matching grape (A-Z on the touch keyboard, best matches first in the desktop dropdown); the list scrolls, nothing is cut off. */
+  function suggest(v) { return kbMode ? search(v, 60, { browse: true }) : search(v, 60, { browse: true, ranked: true }); }
 
   function onInput() {
     msgEl.textContent = ''; results = suggest(input.value); active = -1; explicit = false; renderList(); paintKeys();

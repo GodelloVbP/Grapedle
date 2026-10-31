@@ -21,8 +21,8 @@ function kindOf(e, q) {
 export function search(query, limit = 8, opts = {}) {
   const q = norm(query);
   if (!q) return [];
-  // touch keyboard, 1-2 letters typed: every grape with a name, word or synonym starting with them, A-Z
-  if (opts.browse && q.length <= 2) { const b = browse(q); if (b.length) return b; }
+  // 1-2 letters typed: every grape whose name or a word in it starts with them, A-Z (touch keyboard) or ranked (desktop)
+  if (opts.browse && q.length <= 2) { const b = browse(q, opts.ranked); if (b.length) return b; }
   const hits = [];
   for (const e of index) {
     const kind = kindOf(e, q);
@@ -34,13 +34,15 @@ export function search(query, limit = 8, opts = {}) {
     else if (kind === 4 && !e.name.includes(q)) via = syn((x) => x.key.includes(q));
     hits.push({ grape: e.g, via, kind, exact: kind === 0, pool: !!e.g.answer });
   }
-  const rank = (h) => [h.exact ? 0 : 1, h.pool ? 0 : 1, h.kind];
-  hits.sort((a, b) => {
-    const ra = rank(a), rb = rank(b);
-    for (let i = 0; i < ra.length; i++) if (ra[i] !== rb[i]) return ra[i] - rb[i];
-    return b.grape.areaHa - a.grape.areaHa;
-  });
+  hits.sort(byRank);
   return hits.slice(0, limit).map(({ grape, via, exact }) => ({ grape, via, exact }));
+}
+
+function rank(h) { return [h.exact ? 0 : 1, h.pool ? 0 : 1, h.kind]; }
+function byRank(a, b) {
+  const ra = rank(a), rb = rank(b);
+  for (let i = 0; i < ra.length; i++) if (ra[i] !== rb[i]) return ra[i] - rb[i];
+  return b.grape.areaHa - a.grape.areaHa;
 }
 
 /** Exact match on name or synonym (for typed text without picking from the list). Pool grapes win a tie. */
@@ -57,8 +59,13 @@ export function exact(query) {
  * the Adelaide synonym lists hold many obscure names (Furmint as "Malvasia Verde") that only confuse a
  * one-letter list. An empty result falls back to the normal search, so "sh" still finds Syrah via Shiraz.
  */
-export function browse(q) {
-  return index.filter((e) => e.name.startsWith(q) || e.name.split(' ').some((w) => w.startsWith(q)))
-    .map((e) => ({ grape: e.g, via: null, exact: e.name === q }))
+export function browse(q, ranked = false) {
+  const hits = index.filter((e) => e.name.startsWith(q) || e.name.split(' ').some((w) => w.startsWith(q)));
+  if (ranked) {
+    // same order as the normal search (exact, answer-pool grapes, name prefix, area), but with no cap
+    return hits.map((e) => ({ grape: e.g, via: null, exact: e.name === q, kind: kindOf(e, q), pool: !!e.g.answer }))
+      .sort(byRank).map(({ grape, via, exact }) => ({ grape, via, exact }));
+  }
+  return hits.map((e) => ({ grape: e.g, via: null, exact: e.name === q }))
     .sort((a, b) => a.grape.name.localeCompare(b.grape.name, 'nl'));
 }

@@ -45,3 +45,11 @@ test('touch suggestions after one letter list every grape starting with it, A-Z,
   assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'nl')));
   assert.equal(search('m').length, 8, 'desktop dropdown keeps its cap');
 });
+
+test('desktop dropdown lists every grape for 1-2 letters, best matches first', () => {
+  const all = search('g', 60, { browse: true, ranked: true }).map((r) => r.grape.name);
+  const touch = search('g', 60, { browse: true }).map((r) => r.grape.name);
+  assert.ok(all.includes('Grignolino'), 'Grignolino must be listed after "g"');
+  assert.deepEqual([...all].sort(), [...touch].sort(), 'same set as the touch keyboard');
+  assert.equal(all[0], search('g')[0].grape.name, 'same top suggestion as the ranked search');
+});
