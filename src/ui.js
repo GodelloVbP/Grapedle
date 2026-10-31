@@ -460,8 +460,8 @@ function mountInner(root, opts) {
     });
   }
 
-  /** Suggestions: after 1-2 letters every matching grape (A-Z on the touch keyboard, best matches first in the desktop dropdown); the list scrolls, nothing is cut off. */
-  function suggest(v) { return kbMode ? search(v, 60, { browse: true }) : search(v, 60, { browse: true, ranked: true }); }
+  /** Suggestions: every match, never cut off (the list scrolls). After 1-2 letters: names first, then synonyms, then the rest; A-Z on the touch keyboard, best matches first on desktop. */
+  function suggest(v) { return search(v, grapes.length, { browse: true, ranked: !kbMode }); }
 
   function onInput() {
     msgEl.textContent = ''; results = suggest(input.value); active = -1; explicit = false; renderList(); paintKeys();

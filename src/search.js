@@ -21,7 +21,7 @@ function kindOf(e, q) {
 export function search(query, limit = 8, opts = {}) {
   const q = norm(query);
   if (!q) return [];
-  // 1-2 letters typed: every grape whose name or a word in it starts with them, A-Z (touch keyboard) or ranked (desktop)
+  // 1-2 letters typed: the three blocks of browse() (touch keyboard A-Z, desktop ranked), nothing cut off
   if (opts.browse && q.length <= 2) { const b = browse(q, opts.ranked); if (b.length) return b; }
   const hits = [];
   for (const e of index) {
@@ -55,17 +55,34 @@ export function exact(query) {
 }
 
 /**
- * All grapes whose display name or a word in it starts with q, A-Z. Synonyms are left out at this length:
- * the Adelaide synonym lists hold many obscure names (Furmint as "Malvasia Verde") that only confuse a
- * one-letter list. An empty result falls back to the normal search, so "sh" still finds Syrah via Shiraz.
+ * Short queries (1-2 letters): every grape that contains the typed text anywhere in its name or a synonym,
+ * in three blocks so the likely ones come first and none is left out:
+ *   1. the display name or a word in it starts with q,
+ *   2. a synonym or a word in it starts with q (`via` names the synonym),
+ *   3. (two letters only) q occurs elsewhere in the name or a synonym.
+ * Each block is A-Z (touch keyboard) or ranked like the normal search (desktop, `ranked`).
  */
 export function browse(q, ranked = false) {
-  const hits = index.filter((e) => e.name.startsWith(q) || e.name.split(' ').some((w) => w.startsWith(q)));
-  if (ranked) {
-    // same order as the normal search (exact, answer-pool grapes, name prefix, area), but with no cap
-    return hits.map((e) => ({ grape: e.g, via: null, exact: e.name === q, kind: kindOf(e, q), pool: !!e.g.answer }))
-      .sort(byRank).map(({ grape, via, exact }) => ({ grape, via, exact }));
+  const words = (k) => k.split(' ');
+  const hits = [];
+  for (const e of index) {
+    let tier = 0, via = null;
+    if (e.name.startsWith(q) || words(e.name).some((w) => w.startsWith(q))) tier = 1;
+    else {
+      const sp = e.syn.find((x) => x.key.startsWith(q) || words(x.key).some((w) => w.startsWith(q)));
+      if (sp) { tier = 2; via = sp.raw; }
+      else if (q.length >= 2) {
+        if (e.name.includes(q)) tier = 3;
+        else {
+          const si = e.syn.find((x) => x.key.includes(q));
+          if (si) { tier = 3; via = si.raw; }
+        }
+      }
+    }
+    if (tier) hits.push({ grape: e.g, via, exact: e.name === q, kind: tier, lead: e.name.startsWith(q) ? 0 : 1, pool: !!e.g.answer });
   }
-  return hits.map((e) => ({ grape: e.g, via: null, exact: e.name === q }))
-    .sort((a, b) => a.grape.name.localeCompare(b.grape.name, 'nl'));
+  const az = (a, b) => a.grape.name.localeCompare(b.grape.name, 'nl');
+  // desktop: names that start with q before names with a word that does, then answer-pool grapes, then the biggest
+  hits.sort((a, b) => a.kind - b.kind || (ranked ? (a.lead - b.lead) || byRank({ ...a, kind: 0 }, { ...b, kind: 0 }) : az(a, b)));
+  return hits.map(({ grape, via, exact }) => ({ grape, via, exact }));
 }

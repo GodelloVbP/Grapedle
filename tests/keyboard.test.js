@@ -34,22 +34,59 @@ test('the letter keys cover a-z exactly once', () => {
   assert.equal(KEY_ROWS.flat().sort().join(''), 'abcdefghijklmnopqrstuvwxyz');
 });
 
-test('touch suggestions after one letter list every grape starting with it, A-Z, uncapped', async () => {
+test('touch suggestions after one letter: names starting with it first, A-Z, then synonyms, nothing cut off', async () => {
   const { default: grapes } = await import('../data/grapes.json', { with: { type: 'json' } });
   const { norm } = await import('../src/text.js');
-  const got = search('m', 60, { browse: true }).map((r) => r.grape.id);
+  const res = search('m', 500, { browse: true });
+  const got = res.map((r) => r.grape.id);
   const want = grapes.filter((g) => norm(g.name).startsWith('m')).map((g) => g.id);
   for (const id of want) assert.ok(got.includes(id), id);
-  assert.ok(got.length > 8, String(got.length));
-  const names = search('m', 60, { browse: true }).map((r) => r.grape.name);
-  assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'nl')));
-  assert.equal(search('m').length, 8, 'desktop dropdown keeps its cap');
+  const starts = (n) => norm(n).startsWith('m') || norm(n).split(' ').some((w) => w.startsWith('m'));
+  const first = grapes.filter((g) => starts(g.name)).map((g) => g.name).sort((a, b) => a.localeCompare(b, 'nl'));
+  assert.deepEqual(res.slice(0, first.length).map((r) => r.grape.name), first, 'name matches come first, A-Z');
+  assert.ok(res.length > first.length, 'synonym matches follow');
+  assert.equal(search('m').length, 8, 'plain search keeps its default cap');
 });
 
-test('desktop dropdown lists every grape for 1-2 letters, best matches first', () => {
-  const all = search('g', 60, { browse: true, ranked: true }).map((r) => r.grape.name);
-  const touch = search('g', 60, { browse: true }).map((r) => r.grape.name);
-  assert.ok(all.includes('Grignolino'), 'Grignolino must be listed after "g"');
-  assert.deepEqual([...all].sort(), [...touch].sort(), 'same set as the touch keyboard');
-  assert.equal(all[0], search('g')[0].grape.name, 'same top suggestion as the ranked search');
+test('desktop dropdown: same set as the touch list, best matches first', () => {
+  for (const q of ['g', 'ga', 'pi', 'a']) {
+    const touch = search(q, 500, { browse: true }).map((r) => r.grape.id);
+    const desk = search(q, 500, { browse: true, ranked: true }).map((r) => r.grape.id);
+    assert.deepEqual([...desk].sort(), [...touch].sort(), q);
+  }
+  assert.equal(search('g', 500, { browse: true, ranked: true })[0].grape.name, search('g')[0].grape.name);
+});
+
+test('every grape shows for every start of its name or a synonym, touch and desktop', async () => {
+  const { default: grapes } = await import('../data/grapes.json', { with: { type: 'json' } });
+  const { norm } = await import('../src/text.js');
+  const miss = [];
+  for (const g of grapes) {
+    for (const nm of [g.name, ...g.synonyms]) {
+      const q = norm(nm);
+      for (let n = 1; n <= q.length; n++) {
+        const p = q.slice(0, n);
+        if (!p.trim()) continue;
+        for (const o of [{ browse: true }, { browse: true, ranked: true }]) {
+          if (!search(p, 500, o).some((r) => r.grape.id === g.id)) miss.push(`${g.name} / ${nm} / "${p}"`);
+        }
+      }
+    }
+  }
+  assert.deepEqual(miss.slice(0, 10), []);
+});
+
+test('every key the keyboard offers leads to a list that holds every grape containing that text', async () => {
+  const { default: grapes } = await import('../data/grapes.json', { with: { type: 'json' } });
+  const { norm } = await import('../src/text.js');
+  for (const start of ['g', 'a', 'p']) {
+    for (const c of nextKeys(start)) {
+      if (c === ' ') continue; // a space adds nothing to the query
+      const q = start + c;
+      const got = new Set(search(q, 500, { browse: true }).map((r) => r.grape.id));
+      for (const g of grapes) {
+        if ([g.name, ...g.synonyms].some((n) => norm(n).includes(q))) assert.ok(got.has(g.id), `${g.name} for "${q}"`);
+      }
+    }
+  }
 });

@@ -259,7 +259,7 @@
 #grapedle-root[data-gd-kb="on"] .gd-play { order: 4; margin-top: 12px; }
 #grapedle-root[data-gd-kb="on"] .gd-input { caret-color: var(--gd-brand); }
 #grapedle-root .gd-sugg { position: relative; height: 0; }
-#grapedle-root[data-gd-kb="on"] .gd-list { position: absolute; left: -4px; right: -4px; bottom: 4px; top: auto; z-index: 20; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; max-height: 136px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 6px 4px; background: none; border: 0; border-radius: 0; box-shadow: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+#grapedle-root[data-gd-kb="on"] .gd-list { position: absolute; left: -4px; right: -4px; bottom: 4px; top: auto; z-index: 20; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px; max-height: min(250px, 40vh); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 6px 4px; background: none; border: 0; border-radius: 0; box-shadow: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 #grapedle-root[data-gd-kb="on"] .gd-list::-webkit-scrollbar { display: none; }
 #grapedle-root[data-gd-kb="on"] .gd-opt, #grapedle-root[data-gd-kb="on"] .gd-opt:last-child { flex: 0 0 auto; flex-wrap: nowrap; align-items: center; white-space: nowrap; min-height: 38px; padding: 6px 12px; background: #fff; border: 1.5px solid var(--gd-field-border); border-radius: 999px; touch-action: manipulation; }
 #grapedle-root[data-gd-kb="on"] .gd-opt-on { background: var(--gd-panel); }
